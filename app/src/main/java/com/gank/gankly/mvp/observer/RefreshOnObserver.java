@@ -14,7 +14,7 @@ public abstract class RefreshOnObserver<T extends BaseEntity> extends BaseObserv
 
     protected abstract void onSuccess(T t);
 
-    protected abstract void onFailure();
+    protected abstract void onFailure(Throwable e);
 
     @Override
     public void onNext(T t) {
@@ -23,7 +23,7 @@ public abstract class RefreshOnObserver<T extends BaseEntity> extends BaseObserv
 
     @Override
     public void onError(Throwable e) {
-        onFailure();
+        onFailure(e);
     }
 
     @Override

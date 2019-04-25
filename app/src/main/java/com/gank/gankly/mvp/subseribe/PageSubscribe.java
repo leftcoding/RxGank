@@ -20,7 +20,7 @@ public class PageSubscribe extends RefreshOnObserver<PageEntity<Gank>> {
     }
 
     @Override
-    protected void onFailure() {
+    protected void onFailure(Throwable e) {
 
     }
 }
