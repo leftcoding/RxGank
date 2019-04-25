@@ -5,11 +5,11 @@ import android.content.Intent;
 import android.ly.business.domain.Gank;
 import android.ly.business.domain.PageConfig;
 import android.os.Bundle;
+import android.view.View;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import com.google.android.material.snackbar.Snackbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import android.view.View;
 
 import com.gank.gankly.R;
 import com.gank.gankly.config.Constants;
@@ -19,6 +19,7 @@ import com.gank.gankly.ui.web.normal.WebActivity;
 import com.gank.gankly.utils.CircularAnimUtils;
 import com.gank.gankly.widget.LySwipeRefreshLayout;
 import com.gank.gankly.widget.MultipleStatusView;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -132,6 +133,7 @@ public class AndroidFragment extends LazyFragment implements AndroidContract.Vie
     @Override
     public void refreshFailure(String msg) {
         shortToast(msg);
+        showError();
     }
 
     @Override

@@ -2,7 +2,6 @@ package com.leftcoding.network;
 
 import android.content.Context;
 
-import okhttp3.Cache;
 import okhttp3.CacheControl;
 
 /**
@@ -18,6 +17,6 @@ public abstract class Server extends ServerDisposable {
     public abstract void init(Context context);
 
     protected CacheControl cacheControl(boolean refresh) {
-        return refresh ? CacheControl.FORCE_NETWORK : CacheControl.FORCE_CACHE;
+        return refresh ? CacheControl.FORCE_NETWORK : null;
     }
 }

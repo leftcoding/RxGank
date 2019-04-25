@@ -40,6 +40,11 @@ public class GankServerHelper {
         return this;
     }
 
+    public GankServerHelper addInterceptor(Interceptor interceptor) {
+        serverHelper.addInterceptor(interceptor);
+        return this;
+    }
+
     public GankServerHelper addNetworkInterceptor(Interceptor interceptor) {
         serverHelper.addNetworkInterceptor(interceptor);
         return this;

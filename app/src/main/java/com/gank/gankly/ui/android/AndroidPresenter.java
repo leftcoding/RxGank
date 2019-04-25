@@ -28,7 +28,7 @@ class AndroidPresenter extends Presenter {
         }
 
         GankServer.with(context)
-                .androids(true, page, INIT_LIMIT)
+                .androids(false, page, INIT_LIMIT)
                 .doOnSubscribe(disposable -> {
                     if (isViewLife()) {
                         view.showProgress();
@@ -53,6 +53,7 @@ class AndroidPresenter extends Presenter {
 
                     @Override
                     protected void onFailure(Throwable e) {
+                        e.printStackTrace();
                         Logcat.e(e.toString());
                         if (isViewLife()) {
                             view.refreshFailure("");

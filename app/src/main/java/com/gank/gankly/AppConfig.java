@@ -7,6 +7,8 @@ import android.util.Log;
 import com.facebook.stetho.Stetho;
 import com.gank.gankly.config.Constants;
 import com.gank.gankly.config.HttpUrlConfig;
+import com.leftcoding.network.interceptor.CacheInterceptor;
+import com.leftcoding.network.interceptor.CacheNetworkInterceptor;
 import com.squareup.leakcanary.LeakCanary;
 import com.tencent.bugly.Bugly;
 import com.tencent.bugly.beta.Beta;
@@ -30,6 +32,9 @@ public class AppConfig extends Application {
 
         GankServerHelper.init(AppConfig.this)
                 .baseUrl(HttpUrlConfig.GANK_URL)
+                .addInterceptor(new CacheInterceptor(this))
+                .addNetworkInterceptor(new CacheInterceptor(this))
+                .addNetworkInterceptor(new CacheNetworkInterceptor())
                 .addNetworkInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY));
 
     }
