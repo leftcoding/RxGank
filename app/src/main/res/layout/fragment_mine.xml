@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/coordinator"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/mine_nested_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?attr/themeBackground"
+        android:scrollbars="none"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/mine_ll_notes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="?attr/baseAdapterItemBackground"
+                android:orientation="vertical"
+                app:divider="@drawable/shape_item_divider"
+                android:elevation="1dp"
+                app:showDividers="middle">
+
+                <com.gank.gankly.widget.LYRelativeLayoutRipple
+                    android:id="@+id/mine_rl_browse"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:paddingBottom="16dp"
+                    android:paddingEnd="0dp"
+                    android:paddingStart="16dp"
+                    android:paddingTop="16dp">
+
+                    <TextView
+                        android:id="@+id/mine_txt_browse"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:drawablePadding="10dp"
+                        android:drawableStart="@drawable/mine_browse"
+                        android:gravity="center_vertical"
+                        android:text="@string/mine_browse"
+                        android:textColor="?attr/textPrimaryColor"/>
+                </com.gank.gankly.widget.LYRelativeLayoutRipple>
+
+                <com.gank.gankly.widget.LYRelativeLayoutRipple
+                    android:id="@+id/mine_rl_collect"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:paddingBottom="16dp"
+                    android:paddingEnd="0dp"
+                    android:paddingStart="16dp"
+                    android:paddingTop="16dp">
+
+                    <TextView
+                        android:id="@+id/mine_txt_collect"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:drawablePadding="10dp"
+                        android:drawableStart="@drawable/mine_collect"
+                        android:gravity="center_vertical"
+                        android:text="@string/mine_my_collect"
+                        android:textColor="?attr/textPrimaryColor"/>
+                </com.gank.gankly.widget.LYRelativeLayoutRipple>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/mine_ll_setting"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="?attr/baseAdapterItemBackground"
+                android:orientation="vertical"
+                android:elevation="1dp"
+                app:divider="@drawable/shape_item_divider"
+                app:showDividers="middle">
+
+                <com.gank.gankly.widget.LYRelativeLayoutRipple
+                    android:id="@+id/mine_rl_night"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:paddingBottom="16dp"
+                    android:paddingEnd="0dp"
+                    android:paddingStart="16dp"
+                    android:paddingTop="16dp">
+
+                    <com.gank.gankly.widget.LSwitch
+                        android:id="@+id/mine_ls_theme"
+                        android:layout_width="44dp"
+                        android:layout_height="26dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="16dp"/>
+
+                    <TextView
+                        android:id="@+id/mine_txt_night"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:drawablePadding="10dp"
+                        android:drawableStart="@drawable/mine_night"
+                        android:gravity="center_vertical"
+                        android:text="@string/mine_night"
+                        android:textColor="?attr/textPrimaryColor"/>
+                </com.gank.gankly.widget.LYRelativeLayoutRipple>
+
+                <com.gank.gankly.widget.LYRelativeLayoutRipple
+                    android:id="@+id/mine_rl_setting"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:paddingBottom="16dp"
+                    android:paddingEnd="0dp"
+                    android:paddingStart="16dp"
+                    android:paddingTop="16dp">
+
+                    <TextView
+                        android:id="@+id/mine_txt_setting"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:drawablePadding="10dp"
+                        android:drawableStart="@drawable/mine_setting"
+                        android:gravity="center_vertical"
+                        android:text="@string/mine_setting"
+                        android:textColor="?attr/textPrimaryColor"/>
+                </com.gank.gankly.widget.LYRelativeLayoutRipple>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="4dp"
+    android:layout_marginTop="4dp"
+    android:background="?attr/meiziDailyItemBackground"
+    android:elevation="1dp"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:id="@+id/daily_meizi_ll_body"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?attr/selectableItemBackground"
+        android:orientation="horizontal"
+        android:paddingBottom="16dp"
+        android:paddingEnd="16dp"
+        android:paddingStart="16dp"
+        android:paddingTop="16dp">
+
+        <ImageView
+            android:id="@+id/daily_meizi_img_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_daily_meizi"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="16dp"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start|center"
+                android:text=""
+                android:textColor="?attr/baseAdapterItemTextColor"
+                android:textSize="16sp"/>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,117 @@
+<resources>
+    <string name="app_name">GankLy</string>
+    <string name="app_again_out">再按一次退出GankLy</string>
+    <string name="retry">重试</string>
+    <string name="app_new_version">NEW</string>
+    <string name="app_website">© GankLy</string>
+    <string name="revoke">撤销</string>
+    <string name="bye_burger_bottom_behavior">com.gank.gankly.widget.ByeBurgerBottomBehavior</string>
+    <string name="loading">加载中</string>
+
+    <string name="image_click_loading">点击加载此图片</string>
+
+    <string name="navigation_collect">收藏</string>
+    <string name="navigation_mine">我的</string>
+    <string name="navigation_settings">设置</string>
+    <string name="navigation_share">分享</string>
+    <string name="navigation_other">其他</string>
+    <string name="navigation_video">视频</string>
+    <string name="navigation_news">发现</string>
+    <string name="navigation_gift">美图</string>
+    <string name="navigation_home">首页</string>
+    <string name="navigation_about">关于</string>
+    <string name="navigation_jiandan">煎蛋杂集</string>
+
+    <string name="mine_my_collect">我的收藏</string>
+    <string name="mine_browse">最近浏览</string>
+    <string name="mine_night">夜间模式</string>
+    <string name="mine_setting">@string/navigation_settings</string>
+
+    <string name="loading_error">加载失败，点击重新获取数据</string>
+    <string name="loading_retry">重试</string>
+    <string name="loading_strive">拼命加载中&#8230;</string>
+    <string name="loading_pic_no_more">╮(╯_╰)╭，妹子都加载完了！</string>
+    <string name="loading_empty">暂无数据</string>
+    <string name="loading_meizi_images">正在解析图片地址</string>
+    <string name="loading_network_failure">Wi-Fi和移动数据已断开</string>
+    <string name="loading_all_over">全部加载完毕</string>
+
+    <string name="network_request_error">网络请求出错</string>
+
+    <string name="dialog_ok">确定</string>
+    <string name="dialog_cancel">取消</string>
+    <string name="dialog_update">更新</string>
+    <string name="dialog_checking">检查更新&#8230;</string>
+
+    <string name="update_downing">开始下载Apk&#8230;</string>
+
+    <string name="collect_success">收藏成功</string>
+    <string name="collect_cancel">取消收藏</string>
+    <string name="collect_revoke">撤销收藏</string>
+
+    <string name="meizi_save">保存</string>
+    <string name="meizi_wallpaper">设置壁纸</string>
+    <string name="meizi_wallpaper_success">设置壁纸成功</string>
+    <string name="meizi_revoke_success">撤销成功</string>
+    <string name="meizi_is_wallpaper">是否将该图片设置手机壁纸</string>
+    <string name="meizi_wallpaper_failure">设置壁纸失败，请重试</string>
+    <string name="meizi_picture_save_path">图片已保存,保存图片路径:%s</string>
+    <string name="meizi_limit_page">%1$d / %2$d</string>
+
+    <string name="web_refresh">刷新</string>
+    <string name="web_copy_url">复制链接</string>
+    <string name="web_open_browser">用浏览器打开</string>
+    <string name="web_open_failed">浏览器打开失败</string>
+
+    <string name="tip_copy_success">复制成功</string>
+    <string name="tip_server_error">数据加载失败，服务器被修空调的搬走了</string>
+    <string name="tip_no_more_load">所有妹子都呈现在你眼前了</string>
+    <string name="tip_to_delete">是否确认删除？</string>
+    <string name="tip_share_empty_text">分享内容不能为空</string>
+    <string name="tip_img_path_error">保存图片地址出错</string>
+    <string name="tip_no_new_version">已经最新版本</string>
+    <string name="tip_connected_again">请连接网络后，点击空白刷新</string>
+
+    <string name="share_to">"分享到…"</string>
+
+    <string name="setting_auto_check">自动检查更新</string>
+    <string name="setting_check_version">检查更新</string>
+    <string name="setting_current_version">当前版本 %1$s</string>
+    <string name="setting_theme_night">夜间模式</string>
+    <string name="setting_save_flow">省流量模式</string>
+    <string name="setting_save_flow_summary">仅在 Wi-Fi 环境下才会自动加载图片</string>
+    <string name="setting_picture_cache">图片缓存（%1$s）</string>
+    <string name="setting_picture_cache_string">图片缓存</string>
+    <string name="setting_clean_cache">清除缓存</string>
+
+    <string name="preference_category_base_settings">基本设置</string>
+    <string name="preference_category_help">帮助</string>
+
+    <string name="about_gank">干货</string>
+    <string name="about_gank_url">http://gank.io</string>
+    <string name="about_mzitu">妹子图</string>
+    <string name="about_mzitu_url">http://www.mzitu.com/mm</string>
+    <string name="about_my_github">我的github</string>
+    <string name="about_my_github_url">https://github.com/leftcoding/GankLy</string>
+    <string name="about_contact">联系方式</string>
+    <string name="about_contact_email">137387869@qq.com</string>
+    <string name="about_app_str">GankLy是一个关于程序猿的干货，基于学习和分享的应用。基本上每天都有会有新Android、ios等内容，以及福（mei）利（zi）、精彩视频等，让你在精神和视觉上都有不同的享受，后期有时间还会加入其他的语言干货。由于时间和能力有限，还有许多不足的地方，请大家多多指教。</string>
+    <string name="about_thanks_str">GankLy里用到的大部分接口均来自 http://gank.io，在这里感谢@daimajia @drakket @xiongwei-git的无私帮助。</string>
+
+    <string name="baisi_click_big_picture"><![CDATA[点击查看全图>>]]></string>
+    <string name="baisi_leisure_time">休闲</string>
+    <string name="discovered_funnys">搞笑视屏集合</string>
+
+    <string name="x5_down_refresh">向下拉刷新页面</string>
+    <string name="x5_qq">由QQ浏览器X5内核提供技术支持</string>
+    <string name="x5_update_note">更新提示</string>
+
+    <string name="gallery_page_select">选择页数</string>
+    <string name="gralley_auto_tip">已开启自动浏览模式</string>
+
+    <!-- 电影 -->
+    <string name="url_format">%1$s_%2$d.html</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="page_format_mark">/</string>
+    <string name="transition_welfare_image">share_welfare_image</string>
+</resources>
