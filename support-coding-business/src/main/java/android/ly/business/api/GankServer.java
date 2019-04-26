@@ -8,6 +8,8 @@ import com.leftcoding.network.Server;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.CacheControl;
@@ -49,17 +51,20 @@ public class GankServer extends Server {
         return server;
     }
 
-    public Observable<PageEntity<Gank>> androids(final boolean refresh, final int page, final int limit) {
-        return api.androids(cacheControl(refresh), page, limit)
+    public Observable<Response<PageEntity<Gank>>> androids(final boolean refresh, final int page, final int limit) {
+        return api.androids(page, limit)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    private void and(final boolean refresh, final int page, final int limit) {
+        Disposable disposable = api.androids(page, limit)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .map(new Function<Response<PageEntity<Gank>>, PageEntity<Gank>>() {
+                .subscribe(new Consumer<Response<PageEntity<Gank>>>() {
                     @Override
-                    public PageEntity<Gank> apply(Response<PageEntity<Gank>> pageEntityResponse) throws Exception {
-                        if (pageEntityResponse == null) {
-                            return null;
-                        }
-                        return pageEntityResponse.body();
+                    public void accept(Response<PageEntity<Gank>> pageEntityResponse) throws Exception {
+
                     }
                 });
     }

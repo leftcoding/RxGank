@@ -52,11 +52,11 @@ class AndroidPresenter extends Presenter {
                     }
 
                     @Override
-                    protected void onFailure(Throwable e) {
+                    protected void onFailure(Throwable e, String msg) {
                         e.printStackTrace();
-                        Logcat.e(e.toString());
+                        Logcat.e(e);
                         if (isViewLife()) {
-                            view.refreshFailure("");
+                            view.refreshFailure(msg);
                         }
                     }
                 });

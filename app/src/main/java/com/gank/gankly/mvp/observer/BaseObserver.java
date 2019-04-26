@@ -1,7 +1,5 @@
 package com.gank.gankly.mvp.observer;
 
-import android.lectcoding.ui.logcat.Logcat;
-
 import com.leftcoding.rxbus.RxApiManager;
 
 import io.reactivex.Observer;
@@ -26,6 +24,5 @@ public abstract class BaseObserver<T> implements Observer<T> {
 
     @Override
     public void onError(Throwable e) {
-        Logcat.e(e);
     }
 }

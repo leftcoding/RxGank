@@ -2,18 +2,22 @@ package com.gank.gankly;
 
 import android.app.Application;
 import android.ly.business.api.GankServerHelper;
+import android.os.Environment;
 import android.util.Log;
 
 import com.facebook.stetho.Stetho;
 import com.gank.gankly.config.Constants;
 import com.gank.gankly.config.HttpUrlConfig;
-import com.leftcoding.network.interceptor.CacheInterceptor;
 import com.leftcoding.network.interceptor.CacheNetworkInterceptor;
+import com.leftcoding.network.interceptor.CacheOffLineInterceptor;
 import com.squareup.leakcanary.LeakCanary;
 import com.tencent.bugly.Bugly;
 import com.tencent.bugly.beta.Beta;
 import com.tencent.smtt.sdk.QbSdk;
 
+import java.io.File;
+
+import okhttp3.Cache;
 import okhttp3.logging.HttpLoggingInterceptor;
 
 /**
@@ -29,11 +33,14 @@ public class AppConfig extends Application {
         super.onCreate();
         setupStetho();
         setupX5WebView();
-
+        File appDir = new File(Environment.getExternalStorageDirectory(), "GankLy/network");
+        if (!appDir.exists()) {
+            appDir.mkdirs();
+        }
         GankServerHelper.init(AppConfig.this)
                 .baseUrl(HttpUrlConfig.GANK_URL)
-                .addInterceptor(new CacheInterceptor(this))
-                .addNetworkInterceptor(new CacheInterceptor(this))
+                .cache(new Cache(appDir, 10 * 1024 * 1024))
+                .addInterceptor(new CacheOffLineInterceptor(this))
                 .addNetworkInterceptor(new CacheNetworkInterceptor())
                 .addNetworkInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY));
 

@@ -24,7 +24,6 @@ public interface Api {
      */
     @GET("Android/{limit}/{page}")
     Observable<Response<PageEntity<Gank>>> androids(
-            @Header(CACHE_CONTROL) CacheControl cacheControl,
             @Path("page") int page,
             @Path("limit") int limit
     );

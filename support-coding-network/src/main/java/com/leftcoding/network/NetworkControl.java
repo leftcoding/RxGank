@@ -3,6 +3,7 @@ package com.leftcoding.network;
 
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.Cache;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 
@@ -11,31 +12,38 @@ import okhttp3.OkHttpClient;
  */
 public class NetworkControl {
     private static final int DEFAULT_OUT_TIME = 30;
-    private OkHttpClient.Builder builder;
+    private OkHttpClient.Builder okHttpClientBuilder;
+    private Cache cache;
 
     private NetworkControl() {
-        builder = new OkHttpClient.Builder();
-        builder.connectTimeout(DEFAULT_OUT_TIME, TimeUnit.SECONDS);
+        okHttpClientBuilder = new OkHttpClient.Builder();
     }
 
     @SuppressWarnings("unchecked")
     public NetworkControl connectTimeout(long timeout, TimeUnit unit) {
-        builder.connectTimeout(timeout, unit);
+        okHttpClientBuilder.connectTimeout(timeout, unit);
         return this;
     }
 
     public NetworkControl addNetworkInterceptor(Interceptor interceptor) {
-        builder.addNetworkInterceptor(interceptor);
+        okHttpClientBuilder.addNetworkInterceptor(interceptor);
         return this;
     }
 
     public NetworkControl addInterceptor(Interceptor interceptor) {
-        builder.addInterceptor(interceptor);
+        okHttpClientBuilder.addInterceptor(interceptor);
+        return this;
+    }
+
+    public NetworkControl cache(Cache cache) {
+        this.cache = cache;
         return this;
     }
 
     public OkHttpClient build() {
-        return builder.build();
+        return okHttpClientBuilder.cache(cache)
+                .connectTimeout(DEFAULT_OUT_TIME, TimeUnit.SECONDS)
+                .build();
     }
 
     private static class SingletonHolder {

@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.leftcoding.network.ServerHelper;
 
+import okhttp3.Cache;
 import okhttp3.Interceptor;
 import retrofit2.Retrofit;
 
@@ -47,6 +48,11 @@ public class GankServerHelper {
 
     public GankServerHelper addNetworkInterceptor(Interceptor interceptor) {
         serverHelper.addNetworkInterceptor(interceptor);
+        return this;
+    }
+
+    public GankServerHelper cache(Cache cache) {
+        serverHelper.cache(cache);
         return this;
     }
 

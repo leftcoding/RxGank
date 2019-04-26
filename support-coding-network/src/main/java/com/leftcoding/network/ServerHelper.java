@@ -3,6 +3,7 @@ package com.leftcoding.network;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import okhttp3.Cache;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import retrofit2.CallAdapter;
@@ -57,6 +58,11 @@ public class ServerHelper {
         return this;
     }
 
+    public ServerHelper cache(Cache cache) {
+        networkControl.cache(cache);
+        return this;
+    }
+
     public ServerHelper baseUrl(String url) {
         this.url = url;
         return this;
@@ -73,10 +79,10 @@ public class ServerHelper {
 
     public Retrofit newRetrofit() {
         return retrofitBuilder
+                .baseUrl(url)
                 .client(getClient())
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .baseUrl(url)
                 .build();
     }
 
