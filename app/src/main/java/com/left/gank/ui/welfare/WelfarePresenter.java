@@ -24,6 +24,7 @@ public class WelfarePresenter extends WelfareContract.Presenter {
     public void loadWelfare(final int page) {
         showProgress();
         GankServer.with(context)
+                .api()
                 .images(page, DEFAULT_LIMIT)
                 .subscribe(new Observer<PageEntity<Gank>>() {
                     @Override

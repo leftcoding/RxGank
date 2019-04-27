@@ -7,10 +7,7 @@ import android.ly.business.domain.PageConfig;
 import android.os.Bundle;
 import android.view.View;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.LinearLayoutManager;
-
+import com.google.android.material.snackbar.Snackbar;
 import com.left.gank.R;
 import com.left.gank.config.Constants;
 import com.left.gank.ui.MainActivity;
@@ -19,11 +16,13 @@ import com.left.gank.ui.web.normal.WebActivity;
 import com.left.gank.utils.CircularAnimUtils;
 import com.left.gank.widget.LySwipeRefreshLayout;
 import com.left.gank.widget.MultipleStatusView;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import butterknife.BindView;
 
 /**
@@ -41,7 +40,7 @@ public class AndroidFragment extends LazyFragment implements AndroidContract.Vie
     private AndroidContract.Presenter androidPresenter;
 
     private AtomicBoolean isFirst = new AtomicBoolean(true);
-    private PageConfig pageConfig;
+    private PageConfig pageConfig = new PageConfig();
 
     @Override
     protected int getLayoutId() {
@@ -218,7 +217,6 @@ public class AndroidFragment extends LazyFragment implements AndroidContract.Vie
 
     @Override
     public void onDestroyView() {
-        super.onDestroyView();
         if (androidAdapter != null) {
             androidAdapter.destroy();
         }
@@ -226,6 +224,7 @@ public class AndroidFragment extends LazyFragment implements AndroidContract.Vie
         if (androidPresenter != null) {
             androidPresenter.destroy();
         }
+        super.onDestroyView();
     }
 
     @Override

@@ -1,8 +1,8 @@
 package android.ly.business.api;
 
+import android.ly.business.domain.Gank;
 import android.ly.business.domain.ListEntity;
 import android.ly.business.domain.PageEntity;
-import android.ly.business.domain.Gank;
 
 import io.reactivex.Observable;
 import okhttp3.CacheControl;
@@ -18,12 +18,13 @@ import static com.leftcoding.network.http.HttpConstants.CACHE_CONTROL;
  * Create by LingYan on 2017-09-29
  */
 
-public interface Api {
+public interface GankApi {
     /**
      * android 资源
      */
     @GET("Android/{limit}/{page}")
     Observable<Response<PageEntity<Gank>>> androids(
+            @Header(CACHE_CONTROL) CacheControl cacheControl,
             @Path("page") int page,
             @Path("limit") int limit
     );

@@ -19,15 +19,20 @@ import retrofit2.Response;
 
 public class GankServer extends Server {
     private volatile static GankServer server;
-    private Api api;
+    private GankApi gankApi;
 
     private GankServer(Context context) {
         super(context);
     }
 
+    @Override
+    public void clean(String tag) {
+
+    }
+
     public GankServer api() {
-        if (api == null) {
-            api = create(Api.class);
+        if (gankApi == null) {
+            gankApi = create(GankApi.class);
         }
         return this;
     }
@@ -44,13 +49,13 @@ public class GankServer extends Server {
     }
 
     public Observable<Response<PageEntity<Gank>>> androids(final boolean refresh, final int page, final int limit) {
-        return api.androids(page, limit)
+        return gankApi.androids(cacheControl(refresh), page, limit)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
     public Observable<PageEntity<Gank>> ios(int page, int limit) {
-        return api.ios(page, limit)
+        return gankApi.ios(page, limit)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .map(new Function<Response<PageEntity<Gank>>, PageEntity<Gank>>() {
@@ -65,7 +70,7 @@ public class GankServer extends Server {
     }
 
     public Observable<PageEntity<Gank>> images(final int page, final int limit) {
-        return api.images(page, limit)
+        return gankApi.images(page, limit)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .map(new Function<Response<PageEntity<Gank>>, PageEntity<Gank>>() {

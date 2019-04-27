@@ -1,6 +1,4 @@
-package com.left.gank.mvp.observer;
-
-import com.leftcoding.rxbus.RxApiManager;
+package android.ly.business.observer;
 
 import io.reactivex.Observer;
 import io.reactivex.annotations.NonNull;
@@ -11,15 +9,12 @@ import io.reactivex.disposables.Disposable;
  */
 
 public abstract class BaseObserver<T> implements Observer<T> {
-    private String observerTag;
-
-    BaseObserver(String requestTag) {
-        this.observerTag = requestTag;
+    BaseObserver() {
     }
 
     @Override
     public void onSubscribe(@NonNull Disposable d) {
-        RxApiManager.get().add(observerTag, d);
+
     }
 
     @Override

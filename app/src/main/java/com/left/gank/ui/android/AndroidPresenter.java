@@ -5,7 +5,8 @@ import android.ly.business.api.GankServer;
 import android.ly.business.domain.Gank;
 import android.ly.business.domain.PageEntity;
 
-import com.left.gank.mvp.observer.RefreshOnObserver;
+import android.ly.business.observer.ResponseObserver;
+
 import com.left.gank.ui.android.AndroidContract.Presenter;
 import com.leftcoding.rxbus.RxApiManager;
 
@@ -39,7 +40,7 @@ class AndroidPresenter extends Presenter {
                         view.hideProgress();
                     }
                 })
-                .subscribe(new RefreshOnObserver<PageEntity<Gank>>(requestTag) {
+                .subscribe(new ResponseObserver<PageEntity<Gank>>(requestTag) {
                     @Override
                     protected void onSuccess(PageEntity<Gank> entity) {
                         if (isViewLife()) {
@@ -62,18 +63,7 @@ class AndroidPresenter extends Presenter {
     }
 
     @Override
-    public void destroy() {
-        super.destroy();
-        RxApiManager.get().clear(requestTag);
-    }
-
-    @Override
     protected void onDestroy() {
-
-    }
-
-    private void fetchAndroid() {
-
-
+        RxApiManager.get().clear(requestTag);
     }
 }

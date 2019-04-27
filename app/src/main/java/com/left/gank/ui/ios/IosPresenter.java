@@ -5,12 +5,12 @@ import android.ly.business.api.GankServer;
 import android.ly.business.domain.Gank;
 import android.ly.business.domain.PageConfig;
 import android.ly.business.domain.PageEntity;
-import androidx.annotation.NonNull;
 
 import com.leftcoding.rxbus.RxApiManager;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import androidx.annotation.NonNull;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
@@ -43,6 +43,7 @@ public class IosPresenter extends IosContract.Presenter {
             return;
         }
         GankServer.with(context)
+                .api()
                 .ios(pageConfig.getCurPage(), pageConfig.limit)
                 .doOnSubscribe(disposable -> {
                     if (isViewLife()) {

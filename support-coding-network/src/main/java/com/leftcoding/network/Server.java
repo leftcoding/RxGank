@@ -2,6 +2,7 @@ package com.leftcoding.network;
 
 import android.content.Context;
 
+import okhttp3.CacheControl;
 import retrofit2.Retrofit;
 
 /**
@@ -30,5 +31,13 @@ public abstract class Server extends BaseServer {
             retrofit = builder.retrofit();
         }
         return retrofit.create(service);
+    }
+
+    protected CacheControl cacheControl(boolean refresh) {
+        return refresh ? CacheControl.FORCE_NETWORK : null;
+    }
+
+    public void clean(String tag) {
+
     }
 }

@@ -1,4 +1,4 @@
-package com.left.gank.mvp.observer;
+package android.ly.business.observer;
 
 import android.ly.business.domain.BaseEntity;
 
@@ -8,9 +8,9 @@ import retrofit2.Response;
  * Create by LingYan on 2017-11-19
  */
 
-public abstract class RefreshOnObserver<T extends BaseEntity> extends BaseObserver<Response<T>> {
+public abstract class ResponseObserver<T extends BaseEntity> extends ManagerObserver<Response<T>> {
 
-    public RefreshOnObserver(String requestTag) {
+    public ResponseObserver(String requestTag) {
         super(requestTag);
     }
 

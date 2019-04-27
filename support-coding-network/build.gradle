@@ -34,6 +34,4 @@ dependencies {
     api "com.squareup.retrofit2:retrofit:${retrofitVersion}"
     api "com.squareup.retrofit2:converter-gson:${converterGson}"
     api "com.squareup.retrofit2:adapter-rxjava2:${adapterRxjava2}"
-    // RxJava2
-    api project(':support-coding-rxbus')
 }
