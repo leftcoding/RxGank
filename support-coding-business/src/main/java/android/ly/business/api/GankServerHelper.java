@@ -3,7 +3,7 @@ package android.ly.business.api;
 import android.content.Context;
 import android.util.Log;
 
-import com.leftcoding.network.ServerHelper;
+import com.leftcoding.network.ServerBuilder;
 
 import okhttp3.Cache;
 import okhttp3.Interceptor;
@@ -16,12 +16,12 @@ import retrofit2.Retrofit;
 public class GankServerHelper {
     private volatile static GankServerHelper gankServerHelper;
     private Context context;
-    private ServerHelper serverHelper;
+    private ServerBuilder serverBuilder;
     private String baseUrl;
 
     private GankServerHelper(Context context) {
         this.context = context.getApplicationContext() == null ? context : context.getApplicationContext();
-        serverHelper = ServerHelper.get();
+        serverBuilder = new ServerBuilder();
     }
 
     public static GankServerHelper init(Context context) {
@@ -42,23 +42,23 @@ public class GankServerHelper {
     }
 
     public GankServerHelper addInterceptor(Interceptor interceptor) {
-        serverHelper.addInterceptor(interceptor);
+        serverBuilder.addInterceptor(interceptor);
         return this;
     }
 
     public GankServerHelper addNetworkInterceptor(Interceptor interceptor) {
-        serverHelper.addNetworkInterceptor(interceptor);
+        serverBuilder.addNetworkInterceptor(interceptor);
         return this;
     }
 
     public GankServerHelper cache(Cache cache) {
-        serverHelper.cache(cache);
+        serverBuilder.cache(cache);
         return this;
     }
 
     Retrofit newRetrofit() {
         Log.d(">>>", ">>baseUrl:" + baseUrl);
-        return serverHelper.baseUrl(baseUrl)
-                .newRetrofit();
+        return serverBuilder.baseUrl(baseUrl)
+                .retrofit();
     }
 }

@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <com.gank.gankly.ui.web.X5WebView
+    <com.left.gank.ui.web.X5WebView
         android:id="@+id/web_video"
         android:layout_width="fill_parent"
         android:layout_height="match_parent"/>

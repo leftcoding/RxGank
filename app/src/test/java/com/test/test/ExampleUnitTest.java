@@ -1,6 +1,6 @@
 package com.test.test;
 
-import com.gank.gankly.ui.MainActivity;
+import com.left.gank.ui.MainActivity;
 
 import org.junit.Before;
 import org.junit.Test;

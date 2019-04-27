@@ -21,11 +21,7 @@ public class NetWorkUtil {
         ConnectivityManager manager = (ConnectivityManager)
                 context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo info = manager.getActiveNetworkInfo();
-        if (info != null && info.isConnected()) {
-            return true;
-        }
-        return false;
-
+        return info != null && info.isConnected();
     }
 
     /**
@@ -50,7 +46,6 @@ public class NetWorkUtil {
         } else if (nType == ConnectivityManager.TYPE_WIFI) {
             netType = 1;
         }
-
         return netType;
     }
 
@@ -66,18 +61,12 @@ public class NetWorkUtil {
         }
     }
 
-
     /**
-     * </br><b>title : </b>		网络是否可用
-     * </br><b>description :</b>网络是否可用
-     *
-     * @param context
-     * @return
+     * 网络是否可用
      */
     public static boolean isNetworkAvailable(Context context) {
         ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkinfo = manager.getActiveNetworkInfo();
         return !(networkinfo == null || !networkinfo.isAvailable());
     }
-
 }

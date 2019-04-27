@@ -38,7 +38,7 @@
             android:textColor="@color/image_default_text"
             android:textSize="14sp" />
 
-        <com.gank.gankly.widget.HorizontalLoading
+        <com.left.gank.widget.HorizontalLoading
             android:id="@+id/image_default_horizontal_loading"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"

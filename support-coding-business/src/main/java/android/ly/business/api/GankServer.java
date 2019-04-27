@@ -8,11 +8,8 @@ import com.leftcoding.network.Server;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
-import okhttp3.CacheControl;
 import retrofit2.Response;
 
 
@@ -22,22 +19,18 @@ import retrofit2.Response;
 
 public class GankServer extends Server {
     private volatile static GankServer server;
-    private GankServerHelper gankServerHelper;
     private Api api;
 
     private GankServer(Context context) {
         super(context);
-        if (gankServerHelper == null) {
-            gankServerHelper = GankServerHelper.init(context);
-        }
-        api = gankServerHelper
-                .newRetrofit()
-                .create(Api.class);
     }
 
     @Override
-    public void init(Context context) {
-        gankServerHelper = GankServerHelper.init(context);
+    public GankServer create() {
+        if (api == null) {
+            api = retrofit().create(Api.class);
+        }
+        return this;
     }
 
     public static GankServer with(Context context) {
@@ -55,18 +48,6 @@ public class GankServer extends Server {
         return api.androids(page, limit)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
-    }
-
-    private void and(final boolean refresh, final int page, final int limit) {
-        Disposable disposable = api.androids(page, limit)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<Response<PageEntity<Gank>>>() {
-                    @Override
-                    public void accept(Response<PageEntity<Gank>> pageEntityResponse) throws Exception {
-
-                    }
-                });
     }
 
     public Observable<PageEntity<Gank>> ios(int page, int limit) {

@@ -21,20 +21,20 @@
             app:dividerPadding="16dp"
             app:showDividers="middle|end">
 
-            <com.gank.gankly.widget.ItemSwitchView
+            <com.left.gank.widget.ItemSwitchView
                 android:id="@+id/setting_switch_check"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:summaryVisible="false"
                 app:textTitle="@string/setting_auto_check" />
 
-            <com.gank.gankly.widget.ItemTextView
+            <com.left.gank.widget.ItemTextView
                 android:id="@+id/setting_item_text_update"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/setting_switch_check" />
 
-            <com.gank.gankly.widget.ItemTextView
+            <com.left.gank.widget.ItemTextView
                 android:id="@+id/setting_item_text_clean_cache"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -42,14 +42,14 @@
                 app:textSummary=""
                 app:textTitle="@string/setting_clean_cache" />
 
-            <com.gank.gankly.widget.ItemSwitchView
+            <com.left.gank.widget.ItemSwitchView
                 android:id="@+id/setting_switch_only_wifi"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:textSummary="@string/setting_save_flow_summary"
                 app:textTitle="@string/setting_save_flow" />
 
-            <com.gank.gankly.widget.LYRelativeLayoutRipple
+            <com.left.gank.widget.LYRelativeLayoutRipple
                 android:id="@+id/setting_rl_about"
                 style="@style/setting_item"
                 android:layout_width="match_parent"
@@ -63,7 +63,7 @@
                     android:gravity="start"
                     android:text="@string/navigation_about"
                     android:textColor="?attr/textTitleColor" />
-            </com.gank.gankly.widget.LYRelativeLayoutRipple>
+            </com.left.gank.widget.LYRelativeLayoutRipple>
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <TextView

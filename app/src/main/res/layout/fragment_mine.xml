@@ -44,7 +44,7 @@
                 android:elevation="1dp"
                 app:showDividers="middle">
 
-                <com.gank.gankly.widget.LYRelativeLayoutRipple
+                <com.left.gank.widget.LYRelativeLayoutRipple
                     android:id="@+id/mine_rl_browse"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -64,9 +64,9 @@
                         android:gravity="center_vertical"
                         android:text="@string/mine_browse"
                         android:textColor="?attr/textPrimaryColor"/>
-                </com.gank.gankly.widget.LYRelativeLayoutRipple>
+                </com.left.gank.widget.LYRelativeLayoutRipple>
 
-                <com.gank.gankly.widget.LYRelativeLayoutRipple
+                <com.left.gank.widget.LYRelativeLayoutRipple
                     android:id="@+id/mine_rl_collect"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -86,7 +86,7 @@
                         android:gravity="center_vertical"
                         android:text="@string/mine_my_collect"
                         android:textColor="?attr/textPrimaryColor"/>
-                </com.gank.gankly.widget.LYRelativeLayoutRipple>
+                </com.left.gank.widget.LYRelativeLayoutRipple>
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.appcompat.widget.LinearLayoutCompat
@@ -100,7 +100,7 @@
                 app:divider="@drawable/shape_item_divider"
                 app:showDividers="middle">
 
-                <com.gank.gankly.widget.LYRelativeLayoutRipple
+                <com.left.gank.widget.LYRelativeLayoutRipple
                     android:id="@+id/mine_rl_night"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -110,7 +110,7 @@
                     android:paddingStart="16dp"
                     android:paddingTop="16dp">
 
-                    <com.gank.gankly.widget.LSwitch
+                    <com.left.gank.widget.LSwitch
                         android:id="@+id/mine_ls_theme"
                         android:layout_width="44dp"
                         android:layout_height="26dp"
@@ -129,9 +129,9 @@
                         android:gravity="center_vertical"
                         android:text="@string/mine_night"
                         android:textColor="?attr/textPrimaryColor"/>
-                </com.gank.gankly.widget.LYRelativeLayoutRipple>
+                </com.left.gank.widget.LYRelativeLayoutRipple>
 
-                <com.gank.gankly.widget.LYRelativeLayoutRipple
+                <com.left.gank.widget.LYRelativeLayoutRipple
                     android:id="@+id/mine_rl_setting"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -151,7 +151,7 @@
                         android:gravity="center_vertical"
                         android:text="@string/mine_setting"
                         android:textColor="?attr/textPrimaryColor"/>
-                </com.gank.gankly.widget.LYRelativeLayoutRipple>
+                </com.left.gank.widget.LYRelativeLayoutRipple>
             </androidx.appcompat.widget.LinearLayoutCompat>
         </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.core.widget.NestedScrollView>

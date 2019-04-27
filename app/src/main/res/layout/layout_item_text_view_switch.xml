@@ -36,7 +36,7 @@
             android:visibility="visible" />
     </LinearLayout>
 
-    <com.gank.gankly.widget.LSwitch
+    <com.left.gank.widget.LSwitch
         android:id="@+id/item_switch_auto_check"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />

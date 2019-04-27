@@ -16,7 +16,7 @@ public class ServerDisposable {
     private Map<String, CompositeDisposable> disposableMap = new ConcurrentHashMap<>();
     protected Context context;
 
-    ServerDisposable(Context context) {
+    public ServerDisposable(Context context) {
         this.context = context;
     }
 

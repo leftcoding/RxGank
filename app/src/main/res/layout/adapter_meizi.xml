@@ -7,7 +7,7 @@
     android:layout_marginTop="5dp"
     android:layout_marginRight="4dp">
 
-    <com.gank.gankly.widget.ImageDefaultView
+    <com.left.gank.widget.ImageDefaultView
         android:id="@+id/img_meizi"
         android:layout_width="match_parent"
         android:layout_height="100dp"

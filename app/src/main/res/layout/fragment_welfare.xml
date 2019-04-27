@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.gank.gankly.widget.MultipleStatusView
+    <com.left.gank.widget.MultipleStatusView
         android:id="@+id/multiple_status_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -20,5 +20,5 @@
                 android:layout_height="match_parent"
                 android:scrollbars="vertical" />
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-    </com.gank.gankly.widget.MultipleStatusView>
+    </com.left.gank.widget.MultipleStatusView>
 </androidx.constraintlayout.widget.ConstraintLayout>
