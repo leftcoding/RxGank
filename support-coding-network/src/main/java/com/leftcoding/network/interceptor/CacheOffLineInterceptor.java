@@ -11,6 +11,8 @@ import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
 
+import static com.leftcoding.network.http.HttpConstants.CACHE_CONTROL;
+
 /**
  * 无网络，使用缓存数据
  * 没有网络，拦截器不会执行到 networkInterceptor。
@@ -28,7 +30,10 @@ public class CacheOffLineInterceptor implements Interceptor {
     @Override
     public Response intercept(Chain chain) throws IOException {
         Request request = chain.request();
-        if (!NetWorkUtil.isNetworkAvailable(context)) {
+        final boolean isNetworkAvailable = NetWorkUtil.isNetworkAvailable(context);
+        final String cacheControl = request.header(CACHE_CONTROL);
+        final boolean isNoCache = cacheControl != null && cacheControl.contains("no-cache");
+        if (!isNetworkAvailable || !isNoCache) {
             request = request.newBuilder()
                     .removeHeader(HttpConstants.PRAGMA)
                     .header(HttpConstants.CACHE_CONTROL, "public, max-stale=2147483647, only-if-cached")

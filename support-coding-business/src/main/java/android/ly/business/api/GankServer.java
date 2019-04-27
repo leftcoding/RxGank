@@ -25,10 +25,9 @@ public class GankServer extends Server {
         super(context);
     }
 
-    @Override
-    public GankServer create() {
+    public GankServer api() {
         if (api == null) {
-            api = retrofit().create(Api.class);
+            api = create(Api.class);
         }
         return this;
     }

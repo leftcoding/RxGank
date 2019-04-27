@@ -1,7 +1,6 @@
 package com.left.gank.ui.android;
 
 import android.content.Context;
-import android.lectcoding.ui.logcat.Logcat;
 import android.ly.business.api.GankServer;
 import android.ly.business.domain.Gank;
 import android.ly.business.domain.PageEntity;
@@ -28,7 +27,7 @@ class AndroidPresenter extends Presenter {
         }
 
         GankServer.with(context)
-                .create()
+                .api()
                 .androids(false, page, INIT_LIMIT)
                 .doOnSubscribe(disposable -> {
                     if (isViewLife()) {
@@ -55,7 +54,6 @@ class AndroidPresenter extends Presenter {
                     @Override
                     protected void onFailure(Throwable e, String msg) {
                         e.printStackTrace();
-                        Logcat.e(e);
                         if (isViewLife()) {
                             view.refreshFailure(msg);
                         }
