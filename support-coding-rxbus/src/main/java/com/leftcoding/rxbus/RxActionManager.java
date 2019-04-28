@@ -9,7 +9,7 @@ import io.reactivex.disposables.Disposable;
 public interface RxActionManager {
     void add(String tag, Disposable disposable);
 
-    void clear(String tag);
+    void clean(String tag);
 
     void clearAll();
 }

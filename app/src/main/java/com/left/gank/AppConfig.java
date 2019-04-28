@@ -43,6 +43,7 @@ public class AppConfig extends Application {
                 .baseUrl(HttpUrlConfig.GANK_URL)
                 .cache(new Cache(appDir, 10 * 1024 * 1024))
                 .addInterceptor(new CacheOffLineInterceptor(this))
+//                .addInterceptor(new GatewayTimeOutInterceptor())
                 .addNetworkInterceptor(new CacheNetworkInterceptor())
                 .addNetworkInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY));
 

@@ -230,7 +230,7 @@ public class BaiSiImageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             Glide.get(mContext).clearMemory();
         } else if (holder instanceof BaiSiNormalImageHolder) {
 //            BaiSiNormalImageHolder baiSiGifHolder = (BaiSiNormalImageHolder) holder;
-//            Glide.clear(baiSiGifHolder.mPicture);
+//            Glide.clean(baiSiGifHolder.mPicture);
             Glide.get(mContext).clearMemory();
         }
         super.onViewRecycled(holder);

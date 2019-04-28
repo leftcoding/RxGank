@@ -4,11 +4,9 @@ import android.content.Context;
 import android.ly.business.api.GankServer;
 import android.ly.business.domain.Gank;
 import android.ly.business.domain.PageEntity;
-
 import android.ly.business.observer.ResponseObserver;
 
 import com.left.gank.ui.android.AndroidContract.Presenter;
-import com.leftcoding.rxbus.RxApiManager;
 
 /**
  * Create by LingYan on 2016-10-25
@@ -22,7 +20,7 @@ class AndroidPresenter extends Presenter {
     }
 
     @Override
-    public void loadAndroid(int page) {
+    public void loadAndroid(final boolean refresh, final boolean useProgress, int page) {
         if (isDestroy()) {
             return;
         }
@@ -31,14 +29,10 @@ class AndroidPresenter extends Presenter {
                 .api()
                 .androids(false, page, INIT_LIMIT)
                 .doOnSubscribe(disposable -> {
-                    if (isViewLife()) {
-                        view.showProgress();
-                    }
+                    showProgress(useProgress);
                 })
                 .doFinally(() -> {
-                    if (isViewLife()) {
-                        view.hideProgress();
-                    }
+                    hideProgress();
                 })
                 .subscribe(new ResponseObserver<PageEntity<Gank>>(requestTag) {
                     @Override
@@ -53,10 +47,10 @@ class AndroidPresenter extends Presenter {
                     }
 
                     @Override
-                    protected void onFailure(Throwable e, String msg) {
+                    protected void onFailure(Throwable e) {
                         e.printStackTrace();
                         if (isViewLife()) {
-                            view.refreshFailure(msg);
+                            view.refreshFailure(e.toString());
                         }
                     }
                 });
@@ -64,6 +58,6 @@ class AndroidPresenter extends Presenter {
 
     @Override
     protected void onDestroy() {
-        RxApiManager.get().clear(requestTag);
+        GankServer.with(context).clean(requestTag);
     }
 }

@@ -7,6 +7,10 @@ import android.ly.business.domain.PageConfig;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+
 import com.google.android.material.snackbar.Snackbar;
 import com.left.gank.R;
 import com.left.gank.config.Constants;
@@ -20,9 +24,6 @@ import com.left.gank.widget.MultipleStatusView;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import butterknife.BindView;
 
 /**
@@ -109,7 +110,7 @@ public class AndroidFragment extends LazyFragment implements AndroidContract.Vie
     };
 
     private void loadAndroid(int page) {
-        androidPresenter.loadAndroid(page);
+        androidPresenter.loadAndroid(false, true, page);
     }
 
     @Override

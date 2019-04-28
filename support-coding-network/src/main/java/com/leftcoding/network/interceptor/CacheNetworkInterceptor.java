@@ -10,6 +10,7 @@ import okhttp3.Response;
 import static com.leftcoding.network.http.HttpConstants.CACHE_CONTROL;
 
 /**
+ * 进行网络缓存，默认缓存10s
  * Create by LingYan on 2019-04-26
  */
 public class CacheNetworkInterceptor implements Interceptor {

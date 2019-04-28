@@ -45,7 +45,7 @@ public class RxApiManager implements RxActionManager {
     }
 
     @Override
-    public void clear(String tag) {
+    public void clean(String tag) {
         if (isContainsKey(tag)) {
             CompositeDisposable disposable = maps.remove(tag);
             if (disposable != null && !disposable.isDisposed()) {

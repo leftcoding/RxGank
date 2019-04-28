@@ -5,6 +5,7 @@ import android.ly.business.domain.Gank;
 import android.ly.business.domain.PageEntity;
 
 import com.leftcoding.network.Server;
+import com.leftcoding.rxbus.RxApiManager;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -27,7 +28,7 @@ public class GankServer extends Server {
 
     @Override
     public void clean(String tag) {
-
+        RxApiManager.get().clean(tag);
     }
 
     public GankServer api() {

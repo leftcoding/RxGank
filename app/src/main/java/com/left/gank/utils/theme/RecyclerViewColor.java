@@ -152,7 +152,7 @@ public class RecyclerViewColor {
         try {
             Field declaredField = recyclerViewClass.getDeclaredField("mRecycler");
             declaredField.setAccessible(true);
-            Method declaredMethod = Class.forName(RecyclerView.Recycler.class.getName()).getDeclaredMethod("clear");
+            Method declaredMethod = Class.forName(RecyclerView.Recycler.class.getName()).getDeclaredMethod("clean");
             declaredMethod.setAccessible(true);
             declaredMethod.invoke(declaredField.get(recyclerView));
             RecyclerView.RecycledViewPool recycledViewPool = recyclerView.getRecycledViewPool();

@@ -81,7 +81,7 @@ public class IosPresenter extends IosContract.Presenter {
     @Override
     public void destroy() {
         if (destroyFlag.compareAndSet(false, true)) {
-            RxApiManager.get().clear(requestTag);
+            RxApiManager.get().clean(requestTag);
         }
         super.destroy();
     }

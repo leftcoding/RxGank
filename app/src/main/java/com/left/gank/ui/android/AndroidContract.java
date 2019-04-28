@@ -2,6 +2,7 @@ package com.left.gank.ui.android;
 
 import android.content.Context;
 import android.ly.business.domain.Gank;
+
 import androidx.annotation.NonNull;
 
 import com.left.gank.mvp.base.LoadMorePresenter;
@@ -21,6 +22,6 @@ public interface AndroidContract {
             super(context, view);
         }
 
-        public abstract void loadAndroid(int page);
+        public abstract void loadAndroid(boolean refresh, boolean useProgress, int page);
     }
 }

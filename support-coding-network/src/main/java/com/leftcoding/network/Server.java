@@ -37,7 +37,5 @@ public abstract class Server extends BaseServer {
         return refresh ? CacheControl.FORCE_NETWORK : null;
     }
 
-    public void clean(String tag) {
-
-    }
+    public abstract void clean(String tag);
 }

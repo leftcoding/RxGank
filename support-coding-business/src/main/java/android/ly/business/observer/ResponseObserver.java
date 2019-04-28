@@ -16,16 +16,16 @@ public abstract class ResponseObserver<T extends BaseEntity> extends ManagerObse
 
     protected abstract void onSuccess(T t);
 
-    protected abstract void onFailure(Throwable e, String msg);
+    protected abstract void onFailure(Throwable e);
 
     @Override
     public void onNext(Response<T> t) {
         if (t == null) {
-            onFailure(new Throwable("response is null"), "请求数据失败");
+            onFailure(new Throwable("response is null"));
             return;
         }
         if (!t.isSuccessful()) {
-            onFailure(new Throwable("request code is:" + t.code()), "请求数据失败");
+            onFailure(new Throwable("request code is:" + t.code()));
             return;
         }
         onSuccess(t.body());
@@ -34,7 +34,7 @@ public abstract class ResponseObserver<T extends BaseEntity> extends ManagerObse
     @Override
     public void onError(Throwable e) {
         super.onError(e);
-        onFailure(e, "");
+        onFailure(e);
     }
 
     @Override

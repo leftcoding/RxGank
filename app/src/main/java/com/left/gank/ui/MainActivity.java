@@ -2,11 +2,12 @@ package com.left.gank.ui;
 
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.TypedValue;
+import android.view.KeyEvent;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import android.util.TypedValue;
-import android.view.KeyEvent;
 
 import com.left.gank.R;
 import com.left.gank.rxjava.RxBus_;
@@ -16,8 +17,6 @@ import com.left.gank.ui.discovered.DiscoveredFragment;
 import com.left.gank.ui.girls.GirlsFragment;
 import com.left.gank.ui.main.IndexFragment;
 import com.left.gank.ui.mine.MineFragment;
-import com.left.gank.utils.AppUtils;
-import com.left.gank.utils.ToastUtils;
 import com.left.gank.utils.permission.PermissionUtils;
 import com.roughike.bottombar.BottomBar;
 
@@ -140,19 +139,19 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if (mIndex != 0) {
-                mBottomBar.selectTabAtPosition(0);
-                return false;
-            } else if ((System.currentTimeMillis() - mKeyDownTime) > 2000) {
-                mKeyDownTime = System.currentTimeMillis();
-                ToastUtils.shortBottom(getBaseContext(), R.string.app_again_out);
-                return false;
-            } else {
-                finish();
-                AppUtils.killProcess();
-            }
-        }
+//        if (keyCode == KeyEvent.KEYCODE_BACK) {
+//            if (mIndex != 0) {
+//                mBottomBar.selectTabAtPosition(0);
+//                return false;
+//            } else if ((System.currentTimeMillis() - mKeyDownTime) > 2000) {
+//                mKeyDownTime = System.currentTimeMillis();
+//                ToastUtils.shortBottom(getBaseContext(), R.string.app_again_out);
+//                return false;
+//            } else {
+//                finish();
+//                AppUtils.killProcess();
+//            }
+//        }
         return super.onKeyDown(keyCode, event);
     }
 

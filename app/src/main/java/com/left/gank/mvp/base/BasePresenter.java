@@ -37,7 +37,7 @@ public abstract class BasePresenter<E extends BaseView> extends BaseContract.Pre
     }
 
     protected void showProgress(boolean useProgress) {
-        if (useProgress && view != null) {
+        if (useProgress && isViewLife()) {
             view.showProgress();
         }
     }

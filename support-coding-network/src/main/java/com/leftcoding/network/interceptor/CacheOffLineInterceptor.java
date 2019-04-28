@@ -39,6 +39,17 @@ public class CacheOffLineInterceptor implements Interceptor {
                     .header(HttpConstants.CACHE_CONTROL, "public, max-stale=2147483647, only-if-cached")
                     .build();
         }
-        return chain.proceed(request);
+        // 防止第一使用缓存，缓存不存在，出现504情况
+        Response response = chain.proceed(request);
+        if (response != null) {
+            String msg = response.message();
+            if (response.code() == 504 && msg.contains("only-if-cached")) {
+                return chain.proceed(request.newBuilder()
+                        .removeHeader(HttpConstants.PRAGMA)
+                        .removeHeader(CACHE_CONTROL)
+                        .build());
+            }
+        }
+        return response;
     }
 }

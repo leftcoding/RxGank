@@ -181,7 +181,7 @@ class CurePresenter extends CureContract.Presenter {
     @Override
     public void destroy() {
         if (destroyFlag.compareAndSet(false, true)) {
-            RxApiManager.get().clear(requestTag);
+            RxApiManager.get().clean(requestTag);
         }
         super.destroy();
     }
