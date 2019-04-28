@@ -11,7 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.google.android.material.snackbar.Snackbar;
 import com.left.gank.R;
 import com.left.gank.config.Constants;
 import com.left.gank.ui.MainActivity;
@@ -22,7 +21,6 @@ import com.left.gank.widget.LySwipeRefreshLayout;
 import com.left.gank.widget.MultipleStatusView;
 
 import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import butterknife.BindView;
 
@@ -40,7 +38,6 @@ public class AndroidFragment extends LazyFragment implements AndroidContract.Vie
     private AndroidAdapter androidAdapter;
     private AndroidContract.Presenter androidPresenter;
 
-    private AtomicBoolean isFirst = new AtomicBoolean(true);
     private PageConfig pageConfig = new PageConfig();
 
     @Override
@@ -114,48 +111,10 @@ public class AndroidFragment extends LazyFragment implements AndroidContract.Vie
     }
 
     @Override
-    public void refreshSuccess(List<Gank> list) {
-        showContent();
-
-        if (isFirst.compareAndSet(true, false)) {
-            if (list == null || list.isEmpty()) {
-                showEmpty();
-                return;
-            }
-        }
-
-        if (androidAdapter != null) {
-            androidAdapter.fillItems(list);
-            androidAdapter.notifyDataSetChanged();
-        }
-    }
-
-    @Override
-    public void refreshFailure(String msg) {
-        shortToast(msg);
-        showError();
-    }
-
-    @Override
-    public void appendSuccess(List<Gank> list) {
-        if (androidAdapter != null) {
-            androidAdapter.appendItems(list);
-            androidAdapter.notifyDataSetChanged();
-        }
-    }
-
-    @Override
-    public void appendFailure(String msg) {
-        shortToast(msg);
-    }
-
-    @Override
     public void showProgress() {
-        if (isFirst.get()) {
-            if (swipeRefreshLayout != null && !swipeRefreshLayout.isRefreshing()) {
-                showLoading();
-                return;
-            }
+        if (swipeRefreshLayout != null && !swipeRefreshLayout.isRefreshing()) {
+            showLoading();
+            return;
         }
 
         if (swipeRefreshLayout != null) {
@@ -171,11 +130,6 @@ public class AndroidFragment extends LazyFragment implements AndroidContract.Vie
     }
 
     @Override
-    public void hasNoMoreDate() {
-        Snackbar.make(swipeRefreshLayout, R.string.loading_all_over, Snackbar.LENGTH_SHORT).show();
-    }
-
-    @Override
     public void showContent() {
         if (multipleStatusView != null) {
             multipleStatusView.showContent();
@@ -186,20 +140,6 @@ public class AndroidFragment extends LazyFragment implements AndroidContract.Vie
     public void showEmpty() {
         if (multipleStatusView != null) {
             multipleStatusView.showEmpty();
-        }
-    }
-
-    @Override
-    public void showDisNetWork() {
-        if (multipleStatusView != null) {
-            multipleStatusView.showDisNetwork();
-        }
-    }
-
-    @Override
-    public void showError() {
-        if (multipleStatusView != null) {
-            multipleStatusView.showError();
         }
     }
 
@@ -229,7 +169,22 @@ public class AndroidFragment extends LazyFragment implements AndroidContract.Vie
     }
 
     @Override
-    public void shortToast(String string) {
+    public void loadAndroidSuccess(int page, List<Gank> list) {
+        showContent();
 
+        if (list == null || list.isEmpty()) {
+            showEmpty();
+            return;
+        }
+
+        if (androidAdapter != null) {
+            androidAdapter.fillItems(list);
+            androidAdapter.notifyDataSetChanged();
+        }
+    }
+
+    @Override
+    public void loadAndroidFailure(int page, String msg) {
+        shortToast(msg);
     }
 }

@@ -4,11 +4,12 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.ly.business.domain.Gift;
 import android.os.Bundle;
+import android.view.View;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
-import android.view.View;
 
 import com.left.gank.R;
 import com.left.gank.ui.base.LazyFragment;
@@ -142,11 +143,6 @@ public class PureFragment extends LazyFragment implements PureContract.View {
     }
 
     @Override
-    public void hasNoMoreDate() {
-
-    }
-
-    @Override
     public void showContent() {
         multipleStatusView.showContent();
     }
@@ -154,16 +150,6 @@ public class PureFragment extends LazyFragment implements PureContract.View {
     @Override
     public void showEmpty() {
         multipleStatusView.showEmpty();
-    }
-
-    @Override
-    public void showDisNetWork() {
-        multipleStatusView.showDisNetwork();
-    }
-
-    @Override
-    public void showError() {
-        multipleStatusView.showError();
     }
 
     private void showLoading() {

@@ -7,13 +7,4 @@ import android.lectcoding.ui.base.BaseView;
  */
 
 public interface SupportView extends BaseView {
-    void hasNoMoreDate();
-
-    void showContent();
-
-    void showEmpty();
-
-    void showDisNetWork();
-
-    void showError();
 }

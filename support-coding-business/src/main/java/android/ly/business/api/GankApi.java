@@ -34,6 +34,7 @@ public interface GankApi {
      */
     @GET("iOS/{limit}/{page}")
     Observable<Response<PageEntity<Gank>>> ios(
+            @Header(CACHE_CONTROL) CacheControl cacheControl,
             @Path("page") int page,
             @Path("limit") int limit
     );

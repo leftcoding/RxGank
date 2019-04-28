@@ -17,7 +17,7 @@ public abstract class BasePresenter<E extends BaseView> extends BaseContract.Pre
     protected Context context;
     protected String requestTag = UUID.randomUUID().toString();
     private AtomicBoolean isDestroy = new AtomicBoolean(false);
-    private String errorTip;
+    protected String errorTip;
 
     public BasePresenter(Context context, E view) {
         this.view = view;

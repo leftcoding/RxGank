@@ -4,9 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.view.KeyEvent;
@@ -17,6 +14,10 @@ import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.Toolbar;
 
 import com.left.gank.R;
 import com.left.gank.config.Constants;
@@ -78,11 +79,6 @@ public class WebActivity extends BaseActivity implements WebContract.View {
     private MenuItem mMenuItem;
 
     private ValueCallback<Uri> uploadFile;
-
-    @Override
-    public void shortToast(String string) {
-
-    }
 
     @Override
     public void showProgress() {

@@ -2,13 +2,15 @@ package android.lectcoding.ui.base;
 
 import android.content.Context;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 /**
  * Create by LingYan on 2016-04-05
@@ -41,9 +43,10 @@ public abstract class BaseFragment extends Fragment implements BaseView {
         super.onDestroyView();
     }
 
-    @Override
     public void shortToast(String msg) {
-        Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
+        if (!TextUtils.isEmpty(msg)) {
+            Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override

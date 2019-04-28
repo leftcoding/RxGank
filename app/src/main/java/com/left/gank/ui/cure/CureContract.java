@@ -5,7 +5,6 @@ import android.ly.business.domain.Gift;
 import androidx.annotation.NonNull;
 
 import com.left.gank.mvp.base.LoadMorePresenter;
-import com.left.gank.mvp.base.PageView;
 
 import java.util.ArrayList;
 
@@ -14,7 +13,7 @@ import java.util.ArrayList;
  */
 
 public interface CureContract {
-    interface View extends PageView<Gift> {
+    interface View extends com.left.gank.mvp.base.SupportView {
         void setMaxProgress(int value);
 
         void disProgressDialog();

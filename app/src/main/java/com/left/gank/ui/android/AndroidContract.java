@@ -5,18 +5,23 @@ import android.ly.business.domain.Gank;
 
 import androidx.annotation.NonNull;
 
-import com.left.gank.mvp.base.LoadMorePresenter;
-import com.left.gank.mvp.base.PageView;
+import com.left.gank.mvp.base.ObserverPresenter;
+import com.left.gank.mvp.base.SupportView;
+
+import java.util.List;
 
 /**
  * Create by LingYan on 2016-10-25
  */
 
 public interface AndroidContract {
-    interface View extends PageView<Gank> {
+    interface View extends SupportView {
+        void loadAndroidSuccess(int page, List<Gank> list);
+
+        void loadAndroidFailure(int page, String msg);
     }
 
-    abstract class Presenter extends LoadMorePresenter<View> {
+    abstract class Presenter extends ObserverPresenter<View> {
 
         public Presenter(@NonNull Context context, @NonNull View view) {
             super(context, view);

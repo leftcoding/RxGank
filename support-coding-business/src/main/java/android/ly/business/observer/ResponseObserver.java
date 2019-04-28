@@ -8,13 +8,12 @@ import retrofit2.Response;
  * Create by LingYan on 2017-11-19
  */
 
-public abstract class ResponseObserver<T extends BaseEntity> extends ManagerObserver<Response<T>> {
+public abstract class ResponseObserver<T extends BaseEntity> extends BaseObserver<Response<T>> {
 
-    public ResponseObserver(String requestTag) {
-        super(requestTag);
+    public ResponseObserver() {
     }
 
-    protected abstract void onSuccess(T t);
+    protected abstract void onSuccess(T entity);
 
     protected abstract void onFailure(Throwable e);
 

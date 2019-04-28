@@ -2,12 +2,15 @@ package com.left.gank.ui.ios;
 
 import android.content.Context;
 import android.ly.business.domain.Gank;
+import android.ly.business.domain.PageConfig;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.View;
 
 import com.left.gank.R;
@@ -73,7 +76,6 @@ public class IosFragment extends LazyFragment implements IosContract.View {
     private final OnFlexibleScrollListener.OnRecyclerViewListener onRecyclerViewListener = new OnFlexibleScrollListener.OnRecyclerViewListener() {
         @Override
         public void onLoadMore() {
-            loadMoreIos();
         }
     };
 
@@ -92,13 +94,6 @@ public class IosFragment extends LazyFragment implements IosContract.View {
         bundle.putString(WebActivity.TYPE, Constants.IOS);
         WebActivity.startWebActivity(getContext(), bundle);
     };
-
-    @Override
-    public void showError() {
-        if (multipleStatusView != null) {
-            multipleStatusView.showError();
-        }
-    }
 
     @Override
     public void showEmpty() {
@@ -122,21 +117,9 @@ public class IosFragment extends LazyFragment implements IosContract.View {
     }
 
     @Override
-    public void hasNoMoreDate() {
-        shortToast(getString(R.string.loading_all_over));
-    }
-
-    @Override
     public void showContent() {
         if (multipleStatusView != null) {
             multipleStatusView.showContent();
-        }
-    }
-
-    @Override
-    public void showDisNetWork() {
-        if (multipleStatusView != null) {
-            multipleStatusView.showDisNetwork();
         }
     }
 
@@ -149,13 +132,7 @@ public class IosFragment extends LazyFragment implements IosContract.View {
 
     private void refreshIos() {
         if (iosPresenter != null) {
-            iosPresenter.refreshIos();
-        }
-    }
-
-    private void loadMoreIos() {
-        if (iosPresenter != null) {
-            iosPresenter.appendIos();
+            iosPresenter.loadIos(false, true, PageConfig.starPage());
         }
     }
 
@@ -171,7 +148,7 @@ public class IosFragment extends LazyFragment implements IosContract.View {
     }
 
     @Override
-    public void refreshSuccess(List<Gank> list) {
+    public void loadIosSuccess(List<Gank> list) {
         showContent();
 
         if (list == null || list.isEmpty()) {
@@ -187,20 +164,7 @@ public class IosFragment extends LazyFragment implements IosContract.View {
     }
 
     @Override
-    public void refreshFailure(String msg) {
-        shortToast(msg);
-    }
+    public void loadIosFailure(String msg) {
 
-    @Override
-    public void appendSuccess(List<Gank> list) {
-        if (iosAdapter != null) {
-            iosAdapter.setItems(list);
-            iosAdapter.update();
-        }
-    }
-
-    @Override
-    public void appendFailure(String msg) {
-        shortToast(msg);
     }
 }

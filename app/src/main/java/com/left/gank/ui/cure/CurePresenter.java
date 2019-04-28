@@ -62,7 +62,7 @@ class CurePresenter extends CureContract.Presenter {
                     getDetailMaxPage(document);
                     getImagesList(document);
                 }, Logcat::e);
-        RxApiManager.get().add(requestTag, disposable);
+        RxApiManager.get().addDisposable(requestTag, disposable);
     }
 
     private void fetchData(String url) {
@@ -94,7 +94,7 @@ class CurePresenter extends CureContract.Presenter {
                         }
                     }
                 }, Logcat::e);
-        RxApiManager.get().add(requestTag, disposable);
+        RxApiManager.get().addDisposable(requestTag, disposable);
     }
 
     /**
@@ -181,7 +181,7 @@ class CurePresenter extends CureContract.Presenter {
     @Override
     public void destroy() {
         if (destroyFlag.compareAndSet(false, true)) {
-            RxApiManager.get().clean(requestTag);
+            RxApiManager.get().cleanDisposable(requestTag);
         }
         super.destroy();
     }

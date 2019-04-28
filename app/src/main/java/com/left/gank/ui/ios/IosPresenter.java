@@ -3,16 +3,10 @@ package com.left.gank.ui.ios;
 import android.content.Context;
 import android.ly.business.api.GankServer;
 import android.ly.business.domain.Gank;
-import android.ly.business.domain.PageConfig;
 import android.ly.business.domain.PageEntity;
-
-import com.leftcoding.rxbus.RxApiManager;
-
-import java.util.concurrent.atomic.AtomicBoolean;
+import android.ly.business.observer.ManagerObserver;
 
 import androidx.annotation.NonNull;
-import io.reactivex.Observer;
-import io.reactivex.disposables.Disposable;
 
 
 /**
@@ -20,74 +14,50 @@ import io.reactivex.disposables.Disposable;
  */
 
 public class IosPresenter extends IosContract.Presenter {
-    private PageConfig pageConfig;
-    private final AtomicBoolean destroyFlag = new AtomicBoolean(false);
+    // 请求个数
+    private static final int INIT_LIMIT = 20;
 
     public IosPresenter(@NonNull Context context, IosContract.View view) {
         super(context, view);
-        pageConfig = new PageConfig();
     }
 
     @Override
-    void refreshIos() {
-        fetchData();
-    }
-
-    @Override
-    void appendIos() {
-        fetchData();
-    }
-
-    private void fetchData() {
-        if (destroyFlag.get()) {
+    void loadIos(boolean refresh, boolean useProgress, int page) {
+        if (isDestroy()) {
             return;
         }
         GankServer.with(context)
                 .api()
-                .ios(pageConfig.getCurPage(), pageConfig.limit)
+                .ios(refresh, page, INIT_LIMIT)
                 .doOnSubscribe(disposable -> {
-                    if (isViewLife()) {
-                        view.showProgress();
-                    }
+                    showProgress(useProgress);
                 })
                 .doFinally(() -> {
-                    if (isViewLife()) {
-                        view.hideProgress();
-                    }
+                    hideProgress();
                 })
-                .subscribe(new Observer<PageEntity<Gank>>() {
+                .subscribe(new ManagerObserver<PageEntity<Gank>>(requestTag, obtainObserver()) {
                     @Override
-                    public void onSubscribe(Disposable d) {
-
+                    protected void onSuccess(PageEntity<Gank> entity) {
+                        if (isViewLife()) {
+                            if (entity != null) {
+                                view.loadIosSuccess(entity.results);
+                                return;
+                            }
+                            view.loadIosFailure(errorTip);
+                        }
                     }
 
                     @Override
-                    public void onNext(PageEntity<Gank> gankPageEntity) {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onComplete() {
-
+                    protected void onFailure(Throwable e) {
+                        if (isViewLife()) {
+                            view.loadIosFailure(errorTip);
+                        }
                     }
                 });
     }
 
     @Override
-    public void destroy() {
-        if (destroyFlag.compareAndSet(false, true)) {
-            RxApiManager.get().clean(requestTag);
-        }
-        super.destroy();
-    }
-
-    @Override
     protected void onDestroy() {
-
+        cleanDisposable(requestTag);
     }
 }

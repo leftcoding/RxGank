@@ -12,7 +12,7 @@ import io.reactivex.disposables.Disposable;
  * Create by LingYan on 2018-03-20
  */
 
-public class RxApiManager implements RxActionManager {
+public class RxApiManager implements ObserverListener {
     private static RxApiManager sInstance = null;
     private final ArrayMap<String, CompositeDisposable> maps;
 
@@ -32,7 +32,7 @@ public class RxApiManager implements RxActionManager {
     }
 
     @Override
-    public void add(String tag, Disposable disposable) {
+    public void addDisposable(String tag, Disposable disposable) {
         CompositeDisposable compositeDisposable = null;
         if (isContainsKey(tag)) {
             compositeDisposable = maps.get(tag);
@@ -45,7 +45,7 @@ public class RxApiManager implements RxActionManager {
     }
 
     @Override
-    public void clean(String tag) {
+    public void cleanDisposable(String tag) {
         if (isContainsKey(tag)) {
             CompositeDisposable disposable = maps.remove(tag);
             if (disposable != null && !disposable.isDisposed()) {

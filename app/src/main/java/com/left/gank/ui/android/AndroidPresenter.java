@@ -4,7 +4,7 @@ import android.content.Context;
 import android.ly.business.api.GankServer;
 import android.ly.business.domain.Gank;
 import android.ly.business.domain.PageEntity;
-import android.ly.business.observer.ResponseObserver;
+import android.ly.business.observer.ManagerObserver;
 
 import com.left.gank.ui.android.AndroidContract.Presenter;
 
@@ -28,21 +28,17 @@ class AndroidPresenter extends Presenter {
         GankServer.with(context)
                 .api()
                 .androids(false, page, INIT_LIMIT)
-                .doOnSubscribe(disposable -> {
-                    showProgress(useProgress);
-                })
-                .doFinally(() -> {
-                    hideProgress();
-                })
-                .subscribe(new ResponseObserver<PageEntity<Gank>>(requestTag) {
+                .doOnSubscribe(disposable -> showProgress(useProgress))
+                .doFinally(this::hideProgress)
+                .subscribe(new ManagerObserver<PageEntity<Gank>>(requestTag, obtainObserver()) {
                     @Override
                     protected void onSuccess(PageEntity<Gank> entity) {
                         if (isViewLife()) {
                             if (entity != null) {
-                                view.refreshSuccess(entity.results);
+                                view.loadAndroidSuccess(entity.results);
                                 return;
                             }
-                            view.refreshFailure("");
+                            view.loadAndroidFailure(errorTip);
                         }
                     }
 
@@ -50,7 +46,7 @@ class AndroidPresenter extends Presenter {
                     protected void onFailure(Throwable e) {
                         e.printStackTrace();
                         if (isViewLife()) {
-                            view.refreshFailure(e.toString());
+                            view.loadAndroidFailure(errorTip);
                         }
                     }
                 });
@@ -58,6 +54,6 @@ class AndroidPresenter extends Presenter {
 
     @Override
     protected void onDestroy() {
-        GankServer.with(context).clean(requestTag);
+        cleanDisposable(requestTag);
     }
 }

@@ -5,8 +5,6 @@ package android.lectcoding.ui.base;
  */
 
 public interface BaseView extends BaseContract.View {
-    public void shortToast(String msg);
-
     public void showProgress();
 
     public void hideProgress();
