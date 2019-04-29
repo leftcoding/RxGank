@@ -26,7 +26,11 @@ public class TextViewModel extends ItemModel {
 
     @Override
     public boolean areItemsTheSame(ItemComparator itemComparator) {
-        return itemComparator instanceof TextViewModel;
+        if (itemComparator instanceof TextViewModel) {
+            TextViewModel oldItem = (TextViewModel) itemComparator;
+            return getViewType() == oldItem.getViewType();
+        }
+        return false;
     }
 
     @Override

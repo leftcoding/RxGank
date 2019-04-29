@@ -2,10 +2,10 @@ package com.left.gank.ui.ios;
 
 import android.content.Context;
 import android.ly.business.domain.Gank;
-import androidx.annotation.NonNull;
 import android.view.ViewGroup;
 
-import com.bumptech.glide.Glide;
+import androidx.annotation.NonNull;
+
 import com.left.gank.butterknife.holder.BindHolder;
 import com.left.gank.butterknife.item.ItemModel;
 import com.left.gank.ui.base.DiffAdapter;
@@ -19,38 +19,31 @@ import java.util.List;
  */
 class IosAdapter extends DiffAdapter<BindHolder> {
     private List<ItemModel> itemModels = new ArrayList<>();
-    private List<Gank> curGank;
+    private List<ItemModel> newModels = new ArrayList<>();
+    private List<Gank> ganks;
 
     private Context context;
     private ItemCallback itemCallBack;
 
     IosAdapter(Context context) {
-        super(context);
         this.context = context;
     }
 
+    @NonNull
     @Override
     public BindHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        BindHolder defaultHolder;
+        BindHolder bindHolder = null;
         switch (viewType) {
             case ViewType.NORMAL:
-                defaultHolder = new NormalHolder(parent, itemCallBack);
-                break;
-            default:
-                defaultHolder = null;
+                bindHolder = new NormalHolder(parent, itemCallBack);
                 break;
         }
-        return defaultHolder;
+        return bindHolder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull BindHolder holder, int position) {
-        final ItemModel viewItem = itemModels.get(position);
-        switch (viewItem.getViewType()) {
-            case ViewType.NORMAL:
-                ((NormalHolder) holder).bindHolder((TextViewModel) viewItem);
-                break;
-        }
+        holder.bindHolder(itemModels.get(position));
     }
 
     @Override
@@ -59,42 +52,34 @@ class IosAdapter extends DiffAdapter<BindHolder> {
     }
 
     @Override
-    public void onViewRecycled(@NonNull BindHolder holder) {
-        super.onViewRecycled(holder);
-        Glide.get(context).clearMemory();
-    }
-
-    @Override
     public int getItemCount() {
         return itemModels.size();
     }
 
     void setItems(@NonNull List<Gank> list) {
-        curGank = list;
+        ganks = list;
     }
 
-    void clearItems() {
+    public void clear() {
         itemModels.clear();
-        curGank = null;
     }
 
     /**
      * 在主线程进行列表差异结果比较，不适合大型数据量
      */
     public void update() {
-        final List<ItemModel> newModels = new ArrayList<>(itemModels);
-        if (!ListUtils.isEmpty(curGank)) {
-            for (Gank gank : curGank) {
-                newModels.add(new TextViewModel(gank));
+        final List<ItemModel> models = new ArrayList<>(itemModels);
+        if (!ListUtils.isEmpty(ganks)) {
+            for (Gank gank : ganks) {
+                models.add(new TextViewModel(gank));
             }
         }
-
-        updateAdapter(itemModels, newModels);
+        updateAdapter(itemModels, models);
+        itemModels = models;
     }
 
     @Override
     public void destroy() {
-        clearItems();
         itemCallBack = null;
     }
 

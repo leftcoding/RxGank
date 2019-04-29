@@ -16,9 +16,9 @@ import java.util.List;
 
 public interface IosContract {
     interface View extends SupportView {
-        void loadIosSuccess(List<Gank> list);
+        void loadIosSuccess(int page, List<Gank> list);
 
-        void loadIosFailure(String msg);
+        void loadIosFailure(int page, String msg);
     }
 
     abstract class Presenter extends ObserverPresenter<View> {

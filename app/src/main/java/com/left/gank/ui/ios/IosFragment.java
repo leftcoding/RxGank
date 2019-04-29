@@ -39,6 +39,7 @@ public class IosFragment extends LazyFragment implements IosContract.View {
 
     private IosAdapter iosAdapter;
     private IosContract.Presenter iosPresenter;
+    private PageConfig pageConfig = new PageConfig();
 
     @Override
     protected int getLayoutId() {
@@ -63,25 +64,35 @@ public class IosFragment extends LazyFragment implements IosContract.View {
         recyclerView.setAdapter(iosAdapter);
 
         swipeRefreshLayout.setOnRefreshListener(onRefreshListener);
-        multipleStatusView.setListener(v -> refreshIos());
+        multipleStatusView.setListener(multipleClick);
     }
 
     @Override
     public void onLazyActivityCreate() {
         iosPresenter = new IosPresenter(getContext(), this);
-        refreshIos();
+        loadIos(true, PageConfig.starPage());
     }
+
+    private final MultipleStatusView.OnMultipleClick multipleClick = new MultipleStatusView.OnMultipleClick() {
+        @Override
+        public void retry(View v) {
+            loadIos(false, PageConfig.starPage());
+        }
+    };
 
     private final OnFlexibleScrollListener.ScrollListener scrollListener = new OnFlexibleScrollListener.ScrollListener() {
         @Override
         public void onLoadMore() {
+            if (pageConfig != null) {
+                loadIos(false, pageConfig.getNextPage());
+            }
         }
     };
 
     private final SwipeRefreshLayout.OnRefreshListener onRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
         @Override
         public void onRefresh() {
-            refreshIos();
+            loadIos(true, PageConfig.starPage());
         }
     };
 
@@ -122,16 +133,9 @@ public class IosFragment extends LazyFragment implements IosContract.View {
         }
     }
 
-    public static IosFragment newInstance() {
-        IosFragment fragment = new IosFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    private void refreshIos() {
+    private void loadIos(boolean useProgress, int page) {
         if (iosPresenter != null) {
-            iosPresenter.loadIos(false, true, PageConfig.starPage());
+            iosPresenter.loadIos(false, useProgress, page);
         }
     }
 
@@ -147,23 +151,40 @@ public class IosFragment extends LazyFragment implements IosContract.View {
     }
 
     @Override
-    public void loadIosSuccess(List<Gank> list) {
+    public void loadIosSuccess(int page, List<Gank> list) {
         showContent();
 
         if (list == null || list.isEmpty()) {
             showEmpty();
             return;
         }
-
+        if (pageConfig != null) {
+            pageConfig.setCurPage(page);
+        }
         if (iosAdapter != null) {
-            iosAdapter.clearItems();
+            if (PageConfig.isFirstPage(page)) {
+                iosAdapter.clear();
+            }
             iosAdapter.setItems(list);
             iosAdapter.update();
         }
     }
 
     @Override
-    public void loadIosFailure(String msg) {
+    public void loadIosFailure(int page, String msg) {
+        if (!PageConfig.isFirstPage(page)) {
 
+        } else {
+            if (multipleStatusView != null) {
+                multipleStatusView.showError();
+            }
+        }
+    }
+
+    public static IosFragment newInstance() {
+        IosFragment fragment = new IosFragment();
+        Bundle args = new Bundle();
+        fragment.setArguments(args);
+        return fragment;
     }
 }

@@ -40,17 +40,17 @@ public class IosPresenter extends IosContract.Presenter {
                     protected void onSuccess(PageEntity<Gank> entity) {
                         if (isViewLife()) {
                             if (entity != null) {
-                                view.loadIosSuccess(entity.results);
+                                view.loadIosSuccess(page, entity.results);
                                 return;
                             }
-                            view.loadIosFailure(errorTip);
+                            view.loadIosFailure(page, errorTip);
                         }
                     }
 
                     @Override
                     protected void onFailure(Throwable e) {
                         if (isViewLife()) {
-                            view.loadIosFailure(errorTip);
+                            view.loadIosFailure(page, errorTip);
                         }
                     }
                 });

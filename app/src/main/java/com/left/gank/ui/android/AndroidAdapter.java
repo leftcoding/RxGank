@@ -22,7 +22,6 @@ import butterknife.BindView;
 
 public class AndroidAdapter extends FootAdapter<BindHolder, List<Gank>> {
     private List<ItemModel> itemModels = new ArrayList<>();
-    private List<Gank> ganks = new ArrayList<>();
     private Callback callback;
 
     public AndroidAdapter(Context context) {
@@ -48,13 +47,11 @@ public class AndroidAdapter extends FootAdapter<BindHolder, List<Gank>> {
     @Override
     public void fillItems(List<Gank> list) {
         itemModels.clear();
-        ganks.clear();
         appendItems(list);
     }
 
     @Override
     public void appendItems(List<Gank> list) {
-        ganks.addAll(list);
         for (Gank gank : list) {
             if (gank == null) continue;
             itemModels.add(new TextItem(gank));

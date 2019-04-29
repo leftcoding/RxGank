@@ -211,8 +211,10 @@ public class AndroidFragment extends LazyFragment implements AndroidContract.Vie
         shortToast(msg);
         final boolean isFirst = PageConfig.isFirstPage(page);
         if (!isFirst) {
-            androidAdapter.showError();
-            androidAdapter.notifyDataSetChanged();
+            if (androidAdapter != null) {
+                androidAdapter.showError();
+                androidAdapter.notifyDataSetChanged();
+            }
         } else {
             if (multipleStatusView != null) {
                 multipleStatusView.showEmpty();
