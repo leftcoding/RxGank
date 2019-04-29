@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.left.gank.R;
-import com.left.gank.butterknife.ButterKnifeFragment;
 import com.left.gank.utils.ListUtils;
 import com.left.gank.widget.LYRelativeLayoutRipple;
 

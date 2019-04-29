@@ -2,9 +2,9 @@ package com.left.gank.ui.ios;
 
 import android.ly.business.domain.Gank;
 
-import com.left.gank.ui.base.adapter.ItemComparator;
+import com.left.gank.butterknife.diff.ItemComparator;
 
-import com.left.gank.butterknife.ItemModel;
+import com.left.gank.butterknife.item.ItemModel;
 import com.left.gank.utils.DateUtils;
 
 import java.util.Date;
@@ -25,12 +25,12 @@ public class TextViewModel extends ItemModel {
     }
 
     @Override
-    public boolean isItemSame(ItemComparator itemComparator) {
+    public boolean areItemsTheSame(ItemComparator itemComparator) {
         return itemComparator instanceof TextViewModel;
     }
 
     @Override
-    public boolean isContentEqual(ItemComparator itemComparator) {
+    public boolean areContentsTheSame(ItemComparator itemComparator) {
         if (itemComparator instanceof TextViewModel) {
             TextViewModel oldItem = (TextViewModel) itemComparator;
             return gank.isContentEqual(oldItem.gank);

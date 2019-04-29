@@ -38,6 +38,10 @@ public class PageConfig {
         return curPage + 1;
     }
 
+    public void setCurPage(int page) {
+        this.curPage = page;
+    }
+
     public int getCurPage() {
         return curPage;
     }
@@ -48,5 +52,9 @@ public class PageConfig {
 
     public static int starPage() {
         return 1;
+    }
+
+    public static boolean isFirstPage(int page) {
+        return starPage() >= page;
     }
 }

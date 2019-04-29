@@ -2,7 +2,7 @@ package com.left.gank.diff;
 
 import androidx.recyclerview.widget.DiffUtil;
 
-import com.left.gank.ui.base.adapter.ItemComparator;
+import com.left.gank.butterknife.diff.ItemComparator;
 
 import java.util.List;
 
@@ -32,13 +32,13 @@ public class DiffCallback extends DiffUtil.Callback {
     public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
         ItemComparator oldItem = oldList.get(oldItemPosition);
         ItemComparator newItem = newList.get(newItemPosition);
-        return newItem.isItemSame(oldItem);
+        return newItem.areItemsTheSame(oldItem);
     }
 
     @Override
     public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
         ItemComparator oldItem = oldList.get(oldItemPosition);
         ItemComparator newItem = newList.get(newItemPosition);
-        return newItem.isContentEqual(oldItem);
+        return newItem.areContentsTheSame(oldItem);
     }
 }

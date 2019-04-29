@@ -1018,8 +1018,8 @@ public class TouchImageView extends AppCompatImageView {
         }
 
         /**
-         * Interpolate between where the image should start and end in order to translate
-         * the image so that the point that is touched is what ends up centered at the end
+         * Interpolate between where the image should start and END in order to translate
+         * the image so that the point that is touched is what ends up centered at the END
          * of the zoom.
          *
          * @param t

@@ -131,11 +131,6 @@ public class BrowseHistoryFragment extends SupportFragment implements BrowseHist
     }
 
     @Override
-    public void hasNoMoreDate() {
-        Snackbar.make(mCoordinatorLayout, R.string.loading_all_over, Snackbar.LENGTH_LONG).show();
-    }
-
-    @Override
     public void showContent() {
         mMultipleStatusView.showContent();
     }
@@ -143,16 +138,6 @@ public class BrowseHistoryFragment extends SupportFragment implements BrowseHist
     @Override
     public void showEmpty() {
         mMultipleStatusView.showEmpty();
-    }
-
-    @Override
-    public void showDisNetWork() {
-        mMultipleStatusView.showDisNetwork();
-    }
-
-    @Override
-    public void showError() {
-        mMultipleStatusView.showError();
     }
 
     private void showLoading() {

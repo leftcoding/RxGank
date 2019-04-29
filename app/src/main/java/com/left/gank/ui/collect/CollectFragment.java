@@ -192,23 +192,8 @@ public class CollectFragment extends SupportFragment implements CollectContract.
     }
 
     @Override
-    public void hasNoMoreDate() {
-        Snackbar.make(mSwipeRefreshLayout, R.string.tip_no_more_load, Snackbar.LENGTH_SHORT).show();
-    }
-
-    @Override
     public void showEmpty() {
         mMultipleStatusView.showEmpty();
-    }
-
-    @Override
-    public void showDisNetWork() {
-        mMultipleStatusView.showDisNetwork();
-    }
-
-    @Override
-    public void showError() {
-        mMultipleStatusView.showError();
     }
 
     private void showLoading() {

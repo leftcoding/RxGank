@@ -71,7 +71,7 @@ public class ProfilingUtils {
             final long prev = mSplits.get(i - 1);
             KLog.d(mLabel + ":      " + (now - prev) + " ms, " + splitLabel);
         }
-        KLog.d(mLabel + ": end, " + (now - first) + " ms");
+        KLog.d(mLabel + ": END, " + (now - first) + " ms");
     }
 }
 

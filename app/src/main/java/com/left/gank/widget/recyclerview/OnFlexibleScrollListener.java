@@ -6,8 +6,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 public class OnFlexibleScrollListener extends RecyclerView.OnScrollListener {
-
-    private OnRecyclerViewListener onRecyclerViewListener;
+    private int lastPosition = RecyclerView.NO_POSITION;
+    private ScrollListener scrollListener;
 
     public OnFlexibleScrollListener() {
         super();
@@ -24,9 +24,10 @@ public class OnFlexibleScrollListener extends RecyclerView.OnScrollListener {
         if (newState == RecyclerView.SCROLL_STATE_IDLE) {
             RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
             if (layoutManager instanceof LinearLayoutManager) {
-                int count = recyclerView.getAdapter().getItemCount() - 1;
-                LinearLayoutManager linearLayoutManager = (LinearLayoutManager) layoutManager;
-                if (linearLayoutManager.findLastCompletelyVisibleItemPosition() == count) {
+                final LinearLayoutManager linearLayoutManager = (LinearLayoutManager) layoutManager;
+                final int lastVisibleItemPosition = linearLayoutManager.findLastVisibleItemPosition();
+                if (lastPosition != lastVisibleItemPosition && layoutManager.getItemCount() <= lastVisibleItemPosition + 1) {
+                    lastPosition = lastVisibleItemPosition;
                     onLoadMore();
                 }
             }
@@ -51,19 +52,19 @@ public class OnFlexibleScrollListener extends RecyclerView.OnScrollListener {
     }
 
     private void onLoadMore() {
-        if (onRecyclerViewListener != null) {
-            onRecyclerViewListener.onLoadMore();
+        if (scrollListener != null) {
+            scrollListener.onLoadMore();
         }
     }
 
-    public void setOnScrollListener(OnRecyclerViewListener listener) {
-        this.onRecyclerViewListener = listener;
+    public void setOnScrollListener(ScrollListener listener) {
+        this.scrollListener = listener;
     }
 
     /**
      * 加载更多的监听
      */
-    public interface OnRecyclerViewListener {
+    public interface ScrollListener {
         void onLoadMore();
     }
 }

@@ -12,7 +12,7 @@
     <color name="text_666666">#666666</color>
     <color name="text_333333">#333333</color>
     <color name="text_9f9fa6">#9f9fa6</color>
-    <!-- 全局颜色 end-->
+    <!-- 全局颜色 END-->
     <color name="dark_color">#ff00A0DC</color>
 
     <color name="color_2f">#ff2f2f2f</color>
@@ -52,7 +52,7 @@
     <color name="meizi_item_background_light">#fefefe</color>
     <color name="colorControlHighlight_light">#33000000</color>
     <color name="text_blue">#4093c6</color>
-    <!-- light theme color end -->
+    <!-- light theme color END -->
 
     <!-- dark  theme color start -->
     <color name="colorPrimary_dark">#263238</color>
@@ -71,7 +71,7 @@
     <color name="colorControlHighlight_dark">#42ffffff</color>
     <color name="collect_background_dark">@color/colorPrimaryDark_dark</color>
     <color name="meizi_item_background_dark">#37474f</color>
-    <!-- dark  theme color end -->
+    <!-- dark  theme color END -->
 
 
     <!--  jianshu   -->

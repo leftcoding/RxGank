@@ -6,7 +6,6 @@ import androidx.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
 
-import com.left.gank.butterknife.ButterKnifeFragment;
 import com.left.gank.mvp.base.SupportView;
 import com.left.gank.utils.ToastUtils;
 
@@ -36,27 +35,12 @@ public abstract class SupportFragment extends ButterKnifeFragment implements Sup
     }
 
     @Override
-    public void hasNoMoreDate() {
-
-    }
-
-    @Override
     public void showContent() {
 
     }
 
     @Override
     public void showEmpty() {
-
-    }
-
-    @Override
-    public void showDisNetWork() {
-
-    }
-
-    @Override
-    public void showError() {
 
     }
 

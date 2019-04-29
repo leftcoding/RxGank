@@ -7,18 +7,9 @@ import com.left.gank.mvp.base.SupportView;
  */
 
 public abstract class SupportActivity extends BaseActivity implements SupportView {
-    @Override
-    public void hasNoMoreDate() {
-
-    }
 
     @Override
     public void showContent() {
-
-    }
-
-    @Override
-    public void shortToast(String msg) {
 
     }
 
@@ -34,16 +25,6 @@ public abstract class SupportActivity extends BaseActivity implements SupportVie
 
     @Override
     public void showEmpty() {
-
-    }
-
-    @Override
-    public void showDisNetWork() {
-
-    }
-
-    @Override
-    public void showError() {
 
     }
 

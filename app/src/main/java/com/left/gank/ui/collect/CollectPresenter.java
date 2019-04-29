@@ -46,11 +46,9 @@ public class CollectPresenter extends CollectContract.Presenter {
 
             if (size < LIMIT) {
                 isNoMore = true;
-                mModelView.hasNoMoreDate();
             }
         } else {
             if (mPage > 0) {
-                mModelView.hasNoMoreDate();
             } else {
                 mModelView.showEmpty();
             }

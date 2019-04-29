@@ -13,4 +13,8 @@ public class ListUtils {
     public static <E> boolean isEmpty(List<E> list) {
         return list == null || list.isEmpty();
     }
+
+    public static <E> boolean isNotEmpty(List<E> list) {
+        return list != null && !list.isEmpty();
+    }
 }

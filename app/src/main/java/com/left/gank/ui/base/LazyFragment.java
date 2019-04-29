@@ -5,7 +5,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import android.view.View;
 
-import com.left.gank.butterknife.ButterKnifeFragment;
+import com.left.gank.ui.base.fragment.ButterKnifeFragment;
 
 
 /**

@@ -1,14 +1,14 @@
 package com.left.gank.ui.cure;
 
-import android.lectcoding.ui.adapter.BaseAdapter;
+import com.left.gank.butterknife.adapter.BaseAdapter;
 import android.ly.business.domain.Gift;
 import androidx.annotation.IntDef;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.left.gank.R;
-import com.left.gank.butterknife.BindViewHolder;
-import com.left.gank.butterknife.ItemModel;
+import com.left.gank.butterknife.holder.BindHolder;
+import com.left.gank.butterknife.item.ItemModel;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -22,7 +22,7 @@ import static com.left.gank.ui.cure.CureAdapter.ViewType.VIEW_TYPE_CURE;
 /**
  * Create by LingYan on 2016-07-05
  */
-public class CureAdapter extends BaseAdapter<CureAdapter.NormalViewHolder> {
+public class CureAdapter extends BaseAdapter<CureAdapter.NormalHolder> {
     private ItemCallback itemCallback;
     private List<Gift> gifts = new ArrayList<>();
     private final List<CureItem> items = new ArrayList<>();
@@ -32,8 +32,8 @@ public class CureAdapter extends BaseAdapter<CureAdapter.NormalViewHolder> {
     }
 
     @Override
-    public CureAdapter.NormalViewHolder onCreateViewHolder(ViewGroup parent, @ViewType.CureViewType int viewType) {
-        NormalViewHolder viewHolder;
+    public NormalHolder onCreateViewHolder(ViewGroup parent, @ViewType.CureViewType int viewType) {
+        NormalHolder viewHolder;
         switch (viewType) {
             case VIEW_TYPE_CURE:
                 viewHolder = new CureHolder(parent);
@@ -46,7 +46,7 @@ public class CureAdapter extends BaseAdapter<CureAdapter.NormalViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(NormalViewHolder holder, int position) {
+    public void onBindViewHolder(NormalHolder holder, int position) {
         switch (holder.getItemViewType()) {
             case VIEW_TYPE_CURE:
                 ((CureHolder) holder).bindHolder(items.get(position), itemCallback);
@@ -103,7 +103,7 @@ public class CureAdapter extends BaseAdapter<CureAdapter.NormalViewHolder> {
         itemCallback = null;
     }
 
-    static class CureHolder extends NormalViewHolder<CureItem> {
+    static class CureHolder extends NormalHolder<CureItem> {
         @BindView(R.id.title)
         TextView title;
 
@@ -142,9 +142,9 @@ public class CureAdapter extends BaseAdapter<CureAdapter.NormalViewHolder> {
         void onItemClick(String url);
     }
 
-    abstract static class NormalViewHolder<TT extends ItemModel> extends BindViewHolder<TT> {
+    abstract static class NormalHolder<TT extends ItemModel> extends BindHolder<TT> {
 
-        NormalViewHolder(ViewGroup parent, int layoutRes) {
+        NormalHolder(ViewGroup parent, int layoutRes) {
             super(parent, layoutRes);
         }
 

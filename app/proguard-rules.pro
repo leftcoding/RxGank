@@ -439,7 +439,7 @@
 	public <fields>;
 	public <methods>;
 }
-# end
+# END
 
 
 -keep public class com.tencent.smtt.export.external.extension.proxy.ProxyWebViewClientExtension {

@@ -1,13 +1,13 @@
 package com.left.gank.ui.pure;
 
 import android.content.Context;
-import android.lectcoding.ui.adapter.ObserverAdapter;
 import android.lectcoding.ui.logcat.Logcat;
 import android.ly.business.domain.Gift;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -15,8 +15,9 @@ import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.load.model.LazyHeaders;
 import com.bumptech.glide.request.RequestOptions;
 import com.left.gank.R;
-import com.left.gank.butterknife.BindViewHolder;
-import com.left.gank.butterknife.ItemModel;
+import com.left.gank.butterknife.adapter.BaseAdapter;
+import com.left.gank.butterknife.holder.BindHolder;
+import com.left.gank.butterknife.item.ItemModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +27,7 @@ import butterknife.BindView;
 /**
  * Create by LingYan on 2016-04-25
  */
-public class PureAdapter extends ObserverAdapter<PureAdapter.PureViewHolder> {
+public class PureAdapter extends BaseAdapter<PureAdapter.PureHolder> {
     private final List<Gift> gifts = new ArrayList<>();
     private ItemClickCallback callback;
     private Context mContext;
@@ -50,11 +51,11 @@ public class PureAdapter extends ObserverAdapter<PureAdapter.PureViewHolder> {
     };
 
     @Override
-    public PureViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        PureViewHolder holder;
+    public PureHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        PureHolder holder;
         switch (viewType) {
-            case GiftViewHolder.LAYOUT:
-                holder = new GiftViewHolder(parent);
+            case GiftHolder.LAYOUT:
+                holder = new GiftHolder(parent);
                 break;
             default:
                 holder = null;
@@ -64,10 +65,10 @@ public class PureAdapter extends ObserverAdapter<PureAdapter.PureViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(PureViewHolder holder, int position) {
+    public void onBindViewHolder(PureHolder holder, int position) {
         switch (holder.getItemViewType()) {
-            case GiftViewHolder.LAYOUT:
-                ((GiftViewHolder) holder).bindHolder((GiftViewItem) items.get(position), callback);
+            case GiftHolder.LAYOUT:
+                ((GiftHolder) holder).bindHolder((GiftViewItem) items.get(position), callback);
                 break;
         }
     }
@@ -91,7 +92,7 @@ public class PureAdapter extends ObserverAdapter<PureAdapter.PureViewHolder> {
     }
 
     @Override
-    public void onViewRecycled(PureViewHolder holder) {
+    public void onViewRecycled(PureHolder holder) {
         super.onViewRecycled(holder);
         Glide.get(mContext).clearMemory();
     }
@@ -132,17 +133,11 @@ public class PureAdapter extends ObserverAdapter<PureAdapter.PureViewHolder> {
 
     @Override
     public void destroy() {
-        super.destroy();
         items.clear();
         gifts.clear();
     }
 
-    @Override
-    protected RecyclerView.AdapterDataObserver getObserver() {
-        return observer;
-    }
-
-    static class GiftViewHolder extends PureViewHolder<GiftViewItem> {
+    static class GiftHolder extends PureHolder<GiftViewItem> {
         static final int LAYOUT = R.layout.adapter_gift;
 
         @BindView(R.id.title)
@@ -154,7 +149,7 @@ public class PureAdapter extends ObserverAdapter<PureAdapter.PureViewHolder> {
         @BindView(R.id.author)
         TextView author;
 
-        GiftViewHolder(ViewGroup parent) {
+        GiftHolder(ViewGroup parent) {
             super(parent, LAYOUT);
         }
 
@@ -196,13 +191,13 @@ public class PureAdapter extends ObserverAdapter<PureAdapter.PureViewHolder> {
 
         @Override
         public int getViewType() {
-            return GiftViewHolder.LAYOUT;
+            return GiftHolder.LAYOUT;
         }
     }
 
-    abstract static class PureViewHolder<II extends ItemModel> extends BindViewHolder<II> {
+    abstract static class PureHolder<II extends ItemModel> extends BindHolder<II> {
 
-        PureViewHolder(ViewGroup parent, int layoutRes) {
+        PureHolder(ViewGroup parent, int layoutRes) {
             super(parent, layoutRes);
         }
 

@@ -10,15 +10,19 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.left.gank.R;
+import com.left.gank.butterknife.adapter.FootAdapter;
 import com.left.gank.config.Constants;
 import com.left.gank.ui.MainActivity;
 import com.left.gank.ui.base.LazyFragment;
 import com.left.gank.ui.web.normal.WebActivity;
 import com.left.gank.utils.CircularAnimUtils;
-import com.left.gank.widget.LySwipeRefreshLayout;
+import com.left.gank.utils.ListUtils;
 import com.left.gank.widget.MultipleStatusView;
+import com.left.gank.widget.recyclerview.OnFlexibleScrollListener;
 
 import java.util.List;
 
@@ -32,7 +36,10 @@ public class AndroidFragment extends LazyFragment implements AndroidContract.Vie
     MultipleStatusView multipleStatusView;
 
     @BindView(R.id.swipe_refresh)
-    LySwipeRefreshLayout swipeRefreshLayout;
+    SwipeRefreshLayout swipeRefreshLayout;
+
+    @BindView(R.id.recycler_view)
+    RecyclerView recyclerView;
 
     private Context context;
     private AndroidAdapter androidAdapter;
@@ -42,7 +49,7 @@ public class AndroidFragment extends LazyFragment implements AndroidContract.Vie
 
     @Override
     protected int getLayoutId() {
-        return R.layout.layout_swipe_normal;
+        return R.layout.fragment_android;
     }
 
     @Override
@@ -54,26 +61,54 @@ public class AndroidFragment extends LazyFragment implements AndroidContract.Vie
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        initRecycler();
 
-        androidAdapter.setOnItemClickListener(itemCallBack);
+        androidAdapter = new AndroidAdapter(context);
+        androidAdapter.setErrorListener(errorListener);
+        androidAdapter.setCallback(callback);
+
+        recyclerView.setAdapter(androidAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        OnFlexibleScrollListener onFlexibleScrollListener = new OnFlexibleScrollListener();
+        onFlexibleScrollListener.setOnScrollListener(scrollListener);
+        recyclerView.addOnScrollListener(onFlexibleScrollListener);
+
+        swipeRefreshLayout.setOnRefreshListener(onRefreshListener);
+
         multipleStatusView.setListener(onMultipleClick);
     }
 
     @Override
     public void onLazyActivityCreate() {
         androidPresenter = new AndroidPresenter(context, this);
-        loadAndroid(PageConfig.starPage());
+        loadAndroid(true, PageConfig.starPage());
     }
 
-    private void initRecycler() {
-        androidAdapter = new AndroidAdapter(context);
-        swipeRefreshLayout.setAdapter(androidAdapter);
-        swipeRefreshLayout.setLayoutManager(new LinearLayoutManager(getContext()));
-        swipeRefreshLayout.setOnScrollListener(onRefreshListener);
-    }
+    private final FootAdapter.ErrorListener errorListener = new FootAdapter.ErrorListener() {
+        @Override
+        public void onClickError() {
+            if (pageConfig != null) {
+                loadAndroid(false, pageConfig.getNextPage());
+            }
+        }
+    };
 
-    private final AndroidAdapter.ItemCallback itemCallBack = new AndroidAdapter.ItemCallback() {
+    private final SwipeRefreshLayout.OnRefreshListener onRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
+        @Override
+        public void onRefresh() {
+            loadAndroid(false, PageConfig.starPage());
+        }
+    };
+
+    private final OnFlexibleScrollListener.ScrollListener scrollListener = new OnFlexibleScrollListener.ScrollListener() {
+        @Override
+        public void onLoadMore() {
+            if (pageConfig != null) {
+                loadAndroid(false, pageConfig.getNextPage());
+            }
+        }
+    };
+
+    private final AndroidAdapter.Callback callback = new AndroidAdapter.Callback() {
         @Override
         public void onItemClick(View view, Gank gank) {
             Bundle bundle = new Bundle();
@@ -87,27 +122,15 @@ public class AndroidFragment extends LazyFragment implements AndroidContract.Vie
         }
     };
 
-    private final LySwipeRefreshLayout.OnSwipeRefreshListener onRefreshListener = new LySwipeRefreshLayout.OnSwipeRefreshListener() {
-        @Override
-        public void onRefresh() {
-            loadAndroid(PageConfig.starPage());
-        }
-
-        @Override
-        public void onLoadMore() {
-            if (pageConfig != null) {
-                loadAndroid(pageConfig.getNextPage());
-            }
-        }
-    };
-
     private final MultipleStatusView.OnMultipleClick onMultipleClick = v -> {
         showLoading();
-        loadAndroid(PageConfig.starPage());
+        loadAndroid(true, PageConfig.starPage());
     };
 
-    private void loadAndroid(int page) {
-        androidPresenter.loadAndroid(false, true, page);
+    private void loadAndroid(boolean useProgress, int page) {
+        if (androidPresenter != null) {
+            androidPresenter.loadAndroid(false, useProgress, page);
+        }
     }
 
     @Override
@@ -157,6 +180,47 @@ public class AndroidFragment extends LazyFragment implements AndroidContract.Vie
     }
 
     @Override
+    public void loadAndroidSuccess(int page, List<Gank> list) {
+        showContent();
+        final boolean isFirst = PageConfig.isFirstPage(page);
+        if (ListUtils.isEmpty(list)) {
+            if (isFirst) {
+                showEmpty();
+                return;
+            } else {
+                if (androidAdapter != null) {
+                    androidAdapter.setEnd(true);
+                }
+            }
+        }
+        if (pageConfig != null) {
+            pageConfig.setCurPage(page);
+        }
+        if (androidAdapter != null) {
+            if (isFirst) {
+                androidAdapter.fillItems(list);
+            } else {
+                androidAdapter.appendItems(list);
+            }
+            androidAdapter.notifyDataSetChanged();
+        }
+    }
+
+    @Override
+    public void loadAndroidFailure(int page, String msg) {
+        shortToast(msg);
+        final boolean isFirst = PageConfig.isFirstPage(page);
+        if (!isFirst) {
+            androidAdapter.showError();
+            androidAdapter.notifyDataSetChanged();
+        } else {
+            if (multipleStatusView != null) {
+                multipleStatusView.showEmpty();
+            }
+        }
+    }
+
+    @Override
     public void onDestroyView() {
         if (androidAdapter != null) {
             androidAdapter.destroy();
@@ -166,25 +230,5 @@ public class AndroidFragment extends LazyFragment implements AndroidContract.Vie
             androidPresenter.destroy();
         }
         super.onDestroyView();
-    }
-
-    @Override
-    public void loadAndroidSuccess(int page, List<Gank> list) {
-        showContent();
-
-        if (list == null || list.isEmpty()) {
-            showEmpty();
-            return;
-        }
-
-        if (androidAdapter != null) {
-            androidAdapter.fillItems(list);
-            androidAdapter.notifyDataSetChanged();
-        }
-    }
-
-    @Override
-    public void loadAndroidFailure(int page, String msg) {
-        shortToast(msg);
     }
 }

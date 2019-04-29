@@ -114,4 +114,7 @@
     <string name="title_activity_main2">Main2Activity</string>
     <string name="page_format_mark">/</string>
     <string name="transition_welfare_image">share_welfare_image</string>
+    <string name="adapter_more_loading">刷新数据中…</string>
+    <string name="adapter_more_error">请求数据失败</string>
+    <string name="adapter_more_end">全部加载完成</string>
 </resources>

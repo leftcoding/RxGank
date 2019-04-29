@@ -3,18 +3,18 @@ package com.left.gank.ui.welfare;
 import android.content.Intent;
 import android.ly.business.domain.Gank;
 import android.os.Bundle;
+import android.view.View;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityOptionsCompat;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
-import android.view.View;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.left.gank.R;
 import com.left.gank.config.MeiziArrayList;
 import com.left.gank.ui.base.LazyFragment;
-import com.left.gank.ui.base.adapter.ViewModelAdapter;
 import com.left.gank.ui.gallery.GalleryActivity;
 import com.left.gank.utils.ListUtils;
 import com.left.gank.widget.MultipleStatusView;
@@ -38,7 +38,7 @@ public class WelfareFragment extends LazyFragment implements WelfareContract.Vie
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
 
-    private WelfareViewManager itemManager;
+    private WelfareAdapter welfareAdapter;
     private WelfareContract.Presenter presenter;
 
     private int curPage = 1;
@@ -58,15 +58,13 @@ public class WelfareFragment extends LazyFragment implements WelfareContract.Vie
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ViewModelAdapter welfareAdapter = new ViewModelAdapter();
-        itemManager = new WelfareViewManager();
-        itemManager.setClickListener(itemClickListener);
-        welfareAdapter.setViewManager(itemManager);
+        welfareAdapter = new WelfareAdapter(getContext());
+        welfareAdapter.setListener(itemClickListener);
 
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,
                 StaggeredGridLayoutManager.VERTICAL));
         OnFlexibleScrollListener scrollListener = new OnFlexibleScrollListener();
-        scrollListener.setOnScrollListener(onRecyclerViewListener);
+        scrollListener.setOnScrollListener(this.scrollListener);
         recyclerView.addOnScrollListener(scrollListener);
         recyclerView.setAdapter(welfareAdapter);
 
@@ -81,7 +79,7 @@ public class WelfareFragment extends LazyFragment implements WelfareContract.Vie
         presenter.loadWelfare(curPage);
     }
 
-    private final OnFlexibleScrollListener.OnRecyclerViewListener onRecyclerViewListener = new OnFlexibleScrollListener.OnRecyclerViewListener() {
+    private final OnFlexibleScrollListener.ScrollListener scrollListener = new OnFlexibleScrollListener.ScrollListener() {
         @Override
         public void onLoadMore() {
             loadWelfare();
@@ -103,7 +101,7 @@ public class WelfareFragment extends LazyFragment implements WelfareContract.Vie
         }
     };
 
-    private final WelfareViewManager.ItemClickListener itemClickListener = new WelfareViewManager.ItemClickListener() {
+    private final WelfareAdapter.ItemClickListener itemClickListener = new WelfareAdapter.ItemClickListener() {
         @Override
         public void onItem(View view, int position) {
             Intent intent = new Intent(getContext(), GalleryActivity.class);
@@ -152,7 +150,7 @@ public class WelfareFragment extends LazyFragment implements WelfareContract.Vie
 
     @Override
     public void loadWelfareSuccess(int page, List<Gank> list) {
-        if (itemManager != null) {
+        if (welfareAdapter != null) {
             if (page == 1 && ListUtils.isEmpty(list)) {
                 showEmpty();
                 return;
@@ -160,8 +158,12 @@ public class WelfareFragment extends LazyFragment implements WelfareContract.Vie
 
             showContent();
             curPage = page + 1;
-            itemManager.setData(page, list);
-            itemManager.notifyDataSetChanged();
+            if (page == 1) {
+                welfareAdapter.fillItems(list);
+            } else {
+                welfareAdapter.appendItems(list);
+            }
+            welfareAdapter.notifyDataSetChanged();
             MeiziArrayList.getInstance().addImages(list, page);
         }
     }

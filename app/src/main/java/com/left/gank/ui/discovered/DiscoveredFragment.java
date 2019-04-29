@@ -11,7 +11,7 @@ import android.util.TypedValue;
 import android.view.View;
 
 import com.left.gank.R;
-import com.left.gank.butterknife.ButterKnifeFragment;
+import com.left.gank.ui.base.fragment.ButterKnifeFragment;
 import com.left.gank.rxjava.RxBus_;
 import com.left.gank.rxjava.theme.ThemeEvent;
 import com.left.gank.ui.MainActivity;

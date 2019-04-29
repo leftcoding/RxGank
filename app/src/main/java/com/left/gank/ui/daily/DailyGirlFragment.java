@@ -102,11 +102,6 @@ public class DailyGirlFragment extends LazyFragment implements DailyGirlContract
     }
 
     @Override
-    public void hasNoMoreDate() {
-
-    }
-
-    @Override
     public void showProgress() {
 
     }
@@ -118,16 +113,6 @@ public class DailyGirlFragment extends LazyFragment implements DailyGirlContract
 
     @Override
     public void showEmpty() {
-
-    }
-
-    @Override
-    public void showDisNetWork() {
-
-    }
-
-    @Override
-    public void showError() {
 
     }
 

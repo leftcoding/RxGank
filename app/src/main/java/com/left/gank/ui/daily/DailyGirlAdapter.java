@@ -1,14 +1,14 @@
 package com.left.gank.ui.daily;
 
-import android.lectcoding.ui.adapter.BaseAdapter;
+import com.left.gank.butterknife.adapter.BaseAdapter;
 import android.ly.business.domain.Girl;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.left.gank.R;
-import com.left.gank.butterknife.BindViewHolder;
-import com.left.gank.butterknife.ItemModel;
+import com.left.gank.butterknife.holder.BindHolder;
+import com.left.gank.butterknife.item.ItemModel;
 import com.left.gank.listener.ItemClick;
 
 import java.util.ArrayList;
@@ -19,7 +19,7 @@ import butterknife.BindView;
 /**
  * Create by LingYan on 2016-07-05
  */
-public class DailyGirlAdapter extends BaseAdapter<DailyGirlAdapter.NormalViewHolder> {
+public class DailyGirlAdapter extends BaseAdapter<DailyGirlAdapter.NormalHolder> {
     private ItemClick mMeiZiOnClick;
     private List<Girl> mGirlList = new ArrayList<>();
 
@@ -28,12 +28,12 @@ public class DailyGirlAdapter extends BaseAdapter<DailyGirlAdapter.NormalViewHol
     }
 
     @Override
-    public DailyGirlAdapter.NormalViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public NormalHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new DailyGirlHolder(parent);
     }
 
     @Override
-    public void onBindViewHolder(NormalViewHolder holder, int position) {
+    public void onBindViewHolder(NormalHolder holder, int position) {
 
     }
 
@@ -68,7 +68,7 @@ public class DailyGirlAdapter extends BaseAdapter<DailyGirlAdapter.NormalViewHol
 
     }
 
-    public static class DailyGirlHolder extends NormalViewHolder<NormalItem> implements View.OnClickListener {
+    public static class DailyGirlHolder extends NormalHolder<NormalItem> implements View.OnClickListener {
         static final int LAYOUT = R.layout.adapter_daily_girl;
 
         @BindView(R.id.title)
@@ -98,9 +98,9 @@ public class DailyGirlAdapter extends BaseAdapter<DailyGirlAdapter.NormalViewHol
         }
     }
 
-    abstract static class NormalViewHolder<TT extends ItemModel> extends BindViewHolder<TT> {
+    abstract static class NormalHolder<TT extends ItemModel> extends BindHolder<TT> {
 
-        public NormalViewHolder(ViewGroup parent, int layoutRes) {
+        public NormalHolder(ViewGroup parent, int layoutRes) {
             super(parent, layoutRes);
         }
 

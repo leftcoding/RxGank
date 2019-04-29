@@ -7,7 +7,7 @@
     <attr name="textSummarySize" format="reference|integer" />
     <attr name="textTitleColor" format="reference|color" />
     <attr name="textSummaryColor" format="reference|color" />
-    <!-- 自定义文本 end -->
+    <!-- 自定义文本 END -->
 
     <!--glide 自定义控件 带进度条-->
     <declare-styleable name="ProgressImageView">
@@ -76,7 +76,7 @@
     <attr name="heavySize" format="reference|dimension" />
     <attr name="superSize" format="reference|dimension" />
     <attr name="superBigSize" format="reference|dimension" />
-    <!-- Night Day Custom Colors end -->
+    <!-- Night Day Custom Colors END -->
 
     <!--recyclerView 是否带有侧滑-->
     <declare-styleable name="LySwipeRefreshLayout">

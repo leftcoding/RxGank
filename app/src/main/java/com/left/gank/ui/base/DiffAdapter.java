@@ -1,12 +1,12 @@
 package com.left.gank.ui.base;
 
 import android.content.Context;
-import android.lectcoding.ui.adapter.BaseAdapter;
+import com.left.gank.butterknife.adapter.BaseAdapter;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListUpdateCallback;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.left.gank.butterknife.ItemModel;
+import com.left.gank.butterknife.item.ItemModel;
 import com.left.gank.diff.DiffCallback;
 
 import java.util.List;

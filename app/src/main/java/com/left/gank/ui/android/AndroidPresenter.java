@@ -8,6 +8,8 @@ import android.ly.business.observer.ManagerObserver;
 
 import com.left.gank.ui.android.AndroidContract.Presenter;
 
+import io.reactivex.functions.Action;
+
 /**
  * Create by LingYan on 2016-10-25
  */
@@ -27,18 +29,23 @@ class AndroidPresenter extends Presenter {
 
         GankServer.with(context)
                 .api()
-                .androids(false, page, INIT_LIMIT)
+                .androids(refresh, page, INIT_LIMIT)
                 .doOnSubscribe(disposable -> showProgress(useProgress))
-                .doFinally(this::hideProgress)
+                .doFinally(new Action() {
+                    @Override
+                    public void run() throws Exception {
+                        hideProgress();
+                    }
+                })
                 .subscribe(new ManagerObserver<PageEntity<Gank>>(requestTag, obtainObserver()) {
                     @Override
                     protected void onSuccess(PageEntity<Gank> entity) {
                         if (isViewLife()) {
                             if (entity != null) {
-                                view.loadAndroidSuccess(entity.results);
+                                view.loadAndroidSuccess(page, entity.results);
                                 return;
                             }
-                            view.loadAndroidFailure(errorTip);
+                            view.loadAndroidFailure(page, errorTip);
                         }
                     }
 
@@ -46,7 +53,7 @@ class AndroidPresenter extends Presenter {
                     protected void onFailure(Throwable e) {
                         e.printStackTrace();
                         if (isViewLife()) {
-                            view.loadAndroidFailure(errorTip);
+                            view.loadAndroidFailure(page, errorTip);
                         }
                     }
                 });

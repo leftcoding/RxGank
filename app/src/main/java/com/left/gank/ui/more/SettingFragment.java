@@ -209,17 +209,7 @@ public class SettingFragment extends SupportFragment implements ILauncher {
     }
 
     @Override
-    public void showDisNetWork() {
-
-    }
-
-    @Override
     public void showContent() {
-
-    }
-
-    @Override
-    public void showError() {
 
     }
 }

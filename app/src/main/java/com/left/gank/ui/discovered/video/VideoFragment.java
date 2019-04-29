@@ -155,11 +155,6 @@ public class VideoFragment extends LazyFragment implements MeiziOnClick, SwipeRe
     }
 
     @Override
-    public void hasNoMoreDate() {
-        Snackbar.make(mRecyclerView, R.string.tip_no_more_load, Snackbar.LENGTH_LONG).show();
-    }
-
-    @Override
     public void showContent() {
         mMultipleStatusView.showContent();
     }
@@ -169,24 +164,9 @@ public class VideoFragment extends LazyFragment implements MeiziOnClick, SwipeRe
         mMultipleStatusView.showEmpty();
     }
 
-    @Override
-    public void showDisNetWork() {
-        mMultipleStatusView.showDisNetwork();
-    }
-
-    @Override
-    public void showError() {
-        mMultipleStatusView.showError();
-    }
-
     private void showLoading() {
         if (mMultipleStatusView != null) {
             mMultipleStatusView.showLoading();
         }
-    }
-
-    @Override
-    public void shortToast(String string) {
-
     }
 }

@@ -4,14 +4,13 @@ import android.content.Context;
 import android.ly.business.domain.Gank;
 import android.ly.business.domain.PageConfig;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.view.View;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.left.gank.R;
 import com.left.gank.config.Constants;
@@ -57,9 +56,9 @@ public class IosFragment extends LazyFragment implements IosContract.View {
         iosAdapter = new IosAdapter(getContext());
         iosAdapter.setOnItemClickListener(onItemClickListener);
 
-        OnFlexibleScrollListener scrollListener = new OnFlexibleScrollListener();
-        scrollListener.setOnScrollListener(onRecyclerViewListener);
-        recyclerView.addOnScrollListener(scrollListener);
+        OnFlexibleScrollListener onFlexibleScrollListener = new OnFlexibleScrollListener();
+        onFlexibleScrollListener.setOnScrollListener(scrollListener);
+        recyclerView.addOnScrollListener(onFlexibleScrollListener);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(iosAdapter);
 
@@ -73,7 +72,7 @@ public class IosFragment extends LazyFragment implements IosContract.View {
         refreshIos();
     }
 
-    private final OnFlexibleScrollListener.OnRecyclerViewListener onRecyclerViewListener = new OnFlexibleScrollListener.OnRecyclerViewListener() {
+    private final OnFlexibleScrollListener.ScrollListener scrollListener = new OnFlexibleScrollListener.ScrollListener() {
         @Override
         public void onLoadMore() {
         }

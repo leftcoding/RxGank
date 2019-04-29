@@ -66,13 +66,13 @@ public abstract class ProgressTarget<T, Z> extends WrappingTarget<Z> implements 
     protected abstract void onConnecting();
 
     /**
-     * Called when there's any progress on the download; not called when loading from cache.
+     * Called when there's any progress on the download; not called when LOADING from cache.
      * At this time we know how many bytes have been transferred through the wire.
      */
     protected abstract void onDownloading(long bytesRead, long expectedLength);
 
     /**
-     * Called when the bytes downloaded reach the length reported by the server; not called when loading from cache.
+     * Called when the bytes downloaded reach the length reported by the server; not called when LOADING from cache.
      * At this time it is fairly certain, that Glide either finished reading the stream.
      * This means that the image was either already decoded or saved the network stream to cache.
      * In the latter case there's more work to do: decode the image from cache and transform.
@@ -81,7 +81,7 @@ public abstract class ProgressTarget<T, Z> extends WrappingTarget<Z> implements 
     protected abstract void onDownloaded();
 
     /**
-     * Called when the Glide load has finished either by successfully loading the image or failing to load or cancelled.
+     * Called when the Glide load has finished either by successfully LOADING the image or failing to load or cancelled.
      * In any case the best is to hide/reset any progress displays.
      */
     protected abstract void onDelivered();

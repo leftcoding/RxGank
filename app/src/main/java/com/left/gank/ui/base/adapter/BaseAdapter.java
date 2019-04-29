@@ -1,8 +1,12 @@
 package com.left.gank.ui.base.adapter;
 
+import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import android.view.ViewGroup;
+
+import com.left.gank.ui.base.item.ViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,16 +19,15 @@ public abstract class BaseAdapter<VH extends RecyclerView.ViewHolder> extends Re
     private static final int DEFAULT_SPAN_COUNT = 1;
     private List<ViewModel> viewModels = new ArrayList<>();
 
+    @NonNull
     @Override
-    public VH onCreateViewHolder(ViewGroup parent, int viewType) {
-        ViewModel<VH> viewModel = getViewModel(viewType);
-        return viewModel.createViewHolder(parent);
+    public VH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return null;
     }
 
     @Override
-    public void onBindViewHolder(VH holder, int position) {
-        ViewModel<VH> viewModel = getViewModelForPosition(position);
-        viewModel.bindView(holder);
+    public void onBindViewHolder(@NonNull VH holder, int position) {
+
     }
 
     @Override
@@ -48,19 +51,6 @@ public abstract class BaseAdapter<VH extends RecyclerView.ViewHolder> extends Re
 
     void setViewModels(List<ViewModel> viewModels) {
         this.viewModels = viewModels;
-    }
-
-    private ViewModel<VH> getViewModelForPosition(int position) {
-        return viewModels.get(position);
-    }
-
-    private ViewModel<VH> getViewModel(int viewType) {
-        for (ViewModel viewModel : viewModels) {
-            if (viewModel.getViewType() == viewType) {
-                return viewModel;
-            }
-        }
-        throw new RuntimeException("can't found viewType");
     }
 
     public final GridLayoutManager.SpanSizeLookup spanSizeLookup = new GridLayoutManager.SpanSizeLookup() {

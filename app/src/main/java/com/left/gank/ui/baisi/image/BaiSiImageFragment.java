@@ -92,27 +92,12 @@ public class BaiSiImageFragment extends LazyFragment implements BaiSiImageContra
     }
 
     @Override
-    public void hasNoMoreDate() {
-
-    }
-
-    @Override
     public void showContent() {
 
     }
 
     @Override
     public void showEmpty() {
-
-    }
-
-    @Override
-    public void showDisNetWork() {
-
-    }
-
-    @Override
-    public void showError() {
 
     }
 

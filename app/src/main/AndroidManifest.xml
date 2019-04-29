@@ -10,13 +10,13 @@
     <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
     <!-- 设为壁纸 start -->
     <uses-permission android:name="android.permission.SET_WALLPAPER" />
-    <!-- 设为壁纸 end -->
+    <!-- 设为壁纸 END -->
 
 
     <!-- Bugly start -->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <!-- Bugly end -->
+    <!-- Bugly END -->
 
 
     <!-- 硬件加速对X5视频播放非常重要，建议开启 -->
@@ -95,6 +95,6 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
         </provider>
-        <!-- bugly end -->
+        <!-- bugly END -->
     </application>
 </manifest>

@@ -9,11 +9,6 @@ import android.ly.business.domain.Gift;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import androidx.annotation.Nullable;
-import com.google.android.material.snackbar.Snackbar;
-import androidx.fragment.app.FragmentActivity;
-import androidx.viewpager.widget.ViewPager;
-import androidx.appcompat.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,12 +16,18 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.FragmentActivity;
+import androidx.viewpager.widget.ViewPager;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.load.model.LazyHeaders;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
+import com.google.android.material.snackbar.Snackbar;
 import com.left.gank.R;
 import com.left.gank.config.MeiziArrayList;
 import com.left.gank.ui.base.activity.SupportActivity;
@@ -133,7 +134,7 @@ public class GalleryActivity extends SupportActivity {
                 stopBrowse();
 
                 if (isPositionEnd()) {
-                    shortToast(getString(R.string.loading_all_over));
+//                    shortToast(getString(R.string.loading_all_over));
                 }
             }
         }

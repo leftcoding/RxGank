@@ -118,11 +118,6 @@ public class CureFragment extends LazyFragment implements CureContract.View {
     }
 
     @Override
-    public void hasNoMoreDate() {
-
-    }
-
-    @Override
     public void showProgress() {
         if (swipeRefresh != null && !swipeRefresh.isRefreshing()) {
             swipeRefresh.setRefreshing(true);
@@ -138,16 +133,6 @@ public class CureFragment extends LazyFragment implements CureContract.View {
 
     @Override
     public void showEmpty() {
-
-    }
-
-    @Override
-    public void showDisNetWork() {
-
-    }
-
-    @Override
-    public void showError() {
 
     }
 
@@ -179,36 +164,6 @@ public class CureFragment extends LazyFragment implements CureContract.View {
     @Override
     public void onLazyActivityCreate() {
         initCureRefresh();
-    }
-
-    @Override
-    public void refreshSuccess(List<Gift> list) {
-        if (list != null) {
-            if (cureAdapter != null) {
-                cureAdapter.refillItem(list);
-                cureAdapter.notifyDataSetChanged();
-            }
-        }
-    }
-
-    @Override
-    public void refreshFailure(String msg) {
-        shortToast(msg);
-    }
-
-    @Override
-    public void appendSuccess(List<Gift> list) {
-        if (cureAdapter != null) {
-            if (list != null) {
-                cureAdapter.appendItem(list);
-                cureAdapter.notifyDataSetChanged();
-            }
-        }
-    }
-
-    @Override
-    public void appendFailure(String msg) {
-        shortToast(msg);
     }
 
     @Override

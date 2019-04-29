@@ -3,14 +3,15 @@ package com.left.gank.ui.discovered.jiandan;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.left.gank.R;
 import com.left.gank.bean.JianDanBean;
@@ -136,11 +137,6 @@ public class JiandanFragment extends LazyFragment implements JiandanContract.Vie
     }
 
     @Override
-    public void hasNoMoreDate() {
-
-    }
-
-    @Override
     public void hideProgress() {
         mSwipeRefreshLayout.setRefreshing(false);
     }
@@ -153,16 +149,6 @@ public class JiandanFragment extends LazyFragment implements JiandanContract.Vie
     @Override
     public void showEmpty() {
         mMultipleStatusView.showEmpty();
-    }
-
-    @Override
-    public void showDisNetWork() {
-        mMultipleStatusView.showDisNetwork();
-    }
-
-    @Override
-    public void showError() {
-        mMultipleStatusView.showError();
     }
 
     private void showLoading() {

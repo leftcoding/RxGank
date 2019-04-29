@@ -23,6 +23,8 @@ ext {
 
     normalVersionCode = 1
     normalVersionName = "1.0"
+
+    xRecyclerView = "1.0.0"
 }
 
 allprojects {

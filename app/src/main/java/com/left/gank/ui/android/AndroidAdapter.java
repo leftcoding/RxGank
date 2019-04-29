@@ -1,18 +1,17 @@
 package com.left.gank.ui.android;
 
 import android.content.Context;
-import android.lectcoding.ui.adapter.BaseAdapter;
 import android.ly.business.domain.Gank;
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
+import androidx.annotation.NonNull;
+
 import com.left.gank.R;
-import com.left.gank.butterknife.BindViewHolder;
-import com.left.gank.butterknife.ItemModel;
+import com.left.gank.butterknife.adapter.FootAdapter;
+import com.left.gank.butterknife.holder.BindHolder;
+import com.left.gank.butterknife.item.ItemModel;
 import com.left.gank.utils.DateUtils;
 
 import java.util.ArrayList;
@@ -21,136 +20,70 @@ import java.util.List;
 
 import butterknife.BindView;
 
+public class AndroidAdapter extends FootAdapter<BindHolder, List<Gank>> {
+    private List<ItemModel> itemModels = new ArrayList<>();
+    private List<Gank> ganks = new ArrayList<>();
+    private Callback callback;
 
-/**
- * Create by LingYan on 2016-04-25
- */
-class AndroidAdapter extends BaseAdapter<BindViewHolder> {
-    private ItemCallback itemCallback;
-    private Context context;
-
-    private final List<Gank> resultsBeans = new ArrayList<>();
-    private final List<ItemModel> viewItemList = new ArrayList<>();
-
-    AndroidAdapter(@NonNull Context context) {
-        this.context = context;
-        setHasStableIds(true);
-        registerAdapterDataObserver(dataObserver);
-    }
-
-    private final RecyclerView.AdapterDataObserver dataObserver = new RecyclerView.AdapterDataObserver() {
-        @Override
-        public void onChanged() {
-            super.onChanged();
-            viewItemList.clear();
-            if (!resultsBeans.isEmpty()) {
-                for (Gank resultsBean : resultsBeans) {
-                    if (resultsBean != null) {
-                        viewItemList.add(new TextViewItem(resultsBean));
-                    }
-                }
-            }
-        }
-    };
-
-    @Override
-    public int getItemViewType(int position) {
-        if (!viewItemList.isEmpty()) {
-            return viewItemList.get(position).getViewType();
-        }
-        return RecyclerView.INVALID_TYPE;
+    public AndroidAdapter(Context context) {
+        super(context);
     }
 
     @Override
-    public BindViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        BindViewHolder defaultHolder;
+    protected BindHolder rxCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        BindHolder bindHolder = null;
         switch (viewType) {
-            case NormalViewHolder.LAYOUT:
-                defaultHolder = new NormalViewHolder(parent, itemCallback);
-                break;
-            default:
-                defaultHolder = null;
+            case Type.TEXT:
+                bindHolder = new TextHolder(parent, callback);
                 break;
         }
-        return defaultHolder;
+        return bindHolder;
     }
 
     @Override
-    public void onBindViewHolder(BindViewHolder holder, int position) {
-        final ItemModel viewItem = viewItemList.get(position);
-        switch (holder.getItemViewType()) {
-            case NormalViewHolder.LAYOUT:
-                ((NormalViewHolder) holder).bindHolder((TextViewItem) viewItem);
-                break;
+    protected List<ItemModel> addItems() {
+        return itemModels;
+    }
+
+    @Override
+    public void fillItems(List<Gank> list) {
+        itemModels.clear();
+        ganks.clear();
+        appendItems(list);
+    }
+
+    @Override
+    public void appendItems(List<Gank> list) {
+        ganks.addAll(list);
+        for (Gank gank : list) {
+            if (gank == null) continue;
+            itemModels.add(new TextItem(gank));
         }
     }
 
-    @Override
-    public void onViewRecycled(BindViewHolder holder) {
-        super.onViewRecycled(holder);
-        Glide.get(context).clearMemory();
+    public void setCallback(Callback callback) {
+        this.callback = callback;
     }
 
-    @Override
-    public int getItemCount() {
-        return resultsBeans.size();
-    }
+    private static class TextItem extends ItemModel {
+        private Gank gank;
 
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
-
-    void fillItems(List<Gank> results) {
-        resultsBeans.clear();
-        appendItems(results);
-    }
-
-    public void appendItems(List<Gank> results) {
-        resultsBeans.addAll(results);
-    }
-
-    public void setOnItemClickListener(ItemCallback itemCallBack) {
-        this.itemCallback = itemCallBack;
-    }
-
-    @Override
-    public void destroy() {
-        if (viewItemList != null) {
-            viewItemList.clear();
-        }
-
-        if (resultsBeans != null) {
-            resultsBeans.clear();
-        }
-
-        unregisterAdapterDataObserver(dataObserver);
-    }
-
-    private static class TextViewItem extends ItemModel {
-        private Gank resultsBean;
-
-        TextViewItem(Gank resultsBean) {
-            this.resultsBean = resultsBean;
-        }
-
-        Gank getResultsBean() {
-            return resultsBean;
+        TextItem(Gank gank) {
+            this.gank = gank;
         }
 
         public String getTime() {
-            Date date = DateUtils.formatToDate(resultsBean.publishedAt);
+            Date date = DateUtils.formatToDate(gank.publishedAt);
             return DateUtils.formatString(date, DateUtils.MM_DD);
         }
 
         @Override
         public int getViewType() {
-            return NormalViewHolder.LAYOUT;
+            return Type.TEXT;
         }
     }
 
-    static class NormalViewHolder extends BindViewHolder<TextViewItem> {
-        static final int LAYOUT = R.layout.adapter_android;
+    static class TextHolder extends BindHolder<TextItem> {
 
         @BindView(R.id.author_name)
         TextView authorName;
@@ -161,29 +94,36 @@ class AndroidAdapter extends BaseAdapter<BindViewHolder> {
         @BindView(R.id.title)
         TextView title;
 
-        private Gank resultsBean;
+        private final Callback callback;
 
-        NormalViewHolder(ViewGroup parent, final ItemCallback itemCallBack) {
+        TextHolder(ViewGroup parent, final Callback callback) {
             super(parent, R.layout.adapter_android);
-            itemView.setOnClickListener(v -> {
-                if (itemCallBack != null && resultsBean != null) {
-                    itemCallBack.onItemClick(v, resultsBean);
-                }
-            });
+            this.callback = callback;
         }
 
         @Override
-        public void bindHolder(TextViewItem item) {
-            final Gank resultsBean = item.getResultsBean();
-            this.resultsBean = resultsBean;
-
+        public void bindHolder(TextItem item) {
+            final Gank gank = item.gank;
             time.setText(item.getTime());
-            title.setText(resultsBean.desc);
-            authorName.setText(resultsBean.who);
+            title.setText(gank.desc);
+            authorName.setText(gank.who);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (callback != null) {
+                        callback.onItemClick(v, gank);
+                    }
+                }
+            });
         }
     }
 
-    public interface ItemCallback {
+    public interface Callback {
         void onItemClick(View view, Gank gank);
+    }
+
+    public interface Type {
+        int TEXT = 0;
     }
 }

@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.left.gank.R;
 import com.left.gank.data.entity.ReadHistory;
 import com.left.gank.listener.ItemClick;
-import com.left.gank.ui.base.BaseHolder;
+import com.left.gank.ui.base.holder.BaseHolder;
 
 import java.util.ArrayList;
 import java.util.List;

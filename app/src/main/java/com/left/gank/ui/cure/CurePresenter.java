@@ -87,9 +87,9 @@ class CurePresenter extends CureContract.Presenter {
                     if (gifts != null) {
                         if (view != null) {
                             if (pageConfig.isFirst()) {
-                                view.refreshSuccess(gifts);
+//                                view.refreshSuccess(gifts);
                             } else {
-                                view.appendSuccess(gifts);
+//                                view.appendSuccess(gifts);
                             }
                         }
                     }

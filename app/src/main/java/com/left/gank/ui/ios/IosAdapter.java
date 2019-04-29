@@ -6,8 +6,8 @@ import androidx.annotation.NonNull;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
-import com.left.gank.butterknife.BindViewHolder;
-import com.left.gank.butterknife.ItemModel;
+import com.left.gank.butterknife.holder.BindHolder;
+import com.left.gank.butterknife.item.ItemModel;
 import com.left.gank.ui.base.DiffAdapter;
 import com.left.gank.utils.ListUtils;
 
@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * Create by LingYan on 2016-04-25
  */
-class IosAdapter extends DiffAdapter<BindViewHolder> {
+class IosAdapter extends DiffAdapter<BindHolder> {
     private List<ItemModel> itemModels = new ArrayList<>();
     private List<Gank> curGank;
 
@@ -30,11 +30,11 @@ class IosAdapter extends DiffAdapter<BindViewHolder> {
     }
 
     @Override
-    public BindViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        BindViewHolder defaultHolder;
+    public BindHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        BindHolder defaultHolder;
         switch (viewType) {
             case ViewType.NORMAL:
-                defaultHolder = new NormalViewHolder(parent, itemCallBack);
+                defaultHolder = new NormalHolder(parent, itemCallBack);
                 break;
             default:
                 defaultHolder = null;
@@ -44,11 +44,11 @@ class IosAdapter extends DiffAdapter<BindViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull BindViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull BindHolder holder, int position) {
         final ItemModel viewItem = itemModels.get(position);
         switch (viewItem.getViewType()) {
             case ViewType.NORMAL:
-                ((NormalViewHolder) holder).bindHolder((TextViewModel) viewItem);
+                ((NormalHolder) holder).bindHolder((TextViewModel) viewItem);
                 break;
         }
     }
@@ -59,7 +59,7 @@ class IosAdapter extends DiffAdapter<BindViewHolder> {
     }
 
     @Override
-    public void onViewRecycled(@NonNull BindViewHolder holder) {
+    public void onViewRecycled(@NonNull BindHolder holder) {
         super.onViewRecycled(holder);
         Glide.get(context).clearMemory();
     }
