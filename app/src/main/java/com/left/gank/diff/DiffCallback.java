@@ -9,13 +9,13 @@ import java.util.List;
 /**
  * Create by LingYan on 2018-11-12
  */
-public class DiffCallback extends DiffUtil.Callback {
-    private List<ItemComparator> oldList;
-    private List<ItemComparator> newList;
+public class DiffCallback<T extends ItemComparator> extends DiffUtil.Callback {
+    private List<T> oldList;
+    private List<T> newList;
 
-    public <T extends ItemComparator> DiffCallback(List<T> oldList, List<T> newList) {
-        this.oldList = (List<ItemComparator>) oldList;
-        this.newList = (List<ItemComparator>) newList;
+    public DiffCallback(List<T> oldList, List<T> newList) {
+        this.oldList = oldList;
+        this.newList = newList;
     }
 
     @Override

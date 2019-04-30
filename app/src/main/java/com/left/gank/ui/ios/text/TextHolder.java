@@ -21,7 +21,7 @@ public class TextHolder extends BindHolder<TextModel> {
 
     private ItemCallback itemCallBack;
 
-    TextHolder(ViewGroup parent, ItemCallback callback) {
+    public TextHolder(ViewGroup parent, ItemCallback callback) {
         super(parent, R.layout.adapter_ios);
         this.itemCallBack = callback;
     }

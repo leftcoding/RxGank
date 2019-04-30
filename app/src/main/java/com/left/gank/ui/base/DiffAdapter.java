@@ -1,8 +1,6 @@
 package com.left.gank.ui.base;
 
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.DiffUtil;
-import androidx.recyclerview.widget.ListUpdateCallback;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.left.gank.butterknife.adapter.BaseAdapter;
@@ -25,31 +23,30 @@ public abstract class DiffAdapter<VH extends RecyclerView.ViewHolder> extends Ba
      * 插入时更新数据源
      */
     protected void updateAdapter(List<ItemModel> oldModels, List<ItemModel> newModels) {
-        final DiffCallback diffCallback = new DiffCallback(oldModels, newModels);
+        final DiffCallback diffCallback = new DiffCallback<>(oldModels, newModels);
         final DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(diffCallback);
-        oldModels.clear();
-        oldModels.addAll(newModels);
-//        diffResult.dispatchUpdatesTo(this);
-        diffResult.dispatchUpdatesTo(new ListUpdateCallback() {
-            @Override
-            public void onInserted(int position, int count) {
-                adapter.notifyItemInserted(position);
-            }
+        diffResult.dispatchUpdatesTo(this);
 
-            @Override
-            public void onRemoved(int position, int count) {
-                adapter.notifyItemRangeRemoved(position, count);
-            }
-
-            @Override
-            public void onMoved(int fromPosition, int toPosition) {
-                adapter.notifyItemMoved(fromPosition, toPosition);
-            }
-
-            @Override
-            public void onChanged(int position, int count, @Nullable Object payload) {
-                adapter.notifyItemRangeChanged(position, count, payload);
-            }
-        });
+//        diffResult.dispatchUpdatesTo(new ListUpdateCallback() {
+//            @Override
+//            public void onInserted(int position, int count) {
+//                adapter.notifyItemInserted(position);
+//            }
+//
+//            @Override
+//            public void onRemoved(int position, int count) {
+//                adapter.notifyItemRangeRemoved(position, count);
+//            }
+//
+//            @Override
+//            public void onMoved(int fromPosition, int toPosition) {
+//                adapter.notifyItemMoved(fromPosition, toPosition);
+//            }
+//
+//            @Override
+//            public void onChanged(int position, int count, @Nullable Object payload) {
+//                adapter.notifyItemRangeChanged(position, count, payload);
+//            }
+//        });
     }
 }

@@ -30,7 +30,6 @@ class IosAdapter extends FootAdapter<BindHolder, List<Gank>> {
         super(context);
     }
 
-    @Override
     protected List<ItemModel> addItems() {
         return itemModels;
     }
@@ -43,15 +42,16 @@ class IosAdapter extends FootAdapter<BindHolder, List<Gank>> {
 
     @Override
     public void appendItems(List<Gank> list) {
+        List<ItemModel> news = new ArrayList<>();
         if (ListUtils.isNotEmpty(list)) {
             for (Gank gank : list) {
                 if (gank == null) continue;
-                itemModels.add(new TextModel(gank));
+                news.add(new TextModel(gank));
             }
         }
+        itemModels.addAll(news);
     }
 
-    @Override
     protected BindHolder rxCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         BindHolder bindHolder = null;
         switch (viewType) {
@@ -64,7 +64,6 @@ class IosAdapter extends FootAdapter<BindHolder, List<Gank>> {
 
     @Override
     public void destroy() {
-        clear();
         itemCallback = null;
     }
 

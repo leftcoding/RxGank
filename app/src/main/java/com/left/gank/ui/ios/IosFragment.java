@@ -38,7 +38,7 @@ public class IosFragment extends LazyFragment implements IosContract.View {
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
 
-    private IosAdapter iosAdapter;
+    private IosAdapter1 iosAdapter;
     private IosContract.Presenter iosPresenter;
     private PageConfig pageConfig = new PageConfig();
 
@@ -55,7 +55,7 @@ public class IosFragment extends LazyFragment implements IosContract.View {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        iosAdapter = new IosAdapter(getContext());
+        iosAdapter = new IosAdapter1(getContext());
         iosAdapter.setOnItemClickListener(onItemClickListener);
 
         OnFlexibleScrollListener onFlexibleScrollListener = new OnFlexibleScrollListener();
@@ -171,18 +171,23 @@ public class IosFragment extends LazyFragment implements IosContract.View {
         }
         if (iosAdapter != null) {
             if (PageConfig.isFirstPage(page)) {
-                iosAdapter.fillItems(list);
-            } else {
-                iosAdapter.appendItems(list);
+                iosAdapter.clearItems();
+//                iosAdapter.fillItems(list);
+//            } else {
+//                iosAdapter.appendItems(list);
             }
-            iosAdapter.notifyDataSetChanged();
+            iosAdapter.update(list);
+//            iosAdapter.notifyDataSetChanged();
         }
     }
 
     @Override
     public void loadIosFailure(int page, String msg) {
         if (!PageConfig.isFirstPage(page)) {
-
+            if (iosAdapter != null) {
+//                iosAdapter.showError();
+//                iosAdapter.notifyDataSetChanged();
+            }
         } else {
             if (multipleStatusView != null) {
                 multipleStatusView.showError();
