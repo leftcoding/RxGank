@@ -1,4 +1,4 @@
-package com.left.gank.ui.ios;
+package com.left.gank.ui.ios.text;
 
 import android.ly.business.domain.Gank;
 import android.view.View;

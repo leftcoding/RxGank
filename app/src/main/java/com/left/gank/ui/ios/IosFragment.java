@@ -15,6 +15,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.left.gank.R;
 import com.left.gank.config.Constants;
 import com.left.gank.ui.base.LazyFragment;
+import com.left.gank.ui.ios.text.ItemCallback;
 import com.left.gank.ui.web.normal.WebActivity;
 import com.left.gank.widget.MultipleStatusView;
 import com.left.gank.widget.recyclerview.OnFlexibleScrollListener;
@@ -114,6 +115,13 @@ public class IosFragment extends LazyFragment implements IosContract.View {
 
     @Override
     public void showProgress() {
+        if (swipeRefreshLayout != null && !swipeRefreshLayout.isRefreshing()) {
+            if (multipleStatusView != null) {
+                multipleStatusView.showLoading();
+            }
+            return;
+        }
+
         if (swipeRefreshLayout != null) {
             swipeRefreshLayout.setRefreshing(true);
         }
@@ -163,10 +171,11 @@ public class IosFragment extends LazyFragment implements IosContract.View {
         }
         if (iosAdapter != null) {
             if (PageConfig.isFirstPage(page)) {
-                iosAdapter.clear();
+                iosAdapter.fillItems(list);
+            } else {
+                iosAdapter.appendItems(list);
             }
-            iosAdapter.setItems(list);
-            iosAdapter.update();
+            iosAdapter.notifyDataSetChanged();
         }
     }
 

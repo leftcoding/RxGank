@@ -1,4 +1,4 @@
-package com.left.gank.ui.ios;
+package com.left.gank.ui.ios.text;
 
 /**
  * Create by LingYan on 2018-11-12

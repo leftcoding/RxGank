@@ -1,4 +1,4 @@
-package com.left.gank.ui.ios;
+package com.left.gank.ui.ios.text;
 
 import android.ly.business.domain.Gank;
 import android.view.ViewGroup;
@@ -9,7 +9,7 @@ import com.left.gank.butterknife.holder.BindHolder;
 
 import butterknife.BindView;
 
-public class NormalHolder extends BindHolder<TextViewModel> {
+public class TextHolder extends BindHolder<TextModel> {
     @BindView(R.id.author_name)
     TextView authorName;
 
@@ -21,13 +21,13 @@ public class NormalHolder extends BindHolder<TextViewModel> {
 
     private ItemCallback itemCallBack;
 
-    NormalHolder(ViewGroup parent, ItemCallback callback) {
+    TextHolder(ViewGroup parent, ItemCallback callback) {
         super(parent, R.layout.adapter_ios);
         this.itemCallBack = callback;
     }
 
     @Override
-    public void bindHolder(TextViewModel item) {
+    public void bindHolder(TextModel item) {
         final Gank gank = item.gank;
 
         time.setText(item.getTime());

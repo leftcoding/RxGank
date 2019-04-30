@@ -43,18 +43,19 @@ public abstract class FootAdapter<VH extends BasicHolder, T> extends BaseAdapter
             List<ItemModel> list = addItems();
             if (list != null) {
                 itemModels.addAll(list);
-            }
-            if (isFootModel) {
-                if (hasError) {
-                    itemModels.add(new ErrorItem());
-                    return;
-                }
-                if (isEnd) {
-                    if (isShowEnd) {
-                        itemModels.add(new EndItem());
+
+                if (isFootModel) {
+                    if (hasError) {
+                        itemModels.add(new ErrorItem());
+                        return;
                     }
-                } else {
-                    itemModels.add(new LoadingItem());
+                    if (isEnd) {
+                        if (isShowEnd) {
+                            itemModels.add(new EndItem());
+                        }
+                    } else {
+                        itemModels.add(new LoadingItem());
+                    }
                 }
             }
         }
@@ -110,7 +111,7 @@ public abstract class FootAdapter<VH extends BasicHolder, T> extends BaseAdapter
 
     @NonNull
     @Override
-    public VH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public final VH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         BasicHolder vh;
         switch (viewType) {
             case ItemType.END:
