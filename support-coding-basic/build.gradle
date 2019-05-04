@@ -26,7 +26,24 @@ android {
 dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
 
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+    testImplementation rootProject.ext.commonsDeps.junit
+    androidTestImplementation rootProject.ext.testDeps.runner
+    androidTestImplementation rootProject.ext.testDeps.espresso_core
+
+    api project(':support-coding-business')
+    api project(':support-coding-rxbus')
+    api project(':superplayerlibrary')
+    api project(':support-coding-ui')
+    api project(':support-coding-jsoup')
+
+    api rootProject.ext.supportLibs
+    api rootProject.ext.commonsLibs
+    api rootProject.ext.rxjavaLibs
+    api rootProject.ext.leakcanaryLibs
+    api rootProject.ext.okhttpLibs
+    api rootProject.ext.greendaoLibs
+    api rootProject.ext.stethoLibs
+    api rootProject.ext.butterknifeLibs
+    api rootProject.ext.glideLibs
+    api rootProject.ext.retrofitLibs
 }

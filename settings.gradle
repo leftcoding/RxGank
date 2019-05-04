@@ -1,1 +1,1 @@
-include ':app', ':superplayerlibrary', ':ijkplayerlibrary', ':support-coding-network', ':support-coding-rxbus', ':support-coding-ui', ':support-coding-business', ':support-coding-jsoup', ':support_coding_file', ':support-coding-adapter', ':suppot-coding-basic'
+include ':app', ':superplayerlibrary', ':ijkplayerlibrary', ':support-coding-network', ':support-coding-rxbus', ':support-coding-ui', ':support-coding-business', ':support-coding-jsoup', ':support_coding_file', ':support-coding-adapter', ':support-coding-basic'

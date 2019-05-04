@@ -62,58 +62,58 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    testImplementation 'junit:junit:4.12'
+//    testImplementation 'junit:junit:4.12'
     //
-    implementation project(':support-coding-business')
-    implementation project(':support-coding-rxbus')
-    implementation project(':superplayerlibrary')
-    implementation project(':support-coding-ui')
-    implementation project(':support-coding-jsoup')
-    implementation "androidx.appcompat:appcompat:${supportVersion}"
-    implementation "com.google.android.material:material:${supportVersion}"
-    implementation "androidx.cardview:cardview:${supportVersion}"
-    implementation "androidx.recyclerview:recyclerview:${supportVersion}"
-    implementation "com.github.zhaokaiqiang.klog:library:${klogVersion}"
-    implementation "com.jakewharton:butterknife:${butterknife}"
-    annotationProcessor "com.jakewharton:butterknife-compiler:${butterknife}"
-    implementation "com.squareup.retrofit2:retrofit:${retrofitVersion}"
-    implementation "com.squareup.retrofit2:retrofit-converters:${retrofitConverters}"
-    implementation "com.squareup.retrofit2:retrofit-adapters:${retrofitAdapters}"
-    implementation "com.squareup.retrofit2:converter-gson:${converterGson}"
-    implementation "com.squareup.retrofit2:adapter-rxjava2:${adapterRxjava2}"
-    implementation "com.squareup.okhttp3:okhttp:${okhttp}"
-    implementation "com.squareup.okhttp3:logging-interceptor:${okhttp}"
-    debugImplementation "com.squareup.leakcanary:leakcanary-android:${leakcanaryandroid}"
-    releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:${leakcanaryandroid}"
-    implementation "com.github.bumptech.glide:glide:${glide}"
-    implementation "com.github.bumptech.glide:annotations:${glide}"
-    implementation "com.github.bumptech.glide:okhttp3-integration:${glide}"
-    annotationProcessor "com.github.bumptech.glide:compiler:${glide}"
-
-    //greendao 数据库
-    implementation "de.greenrobot:greendao:${greendao}"
-    implementation "de.greenrobot:greendao-generator:${greendao}"
-
-    //chrome stetho 数据库查看
-    implementation "com.facebook.stetho:stetho:${stethoVersion}"
-    implementation "com.facebook.stetho:stetho-okhttp3:${stethoOkhttp3}"
-
-    // recyclerview-animators
-//    implementation 'jp.wasabeef:recyclerview-animators:2.2.3'
-
-    //底部导航  https://github.com/roughike/BottomBar
-    implementation ("com.roughike:bottom-bar:${bottomBar}"){
-        exclude group: 'com.android.support'
-    }
-
-    //大图库
-    implementation("com.davemorrissey.labs:subsampling-scale-image-view:${subsamplingVersion}") {
-        exclude group: 'com.android.support'
-    }
-
-    //rxjava2   https://github.com/ReactiveX/RxJava
-    implementation "io.reactivex.rxjava2:rxjava:${rxjava}"
-    implementation "io.reactivex.rxjava2:rxandroid:${rxandroid}"
-    implementation "com.tencent.bugly:crashreport_upgrade:${crashreportUpgrade}"
-    implementation "androidx.constraintlayout:constraintlayout:${constraintLayout}"
+    implementation project(':support-coding-basic')
+//    implementation project(':support-coding-rxbus')
+//    implementation project(':superplayerlibrary')
+//    implementation project(':support-coding-ui')
+//    implementation project(':support-coding-jsoup')
+//    implementation "androidx.appcompat:appcompat:${supportVersion}"
+//    implementation "com.google.android.material:material:${supportVersion}"
+//    implementation "androidx.cardview:cardview:${supportVersion}"
+//    implementation "androidx.recyclerview:recyclerview:${supportVersion}"
+//    implementation "com.github.zhaokaiqiang.klog:library:${klogVersion}"
+//    implementation "com.jakewharton:butterknife:${butterknife}"
+//    annotationProcessor "com.jakewharton:butterknife-compiler:${butterknife}"
+//    implementation "com.squareup.retrofit2:retrofit:${retrofitVersion}"
+//    implementation "com.squareup.retrofit2:retrofit-converters:${retrofitConverters}"
+//    implementation "com.squareup.retrofit2:retrofit-adapters:${retrofitAdapters}"
+//    implementation "com.squareup.retrofit2:converter-gson:${converterGson}"
+//    implementation "com.squareup.retrofit2:adapter-rxjava2:${adapterRxjava2}"
+//    implementation "com.squareup.okhttp3:okhttp:${okhttp}"
+//    implementation "com.squareup.okhttp3:logging-interceptor:${okhttp}"
+//    debugImplementation "com.squareup.leakcanary:leakcanary-android:${leakcanaryandroid}"
+//    releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:${leakcanaryandroid}"
+//    implementation "com.github.bumptech.glide:glide:${glide}"
+//    implementation "com.github.bumptech.glide:annotations:${glide}"
+//    implementation "com.github.bumptech.glide:okhttp3-integration:${glide}"
+//    annotationProcessor "com.github.bumptech.glide:compiler:${glide}"
+//
+//    //greendao 数据库
+//    implementation "de.greenrobot:greendao:${greendao}"
+//    implementation "de.greenrobot:greendao-generator:${greendao}"
+//
+//    //chrome stetho 数据库查看
+//    implementation "com.facebook.stetho:stetho:${stethoVersion}"
+//    implementation "com.facebook.stetho:stetho-okhttp3:${stethoOkhttp3}"
+//
+//    // recyclerview-animators
+////    implementation 'jp.wasabeef:recyclerview-animators:2.2.3'
+//
+//    //底部导航  https://github.com/roughike/BottomBar
+//    implementation ("com.roughike:bottom-bar:${bottomBar}"){
+//        exclude group: 'com.android.support'
+//    }
+//
+//    //大图库
+//    implementation("com.davemorrissey.labs:subsampling-scale-image-view:${subsamplingVersion}") {
+//        exclude group: 'com.android.support'
+//    }
+//
+//    //rxjava2   https://github.com/ReactiveX/RxJava
+//    implementation "io.reactivex.rxjava2:rxjava:${rxjava}"
+//    implementation "io.reactivex.rxjava2:rxandroid:${rxandroid}"
+//    implementation "com.tencent.bugly:crashreport_upgrade:${crashreportUpgrade}"
+//    implementation "androidx.constraintlayout:constraintlayout:${constraintLayout}"
 }

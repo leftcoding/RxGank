@@ -7,14 +7,14 @@
       <module fileurl="file://$PROJECT_DIR$/ijkplayerlibrary/ijkplayerlibrary.iml" filepath="$PROJECT_DIR$/ijkplayerlibrary/ijkplayerlibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/superplayerlibrary/superplayerlibrary.iml" filepath="$PROJECT_DIR$/superplayerlibrary/superplayerlibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/support-coding-adapter/support-coding-adapter.iml" filepath="$PROJECT_DIR$/support-coding-adapter/support-coding-adapter.iml" />
-      <module fileurl="file://$PROJECT_DIR$/support-coding-adapter/support-coding-adapter.iml" filepath="$PROJECT_DIR$/support-coding-adapter/support-coding-adapter.iml" />
+      <module fileurl="file://$PROJECT_DIR$/support-coding-basic/support-coding-basic.iml" filepath="$PROJECT_DIR$/support-coding-basic/support-coding-basic.iml" />
       <module fileurl="file://$PROJECT_DIR$/support-coding-business/support-coding-business.iml" filepath="$PROJECT_DIR$/support-coding-business/support-coding-business.iml" />
       <module fileurl="file://$PROJECT_DIR$/support-coding-jsoup/support-coding-jsoup.iml" filepath="$PROJECT_DIR$/support-coding-jsoup/support-coding-jsoup.iml" />
       <module fileurl="file://$PROJECT_DIR$/support-coding-network/support-coding-network.iml" filepath="$PROJECT_DIR$/support-coding-network/support-coding-network.iml" />
       <module fileurl="file://$PROJECT_DIR$/support-coding-rxbus/support-coding-rxbus.iml" filepath="$PROJECT_DIR$/support-coding-rxbus/support-coding-rxbus.iml" />
       <module fileurl="file://$PROJECT_DIR$/support-coding-ui/support-coding-ui.iml" filepath="$PROJECT_DIR$/support-coding-ui/support-coding-ui.iml" />
       <module fileurl="file://$PROJECT_DIR$/support_coding_file/support_coding_file.iml" filepath="$PROJECT_DIR$/support_coding_file/support_coding_file.iml" />
-      <module fileurl="file://$PROJECT_DIR$/suppot-coding-basic/suppot-coding-basic.iml" filepath="$PROJECT_DIR$/suppot-coding-basic/suppot-coding-basic.iml" />
+      <module fileurl="file://$PROJECT_DIR$/support_coding_file/support_coding_file.iml" filepath="$PROJECT_DIR$/support_coding_file/support_coding_file.iml" />
     </modules>
   </component>
 </project>
