@@ -30,11 +30,12 @@ dependencies {
     androidTestImplementation rootProject.ext.testDeps.runner
     androidTestImplementation rootProject.ext.testDeps.espresso_core
 
-    api project(':support-coding-business')
-    api project(':support-coding-rxbus')
-    api project(':superplayerlibrary')
-    api project(':support-coding-ui')
-    api project(':support-coding-jsoup')
+    api project(path: ':support-coding-business')
+    api project(path: ':support-coding-rxbus')
+    api project(path: ':superplayerlibrary')
+    api project(path: ':support-coding-ui')
+    api project(path: ':support-coding-jsoup')
+    api project(path: ':support-coding-network')
 
     api rootProject.ext.supportLibs
     api rootProject.ext.commonsLibs
@@ -46,4 +47,7 @@ dependencies {
     api rootProject.ext.butterknifeLibs
     api rootProject.ext.glideLibs
     api rootProject.ext.retrofitLibs
+
+    annotationProcessor rootProject.ext.compilerLibs
+
 }

@@ -42,8 +42,7 @@ ext {
 
 
     butterknife = [
-            "butterknife"         : "com.jakewharton:butterknife:${dependVersion.butterknife}",
-            "butterknife-compiler": "com.jakewharton:butterknife-compiler:${dependVersion.butterknife}"
+            "butterknife": "com.jakewharton:butterknife:${dependVersion.butterknife}",
     ]
 
     retrofit = [
@@ -65,7 +64,6 @@ ext {
     glide = [
             "glide"              : "com.github.bumptech.glide:glide:${dependVersion.glide}",
             "okhttp3-integration": "com.github.bumptech.glide:okhttp3-integration:${dependVersion.glide}",
-            "compiler"           : "com.github.bumptech.glide:compiler:${dependVersion.glide}"
     ]
 
     greendao = [
@@ -89,6 +87,11 @@ ext {
             "espresso_core": "androidx.test.espresso:espresso-core:${dependVersion.espresso_core}"
     ]
 
+    compilerDeps = [
+            "glide-compiler"      : "com.github.bumptech.glide:compiler:${dependVersion.glide}",
+            "butterknife-compiler": "com.jakewharton:butterknife-compiler:${dependVersion.butterknife}"
+    ]
+
     supportLibs = supportDeps.values()
     commonsLibs = commonsDeps.values()
     rxjavaLibs = rxjava2.values()
@@ -99,4 +102,5 @@ ext {
     butterknifeLibs = butterknife.values()
     glideLibs = glide.values()
     retrofitLibs = retrofit.values()
+    compilerLibs = commonsDeps.values()
 }
