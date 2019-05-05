@@ -63,4 +63,5 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation project(':support-coding-basic')
+    debugImplementation rootProject.ext.leakcanary.leakcanary_android
 }

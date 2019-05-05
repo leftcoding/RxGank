@@ -25,7 +25,9 @@ android {
 
 dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
-
+    configurations {
+        all*.exclude group: 'com.android.support', module: 'support-v13'
+    }
     testImplementation rootProject.ext.commonsDeps.junit
     androidTestImplementation rootProject.ext.testDeps.runner
     androidTestImplementation rootProject.ext.testDeps.espresso_core
@@ -40,7 +42,6 @@ dependencies {
     api rootProject.ext.supportLibs
     api rootProject.ext.commonsLibs
     api rootProject.ext.rxjavaLibs
-    api rootProject.ext.leakcanaryLibs
     api rootProject.ext.okhttpLibs
     api rootProject.ext.greendaoLibs
     api rootProject.ext.stethoLibs
@@ -49,5 +50,6 @@ dependencies {
     api rootProject.ext.retrofitLibs
 
     annotationProcessor rootProject.ext.compilerLibs
+
 
 }
