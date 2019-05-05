@@ -10,8 +10,8 @@ import android.util.Pair;
 import android.view.View;
 import android.widget.TextView;
 
-import com.left.gank.R;
 import com.google.android.material.snackbar.Snackbar;
+import com.left.gank.R;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,7 +25,6 @@ import butterknife.Unbinder;
  * Create by LingYan on 2016-04-05
  */
 public abstract class BaseActivity extends AppCompatActivity {
-    private static final int contentResId = R.id.main_frame_layout;
     private long mLastTime;
     protected Unbinder mUnBinder;
     protected FragmentTransaction mFragmentTransaction;
@@ -33,15 +32,11 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(getContentId());
         mUnBinder = ButterKnife.bind(this);
-        changeThemes();
         mFragmentTransaction = getSupportFragmentManager()
                 .beginTransaction();
-    }
-
-    public void changeThemes() {
-
     }
 
     public void addMainFragment(Fragment fragment) {
@@ -49,7 +44,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     public void addHideFragment(Fragment from, Fragment to) {
-        addHideFragment(from, to, contentResId, null, "", false);
+        addHideFragment(from, to, R.id.main_frame_layout, null, "", false);
     }
 
     public void addHideFragment(Fragment from, Fragment to, String Tag, int contentAreaId) {
@@ -57,11 +52,11 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     public void addAnimFragment(Fragment from, Fragment to, boolean isAnim) {
-        addHideFragment(from, to, contentResId, null, "", isAnim);
+        addHideFragment(from, to, R.id.main_frame_layout, null, "", isAnim);
     }
 
     public void addAnimFragment(Fragment from, Fragment to, String tag, boolean isAnim) {
-        addHideFragment(from, to, contentResId, null, tag, isAnim);
+        addHideFragment(from, to, R.id.main_frame_layout, null, tag, isAnim);
     }
 
     public void addHideFragment(Fragment from, Fragment to, int contentAreaId,
@@ -141,7 +136,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
 
         if (!fragment.isAdded()) {
-            mFragmentTransaction.add(contentResId, fragment);
+            mFragmentTransaction.add(R.id.main_frame_layout, fragment);
         }
         mFragmentTransaction.commitAllowingStateLoss();
     }

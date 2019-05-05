@@ -15,10 +15,6 @@ import android.view.ViewParent;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.widget.Toolbar;
-
 import com.left.gank.R;
 import com.left.gank.config.Constants;
 import com.left.gank.data.entity.ReadHistory;
@@ -40,6 +36,9 @@ import com.tencent.smtt.sdk.WebViewClient;
 import java.io.InputStream;
 import java.util.Date;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.Toolbar;
 import butterknife.BindView;
 
 /**
@@ -111,8 +110,8 @@ public class WebActivity extends BaseActivity implements WebContract.View {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        parseBundle();
         super.onCreate(savedInstanceState);
+        parseBundle();
         mPresenter = new WebPresenter(LocalDataSource.getInstance(), this);
 
         mWebView = new WebView(getApplicationContext(), null);

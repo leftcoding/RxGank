@@ -52,7 +52,7 @@
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@style/MyAppTheme" />
+            android:theme="@style/AppTheme.Web" />
         <activity
             android:name="com.left.gank.ui.web.JiandanWebActivity"
             android:launchMode="singleTask"
@@ -60,8 +60,7 @@
         <activity
             android:name="com.left.gank.ui.gallery.GalleryActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.Black" />
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.left.gank.ui.web.WebVideoViewActivity"
             android:launchMode="singleTask"
@@ -78,8 +77,7 @@
         <activity
             android:name="com.left.gank.ui.baisi.BaiSiVideoPreViewActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:launchMode="singleTask"
-            android:theme="@style/AppTheme.light.NoActionBar" />
+            android:launchMode="singleTask" />
         <!-- bugly start -->
         <activity
             android:name="com.tencent.bugly.beta.ui.BetaActivity"
