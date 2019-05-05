@@ -4,10 +4,25 @@
 [![platform](https://img.shields.io/badge/platform-Android-yellow.svg)](https://www.android.com)
 [![API](https://img.shields.io/badge/API-21%2B-blue.svg?style=flat)](https://android-arsenal.com/api?level=21#l21)
 
+### 更新说明
+*优化下之前的写的代码*
+
+- support-coding-adapter           适配器（开发中...）
+- support-coding-basic             基本组件（开发中...）
+- support-coding-business          网络请求封装（二次优化）
+- support-coding-download          下载（开发中...）
+- support-coding-file              文件管理（开发中...）
+- support-coding-jsoup             爬虫（二次优化）
+- support-coding-network           网络库（二次优化）
+- support-coding-rxbus             rxbus（开发中...）
+- support-coding-ui                基本UI（开发中...）
+
+
+## 以下都是之前的说明
+
 ### 前言
 
 应用含有知识干货、新鲜事、妹子、科技资讯，搞笑视频和图片，动态更新皮肤等，图片来源于<a href="http://www.mzitu.com/">妹子图</a>，图标来源于<a href="http://iconfont.cn/">阿里巴巴矢量图</a>，项目采用 mvp-clean 架构，基于 Glide + retrofit2 + rxjava2 + Rxbus + butterknife。
-
 
 ### 安装包 
 <a href="https://pro-app-qn.fir.im/39d225b22b239c79c88751f3297ec7f4a6057a5c.apk?attname=gankly_2.1.1_8.24.apk_2.1.1.apk&e=1503562220&token=LOvmia8oXF4xnLh0IdH05XMYpH6ENHNpARlmPc-T:kJonnEV5WckLuOeJuA4TACw5U2M=">下载最新apk</a>
