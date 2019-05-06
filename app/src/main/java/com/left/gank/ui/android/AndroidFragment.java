@@ -73,7 +73,6 @@ public class AndroidFragment extends LazyFragment implements AndroidContract.Vie
         recyclerView.addOnScrollListener(onFlexibleScrollListener);
 
         swipeRefreshLayout.setOnRefreshListener(onRefreshListener);
-
         multipleStatusView.setListener(onMultipleClick);
     }
 

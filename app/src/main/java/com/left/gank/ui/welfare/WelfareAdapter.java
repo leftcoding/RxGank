@@ -9,45 +9,39 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
-import com.bumptech.glide.Priority;
-import com.bumptech.glide.RequestBuilder;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.RequestOptions;
-import com.bumptech.glide.request.target.BitmapImageViewTarget;
-import com.bumptech.glide.request.transition.Transition;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.left.gank.R;
 import com.left.gank.butterknife.adapter.FootAdapter;
 import com.left.gank.butterknife.holder.BindHolder;
 import com.left.gank.butterknife.item.ItemModel;
-import com.left.gank.utils.AppUtils;
-import com.left.gank.utils.gilde.ImageLoaderUtil;
-import com.left.gank.widget.ImageDefaultView;
+import com.left.gank.glide.GlideApp;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import butterknife.BindView;
 
 /**
  * Create by LingYan on 2018-09-25
  */
 public class WelfareAdapter extends FootAdapter<WelfareAdapter.ViewHolder, List<Gank>> {
-    private ArrayMap<String, Integer> heights = new ArrayMap<>();
+    private static ArrayMap<String, Integer> heights = new ArrayMap<>();
     private List<ItemModel> models = new ArrayList<>();
     private ItemClickListener itemClickListener;
 
     public WelfareAdapter(Context context) {
         super(context);
+        setFootModel(false);
     }
-
 
     public void setListener(ItemClickListener itemClickListener) {
         this.itemClickListener = itemClickListener;
     }
-
 
     @Override
     protected ViewHolder rxCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -73,50 +67,27 @@ public class WelfareAdapter extends FootAdapter<WelfareAdapter.ViewHolder, List<
         }
     }
 
-    public interface onResourceCallback {
-        void onCallback(int width, int height);
-    }
-
-    private static class DriverViewTarget extends BitmapImageViewTarget {
-        private final onResourceCallback resourceCallback;
-
-        DriverViewTarget(ImageView image, onResourceCallback resourceCallback) {
-            super(image);
-            this.resourceCallback = resourceCallback;
-        }
-
-        @Override
-        public void onResourceReady(Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
-            super.onResourceReady(resource, transition);
-            if (resourceCallback != null) {
-                resourceCallback.onCallback(resource.getWidth(), resource.getHeight());
-            }
-        }
+    @Override
+    public long getItemId(int position) {
+        return position;
     }
 
     public static class ViewHolder extends BindHolder<ImageItem> {
-        @BindView(R.id.img_meizi)
-        ImageDefaultView imgMeizi;
+        @BindView(R.id.image)
+        ImageView image;
 
-        @BindView(R.id.meizi_card_view)
-        RelativeLayout mRelativeLayout;
-
-        ImageView imageView;
-
-        private int screenWidth;
-        private int screenHeight;
+        @BindView(R.id.group_item)
+        RelativeLayout groupItem;
 
         private final Context context;
         private final ItemClickListener itemClickListener;
+
+        @NonNull
         private ArrayMap<String, Integer> heights;
 
-        public ViewHolder(ViewGroup parent, ItemClickListener itemClickListener, ArrayMap<String, Integer> heights) {
+        public ViewHolder(ViewGroup parent, ItemClickListener itemClickListener, @NonNull ArrayMap<String, Integer> heights) {
             super(parent, R.layout.adapter_meizi);
             context = parent.getContext();
-            imageView = new ImageView(context);
-            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            imgMeizi.setFrameLayout(imageView);
-            screenWidth = screenHeight = AppUtils.getDisplayWidth(context) / 2;
             this.heights = heights;
             this.itemClickListener = itemClickListener;
         }
@@ -126,51 +97,59 @@ public class WelfareAdapter extends FootAdapter<WelfareAdapter.ViewHolder, List<
             final Gank gank = item.gank;
             final String url = gank.url;
 
-            RequestBuilder<Bitmap> requestBuilder = ImageLoaderUtil.getInstance()
-                    .glideAsBitmap(context, url);
-
-            if (heights.containsKey(url)) {
-                setCardViewLayoutParams(imgMeizi, screenWidth, heights.get(url));
-                requestBuilder.apply(new RequestOptions()
-                        .fitCenter()
-                        .diskCacheStrategy(DiskCacheStrategy.ALL)
-                        .priority(Priority.HIGH)
-                );
-                requestBuilder.into(imageView);
-            } else {
-                requestBuilder.apply(new RequestOptions()
-                        .fitCenter()
-                        .diskCacheStrategy(DiskCacheStrategy.ALL)
-                        .priority(Priority.HIGH)
-                        .override(screenWidth, screenHeight)//设置宽高一致，后期改动不大
-                );
-                requestBuilder.into(new DriverViewTarget(imageView, new onResourceCallback() {
-                    @Override
-                    public void onCallback(int width, int height) {
-                        if (!heights.containsKey(url) && url != null) {
-                            int viewHeight = width * screenWidth / height;
-                            heights.put(url, viewHeight);
-                            setCardViewLayoutParams(imgMeizi, screenWidth, heights.get(url));
+            GlideApp.with(context)
+                    .asBitmap()
+                    .load(url)
+                    .centerCrop()
+                    .placeholder(R.drawable.ic_image_default)
+                    .error(R.drawable.ic_image_default)
+                    .fallback(R.drawable.ic_image_default)
+                    .listener(new RequestListener<Bitmap>() {
+                        @Override
+                        public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {
+                            return false;
                         }
-                    }
-                }));
-            }
+
+                        @Override
+                        public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
+                            final int height = resource.getHeight();
+                            final int width = resource.getWidth();
+                            final int imageWidth = image.getWidth();
+
+                            int finalHeight = -1;
+                            if (heights.containsKey(url)) {
+                                Integer i = heights.get(url);
+                                if (i != null) {
+                                    finalHeight = i;
+                                }
+                            }
+
+                            if (finalHeight == -1) {
+                                finalHeight = height * imageWidth / width;
+                                heights.put(url, finalHeight);
+                            }
+
+                            setCardViewLayoutParams(imageWidth, finalHeight);
+                            return false;
+                        }
+                    })
+                    .into(image);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (itemClickListener != null) {
-                        itemClickListener.onItem(imgMeizi, getLayoutPosition());
+                        itemClickListener.onItem(image, getAdapterPosition());
                     }
                 }
             });
         }
 
-        private void setCardViewLayoutParams(ImageDefaultView imageDefaultView, int width, int height) {
-            ViewGroup.LayoutParams layoutParams = imageDefaultView.getLayoutParams();
+        private void setCardViewLayoutParams(int width, int height) {
+            ViewGroup.LayoutParams layoutParams = groupItem.getLayoutParams();
             layoutParams.width = width;
             layoutParams.height = height;
-            imageDefaultView.setLayoutParams(layoutParams);
+            groupItem.setLayoutParams(layoutParams);
         }
     }
 

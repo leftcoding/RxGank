@@ -8,7 +8,6 @@ import com.leftcoding.network.Server;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Response;
 
@@ -55,18 +54,9 @@ public class GankServer extends Server {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public Observable<PageEntity<Gank>> images(final int page, final int limit) {
-        return gankApi.images(page, limit)
+    public Observable<Response<PageEntity<Gank>>> images(final boolean refresh, final int page, final int limit) {
+        return gankApi.images(cacheControl(refresh), page, limit)
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .map(new Function<Response<PageEntity<Gank>>, PageEntity<Gank>>() {
-                    @Override
-                    public PageEntity<Gank> apply(Response<PageEntity<Gank>> response) throws Exception {
-                        if (response == null || !response.isSuccessful()) {
-                            return null;
-                        }
-                        return response.body();
-                    }
-                });
+                .observeOn(AndroidSchedulers.mainThread());
     }
 }

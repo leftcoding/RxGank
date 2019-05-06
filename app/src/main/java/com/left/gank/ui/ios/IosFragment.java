@@ -6,12 +6,6 @@ import android.ly.business.domain.PageConfig;
 import android.os.Bundle;
 import android.view.View;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import com.left.gank.R;
 import com.left.gank.config.Constants;
 import com.left.gank.ui.base.LazyFragment;
@@ -22,6 +16,11 @@ import com.left.gank.widget.recyclerview.OnFlexibleScrollListener;
 
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 
 /**
@@ -38,7 +37,7 @@ public class IosFragment extends LazyFragment implements IosContract.View {
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
 
-    private IosAdapter1 iosAdapter;
+    private IosAdapter iosAdapter;
     private IosContract.Presenter iosPresenter;
     private PageConfig pageConfig = new PageConfig();
 
@@ -55,7 +54,7 @@ public class IosFragment extends LazyFragment implements IosContract.View {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        iosAdapter = new IosAdapter1(getContext());
+        iosAdapter = new IosAdapter(getContext());
         iosAdapter.setOnItemClickListener(onItemClickListener);
 
         OnFlexibleScrollListener onFlexibleScrollListener = new OnFlexibleScrollListener();
@@ -171,13 +170,11 @@ public class IosFragment extends LazyFragment implements IosContract.View {
         }
         if (iosAdapter != null) {
             if (PageConfig.isFirstPage(page)) {
-                iosAdapter.clearItems();
-//                iosAdapter.fillItems(list);
-//            } else {
-//                iosAdapter.appendItems(list);
+                iosAdapter.fillItems(list);
+            } else {
+                iosAdapter.appendItems(list);
             }
-            iosAdapter.update(list);
-//            iosAdapter.notifyDataSetChanged();
+            iosAdapter.notifyDataSetChanged();
         }
     }
 
@@ -185,8 +182,8 @@ public class IosFragment extends LazyFragment implements IosContract.View {
     public void loadIosFailure(int page, String msg) {
         if (!PageConfig.isFirstPage(page)) {
             if (iosAdapter != null) {
-//                iosAdapter.showError();
-//                iosAdapter.notifyDataSetChanged();
+                iosAdapter.showError();
+                iosAdapter.notifyDataSetChanged();
             }
         } else {
             if (multipleStatusView != null) {

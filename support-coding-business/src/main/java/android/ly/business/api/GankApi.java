@@ -39,17 +39,12 @@ public interface GankApi {
             @Path("limit") int limit
     );
 
-    @GET("all/{limit}/{page}")
-    Observable<Response<ListEntity<Gank>>> allGoods(
-            @Path("page") int page,
-            @Path("limit") int limit
-    );
-
     /**
      * 福利 - 图片
      */
     @GET("福利/{limit}/{page}")
     Observable<Response<PageEntity<Gank>>> images(
+            @Header(CACHE_CONTROL) CacheControl cacheControl,
             @Path("page") int page,
             @Path("limit") int limit
     );

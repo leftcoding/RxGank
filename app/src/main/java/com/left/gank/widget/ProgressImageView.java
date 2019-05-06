@@ -19,7 +19,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.bumptech.glide.request.target.Target;
 import com.left.gank.R;
-import com.left.gank.config.glide.ProgressTarget;
+import com.left.gank.glide.ProgressTarget;
 
 import androidx.fragment.app.Fragment;
 

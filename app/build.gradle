@@ -67,4 +67,6 @@ dependencies {
 
     implementation rootProject.ext.butterknife.butterknife
     annotationProcessor rootProject.ext.compilerDeps.butterknife_compiler
+
+    annotationProcessor rootProject.ext.compilerDeps.glide_compiler
 }

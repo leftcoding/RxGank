@@ -3,10 +3,6 @@ package com.left.gank.butterknife.adapter;
 import android.content.Context;
 import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.left.gank.butterknife.adapter.more.EndHolder;
 import com.left.gank.butterknife.adapter.more.EndItem;
 import com.left.gank.butterknife.adapter.more.ErrorHolder;
@@ -18,6 +14,10 @@ import com.left.gank.butterknife.item.ItemModel;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 
 public abstract class FootAdapter<VH extends BasicHolder, T> extends BaseAdapter<VH> {
     protected final Context context;
@@ -32,6 +32,7 @@ public abstract class FootAdapter<VH extends BasicHolder, T> extends BaseAdapter
 
     public FootAdapter(Context context) {
         this.context = context;
+        setHasStableIds(true);
         registerAdapterDataObserver(adapterDataObserver);
     }
 

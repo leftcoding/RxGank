@@ -1,4 +1,4 @@
-package com.left.gank.config.glide;
+package com.left.gank.glide;
 
 import com.bumptech.glide.load.Options;
 import com.bumptech.glide.load.data.DataFetcher;
