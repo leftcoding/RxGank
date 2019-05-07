@@ -23,7 +23,7 @@ public class WelfarePresenter extends WelfareContract.Presenter {
 
     @Override
     public void loadWelfare(boolean refresh, final boolean useProgress, final int page) {
-        GankServer.with(context)
+        GankServer.with()
                 .api()
                 .images(refresh, page, DEFAULT_LIMIT)
                 .doOnSubscribe(new Consumer<Disposable>() {

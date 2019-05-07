@@ -67,11 +67,6 @@ public class WelfareAdapter extends FootAdapter<WelfareAdapter.ViewHolder, List<
         }
     }
 
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
-
     public static class ViewHolder extends BindHolder<ImageItem> {
         @BindView(R.id.image)
         ImageView image;

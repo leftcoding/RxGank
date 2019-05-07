@@ -44,8 +44,8 @@ public class LocalDataSource extends BaseModel {
     }
 
     private LocalDataSource() {
-//        mUrlCollectDao = AppConfig.getDaoSession().getUrlCollectDao();
-//        mReadHistoryDao = AppConfig.getDaoSession().getReadHistoryDao();
+//        mUrlCollectDao = App.getDaoSession().getUrlCollectDao();
+//        mReadHistoryDao = App.getDaoSession().getReadHistoryDao();
     }
 
     public Observable<List<UrlCollect>> getCollect(final int offset, final int limit) {

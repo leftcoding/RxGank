@@ -1,4 +1,4 @@
-package com.leftcoding.network.http;
+package com.leftcoding.network.http.constants;
 
 public class HttpConstants {
 
@@ -41,7 +41,7 @@ public class HttpConstants {
     public static final String RANGE = "Range";
     public static final String REFERER = "Referer";
     public static final String RETRY_AFTER = "Retry-After";
-    public static final String SERVER = "Server";
+    public static final String SERVER = "BaseServer";
     public static final String TE = "TE";
     public static final String TRAILER = "Trailer";
     public static final String TRANSFER_ENCODING = "Transfer-Encoding";

@@ -145,7 +145,7 @@ public class JiandanWebActivity extends BaseActivity {
             mFromWay = bundle.getInt(FROM_WAY);
         }
 
-//        mUrlCollectDao = AppConfig.getDaoSession().getUrlCollectDao();
+//        mUrlCollectDao = App.getDaoSession().getUrlCollectDao();
         List<UrlCollect> list = mUrlCollectDao.queryBuilder().where(UrlCollectDao.Properties.Url.eq(mUrl)).list();
         if (!ListUtils.isEmpty(list)) {
             isInitCollect = true;

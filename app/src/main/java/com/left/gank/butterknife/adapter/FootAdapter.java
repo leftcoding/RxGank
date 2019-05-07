@@ -32,7 +32,6 @@ public abstract class FootAdapter<VH extends BasicHolder, T> extends BaseAdapter
 
     public FootAdapter(Context context) {
         this.context = context;
-        setHasStableIds(true);
         registerAdapterDataObserver(adapterDataObserver);
     }
 

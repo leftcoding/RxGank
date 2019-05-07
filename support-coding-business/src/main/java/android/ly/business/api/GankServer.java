@@ -1,10 +1,11 @@
 package android.ly.business.api;
 
-import android.content.Context;
 import android.ly.business.domain.Gank;
 import android.ly.business.domain.PageEntity;
 
-import com.leftcoding.network.Server;
+import com.leftcoding.network.RxServer;
+import com.leftcoding.network.BaseServer;
+import com.leftcoding.network.builder.Builder;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -16,26 +17,32 @@ import retrofit2.Response;
  * Create by LingYan on 2017-09-30
  */
 
-public class GankServer extends Server {
+public class GankServer extends BaseServer {
     private volatile static GankServer server;
     private GankApi gankApi;
 
-    private GankServer(Context context) {
-        super(context);
+    private GankServer() {
+        super();
     }
 
+    @Override
+    public Builder init() {
+        return RxServer.initConfig();
+    }
+
+    @Override
     public GankServer api() {
         if (gankApi == null) {
-            gankApi = create(GankApi.class);
+            gankApi = RxServer.get().api().create(GankApi.class);
         }
         return this;
     }
 
-    public static GankServer with(Context context) {
+    public static GankServer with() {
         if (server == null) {
             synchronized (GankServer.class) {
                 if (server == null) {
-                    server = new GankServer(context);
+                    server = new GankServer();
                 }
             }
         }
