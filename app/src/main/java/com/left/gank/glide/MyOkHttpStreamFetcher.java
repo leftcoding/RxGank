@@ -1,4 +1,4 @@
-package com.left.gank.config.glide;
+package com.left.gank.glide;
 
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.integration.okhttp3.OkHttpStreamFetcher;

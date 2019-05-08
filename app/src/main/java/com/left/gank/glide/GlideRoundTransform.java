@@ -1,4 +1,4 @@
-package com.left.gank.config.glide;
+package com.left.gank.glide;
 
 import android.content.Context;
 import android.content.res.Resources;

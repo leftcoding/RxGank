@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.left.gank.R;
-import com.left.gank.config.glide.GlideRoundTransform;
+import com.left.gank.glide.GlideRoundTransform;
 import com.left.gank.data.entity.UrlCollect;
 import com.left.gank.ui.base.holder.BaseHolder;
 import com.left.gank.utils.DateUtils;

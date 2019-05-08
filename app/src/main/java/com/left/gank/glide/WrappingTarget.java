@@ -1,4 +1,4 @@
-package com.left.gank.config.glide;
+package com.left.gank.glide;
 
 import android.graphics.drawable.Drawable;
 import androidx.annotation.Nullable;

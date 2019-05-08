@@ -1,17 +1,10 @@
 package com.left.gank.ui;
 
-import android.content.res.Resources;
 import android.os.Bundle;
-import android.util.TypedValue;
 import android.view.KeyEvent;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
 import com.left.gank.R;
 import com.left.gank.rxjava.RxBus_;
-import com.left.gank.rxjava.theme.ThemeEvent;
 import com.left.gank.ui.base.activity.BaseActivity;
 import com.left.gank.ui.discovered.DiscoveredFragment;
 import com.left.gank.ui.girls.GirlsFragment;
@@ -19,27 +12,34 @@ import com.left.gank.ui.main.IndexFragment;
 import com.left.gank.ui.mine.MineFragment;
 import com.left.gank.utils.permission.PermissionUtils;
 import com.roughike.bottombar.BottomBar;
+import com.roughike.bottombar.OnTabSelectListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import butterknife.BindView;
-import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 
 /**
  * Create by LingYan on 2016-6-13
  */
 public class MainActivity extends BaseActivity {
+    private static final int DEFAULT_TAB_POSITION = 0;
+
+    private static final int TAB_HOME = 0;
+    private static final int TAB_NEWS = 1;
+    private static final int TAB_IMAGE = 2;
+    private static final int TAB_MORE = 3;
+
     @BindView(R.id.bottomBar)
-    BottomBar mBottomBar;
+    BottomBar bottomBar;
 
-    private long mKeyDownTime;
-    private Fragment mCurFragment;
+    private long keyDownTime;
+    private Fragment curFragment;
 
-    private Integer[] mBottomBarTabs = {R.id.tab_home, R.id.tab_image, R.id.tab_more, R.id.tab_news};
-    private List<Fragment> mFragmentList;
-    private int mIndex = 0;
+    private List<Fragment> fragmentList;
+    private int index = 0;
     private boolean isRestore = false;
 
     @Override
@@ -47,71 +47,60 @@ public class MainActivity extends BaseActivity {
         return R.layout.fragment_main_bottom_navigation;
     }
 
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         if (savedInstanceState != null) {
             isRestore = savedInstanceState.getBoolean("isRestore");
-            mIndex = savedInstanceState.getInt("index");
+            index = savedInstanceState.getInt("index");
         }
-        super.onCreate(savedInstanceState);
 
         PermissionUtils.requestAllPermissions(this);
 
-        if (mFragmentList == null) {
-            mFragmentList = getFragmentList();
+        fragmentList = getFragmentList();
+        bottomBar.setDefaultTabPosition(DEFAULT_TAB_POSITION);
+
+        bottomBar.setOnTabSelectListener(onTabSelectListener);
+    }
+
+    private final OnTabSelectListener onTabSelectListener = new OnTabSelectListener() {
+        @Override
+        public void onTabSelected(int tabId) {
+            index = getFragmentIndex(tabId);
+            openFragment(index);
         }
-        mBottomBar.setDefaultTabPosition(0);
-
-        changeBottomBar();
-
-        RxBus_.getInstance().toObservable(ThemeEvent.class)
-                .subscribe(themeEvent -> changeBottomBar());
-
-        mBottomBar.setOnTabSelectListener(tabId -> {
-            mIndex = getFragmentIndex(tabId);
-            openFragment(mIndex);
-        });
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-    }
+    };
 
     private int getFragmentIndex(int tabId) {
-        int index;
+        int index = TAB_HOME;
         switch (tabId) {
             case R.id.tab_home:
-                index = 0;
+                index = TAB_HOME;
                 break;
             case R.id.tab_news:
-                index = 1;
+                index = TAB_NEWS;
                 break;
             case R.id.tab_image:
-                index = 2;
+                index = TAB_IMAGE;
                 break;
             case R.id.tab_more:
-                index = 3;
-                break;
-            default:
-                index = 0;
+                index = TAB_MORE;
                 break;
         }
         return index;
     }
 
     private void openFragment(int index) {
-        Fragment fragmentTo = mFragmentList.get(index);
-        if (mCurFragment == null) {
+        Fragment fragmentTo = fragmentList.get(index);
+        if (curFragment == null) {
             if (!isRestore) {
                 addMainFragment(fragmentTo);
             }
-            mCurFragment = fragmentTo;
+            curFragment = fragmentTo;
         } else {
-            if (!mCurFragment.equals(fragmentTo)) {
-                addAnimFragment(mCurFragment, fragmentTo, true);
-                mCurFragment = fragmentTo;
+            if (!curFragment.equals(fragmentTo)) {
+                addAnimFragment(curFragment, fragmentTo, true);
+                curFragment = fragmentTo;
             }
         }
     }
@@ -123,18 +112,6 @@ public class MainActivity extends BaseActivity {
         fragments.add(new GirlsFragment());
         fragments.add(new MineFragment());
         return fragments;
-    }
-
-    public void changeBottomBar() {
-        TypedValue typedValue = new TypedValue();
-        Resources.Theme theme = getTheme();
-        theme.resolveAttribute(R.attr.colorPrimary, typedValue, true);
-        final int color = typedValue.resourceId;
-
-        Observable.fromArray(mBottomBarTabs)
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(integer -> mBottomBar.getTabWithId(integer).setBackgroundResource(color));
     }
 
     @Override
@@ -161,11 +138,10 @@ public class MainActivity extends BaseActivity {
         RxBus_.getInstance().removeAllStickyEvents();// 移除所有Sticky事件
     }
 
-
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         outState.putBoolean("isRestore", true);
-        outState.putInt("index", mIndex);
+        outState.putInt("index", index);
         super.onSaveInstanceState(outState);
     }
 }

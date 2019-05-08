@@ -25,25 +25,27 @@ android {
 
 dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
+    configurations {
+        all*.exclude group: 'com.android.support', module: 'support-v13'
+    }
 
     testImplementation rootProject.ext.commonsDeps.junit
     androidTestImplementation rootProject.ext.testDeps.runner
     androidTestImplementation rootProject.ext.testDeps.espresso_core
 
-    api project(':support-coding-business')
-    api project(':support-coding-rxbus')
-    api project(':superplayerlibrary')
-    api project(':support-coding-ui')
-    api project(':support-coding-jsoup')
+    api project(path: ':support-coding-business')
+    api project(path: ':support-coding-rxbus')
+    api project(path: ':superplayerlibrary')
+    api project(path: ':support-coding-ui')
+    api project(path: ':support-coding-jsoup')
+    api project(path: ':support-coding-network')
 
     api rootProject.ext.supportLibs
     api rootProject.ext.commonsLibs
     api rootProject.ext.rxjavaLibs
-    api rootProject.ext.leakcanaryLibs
     api rootProject.ext.okhttpLibs
     api rootProject.ext.greendaoLibs
     api rootProject.ext.stethoLibs
-    api rootProject.ext.butterknifeLibs
     api rootProject.ext.glideLibs
     api rootProject.ext.retrofitLibs
 }

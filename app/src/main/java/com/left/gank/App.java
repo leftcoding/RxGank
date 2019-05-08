@@ -10,7 +10,6 @@ import com.left.gank.config.Constants;
 import com.left.gank.config.HttpUrlConfig;
 import com.leftcoding.network.interceptor.CacheNetworkInterceptor;
 import com.leftcoding.network.interceptor.CacheOffLineInterceptor;
-import com.squareup.leakcanary.LeakCanary;
 import com.tencent.bugly.Bugly;
 import com.tencent.bugly.beta.Beta;
 import com.tencent.smtt.sdk.QbSdk;
@@ -23,10 +22,7 @@ import okhttp3.logging.HttpLoggingInterceptor;
 /**
  * Create by LingYan on 2016-04-01
  */
-public class AppConfig extends Application {
-
-    public AppConfig() {
-    }
+public class App extends Application {
 
     @Override
     public void onCreate() {
@@ -38,28 +34,20 @@ public class AppConfig extends Application {
             appDir.mkdirs();
         }
 
-        GankServer.with(this)
-                .initConfig()
+        GankServer.with()
+                .init()
                 .baseUrl(HttpUrlConfig.GANK_URL)
                 .cache(new Cache(appDir, 10 * 1024 * 1024))
                 .addInterceptor(new CacheOffLineInterceptor(this))
-//                .addInterceptor(new GatewayTimeOutInterceptor())
                 .addNetworkInterceptor(new CacheNetworkInterceptor())
                 .addNetworkInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY));
-
-//        GankServerHelper.init(AppConfig.this)
-//                .baseUrl(HttpUrlConfig.GANK_URL)
-//                .cache(new Cache(appDir, 10 * 1024 * 1024))
-//                .addInterceptor(new CacheOffLineInterceptor(this))
-//                .addNetworkInterceptor(new CacheNetworkInterceptor())
-//                .addNetworkInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY));
     }
 
     /**
      * 数据库Chrome上调试
      */
     private void setupStetho() {
-        Stetho.initializeWithDefaults(AppConfig.this);
+        Stetho.initializeWithDefaults(App.this);
     }
 
     /**
@@ -68,7 +56,7 @@ public class AppConfig extends Application {
     private void setupBugly() {
         Beta.autoDownloadOnWifi = true;
 //        Beta.autoCheckUpgrade = GanklyPreferences.getBoolean(Preferences.SETTING_AUTO_CHECK, true);
-        Bugly.init(AppConfig.this, Constants.CRASH_LOG_ID, false);
+        Bugly.init(App.this, Constants.CRASH_LOG_ID, false);
     }
 
     /**
@@ -88,16 +76,6 @@ public class AppConfig extends Application {
             }
         };
         //x5内核初始化接口
-        QbSdk.initX5Environment(AppConfig.this, cb);
-    }
-
-    /**
-     * 内存监视
-     */
-    private void setupLeakCanary() {
-        if (LeakCanary.isInAnalyzerProcess(this)) {
-            return;
-        }
-        LeakCanary.install(this);
+        QbSdk.initX5Environment(App.this, cb);
     }
 }

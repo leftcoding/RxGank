@@ -20,8 +20,9 @@ public class PageConfig {
      */
     private int curPage = 1;
 
-    public PageConfig() {
+    private boolean isEnd;
 
+    public PageConfig() {
     }
 
     public PageConfig(int limit, int initPage, int curPage) {
@@ -39,7 +40,14 @@ public class PageConfig {
     }
 
     public void setCurPage(int page) {
+        if (page == curPage && page > 1) {
+            isEnd = true;
+        }
         this.curPage = page;
+    }
+
+    public boolean isEnd() {
+        return isEnd;
     }
 
     public int getCurPage() {
