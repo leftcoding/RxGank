@@ -1,4 +1,4 @@
-package com.leftcoding.network;
+package com.leftcoding.network.server;
 
 import com.leftcoding.network.builder.Builder;
 

@@ -1,4 +1,4 @@
-package com.leftcoding.network;
+package com.leftcoding.network.server;
 
 /**
  * Create by LingYan on 2019-04-27

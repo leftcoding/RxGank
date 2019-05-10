@@ -39,6 +39,8 @@ dependencies {
     api project(path: ':support-coding-ui')
     api project(path: ':support-coding-jsoup')
     api project(path: ':support-coding-network')
+    api project(path: ':support-coding-download')
+    api project(path: ':support-coding-file')
 
     api rootProject.ext.supportLibs
     api rootProject.ext.commonsLibs

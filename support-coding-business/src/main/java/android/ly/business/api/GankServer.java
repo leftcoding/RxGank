@@ -4,7 +4,7 @@ import android.ly.business.domain.Gank;
 import android.ly.business.domain.PageEntity;
 
 import com.leftcoding.network.RxServer;
-import com.leftcoding.network.BaseServer;
+import com.leftcoding.network.server.BaseServer;
 import com.leftcoding.network.builder.Builder;
 
 import io.reactivex.Observable;
