@@ -14,7 +14,6 @@ android {
             abiFilters 'armeabi', 'x86', 'armeabi-v7a', 'x86_64', 'arm64-v8a'
         }
 
-        buildConfigField("String", "GANK_SERVER_ULR", "\"${gank_server_url}\"")
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         testOptions.unitTests.includeAndroidResources = true
     }

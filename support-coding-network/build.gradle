@@ -1,16 +1,15 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion rootProject.compileSdkVersion
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
 
     defaultConfig {
-        minSdkVersion rootProject.minSdkVersion
-        targetSdkVersion rootProject.targetSdkVersion
-        versionCode rootProject.normalVersionCode
-        versionName rootProject.normalVersionName
-
-        buildConfigField("String", "GANK_SERVER_ULR", "\"${gank_server_url}\"")
+        minSdkVersion rootProject.ext.android.minSdkversion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        versionCode rootProject.ext.android.moduleCode
+        versionName rootProject.ext.android.moduleName
     }
+
     buildTypes {
         debug {
             minifyEnabled false
@@ -25,13 +24,10 @@ android {
 
 dependencies {
     api fileTree(include: ['*.jar'], dir: 'libs')
-    // Gson
-    api "com.google.code.gson:gson:${gsonVersion}"
 
-    // Retrofit
-    api "com.squareup.okhttp3:logging-interceptor:${loggingInterceptor}"
+    api rootProject.ext.commonsDeps.gson
 
-    api "com.squareup.retrofit2:retrofit:${retrofitVersion}"
-    api "com.squareup.retrofit2:converter-gson:${converterGson}"
-    api "com.squareup.retrofit2:adapter-rxjava2:${adapterRxjava2}"
+    api rootProject.ext.okhttp3.logging_interceptor
+
+    api rootProject.ext.retrofitLibs
 }

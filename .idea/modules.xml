@@ -13,6 +13,7 @@
       <module fileurl="file://$PROJECT_DIR$/support-coding-file/support-coding-file.iml" filepath="$PROJECT_DIR$/support-coding-file/support-coding-file.iml" />
       <module fileurl="file://$PROJECT_DIR$/support-coding-jsoup/support-coding-jsoup.iml" filepath="$PROJECT_DIR$/support-coding-jsoup/support-coding-jsoup.iml" />
       <module fileurl="file://$PROJECT_DIR$/support-coding-network/support-coding-network.iml" filepath="$PROJECT_DIR$/support-coding-network/support-coding-network.iml" />
+      <module fileurl="file://$PROJECT_DIR$/support-coding-permission/support-coding-permission.iml" filepath="$PROJECT_DIR$/support-coding-permission/support-coding-permission.iml" />
       <module fileurl="file://$PROJECT_DIR$/support-coding-rxbus/support-coding-rxbus.iml" filepath="$PROJECT_DIR$/support-coding-rxbus/support-coding-rxbus.iml" />
       <module fileurl="file://$PROJECT_DIR$/support-coding-ui/support-coding-ui.iml" filepath="$PROJECT_DIR$/support-coding-ui/support-coding-ui.iml" />
     </modules>

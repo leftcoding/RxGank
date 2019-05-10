@@ -1,13 +1,13 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion rootProject.compileSdkVersion
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
 
     defaultConfig {
-        minSdkVersion rootProject.minSdkVersion
-        targetSdkVersion rootProject.targetSdkVersion
-        versionCode rootProject.normalVersionCode
-        versionName rootProject.normalVersionName
+        minSdkVersion rootProject.ext.android.minSdkversion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        versionCode rootProject.ext.android.moduleCode
+        versionName rootProject.ext.android.moduleName
     }
 
     buildTypes {
@@ -22,6 +22,6 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
-    api "org.jsoup:jsoup:${jsoup}"
+    api rootProject.ext.commonsDeps.jsoup
     implementation project(':support-coding-rxbus')
 }

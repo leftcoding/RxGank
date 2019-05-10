@@ -1,16 +1,15 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion rootProject.compileSdkVersion
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
 
     defaultConfig {
-        minSdkVersion rootProject.minSdkVersion
-        targetSdkVersion rootProject.targetSdkVersion
-        versionCode rootProject.normalVersionCode
-        versionName rootProject.normalVersionName
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        minSdkVersion rootProject.ext.android.minSdkversion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        versionCode rootProject.ext.android.moduleCode
+        versionName rootProject.ext.android.moduleName
     }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -20,7 +19,6 @@ android {
 }
 
 dependencies {
-    api fileTree(dir: 'libs', include: ['*.jar'])
-    api "io.reactivex.rxjava2:rxjava:${rxjava}"
-    api "io.reactivex.rxjava2:rxandroid:${rxandroid}"
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    api rootProject.ext.rxjavaLibs
 }

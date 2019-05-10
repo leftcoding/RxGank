@@ -1,13 +1,13 @@
 package com.left.gank;
 
 import android.app.Application;
-import android.ly.business.api.GankServer;
 import android.os.Environment;
 import android.util.Log;
 
 import com.facebook.stetho.Stetho;
 import com.left.gank.config.Constants;
 import com.left.gank.config.HttpUrlConfig;
+import com.leftcoding.network.HttpServer;
 import com.leftcoding.network.interceptor.CacheNetworkInterceptor;
 import com.leftcoding.network.interceptor.CacheOffLineInterceptor;
 import com.tencent.bugly.Bugly;
@@ -34,8 +34,7 @@ public class App extends Application {
             appDir.mkdirs();
         }
 
-        GankServer.with()
-                .init()
+        HttpServer.initConfig()
                 .baseUrl(HttpUrlConfig.GANK_URL)
                 .cache(new Cache(appDir, 10 * 1024 * 1024))
                 .addInterceptor(new CacheOffLineInterceptor(this))

@@ -3,9 +3,7 @@ package android.ly.business.api;
 import android.ly.business.domain.Gank;
 import android.ly.business.domain.PageEntity;
 
-import com.leftcoding.network.RxServer;
-import com.leftcoding.network.server.BaseServer;
-import com.leftcoding.network.builder.Builder;
+import com.leftcoding.network.HttpServer;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -17,7 +15,7 @@ import retrofit2.Response;
  * Create by LingYan on 2017-09-30
  */
 
-public class GankServer extends BaseServer {
+public class GankServer extends HttpServer {
     private volatile static GankServer server;
     private GankApi gankApi;
 
@@ -25,15 +23,9 @@ public class GankServer extends BaseServer {
         super();
     }
 
-    @Override
-    public Builder init() {
-        return RxServer.initConfig();
-    }
-
-    @Override
     public GankServer api() {
         if (gankApi == null) {
-            gankApi = RxServer.get().api().create(GankApi.class);
+            gankApi = HttpServer.get().api().create(GankApi.class);
         }
         return this;
     }
