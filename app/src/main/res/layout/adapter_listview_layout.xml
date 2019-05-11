@@ -3,7 +3,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?attr/lyItemSelectBackground"
     android:elevation="1dp"
     android:orientation="vertical"
     android:paddingBottom="8dp"
@@ -51,7 +50,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:text=""
-                    android:textColor="?attr/budejieAdapterTitleColor"
                     android:textSize="12sp"/>
             </LinearLayout>
         </LinearLayout>
@@ -63,7 +61,6 @@
             android:layout_below="@id/baisi_ll_head"
             android:maxLines="2"
             android:text=""
-            android:textColor="?attr/budejieAdapterTitleColor"
             android:textSize="16sp"/>
     </RelativeLayout>
 

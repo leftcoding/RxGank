@@ -7,12 +7,6 @@ import android.ly.business.domain.PageConfig;
 import android.os.Bundle;
 import android.view.View;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import com.left.gank.R;
 import com.left.gank.butterknife.adapter.FootAdapter;
 import com.left.gank.config.Constants;
@@ -26,6 +20,11 @@ import com.left.gank.widget.recyclerview.OnFlexibleScrollListener;
 
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 
 /**
@@ -61,18 +60,16 @@ public class AndroidFragment extends LazyFragment implements AndroidContract.Vie
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         androidAdapter = new AndroidAdapter(context);
         androidAdapter.setErrorListener(errorListener);
         androidAdapter.setCallback(callback);
 
         recyclerView.setAdapter(androidAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        OnFlexibleScrollListener onFlexibleScrollListener = new OnFlexibleScrollListener();
+        OnFlexibleScrollListener onFlexibleScrollListener = new OnFlexibleScrollListener(swipeRefreshLayout);
         onFlexibleScrollListener.setOnScrollListener(scrollListener);
         recyclerView.addOnScrollListener(onFlexibleScrollListener);
 
-        swipeRefreshLayout.setOnRefreshListener(onRefreshListener);
         multipleStatusView.setListener(onMultipleClick);
     }
 
@@ -82,23 +79,18 @@ public class AndroidFragment extends LazyFragment implements AndroidContract.Vie
         loadAndroid(true, PageConfig.starPage());
     }
 
-    private final FootAdapter.ErrorListener errorListener = new FootAdapter.ErrorListener() {
-        @Override
-        public void onClickError() {
-            if (pageConfig != null) {
-                loadAndroid(false, pageConfig.getNextPage());
-            }
-        }
-    };
-
-    private final SwipeRefreshLayout.OnRefreshListener onRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
-        @Override
-        public void onRefresh() {
-            loadAndroid(false, PageConfig.starPage());
+    private final FootAdapter.ErrorListener errorListener = () -> {
+        if (pageConfig != null) {
+            loadAndroid(false, pageConfig.getNextPage());
         }
     };
 
     private final OnFlexibleScrollListener.ScrollListener scrollListener = new OnFlexibleScrollListener.ScrollListener() {
+        @Override
+        public void onRefresh() {
+            loadAndroid(false, PageConfig.starPage());
+        }
+
         @Override
         public void onLoadMore() {
             if (pageConfig != null) {
@@ -128,7 +120,7 @@ public class AndroidFragment extends LazyFragment implements AndroidContract.Vie
 
     private void loadAndroid(boolean useProgress, int page) {
         if (androidPresenter != null) {
-            androidPresenter.loadAndroid(false, useProgress, page);
+            androidPresenter.loadAndroid(true, useProgress, page);
         }
     }
 

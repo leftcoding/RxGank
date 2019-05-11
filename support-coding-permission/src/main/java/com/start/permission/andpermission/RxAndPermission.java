@@ -1,7 +1,6 @@
 package com.start.permission.andpermission;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 
 import com.start.permission.Request;
 import com.start.permission.RequestCallback;
@@ -55,7 +54,7 @@ public class RxAndPermission implements Request {
                 })
                 .onDenied(new Action<List<String>>() {
                     @Override
-                    public void onAction(@NonNull List<String> permissions) {
+                    public void onAction(List<String> permissions) {
                         if (callback != null) {
                             callback.onDenied(permissions);
                         }

@@ -57,13 +57,11 @@ public class IosFragment extends LazyFragment implements IosContract.View {
         iosAdapter = new IosAdapter(getContext());
         iosAdapter.setOnItemClickListener(onItemClickListener);
 
-        OnFlexibleScrollListener onFlexibleScrollListener = new OnFlexibleScrollListener();
+        OnFlexibleScrollListener onFlexibleScrollListener = new OnFlexibleScrollListener(swipeRefreshLayout);
         onFlexibleScrollListener.setOnScrollListener(scrollListener);
         recyclerView.addOnScrollListener(onFlexibleScrollListener);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(iosAdapter);
-
-        swipeRefreshLayout.setOnRefreshListener(onRefreshListener);
         multipleStatusView.setListener(multipleClick);
     }
 
@@ -82,17 +80,15 @@ public class IosFragment extends LazyFragment implements IosContract.View {
 
     private final OnFlexibleScrollListener.ScrollListener scrollListener = new OnFlexibleScrollListener.ScrollListener() {
         @Override
+        public void onRefresh() {
+            loadIos(true, PageConfig.starPage());
+        }
+
+        @Override
         public void onLoadMore() {
             if (pageConfig != null) {
                 loadIos(false, pageConfig.getNextPage());
             }
-        }
-    };
-
-    private final SwipeRefreshLayout.OnRefreshListener onRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
-        @Override
-        public void onRefresh() {
-            loadIos(true, PageConfig.starPage());
         }
     };
 
@@ -142,7 +138,7 @@ public class IosFragment extends LazyFragment implements IosContract.View {
 
     private void loadIos(boolean useProgress, int page) {
         if (iosPresenter != null) {
-            iosPresenter.loadIos(false, useProgress, page);
+            iosPresenter.loadIos(true, useProgress, page);
         }
     }
 

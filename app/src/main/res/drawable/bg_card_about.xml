@@ -10,7 +10,7 @@
 
     <item android:bottom="2dp">
         <shape android:shape="rectangle">
-            <solid android:color="?attr/aboutTextViewBackground"/>
+            <solid android:color="@color/colorPrimary"/>
             <corners android:radius="3dp"/>
         </shape>
     </item>

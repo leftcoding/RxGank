@@ -1,9 +1,9 @@
 package com.left.gank;
 
 import android.app.Application;
-import android.os.Environment;
 import android.util.Log;
 
+import com.coding.file.FilePathUtils;
 import com.facebook.stetho.Stetho;
 import com.left.gank.config.Constants;
 import com.left.gank.config.HttpUrlConfig;
@@ -13,8 +13,6 @@ import com.leftcoding.network.interceptor.CacheOffLineInterceptor;
 import com.tencent.bugly.Bugly;
 import com.tencent.bugly.beta.Beta;
 import com.tencent.smtt.sdk.QbSdk;
-
-import java.io.File;
 
 import okhttp3.Cache;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -29,14 +27,11 @@ public class App extends Application {
         super.onCreate();
         setupStetho();
         setupX5WebView();
-        File appDir = new File(Environment.getExternalStorageDirectory(), "GankLy/network");
-        if (!appDir.exists()) {
-            appDir.mkdirs();
-        }
 
+        FilePathUtils.init("edu");
         HttpServer.initConfig()
                 .baseUrl(HttpUrlConfig.GANK_URL)
-                .cache(new Cache(appDir, 10 * 1024 * 1024))
+                .cache(new Cache(FilePathUtils.mkHttpPath(), 10 * 1024 * 1024))
                 .addInterceptor(new CacheOffLineInterceptor(this))
                 .addNetworkInterceptor(new CacheNetworkInterceptor())
                 .addNetworkInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY));

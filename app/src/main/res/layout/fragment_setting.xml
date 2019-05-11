@@ -15,7 +15,6 @@
             android:id="@+id/setting_rl_body"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="?attr/baseAdapterItemBackground"
             android:orientation="vertical"
             app:divider="@drawable/shape_item_divider"
             app:dividerPadding="16dp"
@@ -61,8 +60,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:gravity="start"
-                    android:text="@string/navigation_about"
-                    android:textColor="?attr/textTitleColor" />
+                    android:text="@string/navigation_about" />
             </com.left.gank.widget.LYRelativeLayoutRipple>
         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -73,7 +71,6 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="15dp"
-            android:text="@string/app_website"
-            android:textColor="?attr/textTitleColor" />
+            android:text="@string/app_website" />
     </RelativeLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

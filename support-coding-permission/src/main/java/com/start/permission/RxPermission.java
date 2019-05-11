@@ -3,7 +3,6 @@ package com.start.permission;
 import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
-import android.support.v4.app.Fragment;
 
 import com.start.permission.source.ActivitySource;
 import com.start.permission.source.ContextSource;
@@ -12,6 +11,8 @@ import com.start.permission.source.Source;
 import com.yanzhenjie.permission.AndPermission;
 
 import java.util.List;
+
+import androidx.fragment.app.Fragment;
 
 public class RxPermission {
     public static final int RESULT_CODE = 100;

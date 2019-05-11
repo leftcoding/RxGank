@@ -32,7 +32,7 @@ public class WelfareFragment extends LazyFragment implements WelfareContract.Vie
     MultipleStatusView multipleStatusView;
 
     @BindView(R.id.swipe_refresh)
-    SwipeRefreshLayout swipeRefreshLayout;
+    SwipeRefreshLayout swipeRefresh;
 
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
@@ -54,12 +54,11 @@ public class WelfareFragment extends LazyFragment implements WelfareContract.Vie
 
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,
                 StaggeredGridLayoutManager.VERTICAL));
-        OnFlexibleScrollListener scrollListener = new OnFlexibleScrollListener();
+        OnFlexibleScrollListener scrollListener = new OnFlexibleScrollListener(swipeRefresh);
         scrollListener.setOnScrollListener(this.scrollListener);
         recyclerView.addOnScrollListener(scrollListener);
         recyclerView.setAdapter(welfareAdapter);
 
-        swipeRefreshLayout.setOnRefreshListener(onRefreshListener);
         multipleStatusView.setListener(onMultipleClick);
     }
 
@@ -71,17 +70,15 @@ public class WelfareFragment extends LazyFragment implements WelfareContract.Vie
 
     private final OnFlexibleScrollListener.ScrollListener scrollListener = new OnFlexibleScrollListener.ScrollListener() {
         @Override
+        public void onRefresh() {
+            loadWelfare(true, PageConfig.starPage());
+        }
+
+        @Override
         public void onLoadMore() {
             if (pageConfig != null) {
                 loadWelfare(false, pageConfig.getNextPage());
             }
-        }
-    };
-
-    private final SwipeRefreshLayout.OnRefreshListener onRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
-        @Override
-        public void onRefresh() {
-            loadWelfare(true, PageConfig.starPage());
         }
     };
 
@@ -108,21 +105,21 @@ public class WelfareFragment extends LazyFragment implements WelfareContract.Vie
 
     private void loadWelfare(boolean useProgress, int page) {
         if (presenter != null) {
-            presenter.loadWelfare(false, useProgress, page);
+            presenter.loadWelfare(true, useProgress, page);
         }
     }
 
     @Override
     public void hideProgress() {
-        if (swipeRefreshLayout != null) {
-            swipeRefreshLayout.setRefreshing(false);
+        if (swipeRefresh != null) {
+            swipeRefresh.setRefreshing(false);
         }
     }
 
     @Override
     public void showProgress() {
-        if (swipeRefreshLayout != null) {
-            swipeRefreshLayout.setRefreshing(true);
+        if (swipeRefresh != null) {
+            swipeRefresh.setRefreshing(true);
         }
     }
 

@@ -4,7 +4,7 @@ ext {
             compileSdkVersion: 28,
             applicationId    : "com.gank.gankly",
             minSdkversion    : 21,
-            targetSdkVersion : 28,
+            targetSdkVersion : 26,
             versionName      : "1.0",
             moduleName       : "1.0",
             moduleCode       : 1,

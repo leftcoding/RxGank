@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main_content"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="?attr/aboutBackground">
+    android:layout_height="match_parent">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -16,7 +14,6 @@
             android:id="@+id/about_collapsing"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:contentScrim="?attr/colorPrimary"
             app:expandedTitleTextAppearance="@style/CollapsingToolbarTitleStyle"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
@@ -26,13 +23,13 @@
                 android:layout_height="match_parent"
                 android:contentDescription="@null"
                 android:scaleType="centerCrop"
-                android:src="@drawable/about_head_bg"/>
+                android:src="@drawable/about_head_bg" />
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/about_toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:layout_collapseMode="pin"/>
+                android:layout_height="48dp"
+                app:layout_collapseMode="pin" />
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -53,29 +50,27 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="16dp"
                 android:lineSpacingExtra="5dp"
-                android:paddingEnd="12dp"
                 android:paddingStart="12dp"
-                android:textSize="14sp"
-                android:textColor="?attr/textTitleColor"
-                android:text="@string/about_app_str"/>
+                android:paddingEnd="12dp"
+                android:text="@string/about_app_str"
+                android:textSize="14sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginTop="16dp"
                 android:lineSpacingExtra="5dp"
-                android:paddingEnd="12dp"
                 android:paddingStart="12dp"
-                android:textSize="14sp"
+                android:paddingEnd="12dp"
                 android:text="@string/about_thanks_str"
-                android:textColor="?attr/textTitleColor"/>
+                android:textSize="14sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
                 android:layout_marginTop="16dp"
+                android:layout_marginRight="8dp"
                 android:background="@drawable/bg_card_about"
                 android:orientation="vertical"
                 android:paddingBottom="8dp">
@@ -85,28 +80,28 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:textSummary="@string/about_gank_url"
-                    app:textTitle="@string/about_gank"/>
+                    app:textTitle="@string/about_gank" />
 
                 <com.left.gank.widget.ItemTextView
                     android:id="@+id/about_item_text_mzitu"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:textSummary="@string/about_mzitu_url"
-                    app:textTitle="@string/about_mzitu"/>
+                    app:textTitle="@string/about_mzitu" />
 
                 <com.left.gank.widget.ItemTextView
                     android:id="@+id/about_item_text_github"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:textSummary="@string/about_my_github_url"
-                    app:textTitle="@string/about_my_github"/>
+                    app:textTitle="@string/about_my_github" />
 
                 <com.left.gank.widget.ItemTextView
                     android:id="@+id/about_item_text_contact"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:textSummary="@string/about_contact_email"
-                    app:textTitle="@string/about_contact"/>
+                    app:textTitle="@string/about_contact" />
             </LinearLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

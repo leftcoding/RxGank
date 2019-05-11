@@ -79,7 +79,7 @@ public class CollectFragment extends SupportFragment implements CollectContract.
                     }
                 });
 
-        mSwipeRefreshLayout.setOnScrollListener(new LySwipeRefreshLayout.OnSwipeRefreshListener() {
+        mSwipeRefreshLayout.setOnScrollListener(new LySwipeRefreshLayout.OnListener() {
             @Override
             public void onRefresh() {
                 showProgress();

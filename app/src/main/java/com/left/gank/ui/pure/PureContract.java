@@ -2,13 +2,13 @@ package com.left.gank.ui.pure;
 
 import android.content.Context;
 import android.ly.business.domain.Gift;
-import androidx.annotation.NonNull;
 
 import com.left.gank.mvp.base.LoadMorePresenter;
 import com.left.gank.mvp.base.SupportView;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import androidx.annotation.NonNull;
 
 /**
  * Create by LingYan on 2016-12-27
@@ -16,13 +16,17 @@ import java.util.List;
 
 public interface PureContract {
     interface View extends SupportView {
-        void refillData(List<Gift> list);
+        void loadDataSuccess(int page, List<Gift> list);
 
-        void appendData(List<Gift> list);
+        void loadDataFailure(int page, String msg);
 
-        void openGalleryActivity(ArrayList<Gift> list);
+        void showLoadingDialog();
 
-        void disLoadingDialog();
+        void hideLoadingDialog();
+
+        void loadImagesSuccess(List<Gift> list);
+
+        void loadImagesFailure(String msg);
     }
 
     abstract class Presenter extends LoadMorePresenter<View> {
@@ -31,10 +35,8 @@ public interface PureContract {
             super(context, view);
         }
 
-        abstract void refreshImages(String url);
+        abstract void loadData(int page);
 
-        abstract void refreshPure();
-
-        abstract void appendPure();
+        abstract void loadImages(String url);
     }
 }

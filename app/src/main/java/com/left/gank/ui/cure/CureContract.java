@@ -2,11 +2,12 @@ package com.left.gank.ui.cure;
 
 import android.content.Context;
 import android.ly.business.domain.Gift;
-import androidx.annotation.NonNull;
 
 import com.left.gank.mvp.base.LoadMorePresenter;
 
-import java.util.ArrayList;
+import java.util.List;
+
+import androidx.annotation.NonNull;
 
 /**
  * Create by LingYan on 2016-10-26
@@ -14,11 +15,17 @@ import java.util.ArrayList;
 
 public interface CureContract {
     interface View extends com.left.gank.mvp.base.SupportView {
-        void setMaxProgress(int value);
+        void loadDataSuccess(int page, int maxPage, List<Gift> list);
 
-        void disProgressDialog();
+        void loadDataFailure(int page, String msg);
 
-        void openBrowseActivity(ArrayList<Gift> list);
+        void showLoadingDialog();
+
+        void hideLoadingDialog();
+
+        void loadImagesSuccess(List<Gift> list);
+
+        void loadImagesFailure(String msg);
     }
 
     abstract class Presenter extends LoadMorePresenter<View> {
@@ -26,9 +33,7 @@ public interface CureContract {
             super(context, view);
         }
 
-        abstract void refreshGirls();
-
-        abstract void appendGirls();
+        abstract void loadData(int page);
 
         abstract void loadImages(String url);
     }

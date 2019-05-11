@@ -1,6 +1,5 @@
 package com.left.gank.widget;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
@@ -20,8 +19,6 @@ import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.bumptech.glide.request.target.Target;
 import com.left.gank.R;
 import com.left.gank.glide.ProgressTarget;
-
-import androidx.fragment.app.Fragment;
 
 /**
  * Glide image with progress
@@ -93,7 +90,7 @@ public class ProgressImageView extends RelativeLayout {
         target = new MyProgressTarget<>(new BitmapImageViewTarget(imageView), progressBar, progressTextView);
     }
 
-    public void load(String url, final Fragment fragment) {
+    public void load(String url, final Context context) {
         target.setModel(url); // update target's cache
 
         if (url.contains("i.meizitu.net/")) {
@@ -101,14 +98,14 @@ public class ProgressImageView extends RelativeLayout {
                 int point = url.lastIndexOf("-");
                 int name = url.lastIndexOf(".");
                 String first = url.substring(0, point);
-                String end = url.substring(name, url.length());
+                String end = url.substring(name);
                 url = first + end;
             }
             GlideUrl glideUrl = new GlideUrl(url, new LazyHeaders.Builder()
                     .addHeader("referer", "http://www.mzitu.com/mm/")
                     .build());
 
-            Glide.with(fragment.getContext())
+            Glide.with(context)
                     .asBitmap()
                     .apply(new RequestOptions()
                             .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
@@ -119,7 +116,7 @@ public class ProgressImageView extends RelativeLayout {
                     .load(glideUrl)
                     .into(target);
         } else {
-            Glide.with(fragment.getContext())
+            Glide.with(context)
                     .asBitmap()
                     .apply(new RequestOptions()
                             .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
@@ -130,21 +127,6 @@ public class ProgressImageView extends RelativeLayout {
                     .load(url)
                     .into(target);
         }
-    }
-
-    public void load(String url, Activity fragment) {
-        target.setModel(url); // update target's cache
-
-        Glide.with(fragment)
-                .asBitmap()
-                .load(url)
-                .apply(new RequestOptions()
-                        .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
-                        .placeholder(R.drawable.image_loading)
-                        .error(R.drawable.image_failure)
-                        .fitCenter() // needs explicit transformation, because we're using a custom target
-                )
-                .into(target);
     }
 
     /**

@@ -3,11 +3,11 @@ package com.left.gank.ui.pure;
 import android.content.Context;
 import android.lectcoding.ui.logcat.Logcat;
 import android.ly.business.domain.Gift;
-import android.ly.business.domain.PageConfig;
 import android.ly.jsoup.JsoupServer;
 import android.text.TextUtils;
 
 import com.left.gank.utils.CrashUtils;
+import com.left.gank.utils.ListUtils;
 import com.left.gank.utils.StringUtils;
 import com.socks.library.KLog;
 
@@ -29,32 +29,22 @@ public class PurePresenter extends PureContract.Presenter {
     private static String BASE_URL = "http://www.mzitu.com/mm/";
     private static String HOST = "page/";
     private static String nextUrl = BASE_URL + HOST;
-
     private int maxPageNumber;
-    private PageConfig pageConfig;
+    private int maxImages;
 
     PurePresenter(Context context, PureContract.View view) {
         super(context, view);
-        pageConfig = new PageConfig();
-        pageConfig.limit = 24;
     }
 
     @Override
-    public void refreshPure() {
-        fetchData(1);
-    }
-
-    @Override
-    public void appendPure() {
-        int page = pageConfig.getNextPage();
-        if (page < maxPageNumber) {
-            fetchData(page);
-        }
-    }
-
-    private void fetchData(int page) {
+    void loadData(int page) {
         String url = getUrl(page);
         JsoupServer.rxConnect(url).build()
+                .doOnSubscribe(disposable -> {
+                    if (view != null) {
+                        view.showProgress();
+                    }
+                })
                 .doFinally(() -> view.hideProgress())
                 .subscribe(new Observer<Document>() {
                     @Override
@@ -69,18 +59,71 @@ public class PurePresenter extends PureContract.Presenter {
                         List<Gift> gifts = getPageLists(document);
                         if (gifts != null) {
                             if (view != null) {
-                                if (pageConfig.isFirst()) {
-                                    view.refillData(gifts);
-                                } else {
-                                    view.appendData(gifts);
-                                }
+                                view.loadDataSuccess(page, gifts);
                             }
+                            return;
+                        }
+                        if (view != null) {
+                            view.loadDataFailure(page, errorTip);
                         }
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         Logcat.e(e);
+                        if (view != null) {
+                            view.loadDataFailure(page, errorTip);
+                        }
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+    }
+
+    @Override
+    void loadImages(String url) {
+        JsoupServer.rxConnect(url)
+                .build()
+                .doOnSubscribe(disposable -> {
+                    if (view != null) {
+                        view.showLoadingDialog();
+                    }
+                })
+                .map(document -> {
+                    maxImages = getImageMaxPage(document);
+                    String firstUrl = getImageFirstUrl(document);
+                    return getImages(firstUrl);
+                })
+                .doFinally(() -> {
+                    if (view != null) {
+                        view.hideLoadingDialog();
+                    }
+                })
+                .subscribe(new Observer<List<Gift>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(List<Gift> list) {
+                        if (ListUtils.isNotEmpty(list)) {
+                            if (isViewLife()) {
+                                view.loadImagesSuccess(list);
+                                return;
+                            }
+                        }
+                        if (isViewLife()) {
+                            view.loadImagesFailure(errorTip);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        KLog.e(e);
+                        CrashUtils.crashReport(e);
                     }
 
                     @Override
@@ -154,7 +197,6 @@ public class PurePresenter extends PureContract.Presenter {
         Elements href = doc.select("#pins > li > a");
         Elements img = doc.select("#pins a img");
         Elements times = doc.select(".time");
-        Elements views = doc.select(".view");
 
         final int countSize = href.size();
         final int imgSize = img.size();
@@ -166,9 +208,8 @@ public class PurePresenter extends PureContract.Presenter {
                 String title = img.get(i).attr("alt");
                 String url = href.get(i).attr("href");
                 String time = times.get(i).text();
-                String view = views.get(i).text();
                 if (!TextUtils.isEmpty(imgUrl) && !TextUtils.isEmpty(url)) {
-                    list.add(new Gift(imgUrl, url, time, view, title));
+                    list.add(new Gift(imgUrl, url, time, title));
                 }
             }
         }
@@ -208,51 +249,7 @@ public class PurePresenter extends PureContract.Presenter {
     }
 
     @Override
-    public void destroy() {
-
-    }
-
-    @Override
     protected void onDestroy() {
 
-    }
-
-    @Override
-    public void refreshImages(String url) {
-        JsoupServer.rxConnect(url)
-                .build()
-                .map(document -> {
-                    maxPageNumber = getImageMaxPage(document);
-                    String firstUrl = getImageFirstUrl(document);
-                    return getImages(firstUrl);
-                })
-                .doFinally(() -> {
-                    if (view != null) {
-                        view.disLoadingDialog();
-                    }
-                })
-                .subscribe(new Observer<ArrayList<Gift>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onNext(ArrayList<Gift> list) {
-                        if (view != null) {
-                            view.openGalleryActivity(list);
-                        }
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        KLog.e(e);
-                        CrashUtils.crashReport(e);
-                    }
-
-                    @Override
-                    public void onComplete() {
-                    }
-                });
     }
 }

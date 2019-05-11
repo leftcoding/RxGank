@@ -68,4 +68,5 @@ dependencies {
     annotationProcessor rootProject.ext.compilerDeps.butterknife_compiler
 
     annotationProcessor rootProject.ext.compilerDeps.glide_compiler
+    implementation project(path: ':support-coding-file')
 }

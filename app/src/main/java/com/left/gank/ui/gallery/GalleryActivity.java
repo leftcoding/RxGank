@@ -16,11 +16,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.fragment.app.FragmentActivity;
-import androidx.viewpager.widget.ViewPager;
-
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.model.GlideUrl;
@@ -29,7 +24,6 @@ import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 import com.google.android.material.snackbar.Snackbar;
 import com.left.gank.R;
-import com.left.gank.config.MeiziArrayList;
 import com.left.gank.ui.base.activity.SupportActivity;
 import com.left.gank.utils.CrashUtils;
 import com.left.gank.utils.ListUtils;
@@ -47,6 +41,10 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.FragmentActivity;
+import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
 import butterknife.OnClick;
 import io.reactivex.Observable;
@@ -65,6 +63,7 @@ public class GalleryActivity extends SupportActivity {
     private static final String FILE_PATH = "GankLy_pic";
     private static final int INTERVALS = 3000;
     private static final int INITIAL_DELAY = 1000;
+    private static final int PAGE_LIMIT = 5;
 
     public static final int TYPE_INDEX = 1;
 
@@ -92,7 +91,6 @@ public class GalleryActivity extends SupportActivity {
 
     private List<Gift> gifts;
     private Bitmap bitmap;
-    private String browseModel = EXTRA_GANK;
     private boolean isCanPlay = true;
     private int position;
 
@@ -105,13 +103,13 @@ public class GalleryActivity extends SupportActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         parseBundle();
-        gifts = getGiftList();
         setupPageNumber(position);
 
         pagerAdapter = new GalleryPagerAdapter(getSupportFragmentManager());
         pagerAdapter.setGifts(gifts);
         viewPager.setAdapter(pagerAdapter);
         viewPager.setCurrentItem(position);
+        viewPager.setOffscreenPageLimit(PAGE_LIMIT);
         viewPager.addOnPageChangeListener(onPageChangeListener);
         pagerAdapter.notifyDataSetChanged();
     }
@@ -132,10 +130,6 @@ public class GalleryActivity extends SupportActivity {
         public void onPageScrollStateChanged(int state) {
             if (state == ViewPager.SCROLL_STATE_DRAGGING) {
                 stopBrowse();
-
-                if (isPositionEnd()) {
-//                    shortToast(getString(R.string.loading_all_over));
-                }
             }
         }
     };
@@ -147,22 +141,10 @@ public class GalleryActivity extends SupportActivity {
         progressPage.setText(StringHtml.getStringSize(index, giftSize, getString(R.string.page_format_mark), NUMBER_COLOR, 22));
     }
 
-    private List<Gift> getGiftList() {
-        List<Gift> gifts;
-        if (EXTRA_GANK.equals(browseModel)) {
-            List<Gank> giftBeen = MeiziArrayList.getInstance().getImagesList();
-            gifts = changeImageList(giftBeen);
-        } else {
-            gifts = getIntent().getParcelableArrayListExtra(EXTRA_LIST);
-        }
-        return gifts == null ? new ArrayList<>() : gifts;
-    }
-
     private void parseBundle() {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            position = bundle.getInt(EXTRA_POSITION, 0);
-            browseModel = bundle.getString(EXTRA_MODEL, EXTRA_GANK);
+            gifts = getIntent().getParcelableArrayListExtra(EXTRA_LIST);
         }
     }
 
@@ -389,13 +371,7 @@ public class GalleryActivity extends SupportActivity {
 
     private String getImageUrl() {
         int position = viewPager.getCurrentItem();
-        String mUrl;
-        if (EXTRA_GANK.equals(browseModel)) {
-            mUrl = MeiziArrayList.getInstance().getResultBean(position).url;
-        } else {
-            mUrl = gifts.get(position).imgUrl;
-        }
-        return mUrl;
+        return gifts.get(position).imgUrl;
     }
 
     private void saveImagePath(String imgUrl, final boolean isShare) {

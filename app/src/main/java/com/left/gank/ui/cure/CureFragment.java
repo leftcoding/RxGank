@@ -4,21 +4,22 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.ly.business.domain.Gift;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import android.text.TextUtils;
 import android.view.View;
 
 import com.left.gank.R;
 import com.left.gank.ui.base.LazyFragment;
 import com.left.gank.ui.gallery.GalleryActivity;
+import com.left.gank.utils.ListUtils;
 import com.left.gank.widget.LySwipeRefreshLayout;
 import com.left.gank.widget.MultipleStatusView;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import butterknife.BindView;
 
 /**
@@ -36,6 +37,7 @@ public class CureFragment extends LazyFragment implements CureContract.View {
     private CureContract.Presenter curePresenter;
 
     private ProgressDialog progressDialog;
+    private int page = 1;
 
     @Override
     protected int getLayoutId() {
@@ -47,25 +49,26 @@ public class CureFragment extends LazyFragment implements CureContract.View {
         super.onViewCreated(view, savedInstanceState);
         cureAdapter = new CureAdapter();
         cureAdapter.setOnItemClickListener(cureCallback);
-        swipeRefresh.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        swipeRefresh.setLayoutManager(new LinearLayoutManager(getContext()));
         swipeRefresh.setAdapter(cureAdapter);
 
-        swipeRefresh.setOnScrollListener(new LySwipeRefreshLayout.OnSwipeRefreshListener() {
+        swipeRefresh.setOnScrollListener(new LySwipeRefreshLayout.OnListener() {
             @Override
             public void onRefresh() {
-                initCureRefresh();
+                page = 1;
+                loadData();
             }
 
             @Override
             public void onLoadMore() {
-                curePresenter.appendGirls();
+                loadData();
             }
         });
     }
 
-    private void initCureRefresh() {
+    private void loadData() {
         if (curePresenter != null) {
-            curePresenter.refreshGirls();
+            curePresenter.loadData(page);
         }
     }
 
@@ -75,17 +78,19 @@ public class CureFragment extends LazyFragment implements CureContract.View {
         curePresenter = new CurePresenter(getContext(), this);
     }
 
-    private final CureAdapter.ItemCallback cureCallback = new CureAdapter.ItemCallback() {
+    private final CureAdapter.Callback cureCallback = new CureAdapter.Callback() {
         @Override
-        public void onItemClick(final String url) {
+        public void onClick(final String url) {
             if (!TextUtils.isEmpty(url)) {
-                showLoadingDialog();
-                curePresenter.loadImages(url);
+                if (curePresenter != null) {
+                    curePresenter.loadImages(url);
+                }
             }
         }
     };
 
-    private void showLoadingDialog() {
+    @Override
+    public void showLoadingDialog() {
         if (progressDialog == null) {
             progressDialog = new ProgressDialog(getContext());
             progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -101,13 +106,25 @@ public class CureFragment extends LazyFragment implements CureContract.View {
     }
 
     @Override
-    public void openBrowseActivity(@NonNull ArrayList<Gift> list) {
+    public void hideLoadingDialog() {
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
+    }
+
+    @Override
+    public void loadImagesSuccess(List<Gift> list) {
         Bundle bundle = new Bundle();
         Intent intent = new Intent(getContext(), GalleryActivity.class);
         bundle.putString(GalleryActivity.EXTRA_MODEL, GalleryActivity.EXTRA_DAILY);
-        intent.putExtra(GalleryActivity.EXTRA_LIST, list);
+        intent.putExtra(GalleryActivity.EXTRA_LIST, (ArrayList) list);
         intent.putExtras(bundle);
         getContext().startActivity(intent);
+    }
+
+    @Override
+    public void loadImagesFailure(String msg) {
+        shortToast(msg);
     }
 
     @Override
@@ -132,22 +149,22 @@ public class CureFragment extends LazyFragment implements CureContract.View {
     }
 
     @Override
-    public void showEmpty() {
-
-    }
-
-    @Override
-    public void setMaxProgress(int value) {
-        if (progressDialog != null) {
-            progressDialog.setMax(value);
+    public void loadDataSuccess(int page, int maxPage, List<Gift> list) {
+        if (ListUtils.isNotEmpty(list)) {
+            if (cureAdapter != null) {
+                if (page == 1) {
+                    cureAdapter.refillItem(list);
+                } else {
+                    cureAdapter.appendItem(list);
+                }
+                cureAdapter.notifyDataSetChanged();
+            }
         }
     }
 
     @Override
-    public void disProgressDialog() {
-        if (progressDialog != null && progressDialog.isShowing()) {
-            progressDialog.dismiss();
-        }
+    public void loadDataFailure(int page, String msg) {
+        shortToast(msg);
     }
 
     @Override
@@ -163,11 +180,6 @@ public class CureFragment extends LazyFragment implements CureContract.View {
 
     @Override
     public void onLazyActivityCreate() {
-        initCureRefresh();
-    }
-
-    @Override
-    public void shortToast(String string) {
-
+        loadData();
     }
 }

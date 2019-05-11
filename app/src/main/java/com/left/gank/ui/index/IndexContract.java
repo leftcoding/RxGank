@@ -1,4 +1,4 @@
-package com.left.gank.ui.main;
+package com.left.gank.ui.index;
 
 import android.content.Context;
 import androidx.annotation.NonNull;

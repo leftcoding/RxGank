@@ -1,4 +1,4 @@
-package com.left.gank.ui.main.tab;
+package com.left.gank.ui.index.tab;
 
 import android.content.Context;
 import androidx.annotation.NonNull;

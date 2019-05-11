@@ -6,14 +6,10 @@ import android.ly.business.domain.Gift;
 import android.os.Bundle;
 import android.view.View;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.app.ActivityOptionsCompat;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
-
 import com.left.gank.R;
 import com.left.gank.ui.base.LazyFragment;
 import com.left.gank.ui.gallery.GalleryActivity;
+import com.left.gank.utils.ListUtils;
 import com.left.gank.widget.LySwipeRefreshLayout;
 import com.left.gank.widget.MultipleStatusView;
 
@@ -21,15 +17,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import butterknife.BindView;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 
 /**
  * 妹子 - 清纯
  * Create by LingYan on 2016-05-17
  */
 public class PureFragment extends LazyFragment implements PureContract.View {
+    private static final int FIRST_PAGE = 1;
+
     @BindView(R.id.swipe_refresh)
     LySwipeRefreshLayout swipeRefresh;
 
@@ -38,8 +41,9 @@ public class PureFragment extends LazyFragment implements PureContract.View {
 
     private PureAdapter pureAdapter;
     private PureContract.Presenter purePresenter;
-
     private ProgressDialog progressDialog;
+    private Disposable disposable;
+    private int curPage = FIRST_PAGE;
 
     @Override
     protected int getLayoutId() {
@@ -53,8 +57,11 @@ public class PureFragment extends LazyFragment implements PureContract.View {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        initRecycler();
-
+        pureAdapter = new PureAdapter();
+        swipeRefresh.setAdapter(pureAdapter);
+        swipeRefresh.setLayoutManager(new StaggeredGridLayoutManager(2,
+                StaggeredGridLayoutManager.VERTICAL));
+        swipeRefresh.setOnScrollListener(listener);
         pureAdapter.setOnItemClickListener(pureCallback);
     }
 
@@ -62,74 +69,61 @@ public class PureFragment extends LazyFragment implements PureContract.View {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         purePresenter = new PurePresenter(getContext(), this);
-        initRefresh();
+        loadData();
     }
 
-    private final PureAdapter.ItemClickCallback pureCallback = new PureAdapter.ItemClickCallback() {
+    private final LySwipeRefreshLayout.OnListener listener = new LySwipeRefreshLayout.OnListener() {
+
         @Override
-        public void onItemClick(final Gift gift) {
-            showDialog();
-            Observable.just(gift)
-                    .throttleFirst(100, TimeUnit.MILLISECONDS)
-                    .subscribeOn(AndroidSchedulers.mainThread())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(giftBean1 -> purePresenter.refreshImages(giftBean1.url));
+        public void onRefresh() {
+            curPage = FIRST_PAGE;
+            loadData();
+        }
+
+        @Override
+        public void onLoadMore() {
+            loadData();
         }
     };
 
-    private void initRefresh() {
-        multipleStatusView.showLoading();
-        purePresenter.refreshPure();
+    private final PureAdapter.Callback pureCallback = new PureAdapter.Callback() {
+        @Override
+        public void onItemClick(final Gift gift) {
+            disposable = Observable.just(gift)
+                    .throttleFirst(100, TimeUnit.MILLISECONDS)
+                    .subscribeOn(AndroidSchedulers.mainThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .map(gift1 -> gift1.url == null ? "" : gift1.url)
+                    .subscribe(url -> {
+                        if (purePresenter != null) {
+                            purePresenter.loadImages(url);
+                        }
+                    });
+        }
+    };
+
+    private void loadData() {
+        if (purePresenter != null) {
+            purePresenter.loadData(curPage);
+        }
     }
-
-    private void initRecycler() {
-        pureAdapter = new PureAdapter(getContext());
-        swipeRefresh.setAdapter(pureAdapter);
-
-        swipeRefresh.setLayoutManager(new StaggeredGridLayoutManager(2,
-                StaggeredGridLayoutManager.VERTICAL));
-
-        swipeRefresh.setOnScrollListener(new LySwipeRefreshLayout.OnSwipeRefreshListener() {
-
-            @Override
-            public void onRefresh() {
-                purePresenter.refreshPure();
-            }
-
-            @Override
-            public void onLoadMore() {
-                purePresenter.appendPure();
-            }
-        });
-    }
-
 
     private void showDialog() {
-        if (progressDialog == null) {
-            progressDialog = new ProgressDialog(getContext());
-        }
 
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progressDialog.setMessage(getContext().getString(R.string.loading_meizi_images));
-        progressDialog.setIndeterminate(true);
-        progressDialog.setCanceledOnTouchOutside(true);
-        progressDialog.setOnCancelListener(dialog -> purePresenter.destroy());
-
-        if (!progressDialog.isShowing()) {
-            progressDialog.show();
-        }
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setRetainInstance(true);
-        setHasOptionsMenu(true);
+//        setRetainInstance(true);
+//        setHasOptionsMenu(true);
     }
 
     @Override
     public void showProgress() {
-        swipeRefresh.setRefreshing(true);
+        if (swipeRefresh != null) {
+            swipeRefresh.setRefreshing(true);
+        }
     }
 
     @Override
@@ -144,61 +138,27 @@ public class PureFragment extends LazyFragment implements PureContract.View {
 
     @Override
     public void showContent() {
-        multipleStatusView.showContent();
+        if (multipleStatusView != null) {
+            multipleStatusView.showContent();
+        }
     }
 
     @Override
     public void showEmpty() {
-        multipleStatusView.showEmpty();
-    }
-
-    private void showLoading() {
         if (multipleStatusView != null) {
-            multipleStatusView.showLoading();
-        }
-    }
-
-    @Override
-    public void refillData(List<Gift> list) {
-        if (pureAdapter != null) {
-            pureAdapter.refillItems(list);
-            pureAdapter.notifyDataSetChanged();
-        }
-    }
-
-    @Override
-    public void appendData(List<Gift> list) {
-        if (pureAdapter != null) {
-            pureAdapter.appendItems(list);
-            pureAdapter.notifyDataSetChanged();
-        }
-    }
-
-    @Override
-    public void openGalleryActivity(ArrayList<Gift> list) {
-        Bundle bundle = new Bundle();
-        Intent intent = new Intent(getContext(), GalleryActivity.class);
-        bundle.putString(GalleryActivity.EXTRA_MODEL, GalleryActivity.EXTRA_GIFT);
-        intent.putExtra(GalleryActivity.EXTRA_LIST, list);
-        intent.putExtras(bundle);
-        ActivityOptionsCompat compat = ActivityOptionsCompat.makeCustomAnimation(getContext(),
-                R.anim.alpha_in, R.anim.alpha_out);
-        getContext().startActivity(intent, compat.toBundle());
-    }
-
-    @Override
-    public void disLoadingDialog() {
-        if (progressDialog != null && progressDialog.isShowing()) {
-            progressDialog.dismiss();
+            multipleStatusView.showEmpty();
         }
     }
 
     @Override
     public void onDestroyView() {
-        super.onDestroyView();
         if (pureAdapter != null) {
             pureAdapter.destroy();
         }
+        if (disposable != null) {
+            disposable.dispose();
+        }
+        super.onDestroyView();
     }
 
     @Override
@@ -207,7 +167,61 @@ public class PureFragment extends LazyFragment implements PureContract.View {
     }
 
     @Override
-    public void shortToast(String string) {
+    public void loadDataSuccess(int page, List<Gift> list) {
+        if (ListUtils.isNotEmpty(list)) {
+            if (pureAdapter != null) {
+                curPage = page + 1;
+                if (page == FIRST_PAGE) {
+                    pureAdapter.refillItems(list);
+                } else {
+                    pureAdapter.appendItems(list);
+                }
+                pureAdapter.notifyDataSetChanged();
+            }
+        }
+    }
 
+    @Override
+    public void loadDataFailure(int page, String msg) {
+        shortToast(msg);
+    }
+
+    @Override
+    public void showLoadingDialog() {
+        hideLoadingDialog();
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setMessage(getContext().getString(R.string.loading_meizi_images));
+        progressDialog.setIndeterminate(true);
+        progressDialog.setCanceledOnTouchOutside(true);
+        progressDialog.setOnCancelListener(dialog -> purePresenter.destroy());
+
+        if (!progressDialog.isShowing()) {
+            progressDialog.show();
+        }
+    }
+
+    @Override
+    public void hideLoadingDialog() {
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
+    }
+
+    @Override
+    public void loadImagesSuccess(List<Gift> list) {
+        Bundle bundle = new Bundle();
+        Intent intent = new Intent(getContext(), GalleryActivity.class);
+        bundle.putString(GalleryActivity.EXTRA_MODEL, GalleryActivity.EXTRA_GIFT);
+        intent.putExtra(GalleryActivity.EXTRA_LIST, (ArrayList) list);
+        intent.putExtras(bundle);
+        ActivityOptionsCompat compat = ActivityOptionsCompat.makeCustomAnimation(getContext(),
+                R.anim.alpha_in, R.anim.alpha_out);
+        startActivity(intent, compat.toBundle());
+    }
+
+    @Override
+    public void loadImagesFailure(String msg) {
+        shortToast(msg);
     }
 }
