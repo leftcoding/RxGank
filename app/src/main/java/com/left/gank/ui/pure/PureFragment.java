@@ -108,15 +108,9 @@ public class PureFragment extends LazyFragment implements PureContract.View {
         }
     }
 
-    private void showDialog() {
-
-    }
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setRetainInstance(true);
-//        setHasOptionsMenu(true);
     }
 
     @Override

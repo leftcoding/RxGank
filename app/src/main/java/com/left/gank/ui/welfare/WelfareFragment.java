@@ -2,6 +2,7 @@ package com.left.gank.ui.welfare;
 
 import android.content.Intent;
 import android.ly.business.domain.Gank;
+import android.ly.business.domain.Gift;
 import android.ly.business.domain.PageConfig;
 import android.os.Bundle;
 import android.view.View;
@@ -13,6 +14,7 @@ import com.left.gank.utils.ListUtils;
 import com.left.gank.widget.MultipleStatusView;
 import com.left.gank.widget.recyclerview.OnFlexibleScrollListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -51,9 +53,9 @@ public class WelfareFragment extends LazyFragment implements WelfareContract.Vie
         super.onViewCreated(view, savedInstanceState);
         welfareAdapter = new WelfareAdapter(getContext());
         welfareAdapter.setListener(itemClickListener);
-
-        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,
-                StaggeredGridLayoutManager.VERTICAL));
+        StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2,
+                StaggeredGridLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(staggeredGridLayoutManager);
         OnFlexibleScrollListener scrollListener = new OnFlexibleScrollListener(swipeRefresh);
         scrollListener.setOnScrollListener(this.scrollListener);
         recyclerView.addOnScrollListener(scrollListener);
@@ -91,13 +93,11 @@ public class WelfareFragment extends LazyFragment implements WelfareContract.Vie
 
     private final WelfareAdapter.ItemClickListener itemClickListener = new WelfareAdapter.ItemClickListener() {
         @Override
-        public void onItem(View view, int position) {
+        public void onItem(View view, String url) {
             Intent intent = new Intent(getContext(), GalleryActivity.class);
-            Bundle bundle = new Bundle();
-            bundle.putInt(GalleryActivity.EXTRA_POSITION, position);
-            bundle.putInt(GalleryActivity.TYPE, GalleryActivity.TYPE_INDEX);
-            intent.putExtras(bundle);
-
+            ArrayList<Gift> list = new ArrayList<>();
+            list.add(new Gift(url));
+            intent.putExtra(GalleryActivity.EXTRA_LIST, list);
             ActivityOptionsCompat activityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(), view, getString(R.string.transition_welfare_image));
             startActivity(intent, activityOptionsCompat.toBundle());
         }

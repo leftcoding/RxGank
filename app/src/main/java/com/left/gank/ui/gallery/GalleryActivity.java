@@ -421,5 +421,10 @@ public class GalleryActivity extends SupportActivity {
     protected void onDestroy() {
         unSubscribeTime();
         super.onDestroy();
+        viewPager = null;
+        if (gifts != null) {
+            gifts.clear();
+            gifts = null;
+        }
     }
 }

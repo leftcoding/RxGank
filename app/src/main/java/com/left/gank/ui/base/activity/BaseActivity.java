@@ -52,7 +52,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     public void addAnimFragment(Fragment from, Fragment to, boolean isAnim) {
-        addHideFragment(from, to, R.id.main_frame_layout, null, to.getClass().getSimpleName(), isAnim);
+        addHideFragment(from, to, R.id.main_frame_layout, null, "", isAnim);
     }
 
     public void addAnimFragment(Fragment from, Fragment to, String tag, boolean isAnim) {

@@ -2,6 +2,7 @@ package com.left.gank.ui.welfare;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.lectcoding.ui.logcat.Logcat;
 import android.ly.business.domain.Gank;
 import android.util.ArrayMap;
 import android.view.View;
@@ -9,10 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import com.bumptech.glide.load.DataSource;
-import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.target.Target;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.left.gank.R;
 import com.left.gank.butterknife.adapter.FootAdapter;
 import com.left.gank.butterknife.holder.BindHolder;
@@ -34,7 +33,7 @@ public class WelfareAdapter extends FootAdapter<WelfareAdapter.ViewHolder, List<
     private List<ItemModel> models = new ArrayList<>();
     private ItemClickListener itemClickListener;
 
-    public WelfareAdapter(Context context) {
+    WelfareAdapter(Context context) {
         super(context);
         setFootModel(false);
     }
@@ -82,7 +81,7 @@ public class WelfareAdapter extends FootAdapter<WelfareAdapter.ViewHolder, List<
 
         public ViewHolder(ViewGroup parent, ItemClickListener itemClickListener, @NonNull ArrayMap<String, Integer> heights) {
             super(parent, R.layout.adapter_meizi);
-            context = parent.getContext();
+            this.context = parent.getContext();
             this.heights = heights;
             this.itemClickListener = itemClickListener;
         }
@@ -92,24 +91,71 @@ public class WelfareAdapter extends FootAdapter<WelfareAdapter.ViewHolder, List<
             final Gank gank = item.gank;
             final String url = gank.url;
 
+//            Disposable disposable = Observable.create(new ObservableOnSubscribe<Bitmap>() {
+//                @Override
+//                public void subscribe(ObservableEmitter<Bitmap> emitter) throws Exception {
+//                    try {
+//                        Bitmap bitmap = GlideApp.with(context)
+//                                .asBitmap()
+//                                .load(url)
+//                                .submit()
+//                                .get();
+//                        if (bitmap != null) {
+//                            emitter.onNext(bitmap);
+//                        } else {
+//                            emitter.onError(new Throwable("bitmap is null"));
+//                        }
+//                    } catch (Exception e) {
+//                        emitter.onError(new Throwable("bitmap is null"));
+//                    }
+//                }
+//            }).subscribeOn(Schedulers.io())
+//                    .observeOn(AndroidSchedulers.mainThread())
+//                    .subscribe(new Consumer<Bitmap>() {
+//                        @Override
+//                        public void accept(Bitmap bitmap) throws Exception {
+//                            if (image == null) return;
+//                            final int height = bitmap.getHeight();
+//                            final int width = bitmap.getWidth();
+//                            final int imageWidth = image.getWidth();
+//                            Logcat.d(">>height:" + height + " width:" + width + " imageWidth:" + imageWidth);
+//
+//                            int finalHeight = -1;
+//                            if (heights.containsKey(url)) {
+//                                Integer i = heights.get(url);
+//                                if (i != null) {
+//                                    finalHeight = i;
+//                                }
+//                            }
+//
+//                            if (finalHeight == -1) {
+//                                finalHeight = height * imageWidth / width;
+//                                heights.put(url, finalHeight);
+//                            }
+//
+//                            setCardViewLayoutParams(imageWidth, finalHeight);
+//                            loadImage(url);
+//                        }
+//                    }, new Consumer<Throwable>() {
+//                        @Override
+//                        public void accept(Throwable throwable) throws Exception {
+//                            loadImage(url);
+//                        }
+//                    });
+
             GlideApp.with(context)
                     .asBitmap()
                     .load(url)
-                    .centerCrop()
                     .placeholder(R.drawable.ic_image_default)
-                    .error(R.drawable.ic_image_default)
                     .fallback(R.drawable.ic_image_default)
-                    .listener(new RequestListener<Bitmap>() {
+                    .error(R.drawable.ic_image_default)
+                    .into(new BitmapImageViewTarget(image) {
                         @Override
-                        public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {
-                            return false;
-                        }
-
-                        @Override
-                        public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
+                        public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
                             final int height = resource.getHeight();
                             final int width = resource.getWidth();
                             final int imageWidth = image.getWidth();
+                            Logcat.d(">>height:" + height + " width:" + width + " imageWidth:" + imageWidth);
 
                             int finalHeight = -1;
                             if (heights.containsKey(url)) {
@@ -125,19 +171,28 @@ public class WelfareAdapter extends FootAdapter<WelfareAdapter.ViewHolder, List<
                             }
 
                             setCardViewLayoutParams(imageWidth, finalHeight);
-                            return false;
+                            super.onResourceReady(resource, transition);
                         }
-                    })
-                    .into(image);
+                    });
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (itemClickListener != null) {
-                        itemClickListener.onItem(image, getAdapterPosition());
+                        itemClickListener.onItem(image, url);
                     }
                 }
             });
+        }
+
+        private void loadImage(String url) {
+            GlideApp.with(context)
+                    .asBitmap()
+                    .load(url)
+                    .placeholder(R.drawable.ic_image_default)
+                    .fallback(R.drawable.ic_image_default)
+                    .error(R.drawable.ic_image_default)
+                    .into(image);
         }
 
         private void setCardViewLayoutParams(int width, int height) {
@@ -162,6 +217,6 @@ public class WelfareAdapter extends FootAdapter<WelfareAdapter.ViewHolder, List<
     }
 
     public interface ItemClickListener {
-        void onItem(View view, int position);
+        void onItem(View view, String url);
     }
 }

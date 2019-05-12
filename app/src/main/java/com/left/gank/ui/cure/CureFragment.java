@@ -151,6 +151,7 @@ public class CureFragment extends LazyFragment implements CureContract.View {
     @Override
     public void loadDataSuccess(int page, int maxPage, List<Gift> list) {
         if (ListUtils.isNotEmpty(list)) {
+            this.page = page + 1;
             if (cureAdapter != null) {
                 if (page == 1) {
                     cureAdapter.refillItem(list);
