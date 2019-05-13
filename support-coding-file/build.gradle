@@ -23,6 +23,5 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation rootProject.ext.supportDeps.appcompat
-//    implementation project(path: ':support-coding-permission')
-
+    implementation project(path: ':support-coding-permission')
 }

@@ -45,7 +45,6 @@ dependencies {
     api rootProject.ext.rxjavaLibs
     api rootProject.ext.okhttpLibs
     api rootProject.ext.greendaoLibs
-    api rootProject.ext.stethoLibs
     api rootProject.ext.glideLibs
     api rootProject.ext.retrofitLibs
 }

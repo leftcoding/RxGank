@@ -1,6 +1,5 @@
 package com.left.gank.network.api;
 
-import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.left.gank.bean.CheckVersion;
 import com.left.gank.network.DownloadProgressInterceptor;
 import com.left.gank.network.DownloadProgressListener;
@@ -39,7 +38,6 @@ public class DownloadApi {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         builder.retryOnConnectionFailure(true);
         builder.connectTimeout(DEFAULT_OUT_TIME, TimeUnit.SECONDS); //手动创建一个OkHttpClient并设置超时时间
-        builder.addNetworkInterceptor(new StethoInterceptor()); //chrome test databases
         if (interceptor != null) {
             builder.addInterceptor(interceptor);
         }

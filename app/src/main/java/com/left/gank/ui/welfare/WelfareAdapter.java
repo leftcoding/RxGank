@@ -91,58 +91,6 @@ public class WelfareAdapter extends FootAdapter<WelfareAdapter.ViewHolder, List<
             final Gank gank = item.gank;
             final String url = gank.url;
 
-//            Disposable disposable = Observable.create(new ObservableOnSubscribe<Bitmap>() {
-//                @Override
-//                public void subscribe(ObservableEmitter<Bitmap> emitter) throws Exception {
-//                    try {
-//                        Bitmap bitmap = GlideApp.with(context)
-//                                .asBitmap()
-//                                .load(url)
-//                                .submit()
-//                                .get();
-//                        if (bitmap != null) {
-//                            emitter.onNext(bitmap);
-//                        } else {
-//                            emitter.onError(new Throwable("bitmap is null"));
-//                        }
-//                    } catch (Exception e) {
-//                        emitter.onError(new Throwable("bitmap is null"));
-//                    }
-//                }
-//            }).subscribeOn(Schedulers.io())
-//                    .observeOn(AndroidSchedulers.mainThread())
-//                    .subscribe(new Consumer<Bitmap>() {
-//                        @Override
-//                        public void accept(Bitmap bitmap) throws Exception {
-//                            if (image == null) return;
-//                            final int height = bitmap.getHeight();
-//                            final int width = bitmap.getWidth();
-//                            final int imageWidth = image.getWidth();
-//                            Logcat.d(">>height:" + height + " width:" + width + " imageWidth:" + imageWidth);
-//
-//                            int finalHeight = -1;
-//                            if (heights.containsKey(url)) {
-//                                Integer i = heights.get(url);
-//                                if (i != null) {
-//                                    finalHeight = i;
-//                                }
-//                            }
-//
-//                            if (finalHeight == -1) {
-//                                finalHeight = height * imageWidth / width;
-//                                heights.put(url, finalHeight);
-//                            }
-//
-//                            setCardViewLayoutParams(imageWidth, finalHeight);
-//                            loadImage(url);
-//                        }
-//                    }, new Consumer<Throwable>() {
-//                        @Override
-//                        public void accept(Throwable throwable) throws Exception {
-//                            loadImage(url);
-//                        }
-//                    });
-
             GlideApp.with(context)
                     .asBitmap()
                     .load(url)
@@ -183,16 +131,6 @@ public class WelfareAdapter extends FootAdapter<WelfareAdapter.ViewHolder, List<
                     }
                 }
             });
-        }
-
-        private void loadImage(String url) {
-            GlideApp.with(context)
-                    .asBitmap()
-                    .load(url)
-                    .placeholder(R.drawable.ic_image_default)
-                    .fallback(R.drawable.ic_image_default)
-                    .error(R.drawable.ic_image_default)
-                    .into(image);
         }
 
         private void setCardViewLayoutParams(int width, int height) {
