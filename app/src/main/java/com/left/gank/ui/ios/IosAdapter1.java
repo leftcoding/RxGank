@@ -21,7 +21,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class IosAdapter1 extends DiffAdapter<BindHolder> {
-    private List<ItemModel> itemModels = new ArrayList<>();
+    private List<ItemModel> oldData = new ArrayList<>();
+    private List<ItemModel> data = new ArrayList<>();
 
     private Context context;
     private ItemCallback itemCallBack;
@@ -30,6 +31,36 @@ public class IosAdapter1 extends DiffAdapter<BindHolder> {
         this.context = context;
     }
 
+    public void addData(List<Gank> list) {
+        if (list != null) {
+            List<ItemModel> temp = new ArrayList<>(data);
+            temp.addAll(convert(list));
+            setData(temp);
+        }
+    }
+
+    private void setData(List<ItemModel> outData) {
+        data.clear();
+        data.addAll(outData);
+        final DiffCallback diffCallback = new DiffCallback<>(oldData, outData);
+        final DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(diffCallback);
+        oldData = new ArrayList<>();
+        oldData.addAll(ListUtils.deepCopy(data));
+        diffResult.dispatchUpdatesTo(this);
+
+
+    }
+
+    private List<ItemModel> convert(List<Gank> list) {
+        List<ItemModel> models = new ArrayList<>();
+        for (Gank gank : list) {
+            if (gank == null) continue;
+            models.add(new TextModel(gank));
+        }
+        return models;
+    }
+
+    @NonNull
     @Override
     public BindHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         BindHolder defaultHolder;
@@ -46,7 +77,7 @@ public class IosAdapter1 extends DiffAdapter<BindHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull BindHolder holder, int position) {
-        final ItemModel viewItem = itemModels.get(position);
+        final ItemModel viewItem = oldData.get(position);
         switch (viewItem.getViewType()) {
             case ViewType.NORMAL:
                 holder.bindHolder(viewItem);
@@ -56,37 +87,42 @@ public class IosAdapter1 extends DiffAdapter<BindHolder> {
 
     @Override
     public int getItemViewType(int position) {
-        return itemModels.get(position).getViewType();
+        return oldData.get(position).getViewType();
     }
 
 
     @Override
     public int getItemCount() {
-        return itemModels == null ? 0 : itemModels.size();
+        return data == null ? 0 : data.size();
     }
 
     public void clearItems() {
-        itemModels.clear();
+        oldData.clear();
     }
 
     /**
      * 在主线程进行列表差异结果比较，不适合大型数据量
      */
     public void update(List<Gank> list) {
-        List<ItemModel> newModels = new ArrayList<>(itemModels);
+        List<ItemModel> newModels = new ArrayList<>(oldData);
         if (!ListUtils.isEmpty(list)) {
             for (Gank gank : list) {
                 newModels.add(new TextModel(gank));
             }
         }
 
-        final DiffCallback diffCallback = new DiffCallback<>(itemModels, newModels);
+        final DiffCallback diffCallback = new DiffCallback<>(oldData, newModels);
         final DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(diffCallback);
-        itemModels.clear();
-        itemModels.addAll(newModels);
+        oldData.clear();
+        oldData.addAll(newModels);
         diffResult.dispatchUpdatesTo(this);
 
 //        notifyDataSetChanged();
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
     }
 
     @Override

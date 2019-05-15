@@ -13,7 +13,7 @@ import java.util.Date;
  * Create by LingYan on 2018-11-12
  */
 public class TextModel extends ItemModel {
-    Gank gank;
+    final Gank gank;
 
     public TextModel(Gank gank) {
         this.gank = gank;

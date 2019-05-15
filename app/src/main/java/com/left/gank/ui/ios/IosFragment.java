@@ -171,12 +171,12 @@ public class IosFragment extends LazyFragment implements IosContract.View {
         }
         if (iosAdapter != null) {
             if (PageConfig.isFirstPage(page)) {
-                iosAdapter.clearItems();
+//                iosAdapter.clearItems();
 //                iosAdapter.fillItems(list);
 //            } else {
 //                iosAdapter.appendItems(list);
             }
-            iosAdapter.update(list);
+            iosAdapter.addData(list);
 //            iosAdapter.notifyDataSetChanged();
         }
     }
