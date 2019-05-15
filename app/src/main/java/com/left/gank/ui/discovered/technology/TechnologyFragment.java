@@ -75,7 +75,7 @@ public class TechnologyFragment extends LazyFragment implements TechnologyContra
 
         mRecyclerView = mSwipeRefreshLayout.getRecyclerView();
         mSwipeRefreshLayout.setLayoutManager(new LinearLayoutManager(mActivity));
-        mSwipeRefreshLayout.setOnScrollListener(new LySwipeRefreshLayout.OnSwipeRefreshListener() {
+        mSwipeRefreshLayout.setOnScrollListener(new LySwipeRefreshLayout.OnListener() {
             @Override
             public void onRefresh() {
 //                mPresenter.fetchNew();

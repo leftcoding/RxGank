@@ -4,13 +4,11 @@
     android:id="@+id/jiandan_ll"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?attr/meiziDailyItemBackground"
     android:orientation="horizontal">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="?attr/selectableItemBackground"
         android:paddingBottom="8dp"
         android:paddingEnd="16dp"
         android:paddingStart="16dp"
@@ -29,7 +27,6 @@
                 android:paddingEnd="10dp"
                 android:paddingStart="0dp"
                 android:text=""
-                android:textColor="?attr/baseAdapterItemTextColor"
                 android:textSize="16sp"/>
 
             <RelativeLayout
@@ -42,8 +39,7 @@
                     android:id="@+id/jiandan_txt_author"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text=""
-                    android:textColor="?attr/textSecondaryColor"/>
+                    android:text=""/>
 
             </RelativeLayout>
         </RelativeLayout>

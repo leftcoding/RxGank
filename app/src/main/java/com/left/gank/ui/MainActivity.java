@@ -1,117 +1,87 @@
 package com.left.gank.ui;
 
-import android.content.res.Resources;
 import android.os.Bundle;
-import android.util.TypedValue;
-import android.view.KeyEvent;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
 import com.left.gank.R;
 import com.left.gank.rxjava.RxBus_;
-import com.left.gank.rxjava.theme.ThemeEvent;
 import com.left.gank.ui.base.activity.BaseActivity;
 import com.left.gank.ui.discovered.DiscoveredFragment;
 import com.left.gank.ui.girls.GirlsFragment;
-import com.left.gank.ui.main.IndexFragment;
+import com.left.gank.ui.index.IndexFragment;
 import com.left.gank.ui.mine.MineFragment;
-import com.left.gank.utils.permission.PermissionUtils;
 import com.roughike.bottombar.BottomBar;
+import com.roughike.bottombar.OnTabSelectListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import butterknife.BindView;
-import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 
 /**
  * Create by LingYan on 2016-6-13
  */
 public class MainActivity extends BaseActivity {
+    private static final int DEFAULT_TAB_POSITION = 0;
+
+    private static final int TAB_HOME = 0;
+    private static final int TAB_NEWS = 1;
+    private static final int TAB_IMAGE = 2;
+    private static final int TAB_MORE = 3;
+
     @BindView(R.id.bottomBar)
-    BottomBar mBottomBar;
+    BottomBar bottomBar;
 
-    private long mKeyDownTime;
-    private Fragment mCurFragment;
-
-    private Integer[] mBottomBarTabs = {R.id.tab_home, R.id.tab_image, R.id.tab_more, R.id.tab_news};
-    private List<Fragment> mFragmentList;
-    private int mIndex = 0;
-    private boolean isRestore = false;
+    private Fragment curFragment;
+    private List<Fragment> fragmentList;
 
     @Override
     protected int getContentId() {
         return R.layout.fragment_main_bottom_navigation;
     }
 
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        if (savedInstanceState != null) {
-            isRestore = savedInstanceState.getBoolean("isRestore");
-            mIndex = savedInstanceState.getInt("index");
-        }
         super.onCreate(savedInstanceState);
-
-        PermissionUtils.requestAllPermissions(this);
-
-        if (mFragmentList == null) {
-            mFragmentList = getFragmentList();
-        }
-        mBottomBar.setDefaultTabPosition(0);
-
-        changeBottomBar();
-
-        RxBus_.getInstance().toObservable(ThemeEvent.class)
-                .subscribe(themeEvent -> changeBottomBar());
-
-        mBottomBar.setOnTabSelectListener(tabId -> {
-            mIndex = getFragmentIndex(tabId);
-            openFragment(mIndex);
-        });
+        fragmentList = getFragmentList();
+        bottomBar.setDefaultTabPosition(DEFAULT_TAB_POSITION);
+        bottomBar.setOnTabSelectListener(onTabSelectListener);
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-    }
+    private final OnTabSelectListener onTabSelectListener = tabId -> {
+        int index = getFragmentIndex(tabId);
+        openFragment(index);
+    };
 
     private int getFragmentIndex(int tabId) {
-        int index;
+        int index = TAB_HOME;
         switch (tabId) {
             case R.id.tab_home:
-                index = 0;
+                index = TAB_HOME;
                 break;
             case R.id.tab_news:
-                index = 1;
+                index = TAB_NEWS;
                 break;
             case R.id.tab_image:
-                index = 2;
+                index = TAB_IMAGE;
                 break;
             case R.id.tab_more:
-                index = 3;
-                break;
-            default:
-                index = 0;
+                index = TAB_MORE;
                 break;
         }
         return index;
     }
 
     private void openFragment(int index) {
-        Fragment fragmentTo = mFragmentList.get(index);
-        if (mCurFragment == null) {
-            if (!isRestore) {
-                addMainFragment(fragmentTo);
-            }
-            mCurFragment = fragmentTo;
+        Fragment fragmentTo = fragmentList.get(index);
+        if (curFragment == null) {
+            addMainFragment(fragmentTo);
+            curFragment = fragmentTo;
         } else {
-            if (!mCurFragment.equals(fragmentTo)) {
-                addAnimFragment(mCurFragment, fragmentTo, true);
-                mCurFragment = fragmentTo;
+            if (!curFragment.equals(fragmentTo)) {
+                addAnimFragment(curFragment, fragmentTo, true);
+                curFragment = fragmentTo;
             }
         }
     }
@@ -125,47 +95,9 @@ public class MainActivity extends BaseActivity {
         return fragments;
     }
 
-    public void changeBottomBar() {
-        TypedValue typedValue = new TypedValue();
-        Resources.Theme theme = getTheme();
-        theme.resolveAttribute(R.attr.colorPrimary, typedValue, true);
-        final int color = typedValue.resourceId;
-
-        Observable.fromArray(mBottomBarTabs)
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(integer -> mBottomBar.getTabWithId(integer).setBackgroundResource(color));
-    }
-
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-//        if (keyCode == KeyEvent.KEYCODE_BACK) {
-//            if (mIndex != 0) {
-//                mBottomBar.selectTabAtPosition(0);
-//                return false;
-//            } else if ((System.currentTimeMillis() - mKeyDownTime) > 2000) {
-//                mKeyDownTime = System.currentTimeMillis();
-//                ToastUtils.shortBottom(getBaseContext(), R.string.app_again_out);
-//                return false;
-//            } else {
-//                finish();
-//                AppUtils.killProcess();
-//            }
-//        }
-        return super.onKeyDown(keyCode, event);
-    }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
         RxBus_.getInstance().removeAllStickyEvents();// 移除所有Sticky事件
-    }
-
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        outState.putBoolean("isRestore", true);
-        outState.putInt("index", mIndex);
-        super.onSaveInstanceState(outState);
     }
 }

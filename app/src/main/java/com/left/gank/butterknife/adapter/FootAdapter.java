@@ -29,6 +29,7 @@ public abstract class FootAdapter<VH extends BasicHolder, T> extends BaseAdapter
     private String errMsg;
     private boolean isShowEnd;
     private ErrorListener errorListener;
+    private int spanCount;
 
     public FootAdapter(Context context) {
         this.context = context;
@@ -155,6 +156,10 @@ public abstract class FootAdapter<VH extends BasicHolder, T> extends BaseAdapter
 
     protected void setFootModel(boolean isFootModel) {
         this.isFootModel = isFootModel;
+    }
+
+    public void setSpanCount(int count) {
+        this.spanCount = count;
     }
 
     @Override

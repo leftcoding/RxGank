@@ -3,7 +3,6 @@ package com.left.gank.ui.cure;
 import android.content.Context;
 import android.lectcoding.ui.logcat.Logcat;
 import android.ly.business.domain.Gift;
-import android.ly.business.domain.PageConfig;
 import android.ly.jsoup.JsoupServer;
 import android.text.TextUtils;
 
@@ -12,14 +11,17 @@ import com.left.gank.utils.StringUtils;
 import com.leftcoding.rxbus.RxApiManager;
 
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
 import java.util.IllegalFormatException;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 
 /**
  * Create by LingYan on 2016-10-26
@@ -27,45 +29,49 @@ import io.reactivex.disposables.Disposable;
 
 class CurePresenter extends CureContract.Presenter {
     private static final String BASE_URL = "http://www.mzitu.com/xinggan/";
-
-    private final ArrayList<Gift> imagesList = new ArrayList<>();
     private final AtomicBoolean destroyFlag = new AtomicBoolean(false);
-    private int maxPageNumber;
-    private PageConfig pageConfig = new PageConfig();
 
     CurePresenter(Context context, CureContract.View view) {
         super(context, view);
-        pageConfig.limit = 24;
     }
 
     @Override
-    void refreshGirls() {
-        fetchData(getUrl(pageConfig.getCurPage()));
-    }
-
-    @Override
-    void appendGirls() {
-        if (maxPageNumber >= pageConfig.getCurPage()) {
-            fetchData(getUrl(pageConfig.getCurPage()));
-        }
+    void loadData(int page) {
+        fetchData(page, getUrl(page));
     }
 
     @Override
     void loadImages(String url) {
-        Disposable disposable = JsoupServer.rxConnect(url).build()
+        Disposable disposable = JsoupServer.rxConnect(url)
+                .build()
+                .doOnSubscribe(new Consumer<Disposable>() {
+                    @Override
+                    public void accept(Disposable disposable) throws Exception {
+                        if (isViewLife()) {
+                            view.showLoadingDialog();
+                        }
+                    }
+                })
                 .doFinally(() -> {
-                    if (view != null) {
-                        view.disProgressDialog();
+                    if (isViewLife()) {
+                        view.hideLoadingDialog();
                     }
                 })
                 .subscribe(document -> {
                     getDetailMaxPage(document);
-                    getImagesList(document);
-                }, Logcat::e);
+                    List<Gift> list = getImagesList(document);
+                    if (isViewLife()) {
+                        view.loadImagesSuccess(list);
+                    }
+                }, e -> {
+                    if (isViewLife()) {
+                        view.loadImagesFailure(errorTip);
+                    }
+                });
         RxApiManager.get().addDisposable(requestTag, disposable);
     }
 
-    private void fetchData(String url) {
+    private void fetchData(int page, String url) {
         if (destroyFlag.get()) {
             return;
         }
@@ -82,15 +88,11 @@ class CurePresenter extends CureContract.Presenter {
                     }
                 })
                 .subscribe(document -> {
-                    maxPageNumber = getMaxPageNum(document);
+                    int maxPageNumber = getMaxPageNum(document);
                     List<Gift> gifts = getPageLists(document);
                     if (gifts != null) {
                         if (view != null) {
-                            if (pageConfig.isFirst()) {
-//                                view.refreshSuccess(gifts);
-                            } else {
-//                                view.appendSuccess(gifts);
-                            }
+                            view.loadDataSuccess(page, maxPageNumber, gifts);
                         }
                     }
                 }, Logcat::e);
@@ -108,7 +110,6 @@ class CurePresenter extends CureContract.Presenter {
         Elements href = doc.select("#pins > li > a");
         Elements img = doc.select("#pins a img");
         Elements times = doc.select(".time");
-        Elements views = doc.select(".view");
 
         final int countSize = href.size();
         final int imgSize = img.size();
@@ -120,9 +121,8 @@ class CurePresenter extends CureContract.Presenter {
                 String title = img.get(i).attr("alt");
                 String url = href.get(i).attr("href");
                 String time = times.get(i).text();
-                String view = views.get(i).text();
                 if (!TextUtils.isEmpty(imgUrl) && !TextUtils.isEmpty(url)) {
-                    list.add(new Gift(imgUrl, url, time, view, title));
+                    list.add(new Gift(imgUrl, url, time, title));
                 }
             }
         }
@@ -161,21 +161,49 @@ class CurePresenter extends CureContract.Presenter {
         return 0;
     }
 
-    private void getImagesList(Document doc) {
-        imagesList.clear();
+    private List<Gift> getImagesList(Document doc) {
+        List<Gift> imagesList = new ArrayList<>();
         if (doc != null) {
-            Elements imgs = doc.select(".main-image a img");
-            if (imgs != null && imgs.size() > 0) {
-                for (int i = 0; i < imgs.size(); i++) {
-                    String src = imgs.get(i).attr("src");
-                    imagesList.add(new Gift(src));
+            Elements images = doc.select(".main-image a img");
+            Elements lengths = doc.select(".pagenavi a");
+            String spanLength = null;
+            if (lengths != null && lengths.size() > 0) {
+                Element element = lengths.get(lengths.size() - 2);
+                if (element != null) {
+                    spanLength = element.select("span").get(0).html();
+                }
+            }
+            int length;
+            try {
+                length = spanLength == null ? -1 : Integer.valueOf(spanLength);
+            } catch (IllegalFormatException e) {
+                length = -1;
+            }
+            if (images != null && images.size() > 0) {
+                String src = images.get(0).attr("src");
+                if (!TextUtils.isEmpty(src)) {
+                    int index = src.lastIndexOf(".");
+                    if (index > 0) {
+                        String start = src.substring(0, index);
+                        start = start.substring(0, start.length() - 1);
+                        String type = src.substring(index);
+                        String sub = start.substring(0, start.length() - 1);
+                        if (length != -1) {
+                            for (int i = 1; i < length; i++) {
+                                String page = i < 10 ? String.format(Locale.SIMPLIFIED_CHINESE, "0%d", i) : String.valueOf(i);
+                                final String url = sub + page + type;
+                                imagesList.add(new Gift(url));
+                            }
+                        }
+                    }
                 }
             }
         }
+        return imagesList;
     }
 
     private String getUrl(int page) {
-        return page == pageConfig.initPage ? BASE_URL : BASE_URL + "page/" + page;
+        return page == 1 ? BASE_URL : BASE_URL + "page/" + page;
     }
 
     @Override

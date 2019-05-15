@@ -4,13 +4,23 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 public class OnFlexibleScrollListener extends RecyclerView.OnScrollListener {
     private int lastPosition = RecyclerView.NO_POSITION;
     private ScrollListener scrollListener;
 
-    public OnFlexibleScrollListener() {
+    public OnFlexibleScrollListener(SwipeRefreshLayout swipeRefreshLayout) {
         super();
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                if (scrollListener != null) {
+                    scrollListener.onRefresh();
+                }
+                lastPosition = RecyclerView.NO_POSITION;
+            }
+        });
     }
 
     @Override
@@ -61,10 +71,9 @@ public class OnFlexibleScrollListener extends RecyclerView.OnScrollListener {
         this.scrollListener = listener;
     }
 
-    /**
-     * 加载更多的监听
-     */
     public interface ScrollListener {
+        void onRefresh();
+
         void onLoadMore();
     }
 }

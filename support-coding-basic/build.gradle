@@ -1,0 +1,50 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.android.minSdkversion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        versionCode rootProject.ext.android.moduleCode
+        versionName rootProject.ext.android.moduleName
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    api fileTree(dir: 'libs', include: ['*.jar'])
+    configurations {
+        all*.exclude group: 'com.android.support', module: 'support-v13'
+    }
+
+    testImplementation rootProject.ext.commonsDeps.junit
+    androidTestImplementation rootProject.ext.testDeps.runner
+    androidTestImplementation rootProject.ext.testDeps.espresso_core
+
+    api project(path: ':support-coding-business')
+    api project(path: ':support-coding-rxbus')
+    api project(path: ':superplayerlibrary')
+    api project(path: ':support-coding-ui')
+    api project(path: ':support-coding-jsoup')
+    api project(path: ':support-coding-network')
+    api project(path: ':support-coding-download')
+    api project(path: ':support-coding-file')
+
+
+    api rootProject.ext.supportLibs
+    api rootProject.ext.commonsLibs
+    api rootProject.ext.rxjavaLibs
+    api rootProject.ext.okhttpLibs
+    api rootProject.ext.greendaoLibs
+    api rootProject.ext.glideLibs
+    api rootProject.ext.retrofitLibs
+}

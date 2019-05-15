@@ -2,17 +2,18 @@ package com.left.gank.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 
 import com.left.gank.R;
 import com.socks.library.KLog;
+
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 /**
  * 组合 SwipeRefresh RecyclerView LyRecyclerView(侧滑)
@@ -27,7 +28,7 @@ public class LySwipeRefreshLayout extends SwipeRefreshLayout {
 
     private RecyclerView.LayoutManager layoutManager;
     private RecyclerView mRecyclerView;
-    private OnSwipeRefreshListener mOnSwipeRefreshListener;
+    private OnListener mOnListener;
     private Context mContext;
     private int mCurManager = 1;
     private int mState;
@@ -67,7 +68,7 @@ public class LySwipeRefreshLayout extends SwipeRefreshLayout {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                if (newState == RecyclerView.SCROLL_STATE_IDLE && mOnSwipeRefreshListener != null
+                if (newState == RecyclerView.SCROLL_STATE_IDLE && mOnListener != null
                         && !isRefreshing()) {
                     int count = recyclerView.getAdapter().getItemCount() - 1;
                     switch (mCurManager) {
@@ -107,7 +108,7 @@ public class LySwipeRefreshLayout extends SwipeRefreshLayout {
     }
 
     public void loadMore() {
-        mOnSwipeRefreshListener.onLoadMore();
+        mOnListener.onLoadMore();
     }
 
     public void setLayoutManager(RecyclerView.LayoutManager layoutManager) {
@@ -122,8 +123,8 @@ public class LySwipeRefreshLayout extends SwipeRefreshLayout {
         mRecyclerView.setLayoutManager(layoutManager);
     }
 
-    public void setOnScrollListener(OnSwipeRefreshListener listener) {
-        this.mOnSwipeRefreshListener = listener;
+    public void setOnScrollListener(OnListener listener) {
+        this.mOnListener = listener;
         super.setOnRefreshListener(listener);
     }
 
@@ -154,7 +155,7 @@ public class LySwipeRefreshLayout extends SwipeRefreshLayout {
     /**
      * 刷新和加载更多的监听
      */
-    public interface OnSwipeRefreshListener extends OnRefreshListener {
+    public interface OnListener extends OnRefreshListener {
         void onRefresh();
 
         void onLoadMore();

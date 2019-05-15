@@ -15,7 +15,7 @@ import com.left.gank.bean.CheckVersion;
 import com.left.gank.config.Preferences;
 import com.left.gank.listener.DialogOnClick;
 import com.left.gank.ui.base.fragment.SupportFragment;
-import com.left.gank.ui.main.LauncherPresenter;
+import com.left.gank.ui.index.LauncherPresenter;
 import com.left.gank.utils.AppUtils;
 import com.left.gank.utils.GanklyPreferences;
 import com.left.gank.utils.GlideCatchUtil;

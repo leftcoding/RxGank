@@ -1,13 +1,13 @@
 package com.leftcoding.network.interceptor;
 
-import com.leftcoding.network.http.HttpConstants;
+import com.leftcoding.network.http.constants.HttpConstants;
 
 import java.io.IOException;
 
 import okhttp3.Interceptor;
 import okhttp3.Response;
 
-import static com.leftcoding.network.http.HttpConstants.CACHE_CONTROL;
+import static com.leftcoding.network.http.constants.HttpConstants.CACHE_CONTROL;
 
 /**
  * 进行网络缓存，默认缓存10s

@@ -16,7 +16,7 @@ import com.left.gank.R;
 import com.left.gank.ui.base.fragment.ButterKnifeFragment;
 import com.left.gank.ui.baisi.image.BaiSiImageFragment;
 import com.left.gank.ui.base.LazyFragment;
-import com.left.gank.ui.main.GankPagerAdapter;
+import com.left.gank.ui.index.IndexPagerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,7 +80,7 @@ public class BaiSiMainFragment extends ButterKnifeFragment implements ViewPager.
         mTitles.add(TYPE_VIDEO);
         mTitles.add(TYPE_IMAGE);
 
-        GankPagerAdapter mPagerAdapter = new GankPagerAdapter(mActivity.getSupportFragmentManager(),
+        IndexPagerAdapter mPagerAdapter = new IndexPagerAdapter(mActivity.getSupportFragmentManager(),
                 mList, mTitles);
         mViewPager.setAdapter(mPagerAdapter);
         mViewPager.setOffscreenPageLimit(1);

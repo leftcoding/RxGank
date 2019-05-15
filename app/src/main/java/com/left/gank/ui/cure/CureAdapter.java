@@ -1,12 +1,11 @@
 package com.left.gank.ui.cure;
 
-import com.left.gank.butterknife.adapter.BaseAdapter;
 import android.ly.business.domain.Gift;
-import androidx.annotation.IntDef;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.left.gank.R;
+import com.left.gank.butterknife.adapter.BaseAdapter;
 import com.left.gank.butterknife.holder.BindHolder;
 import com.left.gank.butterknife.item.ItemModel;
 
@@ -15,47 +14,40 @@ import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.IntDef;
+import androidx.annotation.NonNull;
 import butterknife.BindView;
-
-import static com.left.gank.ui.cure.CureAdapter.ViewType.VIEW_TYPE_CURE;
 
 /**
  * Create by LingYan on 2016-07-05
  */
 public class CureAdapter extends BaseAdapter<CureAdapter.NormalHolder> {
-    private ItemCallback itemCallback;
+    private Callback callback;
     private List<Gift> gifts = new ArrayList<>();
     private final List<CureItem> items = new ArrayList<>();
 
     CureAdapter() {
-        setHasStableIds(true);
     }
 
+    @NonNull
     @Override
-    public NormalHolder onCreateViewHolder(ViewGroup parent, @ViewType.CureViewType int viewType) {
+    public NormalHolder onCreateViewHolder(@NonNull ViewGroup parent, @ViewType.CureViewType int viewType) {
         NormalHolder viewHolder;
-        switch (viewType) {
-            case VIEW_TYPE_CURE:
-                viewHolder = new CureHolder(parent);
-                break;
-            default:
-                viewHolder = null;
-                break;
+        if (viewType == ViewType.VIEW_TYPE_CURE) {
+            viewHolder = new CureHolder(parent, callback);
+        } else {
+            viewHolder = null;
         }
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(NormalHolder holder, int position) {
-        switch (holder.getItemViewType()) {
-            case VIEW_TYPE_CURE:
-                ((CureHolder) holder).bindHolder(items.get(position), itemCallback);
-                break;
-        }
+    public void onBindViewHolder(@NonNull NormalHolder holder, int position) {
+        holder.bindHolder(items.get(position));
     }
 
-    public void setOnItemClickListener(ItemCallback itemCallback) {
-        this.itemCallback = itemCallback;
+    public void setOnItemClickListener(Callback callback) {
+        this.callback = callback;
     }
 
     @Override
@@ -82,17 +74,14 @@ public class CureAdapter extends BaseAdapter<CureAdapter.NormalHolder> {
     }
 
     public void appendItem(List<Gift> dailyGirlList) {
-        int startIndex = items.size();
         gifts.addAll(dailyGirlList);
-        changeItems(startIndex);
+        changeItems();
     }
 
-    private void changeItems(int startIndex) {
-        for (int i = startIndex, size = gifts.size(); i < size; i++) {
-            final Gift gift = gifts.get(i);
-            if (gift != null) {
-                items.add(new CureItem(gift));
-            }
+    private void changeItems() {
+        for (Gift gift : gifts) {
+            if (gift == null) continue;
+            items.add(new CureItem(gift));
         }
     }
 
@@ -100,26 +89,28 @@ public class CureAdapter extends BaseAdapter<CureAdapter.NormalHolder> {
     public void destroy() {
         items.clear();
         gifts.clear();
-        itemCallback = null;
     }
 
     static class CureHolder extends NormalHolder<CureItem> {
         @BindView(R.id.title)
         TextView title;
 
-        CureHolder(ViewGroup parent) {
+        private final Callback callback;
+
+        CureHolder(ViewGroup parent, Callback callback) {
             super(parent, R.layout.adapter_daily_girl);
+            this.callback = callback;
         }
 
         @Override
-        void bindHolder(CureItem item, ItemCallback callback) {
-            super.bindHolder(item, callback);
+        public void bindHolder(CureItem item) {
+            super.bindHolder(item);
             final Gift gift = item.gift;
             title.setText(gift.title);
 
             itemView.setOnClickListener(v -> {
                 if (callback != null) {
-                    callback.onItemClick(gift.url);
+                    callback.onClick(gift.url);
                 }
             });
         }
@@ -134,12 +125,12 @@ public class CureAdapter extends BaseAdapter<CureAdapter.NormalHolder> {
 
         @Override
         public int getViewType() {
-            return VIEW_TYPE_CURE;
+            return ViewType.VIEW_TYPE_CURE;
         }
     }
 
-    interface ItemCallback {
-        void onItemClick(String url);
+    interface Callback {
+        void onClick(String url);
     }
 
     abstract static class NormalHolder<TT extends ItemModel> extends BindHolder<TT> {
@@ -148,17 +139,13 @@ public class CureAdapter extends BaseAdapter<CureAdapter.NormalHolder> {
             super(parent, layoutRes);
         }
 
-        void bindHolder(TT item, ItemCallback callback) {
-
-        }
-
         @Override
         public void bindHolder(TT item) {
 
         }
     }
 
-    interface ViewType {
+    public interface ViewType {
         int VIEW_TYPE_CURE = 1;
 
         @IntDef(VIEW_TYPE_CURE)

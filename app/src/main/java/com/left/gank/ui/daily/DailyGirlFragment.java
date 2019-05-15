@@ -50,7 +50,7 @@ public class DailyGirlFragment extends LazyFragment implements DailyGirlContract
         swipeRefresh.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         swipeRefresh.setAdapter(dailyGirlAdapter);
 
-        swipeRefresh.setOnScrollListener(new LySwipeRefreshLayout.OnSwipeRefreshListener() {
+        swipeRefresh.setOnScrollListener(new LySwipeRefreshLayout.OnListener() {
             @Override
             public void onRefresh() {
                 dailyPresenter.fetchNew();

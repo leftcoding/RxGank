@@ -26,7 +26,7 @@ public class IosPresenter extends IosContract.Presenter {
         if (isDestroy()) {
             return;
         }
-        GankServer.with(context)
+        GankServer.with()
                 .api()
                 .ios(refresh, page, INIT_LIMIT)
                 .doOnSubscribe(disposable -> {

@@ -8,16 +8,13 @@
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|enterAlways|snap"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+            app:layout_scrollFlags="scroll|enterAlways|snap" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -29,18 +26,16 @@
         <FrameLayout
             android:id="@+id/web_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
-        </FrameLayout>
+            android:layout_height="match_parent"></FrameLayout>
 
         <ProgressBar
             android:id="@+id/web_progress_bar"
-            style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:indeterminate="false"
             android:maxHeight="5dip"
             android:minHeight="5dip"
             android:progress="0"
-            android:progressDrawable="@drawable/web_view_progress_bar_bg"/>
+            android:progressDrawable="@drawable/web_view_progress_bar_bg" />
     </RelativeLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,13 +1,10 @@
 package com.left.gank.ui.pure;
 
 import android.content.Context;
-import android.lectcoding.ui.logcat.Logcat;
 import android.ly.business.domain.Gift;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -18,69 +15,61 @@ import com.left.gank.R;
 import com.left.gank.butterknife.adapter.BaseAdapter;
 import com.left.gank.butterknife.holder.BindHolder;
 import com.left.gank.butterknife.item.ItemModel;
+import com.left.gank.utils.ListUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 
 /**
  * Create by LingYan on 2016-04-25
  */
-public class PureAdapter extends BaseAdapter<PureAdapter.PureHolder> {
+public class PureAdapter extends BaseAdapter<BindHolder> {
     private final List<Gift> gifts = new ArrayList<>();
-    private ItemClickCallback callback;
-    private Context mContext;
     private final List<ItemModel> items = new ArrayList<>();
+    private Callback callback;
 
-    PureAdapter(Context context) {
-        setHasStableIds(true);
-        mContext = context;
+    PureAdapter() {
+        registerAdapterDataObserver(observer);
     }
 
     private final RecyclerView.AdapterDataObserver observer = new RecyclerView.AdapterDataObserver() {
         @Override
         public void onChanged() {
             super.onChanged();
-        }
-
-        @Override
-        public void onItemRangeInserted(int positionStart, int itemCount) {
-            super.onItemRangeInserted(positionStart, itemCount);
+            items.clear();
+            if (ListUtils.isNotEmpty(gifts)) {
+                for (Gift gift : gifts) {
+                    if (gift == null) continue;
+                    items.add(new GiftItem(gift));
+                }
+            }
         }
     };
 
+    @NonNull
     @Override
-    public PureHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        PureHolder holder;
-        switch (viewType) {
-            case GiftHolder.LAYOUT:
-                holder = new GiftHolder(parent);
-                break;
-            default:
-                holder = null;
-                break;
+    public BindHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        BindHolder holder;
+        if (viewType == Type.IMAGE) {
+            holder = new GiftHolder(parent, callback);
+        } else {
+            holder = null;
         }
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(PureHolder holder, int position) {
-        switch (holder.getItemViewType()) {
-            case GiftHolder.LAYOUT:
-                ((GiftHolder) holder).bindHolder((GiftViewItem) items.get(position), callback);
-                break;
-        }
+    public void onBindViewHolder(@NonNull BindHolder holder, int position) {
+        holder.bindHolder(items.get(position));
     }
 
     @Override
     public int getItemCount() {
         return items.size();
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return position;
     }
 
     @Override
@@ -91,12 +80,6 @@ public class PureAdapter extends BaseAdapter<PureAdapter.PureHolder> {
         return super.getItemViewType(position);
     }
 
-    @Override
-    public void onViewRecycled(PureHolder holder) {
-        super.onViewRecycled(holder);
-        Glide.get(mContext).clearMemory();
-    }
-
     void refillItems(List<Gift> getResults) {
         gifts.clear();
         items.clear();
@@ -104,42 +87,25 @@ public class PureAdapter extends BaseAdapter<PureAdapter.PureHolder> {
     }
 
     public void appendItems(List<Gift> getResults) {
-        int startIndex = gifts.size();
-        Logcat.d("");
         gifts.addAll(getResults);
-        changeItem(startIndex);
-    }
-
-    private void changeItem(int startIndex) {
-        if (!gifts.isEmpty()) {
-            for (int i = startIndex, size = gifts.size(); i < size; i++) {
-                final Gift gift = gifts.get(i);
-                if (gift != null) {
-                    items.add(new GiftViewItem(gift));
-                }
-            }
-        }
     }
 
     public void clear() {
-        if (gifts != null) {
-            gifts.clear();
-        }
+        gifts.clear();
     }
 
-    public void setOnItemClickListener(ItemClickCallback itemClickCallback) {
-        this.callback = itemClickCallback;
+    public void setOnItemClickListener(Callback callback) {
+        this.callback = callback;
     }
 
     @Override
     public void destroy() {
         items.clear();
         gifts.clear();
+        unregisterAdapterDataObserver(observer);
     }
 
-    static class GiftHolder extends PureHolder<GiftViewItem> {
-        static final int LAYOUT = R.layout.adapter_gift;
-
+    static class GiftHolder extends BindHolder<GiftItem> {
         @BindView(R.id.title)
         TextView title;
 
@@ -149,13 +115,15 @@ public class PureAdapter extends BaseAdapter<PureAdapter.PureHolder> {
         @BindView(R.id.author)
         TextView author;
 
-        GiftHolder(ViewGroup parent) {
-            super(parent, LAYOUT);
+        private final Callback callback;
+
+        GiftHolder(ViewGroup parent, Callback callback) {
+            super(parent, R.layout.adapter_gift);
+            this.callback = callback;
         }
 
         @Override
-        void bindHolder(GiftViewItem item, ItemClickCallback callback) {
-            super.bindHolder(item, callback);
+        public void bindHolder(GiftItem item) {
             final Gift gift = item.gift;
             final Context context = itemView.getContext();
             title.setText(gift.title);
@@ -182,36 +150,24 @@ public class PureAdapter extends BaseAdapter<PureAdapter.PureHolder> {
         }
     }
 
-    static class GiftViewItem extends ItemModel {
+    static class GiftItem extends ItemModel {
         final Gift gift;
 
-        GiftViewItem(Gift gift) {
+        GiftItem(Gift gift) {
             this.gift = gift;
         }
 
         @Override
         public int getViewType() {
-            return GiftHolder.LAYOUT;
+            return Type.IMAGE;
         }
     }
 
-    abstract static class PureHolder<II extends ItemModel> extends BindHolder<II> {
-
-        PureHolder(ViewGroup parent, int layoutRes) {
-            super(parent, layoutRes);
-        }
-
-        @Override
-        public void bindHolder(II item) {
-
-        }
-
-        void bindHolder(II item, ItemClickCallback callback) {
-
-        }
+    public interface Type {
+        int IMAGE = 0;
     }
 
-    interface ItemClickCallback {
+    interface Callback {
         void onItemClick(Gift gift);
     }
 }

@@ -4,7 +4,6 @@
     android:id="@+id/item_rl_update_version"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?attr/selectableItemBackground"
     android:padding="16dp">
 
     <TextView
@@ -12,7 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text=""
-        android:textColor="?attr/textTitleColor"
         android:textSize="14sp"/>
 
     <TextView
@@ -21,7 +19,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/item_view_txt_name"
         android:text=""
-        android:textColor="?attr/textSecondaryColor"
         android:textSize="12sp"/>
 
     <TextView
@@ -35,7 +32,6 @@
         android:paddingEnd="3dp"
         android:paddingStart="3dp"
         android:text="@string/app_new_version"
-        android:textColor="?attr/textPrimaryColor"
         android:textSize="12sp"
         android:visibility="gone"/>
 </RelativeLayout>

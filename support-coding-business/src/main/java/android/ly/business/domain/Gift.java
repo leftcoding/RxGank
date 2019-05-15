@@ -10,18 +10,16 @@ public class Gift implements Parcelable {
     public String imgUrl;
     public String url;
     public String time;
-    public String views;
     public String title;
 
     public Gift(String imgUrl) {
         this.imgUrl = imgUrl;
     }
 
-    public Gift(String imgUrl, String url, String time, String views, String title) {
+    public Gift(String imgUrl, String url, String time, String title) {
         this.imgUrl = imgUrl;
         this.url = url;
         this.time = time;
-        this.views = views;
         this.title = title;
     }
 
@@ -29,7 +27,6 @@ public class Gift implements Parcelable {
         imgUrl = in.readString();
         url = in.readString();
         time = in.readString();
-        views = in.readString();
         title = in.readString();
     }
 
@@ -55,7 +52,6 @@ public class Gift implements Parcelable {
         dest.writeString(imgUrl);
         dest.writeString(url);
         dest.writeString(time);
-        dest.writeString(views);
         dest.writeString(title);
     }
 }

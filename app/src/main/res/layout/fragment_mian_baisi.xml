@@ -21,8 +21,7 @@
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/baisi_tabLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?attr/themeTabLayoutBackground"/>
+            android:layout_height="wrap_content"/>
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.viewpager.widget.ViewPager

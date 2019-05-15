@@ -1,14 +1,12 @@
 package com.left.gank.network.api;
 
-import androidx.annotation.NonNull;
-
-import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.socks.library.KLog;
 
 import java.util.concurrent.TimeUnit;
 
+import androidx.annotation.NonNull;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -37,7 +35,6 @@ public class ApiManager {
     private ApiManager(String url) {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         builder.connectTimeout(DEFAULT_OUT_TIME, TimeUnit.SECONDS); //手动创建一个OkHttpClient并设置超时时间
-        builder.addNetworkInterceptor(new StethoInterceptor()); //chrome test databases
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
             @Override
             public void log(@NonNull String message) {
@@ -49,19 +46,6 @@ public class ApiManager {
 
         builder.addInterceptor(logging);
 //        builder.interceptors().add(new LoggingInterceptor()); //打印请求log
-//        builder.addInterceptor(new Interceptor() {
-//            @Override
-//            public Response intercept(Interceptor.Chain chain) throws IOException {
-//                Request original = chain.request();
-//
-//                Request request = original.newBuilder()
-//                        .header("Content-Type", "application/json")
-//                        .header("Cache-Control", "public, max-age=" + 60 * 60 * 4)
-//                        .build();
-//                KLog.d("--api--" + chain.proceed(request).body().string());
-//                return chain.proceed(request);
-//            }
-//        });
 
         retrofit = new Retrofit.Builder()
                 .client(builder.build())

@@ -2,8 +2,20 @@ package com.left.gank.ui.welfare;
 
 import android.content.Intent;
 import android.ly.business.domain.Gank;
+import android.ly.business.domain.Gift;
+import android.ly.business.domain.PageConfig;
 import android.os.Bundle;
 import android.view.View;
+
+import com.left.gank.R;
+import com.left.gank.ui.base.LazyFragment;
+import com.left.gank.ui.gallery.GalleryActivity;
+import com.left.gank.utils.ListUtils;
+import com.left.gank.widget.MultipleStatusView;
+import com.left.gank.widget.recyclerview.OnFlexibleScrollListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -11,17 +23,6 @@ import androidx.core.app.ActivityOptionsCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
-import com.left.gank.R;
-import com.left.gank.config.MeiziArrayList;
-import com.left.gank.ui.base.LazyFragment;
-import com.left.gank.ui.gallery.GalleryActivity;
-import com.left.gank.utils.ListUtils;
-import com.left.gank.widget.MultipleStatusView;
-import com.left.gank.widget.recyclerview.OnFlexibleScrollListener;
-
-import java.util.List;
-
 import butterknife.BindView;
 
 /**
@@ -33,26 +34,18 @@ public class WelfareFragment extends LazyFragment implements WelfareContract.Vie
     MultipleStatusView multipleStatusView;
 
     @BindView(R.id.swipe_refresh)
-    SwipeRefreshLayout swipeRefreshLayout;
+    SwipeRefreshLayout swipeRefresh;
 
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
 
     private WelfareAdapter welfareAdapter;
     private WelfareContract.Presenter presenter;
-
-    private int curPage = 1;
+    private PageConfig pageConfig = new PageConfig();
 
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_welfare;
-    }
-
-    public static WelfareFragment newInstance() {
-        WelfareFragment fragment = new WelfareFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
@@ -60,15 +53,13 @@ public class WelfareFragment extends LazyFragment implements WelfareContract.Vie
         super.onViewCreated(view, savedInstanceState);
         welfareAdapter = new WelfareAdapter(getContext());
         welfareAdapter.setListener(itemClickListener);
-
-        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,
-                StaggeredGridLayoutManager.VERTICAL));
-        OnFlexibleScrollListener scrollListener = new OnFlexibleScrollListener();
+        StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2,
+                StaggeredGridLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(staggeredGridLayoutManager);
+        OnFlexibleScrollListener scrollListener = new OnFlexibleScrollListener(swipeRefresh);
         scrollListener.setOnScrollListener(this.scrollListener);
         recyclerView.addOnScrollListener(scrollListener);
         recyclerView.setAdapter(welfareAdapter);
-
-        swipeRefreshLayout.setOnRefreshListener(onRefreshListener);
 
         multipleStatusView.setListener(onMultipleClick);
     }
@@ -76,21 +67,20 @@ public class WelfareFragment extends LazyFragment implements WelfareContract.Vie
     @Override
     public void onLazyActivityCreate() {
         presenter = new WelfarePresenter(getContext(), this);
-        presenter.loadWelfare(curPage);
+        loadWelfare(true, PageConfig.starPage());
     }
 
     private final OnFlexibleScrollListener.ScrollListener scrollListener = new OnFlexibleScrollListener.ScrollListener() {
         @Override
-        public void onLoadMore() {
-            loadWelfare();
-        }
-    };
-
-    private final SwipeRefreshLayout.OnRefreshListener onRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
-        @Override
         public void onRefresh() {
-            curPage = 1;
-            loadWelfare();
+            loadWelfare(true, PageConfig.starPage());
+        }
+
+        @Override
+        public void onLoadMore() {
+            if (pageConfig != null) {
+                loadWelfare(false, pageConfig.getNextPage());
+            }
         }
     };
 
@@ -103,36 +93,33 @@ public class WelfareFragment extends LazyFragment implements WelfareContract.Vie
 
     private final WelfareAdapter.ItemClickListener itemClickListener = new WelfareAdapter.ItemClickListener() {
         @Override
-        public void onItem(View view, int position) {
+        public void onItem(View view, String url) {
             Intent intent = new Intent(getContext(), GalleryActivity.class);
-            Bundle bundle = new Bundle();
-            bundle.putInt(GalleryActivity.EXTRA_POSITION, position);
-            bundle.putInt(GalleryActivity.TYPE, GalleryActivity.TYPE_INDEX);
-            intent.putExtras(bundle);
-//            startActivity(intent);
-
+            ArrayList<Gift> list = new ArrayList<>();
+            list.add(new Gift(url));
+            intent.putExtra(GalleryActivity.EXTRA_LIST, list);
             ActivityOptionsCompat activityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(), view, getString(R.string.transition_welfare_image));
             startActivity(intent, activityOptionsCompat.toBundle());
         }
     };
 
-    private void loadWelfare() {
+    private void loadWelfare(boolean useProgress, int page) {
         if (presenter != null) {
-            presenter.loadWelfare(curPage);
+            presenter.loadWelfare(true, useProgress, page);
         }
     }
 
     @Override
     public void hideProgress() {
-        if (swipeRefreshLayout != null) {
-            swipeRefreshLayout.setRefreshing(false);
+        if (swipeRefresh != null) {
+            swipeRefresh.setRefreshing(false);
         }
     }
 
     @Override
     public void showProgress() {
-        if (swipeRefreshLayout != null) {
-            swipeRefreshLayout.setRefreshing(true);
+        if (swipeRefresh != null) {
+            swipeRefresh.setRefreshing(true);
         }
     }
 
@@ -150,26 +137,28 @@ public class WelfareFragment extends LazyFragment implements WelfareContract.Vie
 
     @Override
     public void loadWelfareSuccess(int page, List<Gank> list) {
-        if (welfareAdapter != null) {
-            if (page == 1 && ListUtils.isEmpty(list)) {
-                showEmpty();
-                return;
-            }
+        final boolean isFirst = PageConfig.isFirstPage(page);
+        if (isFirst && ListUtils.isEmpty(list)) {
+            showEmpty();
+            return;
+        }
 
-            showContent();
-            curPage = page + 1;
-            if (page == 1) {
+        showContent();
+        if (pageConfig != null) {
+            pageConfig.setCurPage(page);
+        }
+        if (welfareAdapter != null) {
+            if (isFirst) {
                 welfareAdapter.fillItems(list);
             } else {
                 welfareAdapter.appendItems(list);
             }
             welfareAdapter.notifyDataSetChanged();
-            MeiziArrayList.getInstance().addImages(list, page);
         }
     }
 
     @Override
-    public void loadWelfareFailure(String msg) {
+    public void loadWelfareFailure(int page, String msg) {
         shortToast(msg);
     }
 
@@ -179,5 +168,12 @@ public class WelfareFragment extends LazyFragment implements WelfareContract.Vie
         if (presenter != null) {
             presenter.destroy();
         }
+    }
+
+    public static WelfareFragment newInstance() {
+        WelfareFragment fragment = new WelfareFragment();
+        Bundle args = new Bundle();
+        fragment.setArguments(args);
+        return fragment;
     }
 }

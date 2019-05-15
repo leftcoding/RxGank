@@ -22,7 +22,7 @@ public class StyleUtils {
         int progressColor = R.color.white;
         int schemeColor = R.color.colorAccent;
 
-//        if (AppConfig.isNight()) {
+//        if (App.isNight()) {
 //            progressColor = R.color.baseSwipeRefreshLayoutProgressSchemeColor;
 //            schemeColor = R.color.baseSwipeRefreshLayoutSchemeColors;
 //        }

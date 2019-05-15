@@ -2,7 +2,7 @@ package com.leftcoding.network.interceptor;
 
 import android.content.Context;
 
-import com.leftcoding.network.http.HttpConstants;
+import com.leftcoding.network.http.constants.HttpConstants;
 import com.leftcoding.network.utils.NetWorkUtil;
 
 import java.io.IOException;
@@ -11,7 +11,7 @@ import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
 
-import static com.leftcoding.network.http.HttpConstants.CACHE_CONTROL;
+import static com.leftcoding.network.http.constants.HttpConstants.CACHE_CONTROL;
 
 /**
  * 无网络，使用缓存数据

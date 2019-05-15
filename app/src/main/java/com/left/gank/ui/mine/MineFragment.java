@@ -75,7 +75,7 @@ public class MineFragment extends ButterKnifeFragment {
     }
 
     private void selectTheme(boolean isChecked) {
-//        AppConfig.setIsNight(isChecked);
+//        App.setIsNight(isChecked);
         GanklyPreferences.putBoolean(getContext(), IS_NIGHT, isChecked);
 
         if (isChecked) {
@@ -123,7 +123,7 @@ public class MineFragment extends ButterKnifeFragment {
     }
 
     private void selectItemSwitch() {
-//        boolean isNight = AppConfig.isNight();
+//        boolean isNight = App.isNight();
 //        themeSwitch.setChecked(isNight);
     }
 
@@ -153,7 +153,7 @@ public class MineFragment extends ButterKnifeFragment {
 
     @OnClick(R.id.mine_rl_night)
     void onNight() {
-//        isNight = !AppConfig.isNight();
+//        isNight = !App.isNight();
         selectTheme(isNight);
     }
 

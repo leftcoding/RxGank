@@ -27,7 +27,7 @@ class AndroidPresenter extends Presenter {
             return;
         }
 
-        GankServer.with(context)
+        GankServer.with()
                 .api()
                 .androids(refresh, page, INIT_LIMIT)
                 .doOnSubscribe(disposable -> showProgress(useProgress))

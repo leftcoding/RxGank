@@ -6,14 +6,12 @@
     android:layout_marginBottom="4dp"
     android:layout_marginTop="4dp"
     android:elevation="1dp"
-    android:background="?attr/meiziDailyItemBackground"
     android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/collect_rl_body"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="?attr/selectableItemBackground"
         android:orientation="vertical"
         android:paddingBottom="8dp"
         android:paddingEnd="16dp"
@@ -62,7 +60,6 @@
                     android:ellipsize="end"
                     android:maxLines="3"
                     android:text=""
-                    android:textColor="?attr/textSecondaryColor"
                     android:textSize="12sp"/>
 
                 <TextView
@@ -88,7 +85,6 @@
             android:ellipsize="end"
             android:maxLines="3"
             android:text=""
-            android:textColor="?attr/baseAdapterItemTextColor"
             android:textSize="18sp"/>
     </RelativeLayout>
 </RelativeLayout>

@@ -11,7 +11,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Path;
 
-import static com.leftcoding.network.http.HttpConstants.CACHE_CONTROL;
+import static com.leftcoding.network.http.constants.HttpConstants.CACHE_CONTROL;
 
 
 /**
@@ -39,17 +39,12 @@ public interface GankApi {
             @Path("limit") int limit
     );
 
-    @GET("all/{limit}/{page}")
-    Observable<Response<ListEntity<Gank>>> allGoods(
-            @Path("page") int page,
-            @Path("limit") int limit
-    );
-
     /**
      * 福利 - 图片
      */
     @GET("福利/{limit}/{page}")
     Observable<Response<PageEntity<Gank>>> images(
+            @Header(CACHE_CONTROL) CacheControl cacheControl,
             @Path("page") int page,
             @Path("limit") int limit
     );
