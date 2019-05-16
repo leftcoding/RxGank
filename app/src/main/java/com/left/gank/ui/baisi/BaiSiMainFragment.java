@@ -42,7 +42,7 @@ public class BaiSiMainFragment extends ButterKnifeFragment implements ViewPager.
     private List<String> mTitles;
 
     @Override
-    protected int getLayoutId() {
+    protected int fragmentLayoutId() {
         return R.layout.fragment_mian_baisi;
     }
 

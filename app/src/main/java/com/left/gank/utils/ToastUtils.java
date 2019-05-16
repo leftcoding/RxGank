@@ -8,7 +8,7 @@ import android.widget.Toast;
  * Create by LingYan on 2016-04-01
  */
 public class ToastUtils {
-    private static Toast mToast;
+    private static Toast toast;
 
     private ToastUtils() {
     }
@@ -35,30 +35,29 @@ public class ToastUtils {
 
     private static void show(Context context, String msg, int duration) {
         cancel();
-        mToast = Toast.makeText(context.getApplicationContext(), msg, duration);
-        mToast.setGravity(Gravity.CENTER, 0, 0);
-        mToast.show();
+        toast = Toast.makeText(context.getApplicationContext(), msg, duration);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.show();
     }
 
     private static void show(Context context, int resText, int duration) {
         cancel();
-        mToast = Toast.makeText(context.getApplicationContext(), resText, duration);
-        mToast.setGravity(Gravity.CENTER, 0, 0);
-        mToast.show();
+        toast = Toast.makeText(context.getApplicationContext(), resText, duration);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.show();
     }
 
     private static void show(Context context, int resText, int duration, int gravity) {
         cancel();
-        mToast = Toast.makeText(context.getApplicationContext(), resText, duration);
-        mToast.setGravity(gravity, 0, 100);
-        mToast.show();
+        toast = Toast.makeText(context.getApplicationContext(), resText, duration);
+        toast.setGravity(gravity, 0, 100);
+        toast.show();
     }
 
-
     private static void cancel() {
-        if (mToast != null) {
-            mToast.cancel();
-            mToast = null;
+        if (toast != null) {
+            toast.cancel();
+            toast = null;
         }
     }
 }

@@ -39,7 +39,7 @@ public class DailyGirlFragment extends LazyFragment implements DailyGirlContract
     private ProgressDialog mDialog;
 
     @Override
-    protected int getLayoutId() {
+    protected int fragmentLayoutId() {
         return R.layout.fragment_gift;
     }
 

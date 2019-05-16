@@ -7,15 +7,15 @@ public interface DownloadListener {
     /**
      * 下载成功
      */
-    void onDownloadSuccess();
+    void onSuccess();
 
     /**
-     * @param progress 下载进度
+     * 下载进度
      */
-    void onDownloading(int progress);
+    void onProgress(int progress);
 
     /**
      * 下载失败
      */
-    void onDownloadFailed();
+    void onFailure(String msg);
 }

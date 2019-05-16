@@ -66,7 +66,7 @@ public class TeamBlogFragment extends LazyFragment implements TechnologyContract
     }
 
     @Override
-    protected int getLayoutId() {
+    protected int fragmentLayoutId() {
         return R.layout.layout_swipe_normal;
     }
 

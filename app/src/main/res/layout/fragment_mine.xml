@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/coordinator"
     android:layout_width="match_parent"
@@ -16,7 +15,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView
@@ -36,49 +35,49 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:elevation="1dp"
                 android:orientation="vertical"
                 app:divider="@drawable/shape_item_divider"
-                android:elevation="1dp"
                 app:showDividers="middle">
 
                 <com.left.gank.widget.LYRelativeLayoutRipple
                     android:id="@+id/mine_rl_browse"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="16dp"
-                    android:paddingEnd="0dp"
                     android:paddingStart="16dp"
-                    android:paddingTop="16dp">
+                    android:paddingTop="16dp"
+                    android:paddingEnd="0dp"
+                    android:paddingBottom="16dp">
 
                     <TextView
                         android:id="@+id/mine_txt_browse"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:drawablePadding="10dp"
                         android:drawableStart="@drawable/mine_browse"
+                        android:drawablePadding="10dp"
                         android:gravity="center_vertical"
-                        android:text="@string/mine_browse"/>
+                        android:text="@string/mine_browse" />
                 </com.left.gank.widget.LYRelativeLayoutRipple>
 
                 <com.left.gank.widget.LYRelativeLayoutRipple
                     android:id="@+id/mine_rl_collect"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="16dp"
-                    android:paddingEnd="0dp"
                     android:paddingStart="16dp"
-                    android:paddingTop="16dp">
+                    android:paddingTop="16dp"
+                    android:paddingEnd="0dp"
+                    android:paddingBottom="16dp">
 
                     <TextView
                         android:id="@+id/mine_txt_collect"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:drawablePadding="10dp"
                         android:drawableStart="@drawable/mine_collect"
+                        android:drawablePadding="10dp"
                         android:gravity="center_vertical"
-                        android:text="@string/mine_my_collect"/>
+                        android:text="@string/mine_my_collect" />
                 </com.left.gank.widget.LYRelativeLayoutRipple>
             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -87,19 +86,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:orientation="vertical"
                 android:elevation="1dp"
-                app:divider="@drawable/shape_item_divider"
+                android:orientation="vertical"
                 app:showDividers="middle">
 
                 <com.left.gank.widget.LYRelativeLayoutRipple
                     android:id="@+id/mine_rl_night"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="16dp"
-                    android:paddingEnd="0dp"
                     android:paddingStart="16dp"
-                    android:paddingTop="16dp">
+                    android:paddingTop="16dp"
+                    android:paddingEnd="0dp"
+                    android:paddingBottom="16dp">
 
                     <com.left.gank.widget.LSwitch
                         android:id="@+id/mine_ls_theme"
@@ -107,7 +105,7 @@
                         android:layout_height="26dp"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginEnd="16dp"/>
+                        android:layout_marginEnd="16dp" />
 
                     <TextView
                         android:id="@+id/mine_txt_night"
@@ -115,31 +113,67 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
-                        android:drawablePadding="10dp"
                         android:drawableStart="@drawable/mine_night"
+                        android:drawablePadding="10dp"
                         android:gravity="center_vertical"
-                        android:text="@string/mine_night"/>
+                        android:text="@string/mine_night" />
                 </com.left.gank.widget.LYRelativeLayoutRipple>
 
                 <com.left.gank.widget.LYRelativeLayoutRipple
                     android:id="@+id/mine_rl_setting"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="16dp"
-                    android:paddingEnd="0dp"
                     android:paddingStart="16dp"
-                    android:paddingTop="16dp">
+                    android:paddingTop="16dp"
+                    android:paddingEnd="0dp"
+                    android:paddingBottom="16dp">
 
                     <TextView
                         android:id="@+id/mine_txt_setting"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:drawablePadding="10dp"
                         android:drawableStart="@drawable/mine_setting"
+                        android:drawablePadding="10dp"
                         android:gravity="center_vertical"
-                        android:text="@string/mine_setting"/>
+                        android:text="@string/mine_setting" />
                 </com.left.gank.widget.LYRelativeLayoutRipple>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:elevation="1dp"
+                android:orientation="vertical"
+                app:divider="@drawable/shape_item_divider"
+                app:showDividers="middle">
+
+                <com.left.gank.widget.LYRelativeLayoutRipple
+                    android:id="@+id/download"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="16dp"
+                    android:paddingTop="16dp"
+                    android:paddingEnd="0dp"
+                    android:paddingBottom="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:drawableStart="@drawable/mine_browse"
+                        android:drawablePadding="10dp"
+                        android:gravity="center_vertical"
+                        android:text="下载测试" />
+
+                </com.left.gank.widget.LYRelativeLayoutRipple>
+
+                <ProgressBar
+                    android:id="@+id/progress_bar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
             </androidx.appcompat.widget.LinearLayoutCompat>
         </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.core.widget.NestedScrollView>

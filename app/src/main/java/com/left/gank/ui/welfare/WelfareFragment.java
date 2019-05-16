@@ -44,7 +44,7 @@ public class WelfareFragment extends LazyFragment implements WelfareContract.Vie
     private PageConfig pageConfig = new PageConfig();
 
     @Override
-    protected int getLayoutId() {
+    protected int fragmentLayoutId() {
         return R.layout.fragment_welfare;
     }
 

@@ -36,7 +36,7 @@ public class DiscoveredMoreFragment extends LazyFragment {
     }
 
     @Override
-    protected int getLayoutId() {
+    protected int fragmentLayoutId() {
         return R.layout.fragment_discovered_more;
     }
 

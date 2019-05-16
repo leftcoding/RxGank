@@ -37,7 +37,7 @@ public class GirlsFragment extends SupportFragment implements ViewPager.OnPageCh
     private List<String> mTitles;
 
     @Override
-    protected int getLayoutId() {
+    protected int fragmentLayoutId() {
         return R.layout.fragment_girls;
     }
 

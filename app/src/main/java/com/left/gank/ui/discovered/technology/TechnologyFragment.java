@@ -41,7 +41,7 @@ public class TechnologyFragment extends LazyFragment implements TechnologyContra
     private TechnologyContract.Presenter mPresenter;
 
     @Override
-    protected int getLayoutId() {
+    protected int fragmentLayoutId() {
         return R.layout.layout_swipe_normal;
     }
 

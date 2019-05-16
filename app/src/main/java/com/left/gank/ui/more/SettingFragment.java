@@ -67,7 +67,7 @@ public class SettingFragment extends SupportFragment implements ILauncher {
     private UpdateVersionDialog mVersionDialog;
 
     @Override
-    protected int getLayoutId() {
+    protected int fragmentLayoutId() {
         return R.layout.fragment_setting;
     }
 

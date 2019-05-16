@@ -42,7 +42,7 @@ public class IosFragment extends LazyFragment implements IosContract.View {
     private PageConfig pageConfig = new PageConfig();
 
     @Override
-    protected int getLayoutId() {
+    protected int fragmentLayoutId() {
         return R.layout.fragment_welfare;
     }
 

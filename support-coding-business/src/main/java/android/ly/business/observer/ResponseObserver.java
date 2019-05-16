@@ -18,16 +18,16 @@ public abstract class ResponseObserver<T extends BaseEntity> extends BaseObserve
     protected abstract void onFailure(Throwable e);
 
     @Override
-    public void onNext(Response<T> t) {
-        if (t == null) {
+    public void onNext(Response<T> response) {
+        if (response == null) {
             onFailure(new Throwable("response is null"));
             return;
         }
-        if (!t.isSuccessful()) {
-            onFailure(new Throwable("request code is:" + t.code()));
+        if (!response.isSuccessful()) {
+            onFailure(new Throwable("request code is:" + response.code()));
             return;
         }
-        onSuccess(t.body());
+        onSuccess(response.body());
     }
 
     @Override
