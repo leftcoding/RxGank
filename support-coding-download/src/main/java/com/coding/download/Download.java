@@ -1,9 +1,14 @@
 package com.coding.download;
 
+import com.coding.download.interceptor.RangeInterceptor;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.RandomAccessFile;
+import java.nio.MappedByteBuffer;
+import java.nio.channels.FileChannel;
 
 import androidx.annotation.NonNull;
 import okhttp3.Call;
@@ -17,7 +22,7 @@ import okhttp3.ResponseBody;
  * Create by LingYan on 2019-05-15
  */
 public class Download {
-    private final OkHttpClient okHttpClient;
+    private OkHttpClient okHttpClient;
     private DownloadListener downloadListener;
     private Call call;
 
@@ -25,6 +30,7 @@ public class Download {
     private String url;
     private File saveFile;
     private String fileName;
+    private long startPoint;
 
     private Download(DownloadParams downloadParams) {
         this.url = downloadParams.url;
@@ -46,7 +52,7 @@ public class Download {
         @Override
         public void onResponse(Call call, Response response) throws IOException {
             ResponseBody responseBody = response.body();
-            if (!response.isSuccessful() || responseBody == null) {
+            if (responseBody == null) {
                 if (downloadListener != null) {
                     downloadListener.onFailure(response.message());
                 }
@@ -55,7 +61,8 @@ public class Download {
 
             File saveFile = saveFile();
             if (saveFile != null) {
-                saveFileToDisk(responseBody, saveFile);
+//                saveFileToDisk(responseBody, saveFile);
+                saveFile(responseBody, saveFile);
             }
         }
     };
@@ -87,6 +94,45 @@ public class Download {
     private long lastSaveLength() {
         File file = saveFile();
         return file == null ? 0 : file.length();
+    }
+
+    private void saveFile(ResponseBody responseBody, File saveFile) {
+        FileChannel fileChannel = null;
+        int total = (int) responseBody.contentLength();
+        int currentLength = 0;
+        InputStream inputStream = responseBody.byteStream();
+
+        try {
+            RandomAccessFile randomAccessFile = new RandomAccessFile(saveFile, "rws");
+            fileChannel = randomAccessFile.getChannel();
+            MappedByteBuffer mappedByteBuffer = fileChannel.map(FileChannel.MapMode.READ_WRITE, startPoint, total);
+            int len;
+            byte[] buffer = new byte[1024];
+            while ((len = inputStream.read(buffer)) != -1) {
+                currentLength = currentLength + len;
+                mappedByteBuffer.put(buffer, 0, len);
+                int progress = (int) (currentLength * 1.0f / total * 100);
+                if (downloadListener != null) {
+                    downloadListener.onProgress(progress);
+                }
+            }
+            if (downloadListener != null) {
+                downloadListener.onSuccess();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            onFailure(e.toString());
+        } finally {
+            isDownloading = false;
+            try {
+                inputStream.close();
+                if (fileChannel != null) {
+                    fileChannel.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private void saveFileToDisk(ResponseBody responseBody, File saveFile) {
@@ -134,12 +180,10 @@ public class Download {
             return;
         }
         isDownloading = true;
-//        long lastFileLength = lastSaveLength();
-        Request request = new Request.Builder()
-                // TODO 断点下载，文件是否修改
-//                .header("If-Modified-Since", "Fri, 10 May 2019 10:37:08 GMT")
-//                .header("RANGE", "bytes=" + lastFileLength + "-80824136")
-                .url(url)
+        startPoint = lastSaveLength();
+        Request request = new Request.Builder().url(url).build();
+        okHttpClient = okHttpClient.newBuilder()
+                .addInterceptor(new RangeInterceptor(startPoint))
                 .build();
         call = okHttpClient.newCall(request);
         call.enqueue(callback);
@@ -156,12 +200,11 @@ public class Download {
     }
 
     /**
-     * 判断下载目录是否存在
+     * 如果有存在文件删除
      */
     private String saveAbsolutePath(File downloadFile) {
-        if (!downloadFile.mkdirs()) {
-            downloadFile.mkdirs();
-        }
+        downloadFile.deleteOnExit();
+        downloadFile.mkdirs();
         return downloadFile.getAbsolutePath();
     }
 

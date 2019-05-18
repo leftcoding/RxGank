@@ -1,5 +1,7 @@
 package com.coding.download;
 
+import android.content.Context;
+
 import java.io.File;
 
 /**
@@ -30,4 +32,6 @@ public class DownloadParams {
      * 是否断点续传
      */
     public boolean isBreakpoint;
+
+    public Context context;
 }
