@@ -40,7 +40,7 @@ public class CureFragment extends LazyFragment implements CureContract.View {
     private int page = 1;
 
     @Override
-    protected int getLayoutId() {
+    protected int fragmentLayoutId() {
         return R.layout.fragment_gift;
     }
 

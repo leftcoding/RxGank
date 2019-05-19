@@ -3,7 +3,7 @@ package com.left.gank.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import javax.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 
 /**

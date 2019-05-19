@@ -1,7 +1,5 @@
 package com.left.gank.ui.collect;
 
-import androidx.annotation.NonNull;
-
 import com.left.gank.data.entity.UrlCollect;
 import com.left.gank.mvp.source.LocalDataSource;
 import com.left.gank.utils.ListUtils;
@@ -9,6 +7,7 @@ import com.socks.library.KLog;
 
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -22,35 +21,36 @@ public class CollectPresenter extends CollectContract.Presenter {
     private static final int LIMIT = 10;
 
     @NonNull
-    private LocalDataSource mTask;
-    @NonNull
-    private CollectContract.View mModelView;
+    private LocalDataSource localDataSource;
 
-    private int mPage = 0;
+    @NonNull
+    private CollectContract.View view;
+
+    private int page = 0;
     private boolean isNoMore;
 
     public CollectPresenter(@NonNull LocalDataSource task, @NonNull CollectContract.View modelView) {
-        this.mTask = task;
-        this.mModelView = modelView;
+        this.localDataSource = task;
+        this.view = modelView;
     }
 
     private void parseData(List<UrlCollect> list) {
         int size = ListUtils.getSize(list);
         if (size > 0) {
-            if (mPage == 0) {
-                mModelView.setAdapterList(list);
+            if (page == 0) {
+                view.setAdapterList(list);
             } else {
-                mModelView.appendAdapter(list);
+                view.appendAdapter(list);
             }
-            mModelView.showContent();
+            view.showContent();
 
             if (size < LIMIT) {
                 isNoMore = true;
             }
         } else {
-            if (mPage > 0) {
+            if (page > 0) {
             } else {
-                mModelView.showEmpty();
+                view.showEmpty();
             }
         }
     }
@@ -58,7 +58,7 @@ public class CollectPresenter extends CollectContract.Presenter {
     @Override
     public void fetchNew() {
         isNoMore = false;
-        mPage = 0;
+        page = 0;
         int offset = getOffset();
         getCollects(offset);
     }
@@ -66,18 +66,18 @@ public class CollectPresenter extends CollectContract.Presenter {
     @Override
     public void fetchMore() {
         if (!isNoMore) {
-            mModelView.showProgress();
+            view.showProgress();
             int offset = getOffset();
             getCollects(offset);
         }
     }
 
     private int getOffset() {
-        return mPage * LIMIT;
+        return page * LIMIT;
     }
 
     private void getCollects(int offset) {
-        mTask.getCollect(offset, LIMIT)
+        localDataSource.getCollect(offset, LIMIT)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<List<UrlCollect>>() {
@@ -88,8 +88,8 @@ public class CollectPresenter extends CollectContract.Presenter {
 
                     @Override
                     public void onComplete() {
-                        mModelView.hideProgress();
-                        mPage = mPage + 1;
+                        view.hideProgress();
+                        page = page + 1;
                     }
 
                     @Override
@@ -106,20 +106,11 @@ public class CollectPresenter extends CollectContract.Presenter {
 
     @Override
     public void cancelCollect(final long position) {
-        mTask.cancelCollect(position)
-//                .delaySubscription(4, TimeUnit.SECONDS)
-                .subscribe(s -> {
-
-                }, throwable -> KLog.e(throwable), () -> {
-                    if (mModelView.getItemsCount() == 0) {
-                        mModelView.showEmpty();
-                    }
-                });
     }
 
     @Override
     public void insertCollect(UrlCollect collect) {
-        mTask.insertCollect(collect).subscribe(new Observer<Long>() {
+        localDataSource.insertCollect(collect).subscribe(new Observer<Long>() {
             @Override
             public void onSubscribe(Disposable d) {
 
@@ -127,7 +118,7 @@ public class CollectPresenter extends CollectContract.Presenter {
 
             @Override
             public void onNext(Long aLong) {
-                mModelView.revokeCollect();
+                view.revokeCollect();
             }
 
             @Override

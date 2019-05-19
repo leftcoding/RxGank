@@ -51,7 +51,7 @@ public class DiscoveredFragment extends ButterKnifeFragment implements ViewPager
     private List<String> mTitles;
 
     @Override
-    protected int getLayoutId() {
+    protected int fragmentLayoutId() {
         return R.layout.fragment_discovered;
     }
 

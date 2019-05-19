@@ -2,11 +2,9 @@ package android.lectcoding.ui.base;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -44,9 +42,7 @@ public abstract class BaseFragment extends Fragment implements BaseView {
     }
 
     public void shortToast(String msg) {
-        if (!TextUtils.isEmpty(msg)) {
-            Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
-        }
+
     }
 
     @Override

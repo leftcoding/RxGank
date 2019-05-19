@@ -43,7 +43,7 @@ public class IndexFragment extends SupportFragment implements
     private long appLength;
 
     @Override
-    protected int getLayoutId() {
+    protected int fragmentLayoutId() {
         return R.layout.fragment_main;
     }
 

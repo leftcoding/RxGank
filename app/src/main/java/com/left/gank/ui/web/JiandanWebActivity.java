@@ -524,7 +524,7 @@ public class JiandanWebActivity extends BaseActivity {
             /**
              * 这里写入你自定义的window alert
              */
-            // AlertDialog.Builder builder = new Builder(getContext());
+            // AlertDialog.DownloadParams builder = new DownloadParams(getContext());
             // builder.setTitle("X5内核");
             // builder.setPositiveButton("确定", new
             // DialogInterface.OnClickListener() {

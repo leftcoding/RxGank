@@ -46,7 +46,7 @@ public class PureFragment extends LazyFragment implements PureContract.View {
     private int curPage = FIRST_PAGE;
 
     @Override
-    protected int getLayoutId() {
+    protected int fragmentLayoutId() {
         return R.layout.fragment_gift;
     }
 

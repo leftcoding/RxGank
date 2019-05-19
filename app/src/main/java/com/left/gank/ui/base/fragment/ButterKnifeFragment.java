@@ -17,12 +17,12 @@ import butterknife.Unbinder;
  */
 
 public abstract class ButterKnifeFragment extends BaseFragment {
-    protected Unbinder unBinder;
+    private Unbinder unBinder;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(getLayoutId(), container, false);
+        return inflater.inflate(fragmentLayoutId(), container, false);
     }
 
     @Override
@@ -31,7 +31,7 @@ public abstract class ButterKnifeFragment extends BaseFragment {
         unBinder = ButterKnife.bind(this, view);
     }
 
-    protected abstract int getLayoutId();
+    protected abstract int fragmentLayoutId();
 
     @Override
     public void onDestroyView() {

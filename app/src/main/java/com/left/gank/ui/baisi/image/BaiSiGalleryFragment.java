@@ -54,7 +54,7 @@ public class BaiSiGalleryFragment extends SupportFragment {
     }
 
     @Override
-    protected int getLayoutId() {
+    protected int fragmentLayoutId() {
         return R.layout.fragment_baisi_gallery;
     }
 

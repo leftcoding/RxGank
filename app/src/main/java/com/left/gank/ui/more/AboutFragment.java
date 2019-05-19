@@ -62,7 +62,7 @@ public class AboutFragment extends SupportFragment {
     }
 
     @Override
-    protected int getLayoutId() {
+    protected int fragmentLayoutId() {
         return R.layout.fragment_about;
     }
 

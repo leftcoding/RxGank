@@ -50,7 +50,7 @@ public class OkHttpProgressGlideModule extends LibraryGlideModule {
 //	@Override
 //	public void registerComponents(Context context, Glide glide) {
 ////		OkHttpClient client = new OkHttpClient();
-//		OkHttpClient.Builder client = new OkHttpClient.Builder();
+//		OkHttpClient.DownloadParams client = new OkHttpClient.DownloadParams();
 //		client.networkInterceptors().add(createInterceptor(new DispatchingProgressListener()));
 //		glide.register(GlideUrl.class, InputStream.class, new OkHttpUrlLoader.Factory(client.build()));
 //		glide.setMemoryCategory(MemoryCategory.LOW);

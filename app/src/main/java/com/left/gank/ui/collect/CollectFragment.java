@@ -1,27 +1,24 @@
 package com.left.gank.ui.collect;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.left.gank.R;
 import com.left.gank.bean.RxCollect;
 import com.left.gank.data.entity.UrlCollect;
 import com.left.gank.mvp.source.LocalDataSource;
 import com.left.gank.rxjava.RxBus_;
 import com.left.gank.ui.base.fragment.SupportFragment;
-import com.left.gank.ui.more.MoreActivity;
 import com.left.gank.ui.web.normal.WebActivity;
 import com.left.gank.widget.LyRecyclerView;
 import com.left.gank.widget.LySwipeRefreshLayout;
 import com.left.gank.widget.MultipleStatusView;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -35,95 +32,86 @@ import io.reactivex.disposables.Disposable;
  */
 public class CollectFragment extends SupportFragment implements CollectContract.View {
     @BindView(R.id.coordinator)
-    CoordinatorLayout mCoordinatorLayout;
+    CoordinatorLayout coordinatorLayout;
+
     @BindView(R.id.multiple_status_view)
-    MultipleStatusView mMultipleStatusView;
+    MultipleStatusView multipleStatusView;
+
     @BindView(R.id.swipe_refresh)
-    LySwipeRefreshLayout mSwipeRefreshLayout;
-    RecyclerView mRecyclerView;
+    LySwipeRefreshLayout swipeRefreshLayout;
+
+    RecyclerView recyclerView;
+
     @BindView(R.id.toolbar)
-    Toolbar mToolbar;
+    Toolbar toolbar;
 
-    private MoreActivity mActivity;
-    private CollectContract.Presenter mPresenter;
-    private CollectAdapter mCollectAdapter;
-    private Disposable mDisposable;
+    private CollectContract.Presenter presenter;
+    private CollectAdapter collectAdapter;
+    private Disposable disposable;
 
     @Override
-    protected int getLayoutId() {
+    protected int fragmentLayoutId() {
         return R.layout.activity_collcet;
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        mActivity = (MoreActivity) context;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mToolbar.setTitle(R.string.mine_my_collect);
-        mActivity.setSupportActionBar(mToolbar);
-        ActionBar bar = mActivity.getSupportActionBar();
-        if (bar != null) {
-            bar.setDisplayHomeAsUpEnabled(true);
-        }
+        toolbar.setTitle(R.string.mine_my_collect);
+        toolbar.setNavigationOnClickListener(v -> getActivity().finish());
 
-        mToolbar.setNavigationOnClickListener(v -> mActivity.finish());
-
-        mDisposable = RxBus_.getInstance().toObservable(RxCollect.class)
+        disposable = RxBus_.getInstance().toObservable(RxCollect.class)
                 .subscribe(rxCollect -> {
                     if (rxCollect.isCollect()) {
                         onDelete();
                     }
                 });
 
-        mSwipeRefreshLayout.setOnScrollListener(new LySwipeRefreshLayout.OnListener() {
+        swipeRefreshLayout.setOnScrollListener(new LySwipeRefreshLayout.OnListener() {
             @Override
             public void onRefresh() {
-                showProgress();
-                mPresenter.fetchNew();
+                if (presenter != null) {
+                    presenter.fetchNew();
+                }
             }
 
             @Override
             public void onLoadMore() {
-                mPresenter.fetchMore();
+                if (presenter != null) {
+                    presenter.fetchMore();
+                }
             }
         });
 
-        initAdapter();
+        collectAdapter = new CollectAdapter(getContext());
         setRecyclerView();
-        initRefresh();
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mPresenter = new CollectPresenter(LocalDataSource.getInstance(), this);
+        presenter = new CollectPresenter(LocalDataSource.getInstance(), this);
+        presenter.fetchNew();
     }
 
     private void setRecyclerView() {
-        mSwipeRefreshLayout.setLayoutManager(new LinearLayoutManager(mActivity));
-        mSwipeRefreshLayout.setAdapter(mCollectAdapter);
-        mSwipeRefreshLayout.setILyRecycler(new LyRecyclerView.ILyRecycler() {
+        swipeRefreshLayout.setLayoutManager(new LinearLayoutManager(getContext()));
+        swipeRefreshLayout.setAdapter(collectAdapter);
+        swipeRefreshLayout.setILyRecycler(new LyRecyclerView.ILyRecycler() {
             @Override
             public void removeRecycle(final int position) {
-                final UrlCollect urlCollect = mCollectAdapter.getUrlCollect(position);
+                final UrlCollect urlCollect = collectAdapter.getUrlCollect(position);
                 long id = urlCollect.getId();
-                mPresenter.cancelCollect(id);
-                mCollectAdapter.deleteItem(position);
-                Snackbar.make(mCoordinatorLayout, R.string.collect_revoke, Snackbar.LENGTH_LONG)
+                presenter.cancelCollect(id);
+                collectAdapter.deleteItem(position);
+                Snackbar.make(coordinatorLayout, R.string.collect_revoke, Snackbar.LENGTH_LONG)
                         .setAction(R.string.revoke, v -> {
-//                                mCollectAdapter.backAdapter();
-//                                mPresenter.backCollect();
-//                                if (mCollectAdapter.getItemCount() > 0) {
-//                                    showContent();
-//                                }
-                            mPresenter.insertCollect(urlCollect);
+                            if (presenter != null) {
+                                presenter.insertCollect(urlCollect);
+                            }
                         })
                         .show();
-                if (mCollectAdapter.getItemCount() == 0) {
+                if (collectAdapter.getItemCount() == 0) {
                     showEmpty();
                 }
             }
@@ -134,94 +122,82 @@ public class CollectFragment extends SupportFragment implements CollectContract.
             }
         });
 
-        mRecyclerView = mSwipeRefreshLayout.getRecyclerView();
-//        mRecyclerView.addItemDecoration(new RecycleViewDivider(mActivity, R.drawable.shape_item_divider));
-//        mRecyclerView.setItemAnimator(new FadeInUpAnimator(new OvershootInterpolator(1f)));
-        mRecyclerView.getItemAnimator().setAddDuration(150);
-        mRecyclerView.getItemAnimator().setRemoveDuration(150);
-    }
-
-    private void initAdapter() {
-        mCollectAdapter = new CollectAdapter(mActivity);
-    }
-
-    private void initRefresh() {
-        mMultipleStatusView.showLoading();
-        mPresenter.fetchNew();
+        recyclerView = swipeRefreshLayout.getRecyclerView();
+        recyclerView.getItemAnimator().setAddDuration(150);
+        recyclerView.getItemAnimator().setRemoveDuration(150);
     }
 
     private void openWebActivity(int position) {
-        UrlCollect urlCollect = mCollectAdapter.getUrlCollect(position);
+        UrlCollect urlCollect = collectAdapter.getUrlCollect(position);
         Bundle bundle = new Bundle();
         bundle.putString(WebActivity.TITLE, urlCollect.getComment());
         bundle.putString(WebActivity.URL, urlCollect.getUrl());
         bundle.putInt(WebActivity.FROM_TYPE, WebActivity.FROM_COLLECT);
-        WebActivity.startWebActivity(mActivity, bundle);
+        WebActivity.startWebActivity(getContext(), bundle);
     }
 
 
     @Override
     public void setAdapterList(List<UrlCollect> list) {
-        mCollectAdapter.updateItems(list);
+        if (collectAdapter != null) {
+            collectAdapter.updateItems(list);
+        }
     }
 
     @Override
     public void appendAdapter(List<UrlCollect> list) {
-        mCollectAdapter.addItems(list);
+        if (collectAdapter != null) {
+            collectAdapter.addItems(list);
+        }
     }
 
     @Override
     public void onDelete() {
-        mCollectAdapter.deleteItem(mSwipeRefreshLayout.getPosition());
-        if (mCollectAdapter.getItemCount() == 0) {
-            showEmpty();
-        }
+
     }
 
     @Override
     public int getItemsCount() {
-        return mCollectAdapter.getItemCount();
+        return collectAdapter != null ? collectAdapter.getItemCount() : 0;
     }
 
     @Override
     public void revokeCollect() {
-        mCollectAdapter.backAdapter();
-        if (mCollectAdapter.getItemCount() > 0) {
-            showContent();
-        }
     }
 
     @Override
     public void showEmpty() {
-        mMultipleStatusView.showEmpty();
-    }
-
-    private void showLoading() {
-        if (mMultipleStatusView != null) {
-            mMultipleStatusView.showLoading();
+        if (multipleStatusView != null) {
+            multipleStatusView.showEmpty();
         }
     }
 
     @Override
     public void showContent() {
-        mMultipleStatusView.showContent();
+        if (multipleStatusView != null) {
+            multipleStatusView.showContent();
+        }
     }
 
     @Override
     public void showProgress() {
-        mSwipeRefreshLayout.setRefreshing(true);
+        if (swipeRefreshLayout != null) {
+            swipeRefreshLayout.setRefreshing(true);
+        }
     }
 
     @Override
     public void hideProgress() {
-        mSwipeRefreshLayout.setRefreshing(false);
+        if (swipeRefreshLayout != null) {
+            swipeRefreshLayout.setRefreshing(false);
+        }
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if (mDisposable != null && !mDisposable.isDisposed()) {
-            mDisposable.dispose();
+        if (disposable != null && !disposable.isDisposed()) {
+            disposable.dispose();
         }
     }
 }

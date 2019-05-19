@@ -54,7 +54,6 @@ public class PurePresenter extends PureContract.Presenter {
 
                     @Override
                     public void onNext(Document document) {
-                        Logcat.d(document);
                         maxPageNumber = getMaxPageNum(document);
                         List<Gift> gifts = getPageLists(document);
                         if (gifts != null) {
@@ -169,7 +168,7 @@ public class PurePresenter extends PureContract.Presenter {
             lastNameIndex = url.lastIndexOf("/");
             baseUrl = url.substring(0, lastNameIndex);
             name = url.substring(lastNameIndex, lastPointIndex - 2);
-            endType = url.substring(lastPointIndex, url.length());
+            endType = url.substring(lastPointIndex);
         }
 
         String number;

@@ -24,7 +24,7 @@ public class GalleryFragment extends SupportFragment implements ProgressImageVie
     private String url;
 
     @Override
-    protected int getLayoutId() {
+    protected int fragmentLayoutId() {
         return R.layout.fragment_browse_picture;
     }
 
