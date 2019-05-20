@@ -43,9 +43,6 @@
 
     <color name="collect_snackbar_text_color">#4093c6</color>
 
-    <color name="colorPrimaryDark">#00796B</color>
-    <color name="colorPrimary">#009688</color>
-    <color name="colorAccent">#009688</color>
     <color name="aboutBackground_light">#EFEEF4</color>
     <color name="collect_background_light">#F1F3F6</color>
     <color name="refresh_background_light">#f8f8f8</color>
