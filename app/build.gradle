@@ -1,5 +1,9 @@
 apply plugin: 'com.android.application'
 
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
     defaultConfig {
@@ -62,10 +66,11 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation project(':support-coding-basic')
-    debugImplementation rootProject.ext.leakcanary.leakcanary_android
 
     implementation rootProject.ext.butterknife.butterknife
     annotationProcessor rootProject.ext.compilerDeps.butterknife_compiler
 
     annotationProcessor rootProject.ext.compilerDeps.glide_compiler
+
+    debugImplementation rootProject.ext.leakcanary.leakcanary_android
 }
