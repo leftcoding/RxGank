@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.roughike.bottombar.BottomBar
+        android:id="@+id/bottomBar"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+        android:background="@color/colorPrimary"
+        app:bb_activeTabAlpha="1"
+        app:bb_activeTabColor="@color/white"
+        app:bb_behavior="shifting|underNavbar"
+        app:bb_inActiveTabAlpha="0.5"
+        app:bb_inActiveTabColor="@color/white"
+        app:bb_showShadow="true"
+        app:bb_tabXmlResource="@xml/bottombar_tabs_color_changing"
+        app:bb_titleTextAppearance="@style/BottomTextAppearance" />
+</merge>

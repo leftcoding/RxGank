@@ -48,5 +48,4 @@ dependencies {
     api rootProject.ext.greendaoLibs
     api rootProject.ext.glideLibs
     api rootProject.ext.retrofitLibs
-
 }

@@ -10,7 +10,6 @@ import android.view.View;
 import com.left.gank.R;
 import com.left.gank.butterknife.adapter.FootAdapter;
 import com.left.gank.config.Constants;
-import com.left.gank.ui.MainActivity;
 import com.left.gank.ui.base.LazyFragment;
 import com.left.gank.ui.web.normal.WebActivity;
 import com.left.gank.utils.CircularAnimUtils;
@@ -109,7 +108,7 @@ public class AndroidFragment extends LazyFragment implements AndroidContract.Vie
             bundle.putString(WebActivity.AUTHOR, gank.who);
             Intent intent = new Intent(context, WebActivity.class);
             intent.putExtras(bundle);
-            CircularAnimUtils.startActivity((MainActivity) context, intent, view, R.color.white_half);
+            CircularAnimUtils.startActivity(getActivity(), intent, view, R.color.white_half);
         }
     };
 

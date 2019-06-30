@@ -93,4 +93,23 @@
         <item name="android:activityCloseEnterAnimation">@anim/alpha_in</item>
         <item name="android:activityCloseExitAnimation">@anim/alpha_out</item>
     </style>
+
+    <style name="Widget.IOSched.BottomNav" parent="@style/Widget.MaterialComponents.BottomNavigationView.Colored">
+        <item name="itemIconTint">@color/bottom_nav_item</item>
+        <item name="itemTextAppearanceActive">
+            @style/BottomNavigationViewActive
+        </item>
+        <item name="itemTextAppearanceInactive">@style/BottomNavigationView.Inactive</item>
+        <item name="labelVisibilityMode">selected</item>
+        <item name="android:theme">@style/ThemeOverlay.MaterialComponents.Dark</item>
+    </style>
+
+    <style name="BottomNavigationViewActive">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="BottomNavigationView.Inactive" parent="@style/TextAppearance.MaterialComponents.Body1">
+        <item name="android:textColor">@color/bottom_nav_item</item>
+    </style>
 </resources>

@@ -25,7 +25,7 @@
         android:supportsRtl="true"
         android:theme="@style/Design.App">
         <activity
-            android:name=".ui.splash.SplashActivity"
+            android:name=".ui.splash.SplashActivityKt"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/Design.Splash">
@@ -35,7 +35,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.MainActivity"
+            android:name=".ui.MainActivityKt"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity

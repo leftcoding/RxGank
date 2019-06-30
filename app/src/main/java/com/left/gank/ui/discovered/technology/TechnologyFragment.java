@@ -1,19 +1,13 @@
 package com.left.gank.ui.discovered.technology;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 
 import com.left.gank.R;
 import com.left.gank.bean.JianDanBean;
 import com.left.gank.config.Constants;
 import com.left.gank.listener.ItemClick;
-import com.left.gank.ui.MainActivity;
 import com.left.gank.ui.base.LazyFragment;
 import com.left.gank.ui.web.normal.WebActivity;
 import com.left.gank.utils.theme.RecyclerViewColor;
@@ -23,6 +17,10 @@ import com.left.gank.widget.MultipleStatusView;
 
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 
 /**
@@ -35,7 +33,6 @@ public class TechnologyFragment extends LazyFragment implements TechnologyContra
     @BindView(R.id.swipe_refresh)
     LySwipeRefreshLayout mSwipeRefreshLayout;
     private RecyclerView mRecyclerView;
-    private MainActivity mActivity;
     private TechnologyAdapter mAdapter;
 
     private TechnologyContract.Presenter mPresenter;
@@ -43,12 +40,6 @@ public class TechnologyFragment extends LazyFragment implements TechnologyContra
     @Override
     protected int fragmentLayoutId() {
         return R.layout.layout_swipe_normal;
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        mActivity = (MainActivity) context;
     }
 
     @Override
@@ -74,7 +65,7 @@ public class TechnologyFragment extends LazyFragment implements TechnologyContra
         mSwipeRefreshLayout.setAdapter(mAdapter);
 
         mRecyclerView = mSwipeRefreshLayout.getRecyclerView();
-        mSwipeRefreshLayout.setLayoutManager(new LinearLayoutManager(mActivity));
+        mSwipeRefreshLayout.setLayoutManager(new LinearLayoutManager(getActivity()));
         mSwipeRefreshLayout.setOnScrollListener(new LySwipeRefreshLayout.OnListener() {
             @Override
             public void onRefresh() {
@@ -126,10 +117,10 @@ public class TechnologyFragment extends LazyFragment implements TechnologyContra
         bundle.putString(WebActivity.URL, bean.getUrl());
         bundle.putString(WebActivity.TYPE, Constants.TECHNOLOGY);
         bundle.putString(WebActivity.AUTHOR, "");
-        Intent intent = new Intent(mActivity, WebActivity.class);
+        Intent intent = new Intent(getActivity(), WebActivity.class);
         intent.putExtras(bundle);
-        mActivity.startActivity(intent);
-        mActivity.overridePendingTransition(0, 0);
+        getActivity().startActivity(intent);
+        getActivity().overridePendingTransition(0, 0);
     }
 
     protected void callBackRefreshUi() {

@@ -8,16 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.left.gank.R;
 import com.left.gank.bean.JianDanBean;
 import com.left.gank.config.Constants;
 import com.left.gank.listener.ItemClick;
-import com.left.gank.ui.MainActivity;
 import com.left.gank.ui.base.LazyFragment;
 import com.left.gank.ui.web.JiandanWebActivity;
 import com.left.gank.utils.StyleUtils;
@@ -27,6 +21,10 @@ import com.left.gank.widget.MyDecoration;
 
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 
 /**
@@ -41,7 +39,6 @@ public class JiandanFragment extends LazyFragment implements JiandanContract.Vie
     LySwipeRefreshLayout mSwipeRefreshLayout;
     private RecyclerView mRecyclerView;
 
-    private MainActivity mActivity;
     private JiandanAdapter mAdapter;
     private JiandanContract.Presenter mPresenter;
 
@@ -49,7 +46,6 @@ public class JiandanFragment extends LazyFragment implements JiandanContract.Vie
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mActivity = (MainActivity) context;
     }
 
     @Override
@@ -62,11 +58,11 @@ public class JiandanFragment extends LazyFragment implements JiandanContract.Vie
         super.onViewCreated(view, savedInstanceState);
         mAdapter = new JiandanAdapter();
         mAdapter.setListener(this);
-        mSwipeRefreshLayout.setLayoutManager(new LinearLayoutManager(mActivity));
+        mSwipeRefreshLayout.setLayoutManager(new LinearLayoutManager(getActivity()));
         mSwipeRefreshLayout.setAdapter(mAdapter);
         mRecyclerView = mSwipeRefreshLayout.getRecyclerView();
         mSwipeRefreshLayout.getRecyclerView().setHasFixedSize(true);
-        mSwipeRefreshLayout.getRecyclerView().addItemDecoration(new MyDecoration(mActivity, LinearLayoutManager.HORIZONTAL));
+        mSwipeRefreshLayout.getRecyclerView().addItemDecoration(new MyDecoration(getActivity(), LinearLayoutManager.HORIZONTAL));
 //        mSwipeRefreshLayout.setColorSchemeColors(App.getAppColor(R.color.colorPrimary));
         mSwipeRefreshLayout.setOnScrollListener(new LySwipeRefreshLayout.OnListener() {
             @Override
@@ -93,7 +89,7 @@ public class JiandanFragment extends LazyFragment implements JiandanContract.Vie
     }
 
     protected void callBackRefreshUi() {
-        Resources.Theme theme = mActivity.getTheme();
+        Resources.Theme theme = getActivity().getTheme();
         TypedValue typedValue = new TypedValue();
         theme.resolveAttribute(R.attr.baseAdapterItemBackground, typedValue, true);
         int background = typedValue.data;
@@ -165,7 +161,7 @@ public class JiandanFragment extends LazyFragment implements JiandanContract.Vie
         bundle.putString(JiandanWebActivity.URL, bean.getUrl());
         bundle.putString(JiandanWebActivity.TYPE, Constants.JIANDAN);
         bundle.putString(JiandanWebActivity.AUTHOR, bean.getType());
-        JiandanWebActivity.startWebActivity(mActivity, bundle);
+        JiandanWebActivity.startWebActivity(getActivity(), bundle);
     }
 
     @Override

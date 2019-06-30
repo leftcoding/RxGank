@@ -32,7 +32,7 @@ class AboutFragmentKt : SupportFragment() {
             title = context.getString(R.string.navigation_about)
         }
         activity?.actionBar?.setDisplayHomeAsUpEnabled(true)
-        toolbar!!.setNavigationOnClickListener { activity?.onBackPressed() }
+        toolbar.setNavigationOnClickListener { activity?.onBackPressed() }
     }
 
     @OnClick(R.id.about_item_text_gank)

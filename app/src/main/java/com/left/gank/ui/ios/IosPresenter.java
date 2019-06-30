@@ -6,8 +6,6 @@ import android.ly.business.domain.Gank;
 import android.ly.business.domain.PageEntity;
 import android.ly.business.observer.ManagerObserver;
 
-import androidx.annotation.NonNull;
-
 
 /**
  * Create by LingYan on 2016-12-20
@@ -17,7 +15,7 @@ public class IosPresenter extends IosContract.Presenter {
     // 请求个数
     private static final int INIT_LIMIT = 20;
 
-    public IosPresenter(@NonNull Context context, IosContract.View view) {
+    public IosPresenter(Context context, IosContract.View view) {
         super(context, view);
     }
 
