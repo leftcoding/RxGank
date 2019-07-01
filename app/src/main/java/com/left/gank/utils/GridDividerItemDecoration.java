@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
  * GridView ItemDecoration 设置间距
  */
 public class GridDividerItemDecoration extends RecyclerView.ItemDecoration {
-
     private static final String TAG = "GridDividerItemDeco";
 
     private Context mContext;
