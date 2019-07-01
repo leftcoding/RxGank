@@ -40,6 +40,7 @@ dependencies {
     api project(path: ':support-coding-file')
     api project(path: ':support-coding-permission')
 
+    api rootProject.ext.kotlinDeps.kotlin
     api rootProject.ext.supportLibs
     api rootProject.ext.commonsLibs
     api rootProject.ext.rxjavaLibs
@@ -47,5 +48,4 @@ dependencies {
     api rootProject.ext.greendaoLibs
     api rootProject.ext.glideLibs
     api rootProject.ext.retrofitLibs
-
 }

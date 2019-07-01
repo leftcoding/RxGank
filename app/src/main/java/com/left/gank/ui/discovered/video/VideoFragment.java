@@ -1,14 +1,8 @@
 package com.left.gank.ui.discovered.video;
 
-import android.content.Context;
 import android.content.res.Resources;
 import android.ly.business.domain.Gank;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +10,6 @@ import android.widget.TextView;
 
 import com.left.gank.R;
 import com.left.gank.listener.MeiziOnClick;
-import com.left.gank.ui.MainActivity;
 import com.left.gank.ui.base.LazyFragment;
 import com.left.gank.ui.web.WebVideoViewActivity;
 import com.left.gank.utils.StyleUtils;
@@ -25,6 +18,11 @@ import com.left.gank.widget.MultipleStatusView;
 
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 
 /**
@@ -40,18 +38,11 @@ public class VideoFragment extends LazyFragment implements MeiziOnClick, SwipeRe
     private RecyclerView mRecyclerView;
 
     private VideoContract.Presenter mPresenter;
-    private MainActivity mActivity;
     private VideoAdapter mAdapter;
 
     @Override
     protected int fragmentLayoutId() {
         return R.layout.layout_swipe_normal;
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        mActivity = (MainActivity) context;
     }
 
     @Override
@@ -62,12 +53,12 @@ public class VideoFragment extends LazyFragment implements MeiziOnClick, SwipeRe
 
         mMultipleStatusView.setListener(v -> onLoading());
 
-        mAdapter = new VideoAdapter(mActivity);
+        mAdapter = new VideoAdapter(getActivity());
         mAdapter.setOnItemClickListener(this);
         mSwipeRefreshLayout.setAdapter(mAdapter);
 
         mRecyclerView = mSwipeRefreshLayout.getRecyclerView();
-        mSwipeRefreshLayout.setLayoutManager(new LinearLayoutManager(mActivity));
+        mSwipeRefreshLayout.setLayoutManager(new LinearLayoutManager(getActivity()));
         mSwipeRefreshLayout.setOnScrollListener(new LySwipeRefreshLayout.OnListener() {
             @Override
             public void onRefresh() {
@@ -97,7 +88,7 @@ public class VideoFragment extends LazyFragment implements MeiziOnClick, SwipeRe
     }
 
     protected void callBackRefreshUi() {
-        Resources.Theme theme = mActivity.getTheme();
+        Resources.Theme theme = getActivity().getTheme();
         TypedValue typedValue = new TypedValue();
         theme.resolveAttribute(R.attr.baseAdapterItemBackground, typedValue, true);
         int background = typedValue.resourceId;
@@ -125,7 +116,7 @@ public class VideoFragment extends LazyFragment implements MeiziOnClick, SwipeRe
         List<Gank> list = mAdapter.getResults();
         bundle.putString(WebVideoViewActivity.TITLE, list.get(position).desc);
         bundle.putString(WebVideoViewActivity.URL, list.get(position).url);
-        WebVideoViewActivity.startWebActivity(mActivity, bundle);
+        WebVideoViewActivity.startWebActivity(getActivity(), bundle);
     }
 
     @Override

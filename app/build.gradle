@@ -1,5 +1,9 @@
 apply plugin: 'com.android.application'
 
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
     defaultConfig {
@@ -13,15 +17,6 @@ android {
 //            // 设置支持的SO库架构
 //            abiFilters 'armeabi', 'x86', 'armeabi-v7a', 'x86_64', 'arm64-v8a'
 //        }
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        testOptions.unitTests.includeAndroidResources = true
-    }
-
-    testOptions {
-        unitTests {
-            includeAndroidResources = true
-        }
     }
 
     //执行lint检查，有任何的错误或者警告提示，都会终止构建，我们可以将其关闭
@@ -62,10 +57,11 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation project(':support-coding-basic')
-    debugImplementation rootProject.ext.leakcanary.leakcanary_android
 
     implementation rootProject.ext.butterknife.butterknife
     annotationProcessor rootProject.ext.compilerDeps.butterknife_compiler
 
     annotationProcessor rootProject.ext.compilerDeps.glide_compiler
+
+    debugImplementation rootProject.ext.leakcanary.leakcanary_android
 }

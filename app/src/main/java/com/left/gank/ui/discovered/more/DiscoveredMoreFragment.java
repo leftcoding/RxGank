@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.widget.LinearLayout;
 
 import com.left.gank.R;
-import com.left.gank.ui.MainActivity;
 import com.left.gank.ui.baisi.BaiSiActivity;
 import com.left.gank.ui.base.LazyFragment;
 import com.left.gank.utils.theme.ThemeColor;
@@ -21,12 +20,9 @@ public class DiscoveredMoreFragment extends LazyFragment {
     @BindView(R.id.discovered_parent)
     LinearLayout mLinearLayout;
 
-    private MainActivity mActivity;
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mActivity = (MainActivity) context;
     }
 
     protected void callBackRefreshUi() {
@@ -42,8 +38,8 @@ public class DiscoveredMoreFragment extends LazyFragment {
 
     @OnClick(R.id.discovered_rl_budejie)
     void onClickBuDeJie() {
-        mActivity.startActivity(new Intent(mActivity, BaiSiActivity.class));
-        mActivity.overridePendingTransition(0, 0);
+        getActivity().startActivity(new Intent(getActivity(), BaiSiActivity.class));
+        getActivity().overridePendingTransition(0, 0);
     }
 
     @Override

@@ -3,17 +3,12 @@ package com.left.gank.ui.discovered.teamBlog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 
 import com.left.gank.R;
 import com.left.gank.bean.JianDanBean;
 import com.left.gank.config.Constants;
 import com.left.gank.listener.ItemClick;
-import com.left.gank.ui.MainActivity;
 import com.left.gank.ui.base.LazyFragment;
 import com.left.gank.ui.discovered.technology.TechnologyContract;
 import com.left.gank.ui.web.JiandanWebActivity;
@@ -25,6 +20,10 @@ import com.left.gank.widget.MultipleStatusView;
 
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 
 /**
@@ -37,7 +36,6 @@ public class TeamBlogFragment extends LazyFragment implements TechnologyContract
     @BindView(R.id.swipe_refresh)
     LySwipeRefreshLayout mSwipeRefreshLayout;
     private RecyclerView mRecyclerView;
-    private MainActivity mActivity;
     private TeamBlogAdapter mAdapter;
 
     private TechnologyContract.Presenter mPresenter;
@@ -45,7 +43,6 @@ public class TeamBlogFragment extends LazyFragment implements TechnologyContract
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mActivity = (MainActivity) context;
     }
 
     @Override
@@ -76,7 +73,7 @@ public class TeamBlogFragment extends LazyFragment implements TechnologyContract
         mSwipeRefreshLayout.setAdapter(mAdapter);
 
         mRecyclerView = mSwipeRefreshLayout.getRecyclerView();
-        mSwipeRefreshLayout.setLayoutManager(new LinearLayoutManager(mActivity));
+        mSwipeRefreshLayout.setLayoutManager(new LinearLayoutManager(getActivity()));
         mSwipeRefreshLayout.setOnScrollListener(new LySwipeRefreshLayout.OnListener() {
             @Override
             public void onRefresh() {
@@ -128,9 +125,9 @@ public class TeamBlogFragment extends LazyFragment implements TechnologyContract
         bundle.putString(WebActivity.URL, bean.getUrl());
         bundle.putString(WebActivity.TYPE, Constants.TECHNOLOGY);
         bundle.putString(WebActivity.AUTHOR, "");
-        Intent intent = new Intent(mActivity, WebActivity.class);
+        Intent intent = new Intent(getActivity(), WebActivity.class);
         intent.putExtras(bundle);
-        JiandanWebActivity.startWebActivity(mActivity, bundle);
+        JiandanWebActivity.startWebActivity(getActivity(), bundle);
     }
 
     protected void callBackRefreshUi() {

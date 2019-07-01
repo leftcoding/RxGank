@@ -1,21 +1,16 @@
 package com.left.gank.ui.discovered;
 
-import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import com.google.android.material.tabs.TabLayout;
-import androidx.viewpager.widget.ViewPager;
 import android.util.TypedValue;
 import android.view.View;
 
+import com.google.android.material.tabs.TabLayout;
 import com.left.gank.R;
-import com.left.gank.ui.base.fragment.ButterKnifeFragment;
 import com.left.gank.rxjava.RxBus_;
 import com.left.gank.rxjava.theme.ThemeEvent;
-import com.left.gank.ui.MainActivity;
 import com.left.gank.ui.base.LazyFragment;
+import com.left.gank.ui.base.fragment.ButterKnifeFragment;
 import com.left.gank.ui.discovered.jiandan.JiandanFragment;
 import com.left.gank.ui.discovered.more.DiscoveredAdapter;
 import com.left.gank.ui.discovered.more.DiscoveredMoreFragment;
@@ -26,6 +21,9 @@ import com.left.gank.ui.discovered.video.VideoFragment;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
 import io.reactivex.disposables.Disposable;
 
@@ -45,7 +43,6 @@ public class DiscoveredFragment extends ButterKnifeFragment implements ViewPager
     @BindView(R.id.discovered_view_pager)
     ViewPager mViewPager;
 
-    private MainActivity mActivity;
     private Disposable mDisposable;
 
     private List<String> mTitles;
@@ -98,7 +95,7 @@ public class DiscoveredFragment extends ButterKnifeFragment implements ViewPager
 
     private void refreshUi() {
         TypedValue typedValue = new TypedValue();
-        Resources.Theme theme = mActivity.getTheme();
+        Resources.Theme theme = getActivity().getTheme();
         theme.resolveAttribute(R.attr.colorPrimary, typedValue, true);
         int background = typedValue.data;
         mTabLayout.setBackgroundColor(background);
@@ -114,12 +111,6 @@ public class DiscoveredFragment extends ButterKnifeFragment implements ViewPager
 
     @Override
     public void onPageScrollStateChanged(int state) {
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        mActivity = (MainActivity) context;
     }
 
     @Override
