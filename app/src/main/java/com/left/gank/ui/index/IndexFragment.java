@@ -51,7 +51,7 @@ public class IndexFragment extends SupportFragment implements
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         List<LazyFragment> fragments = new ArrayList<>();
-        fragments.add(AndroidFragment.newInstance());
+        fragments.add(AndroidFragment.Companion.newInstance());
         fragments.add(IosFragment.newInstance());
         fragments.add(WelfareFragment.newInstance());
 
