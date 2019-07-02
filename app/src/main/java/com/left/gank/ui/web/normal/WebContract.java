@@ -1,6 +1,7 @@
 package com.left.gank.ui.web.normal;
 
-import android.lectcoding.ui.base.BaseView;
+import android.left.ui.base.BaseView;
+
 import androidx.annotation.NonNull;
 
 import com.left.gank.data.entity.ReadHistory;

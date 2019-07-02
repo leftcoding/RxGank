@@ -4,7 +4,7 @@ import android.animation.Animator
 import android.content.Intent
 import android.os.Bundle
 import com.left.gank.R
-import com.left.gank.ui.MainActivityKt
+import com.left.gank.ui.MainActivity
 import com.left.gank.ui.base.activity.BaseActivity
 import kotlinx.android.synthetic.main.activity_splash.*
 
@@ -43,7 +43,7 @@ class SplashActivityKt : BaseActivity() {
 
                     override fun onAnimationEnd(animation: Animator) {
                         if (isDestroyed) return
-                        val intent = Intent(this@SplashActivityKt, MainActivityKt::class.java)
+                        val intent = Intent(this@SplashActivityKt, MainActivity::class.java)
                         startActivity(intent)
                         overridePendingTransition(R.anim.alpha_in, R.anim.alpha_out)
                         finish()

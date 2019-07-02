@@ -1,4 +1,4 @@
-package android.lectcoding.ui.adapter;
+package android.left.ui.adapter;
 
 /**
  * Create by LingYan on 2017-11-27

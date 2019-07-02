@@ -1,7 +1,8 @@
 package com.left.gank.view;
 
+import android.left.ui.base.BaseView;
+
 import com.left.gank.bean.CheckVersion;
-import android.lectcoding.ui.base.BaseView;
 
 /**
  * Create by LingYan on 2016-06-01

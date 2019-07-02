@@ -44,7 +44,6 @@ class AndroidAdapter(context: Context) : FootAdapter<BindHolder<*>, List<Gank>>(
     }
 
     class TextItem internal constructor(val gank: Gank) : ItemModel() {
-
         val time: String?
             get() {
                 val date = DateUtils.formatToDate(gank.publishedAt)

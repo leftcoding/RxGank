@@ -1,7 +1,7 @@
 package com.left.gank.ui.pure;
 
 import android.content.Context;
-import android.lectcoding.ui.logcat.Logcat;
+import android.left.ui.logcat.Logcat;
 import android.ly.business.domain.Gift;
 import android.ly.jsoup.JsoupServer;
 import android.text.TextUtils;

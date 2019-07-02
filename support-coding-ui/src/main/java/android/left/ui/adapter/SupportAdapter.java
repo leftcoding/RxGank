@@ -1,4 +1,4 @@
-package android.lectcoding.ui.adapter;
+package android.left.ui.adapter;
 
 import androidx.recyclerview.widget.RecyclerView;
 

@@ -1,6 +1,6 @@
-package android.lectcoding.ui.logcat.base;
+package android.left.ui.logcat.base;
 
-import android.lectcoding.ui.logcat.Logcat;
+import android.left.ui.logcat.Logcat;
 import android.util.Log;
 
 public class BaseLog {

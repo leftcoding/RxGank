@@ -94,7 +94,7 @@
         <item name="android:activityCloseExitAnimation">@anim/alpha_out</item>
     </style>
 
-    <style name="Widget.IOSched.BottomNav" parent="@style/Widget.MaterialComponents.BottomNavigationView.Colored">
+    <style name="Widget.Gank.BottomNav" parent="@style/Widget.MaterialComponents.BottomNavigationView.Colored">
         <item name="itemIconTint">@color/bottom_nav_item</item>
         <item name="itemTextAppearanceActive">
             @style/BottomNavigationViewActive
@@ -105,11 +105,11 @@
     </style>
 
     <style name="BottomNavigationViewActive">
-        <item name="android:textStyle">bold</item>
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">10sp</item>
     </style>
 
     <style name="BottomNavigationView.Inactive" parent="@style/TextAppearance.MaterialComponents.Body1">
         <item name="android:textColor">@color/bottom_nav_item</item>
+        <item name="android:textSize">10sp</item>
     </style>
 </resources>

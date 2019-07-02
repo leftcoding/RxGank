@@ -1,4 +1,4 @@
-package android.lectcoding.ui.logcat;
+package android.left.ui.logcat;
 
 import android.text.TextUtils;
 import android.util.Log;

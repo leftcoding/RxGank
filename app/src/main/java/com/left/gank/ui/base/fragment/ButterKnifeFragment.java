@@ -1,6 +1,6 @@
 package com.left.gank.ui.base.fragment;
 
-import android.lectcoding.ui.base.BaseFragment;
+import android.left.ui.base.BaseFragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;

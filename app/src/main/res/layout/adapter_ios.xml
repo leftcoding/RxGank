@@ -32,11 +32,11 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
                     android:layout_marginEnd="6dp"
                     android:contentDescription="@null"
-                    android:src="@drawable/bg_consulting_placeholder_guest" />
+                    android:src="@drawable/ic_default_avatar_1" />
 
                 <TextView
                     android:id="@+id/author_name"
@@ -46,7 +46,7 @@
                     android:gravity="start"
                     android:maxLines="1"
                     android:text=""
-                    android:textColor="#23c5d9"
+                    android:textColor="@color/text_666666"
                     android:textSize="@dimen/normalSize" />
             </LinearLayout>
 
@@ -60,7 +60,7 @@
                 android:gravity="center_vertical"
                 android:maxLines="1"
                 android:text=""
-                android:textColor="@color/text_666666"
+                android:textColor="@color/text_999999"
                 android:textSize="@dimen/smallSize" />
 
         </RelativeLayout>
@@ -76,7 +76,7 @@
             android:lineSpacingExtra="3dp"
             android:maxLines="3"
             android:text=""
-            android:textColor="@color/text_333333"
+            android:textColor="@color/black"
             android:textSize="@dimen/normalSize" />
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

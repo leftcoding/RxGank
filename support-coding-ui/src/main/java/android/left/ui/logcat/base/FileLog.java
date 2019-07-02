@@ -1,8 +1,9 @@
-package android.lectcoding.ui.logcat.base;
+package android.left.ui.logcat.base;
+
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import android.util.Log;
 
 import java.io.File;
 import java.io.FileOutputStream;

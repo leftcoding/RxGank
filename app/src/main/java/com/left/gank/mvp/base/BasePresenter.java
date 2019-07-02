@@ -1,8 +1,8 @@
 package com.left.gank.mvp.base;
 
 import android.content.Context;
-import android.lectcoding.ui.base.BaseContract;
-import android.lectcoding.ui.base.BaseView;
+import android.left.ui.base.BaseContract;
+import android.left.ui.base.BaseView;
 
 import com.left.gank.R;
 

@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.fragment_main_bottom_navigation.*
  *
  * Create by LingYan on 2019-06-29
  */
-class MainActivityKt : BaseActivity() {
+class MainActivity : BaseActivity() {
     private var curFragment: Fragment? = null
 
     companion object {

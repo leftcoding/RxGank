@@ -1,10 +1,11 @@
 package com.left.gank.ui.index;
 
 import android.content.Context;
+import android.left.ui.base.BaseView;
+
 import androidx.annotation.NonNull;
 
 import com.left.gank.mvp.base.BasePresenter;
-import android.lectcoding.ui.base.BaseView;
 
 /**
  * Create by LingYan on 2017-10-03

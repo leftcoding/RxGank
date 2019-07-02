@@ -1,6 +1,6 @@
 package com.left.gank.mvp.base;
 
-import android.lectcoding.ui.base.BaseView;
+import android.left.ui.base.BaseView;
 
 /**
  * Create by LingYan on 2016-10-20

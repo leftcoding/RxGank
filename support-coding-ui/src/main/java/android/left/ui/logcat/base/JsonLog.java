@@ -1,7 +1,7 @@
-package android.lectcoding.ui.logcat.base;
+package android.left.ui.logcat.base;
 
-import android.lectcoding.ui.logcat.Logcat;
-import android.lectcoding.ui.logcat.LogcatUtil;
+import android.left.ui.logcat.Logcat;
+import android.left.ui.logcat.LogcatUtil;
 import android.util.Log;
 
 import org.json.JSONArray;

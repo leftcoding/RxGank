@@ -1,12 +1,13 @@
-package android.lectcoding.ui.logcat;
+package android.left.ui.logcat;
 
 
-import android.lectcoding.ui.logcat.base.BaseLog;
-import android.lectcoding.ui.logcat.base.FileLog;
-import android.lectcoding.ui.logcat.base.JsonLog;
-import android.lectcoding.ui.logcat.base.XmlLog;
-import androidx.annotation.Nullable;
+import android.left.ui.logcat.base.BaseLog;
+import android.left.ui.logcat.base.FileLog;
+import android.left.ui.logcat.base.JsonLog;
+import android.left.ui.logcat.base.XmlLog;
 import android.text.TextUtils;
+
+import androidx.annotation.Nullable;
 
 import java.io.File;
 import java.io.PrintWriter;

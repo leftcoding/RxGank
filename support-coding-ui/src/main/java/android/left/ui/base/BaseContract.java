@@ -1,4 +1,4 @@
-package android.lectcoding.ui.base;
+package android.left.ui.base;
 
 /**
  * Create by LingYan on 2017-09-30

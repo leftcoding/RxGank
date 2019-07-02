@@ -1,9 +1,10 @@
 package com.left.gank.ui.index.tab;
 
 import android.content.Context;
+import android.left.ui.base.BaseView;
+
 import androidx.annotation.NonNull;
 
-import android.lectcoding.ui.base.BaseView;
 import com.left.gank.mvp.base.BasePresenter;
 
 /**

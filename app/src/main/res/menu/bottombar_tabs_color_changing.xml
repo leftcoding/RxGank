@@ -2,23 +2,23 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/tab_home"
-        android:icon="@drawable/ic_bottom_bar_home"
+        android:icon="@drawable/ic_home"
         android:orderInCategory="100"
         android:title="@string/navigation_home" />
     <item
         android:id="@+id/tab_news"
-        android:icon="@drawable/ic_bottom_bar_news"
+        android:icon="@drawable/ic_browse"
         android:orderInCategory="100"
         android:title="@string/navigation_news" />
     <item
         android:id="@+id/tab_image"
-        android:icon="@drawable/ic_bottom_bar_image"
+        android:icon="@drawable/ic_image"
         android:orderInCategory="100"
         android:title="@string/navigation_gift" />
 
     <item
         android:id="@+id/tab_more"
-        android:icon="@drawable/ic_bottom_bar_more"
+        android:icon="@drawable/ic_mine"
         android:orderInCategory="100"
         android:title="@string/navigation_mine" />
 </menu>

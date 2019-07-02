@@ -1,10 +1,11 @@
-package android.lectcoding.ui.adapter;
+package android.left.ui.adapter;
 
-import androidx.annotation.LayoutRes;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.annotation.LayoutRes;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * Create by LingYan on 2017-11-27
