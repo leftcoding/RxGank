@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.activity_splash.*
  *
  * Create by LingYan on 2019-06-30
  */
-class SplashActivityKt : BaseActivity() {
+class SplashActivity : BaseActivity() {
     companion object {
         private const val ANIMATE_DURATION = 500
     }
@@ -43,7 +43,7 @@ class SplashActivityKt : BaseActivity() {
 
                     override fun onAnimationEnd(animation: Animator) {
                         if (isDestroyed) return
-                        val intent = Intent(this@SplashActivityKt, MainActivity::class.java)
+                        val intent = Intent(this@SplashActivity, MainActivity::class.java)
                         startActivity(intent)
                         overridePendingTransition(R.anim.alpha_in, R.anim.alpha_out)
                         finish()
