@@ -1,10 +1,15 @@
 package com.left.gank.ui.pure;
 
 import android.app.ProgressDialog;
+import android.business.domain.Gift;
 import android.content.Intent;
-import android.ly.business.domain.Gift;
 import android.os.Bundle;
 import android.view.View;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.left.gank.R;
 import com.left.gank.ui.base.LazyFragment;
@@ -17,10 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.app.ActivityOptionsCompat;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import butterknife.BindView;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;

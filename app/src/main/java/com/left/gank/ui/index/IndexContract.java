@@ -1,7 +1,7 @@
 package com.left.gank.ui.index;
 
 import android.content.Context;
-import android.left.ui.base.BaseView;
+import android.ui.base.BaseView;
 
 import androidx.annotation.NonNull;
 
@@ -18,7 +18,7 @@ public interface IndexContract {
 
     abstract class Presenter extends BasePresenter<View> {
 
-       public Presenter(@NonNull Context context, @NonNull View view) {
+        public Presenter(@NonNull Context context, @NonNull View view) {
             super(context, view);
         }
     }

@@ -1,14 +1,15 @@
 package com.left.gank.ui.welfare;
 
+import android.business.domain.Gank;
 import android.content.Context;
-import android.left.ui.base.BaseView;
-import android.ly.business.domain.Gank;
+import android.ui.base.BaseView;
 
 import androidx.annotation.NonNull;
 
 import com.left.gank.mvp.base.LoadMorePresenter;
 
 import java.util.List;
+
 
 /**
  * Create by LingYan on 2016-12-23

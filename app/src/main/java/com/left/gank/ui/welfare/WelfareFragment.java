@@ -1,11 +1,18 @@
 package com.left.gank.ui.welfare;
 
+import android.business.domain.Gank;
+import android.business.domain.Gift;
+import android.business.domain.PageConfig;
 import android.content.Intent;
-import android.ly.business.domain.Gank;
-import android.ly.business.domain.Gift;
-import android.ly.business.domain.PageConfig;
 import android.os.Bundle;
 import android.view.View;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.left.gank.R;
 import com.left.gank.ui.base.LazyFragment;
@@ -17,12 +24,6 @@ import com.left.gank.widget.recyclerview.OnFlexibleScrollListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.app.ActivityOptionsCompat;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 
 /**

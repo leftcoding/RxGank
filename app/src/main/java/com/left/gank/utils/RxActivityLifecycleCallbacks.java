@@ -21,15 +21,16 @@ public class RxActivityLifecycleCallbacks {
         application.registerActivityLifecycleCallbacks(new Application.ActivityLifecycleCallbacks() {
             @Override
             public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
-                if (activityMap.containsKey(activity.getLocalClassName()))
-                    if (callback != null) {
-                        callback.onActivityCreated(activity, savedInstanceState);
-                    }
+
             }
 
             @Override
             public void onActivityStarted(Activity activity) {
-
+                if (activityMap.containsKey(activity.getLocalClassName())) {
+                    if (callback != null) {
+                        callback.onActivityStarted(activity);
+                    }
+                }
             }
 
             @Override
@@ -60,8 +61,6 @@ public class RxActivityLifecycleCallbacks {
     }
 
     public interface Callback {
-        void onActivityCreated(Activity activity, Bundle savedInstanceState);
-
-        void onFourceFront(Activity activity);
+        void onActivityStarted(Activity activity);
     }
 }

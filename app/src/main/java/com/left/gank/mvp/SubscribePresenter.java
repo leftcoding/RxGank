@@ -1,7 +1,7 @@
 package com.left.gank.mvp;
 
 import android.content.Context;
-import android.left.ui.base.BaseView;
+import android.ui.base.BaseView;
 
 import androidx.annotation.NonNull;
 

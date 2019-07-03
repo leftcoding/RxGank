@@ -13,6 +13,7 @@ import kotlinx.android.synthetic.main.activity_splash.*
  * Create by LingYan on 2019-06-30
  */
 class SplashActivity : BaseActivity() {
+    // todo
     companion object {
         private const val ANIMATE_DURATION = 500
     }

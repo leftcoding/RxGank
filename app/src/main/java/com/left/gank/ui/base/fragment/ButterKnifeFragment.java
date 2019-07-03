@@ -1,7 +1,7 @@
 package com.left.gank.ui.base.fragment;
 
-import android.left.ui.base.BaseFragment;
 import android.os.Bundle;
+import android.ui.base.BaseFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

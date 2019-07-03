@@ -1,7 +1,7 @@
 package com.left.gank.ui.discovered.video;
 
+import android.business.domain.Gank;
 import android.content.Context;
-import android.ly.business.domain.Gank;
 
 import com.left.gank.bean.GankResult;
 import com.left.gank.config.MeiziArrayList;

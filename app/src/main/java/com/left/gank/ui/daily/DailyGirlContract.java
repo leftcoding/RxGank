@@ -1,15 +1,17 @@
 package com.left.gank.ui.daily;
 
+import android.business.domain.Gift;
+import android.business.domain.Girl;
 import android.content.Context;
-import android.ly.business.domain.Gift;
+
 import androidx.annotation.NonNull;
 
-import android.ly.business.domain.Girl;
 import com.left.gank.mvp.base.LoadMorePresenter;
 import com.left.gank.mvp.base.SupportView;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 /**
  * Create by LingYan on 2016-10-26

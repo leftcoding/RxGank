@@ -1,6 +1,6 @@
 package com.left.gank.view;
 
-import android.left.ui.base.BaseView;
+import android.ui.base.BaseView;
 
 import com.left.gank.bean.CheckVersion;
 

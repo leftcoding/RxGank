@@ -1,9 +1,9 @@
 package com.left.gank.ui
 
 import android.os.Bundle
+import android.rxbus.RxEventBus
 import androidx.fragment.app.Fragment
 import com.left.gank.R
-import com.left.gank.rxjava.RxBus_
 import com.left.gank.ui.base.activity.BaseActivity
 import com.left.gank.ui.discovered.DiscoveredFragment
 import com.left.gank.ui.girls.GirlsFragment
@@ -79,6 +79,6 @@ class MainActivity : BaseActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        RxBus_.getInstance().removeAllStickyEvents()// 移除所有Sticky事件
+        RxEventBus.newInstance().removeAllStickyEvents() // 移除所有Sticky事件
     }
 }

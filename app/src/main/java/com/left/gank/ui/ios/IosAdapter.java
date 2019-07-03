@@ -1,7 +1,7 @@
 package com.left.gank.ui.ios;
 
+import android.business.domain.Gank;
 import android.content.Context;
-import android.ly.business.domain.Gank;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;

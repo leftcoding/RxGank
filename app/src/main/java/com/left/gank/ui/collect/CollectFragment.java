@@ -1,14 +1,21 @@
 package com.left.gank.ui.collect;
 
 import android.os.Bundle;
+import android.rxbus.RxEventBus;
 import android.view.View;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.left.gank.R;
 import com.left.gank.bean.RxCollect;
 import com.left.gank.data.entity.UrlCollect;
 import com.left.gank.mvp.source.LocalDataSource;
-import com.left.gank.rxjava.RxBus_;
 import com.left.gank.ui.base.fragment.SupportFragment;
 import com.left.gank.ui.web.normal.WebActivity;
 import com.left.gank.widget.LyRecyclerView;
@@ -17,12 +24,6 @@ import com.left.gank.widget.MultipleStatusView;
 
 import java.util.List;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.widget.Toolbar;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import io.reactivex.disposables.Disposable;
 
@@ -60,7 +61,7 @@ public class CollectFragment extends SupportFragment implements CollectContract.
         toolbar.setTitle(R.string.mine_my_collect);
         toolbar.setNavigationOnClickListener(v -> getActivity().finish());
 
-        disposable = RxBus_.getInstance().toObservable(RxCollect.class)
+        disposable = RxEventBus.newInstance().toObservable(RxCollect.class)
                 .subscribe(rxCollect -> {
                     if (rxCollect.isCollect()) {
                         onDelete();

@@ -1,7 +1,8 @@
 package com.left.gank.ui.gallery;
 
+import android.business.domain.Gank;
 import android.content.Context;
-import android.ly.business.domain.Gank;
+
 import androidx.annotation.NonNull;
 
 import com.left.gank.mvp.base.LoadMorePresenter;

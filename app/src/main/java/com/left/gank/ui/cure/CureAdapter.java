@@ -1,8 +1,11 @@
 package com.left.gank.ui.cure;
 
-import android.ly.business.domain.Gift;
+import android.business.domain.Gift;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import androidx.annotation.IntDef;
+import androidx.annotation.NonNull;
 
 import com.left.gank.R;
 import com.left.gank.butterknife.adapter.BaseAdapter;
@@ -14,8 +17,6 @@ import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.annotation.IntDef;
-import androidx.annotation.NonNull;
 import butterknife.BindView;
 
 /**

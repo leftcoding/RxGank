@@ -1,6 +1,6 @@
 package com.left.gank.ui.ios.text;
 
-import android.ly.business.domain.Gank;
+import android.business.domain.Gank;
 
 import com.left.gank.butterknife.item.ItemModel;
 import com.left.gank.utils.DateUtils;

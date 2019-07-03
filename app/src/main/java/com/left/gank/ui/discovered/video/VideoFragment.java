@@ -1,12 +1,18 @@
 package com.left.gank.ui.discovered.video;
 
+import android.business.domain.Gank;
 import android.content.res.Resources;
-import android.ly.business.domain.Gank;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.left.gank.R;
 import com.left.gank.listener.MeiziOnClick;
@@ -18,11 +24,6 @@ import com.left.gank.widget.MultipleStatusView;
 
 import java.util.List;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 
 /**

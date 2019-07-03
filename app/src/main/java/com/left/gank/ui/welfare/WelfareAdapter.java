@@ -1,9 +1,9 @@
 package com.left.gank.ui.welfare;
 
+import android.business.domain.Gank;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.left.ui.logcat.Logcat;
-import android.ly.business.domain.Gank;
+import android.ui.logcat.Logcat;
 import android.util.ArrayMap;
 import android.view.View;
 import android.view.ViewGroup;

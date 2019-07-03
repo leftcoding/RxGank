@@ -2,21 +2,21 @@ package com.left.gank;
 
 import android.app.Activity;
 import android.app.Application;
-import android.content.Context;
-import android.os.Bundle;
+import android.file.FilePathUtils;
+import android.network.HttpServer;
+import android.network.interceptor.CacheNetworkInterceptor;
+import android.network.interceptor.CacheOffLineInterceptor;
+import android.permission.Permissions;
+import android.permission.RequestCallback;
+import android.rxbus.RxEventBus;
 
-import com.coding.file.FilePathUtils;
 import com.left.gank.config.Constants;
 import com.left.gank.config.HttpUrlConfig;
+import com.left.gank.data.bean.PoseCode;
+import com.left.gank.data.bean.PoseEvent;
 import com.left.gank.ui.splash.SplashActivity;
+import com.left.gank.utils.Permission;
 import com.left.gank.utils.RxActivityLifecycleCallbacks;
-import com.leftcoding.network.HttpServer;
-import com.leftcoding.network.interceptor.CacheNetworkInterceptor;
-import com.leftcoding.network.interceptor.CacheOffLineInterceptor;
-import com.start.permission.RequestCallback;
-import com.start.permission.RequestExecutor;
-import com.start.permission.Runnable;
-import com.start.permission.RxPermission;
 import com.tencent.bugly.Bugly;
 import com.tencent.bugly.beta.Beta;
 
@@ -36,9 +36,20 @@ public class App extends Application {
 
         RxActivityLifecycleCallbacks.permissionApp(this, new RxActivityLifecycleCallbacks.Callback() {
             @Override
-            public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
+            public void onActivityStarted(Activity activity) {
                 if (activity instanceof SplashActivity) {
-                    permission(activity);
+                    Permission.initPermissions(activity, new RequestCallback() {
+                        @Override
+                        public void onGranted(List<String> list) {
+                            initSdk();
+                            RxEventBus.newInstance().post(new PoseEvent(PoseCode.NEED_PERMISSION_SUCCESS));
+                        }
+
+                        @Override
+                        public void onDenied(List<String> list) {
+                            Permission.startPermissionSetting(activity);
+                        }
+                    }, Permissions.Group.STORAGE);
                 }
             }
         });
@@ -50,30 +61,6 @@ public class App extends Application {
     private void setupBugly() {
         Beta.autoDownloadOnWifi = true;
         Bugly.init(App.this, Constants.CRASH_LOG_ID, false);
-    }
-
-    private void permission(Activity activity) {
-        RxPermission.with(activity)
-                .runtime()
-                .checkPermission()
-                .rationale(new Runnable() {
-                    @Override
-                    public void showRationale(Context context, List<String> permissions, RequestExecutor executor) {
-                        permission(activity);
-                    }
-                })
-                .setCallback(new RequestCallback() {
-                    @Override
-                    public void onGranted(List<String> list) {
-                        initSdk();
-                    }
-
-                    @Override
-                    public void onDenied(List<String> list) {
-                        RxPermission.with(activity).launcher().start(100);
-                    }
-                })
-                .start();
     }
 
     private void initSdk() {

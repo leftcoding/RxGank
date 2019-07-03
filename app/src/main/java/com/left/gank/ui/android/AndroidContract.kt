@@ -1,7 +1,7 @@
 package com.left.gank.ui.android
 
+import android.business.domain.Gank
 import android.content.Context
-import android.ly.business.domain.Gank
 
 import com.left.gank.mvp.base.ObserverPresenter
 import com.left.gank.mvp.base.SupportView

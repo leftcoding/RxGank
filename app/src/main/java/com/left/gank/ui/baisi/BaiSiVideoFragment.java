@@ -3,16 +3,17 @@ package com.left.gank.ui.baisi;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.rxbus.RxEventBus;
+import android.view.View;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import android.view.View;
 
 import com.left.gank.R;
 import com.left.gank.bean.BuDeJieVideo;
 import com.left.gank.bean.GallerySize;
 import com.left.gank.mvp.source.remote.BuDeJieDataSource;
-import com.left.gank.rxjava.RxBus_;
 import com.left.gank.ui.base.LazyFragment;
 import com.left.gank.widget.LySwipeRefreshLayout;
 import com.left.gank.widget.MultipleStatusView;
@@ -95,7 +96,7 @@ public class BaiSiVideoFragment extends LazyFragment implements BaiSiVideoContra
     }
 
     private void startActivity(GallerySize gs) {
-        RxBus_.getInstance().postSticky(gs);
+        RxEventBus.newInstance().postSticky(gs);
         Intent intent = new Intent(mActivity, BaiSiVideoPreViewActivity.class);
         mActivity.startActivity(intent);
         mActivity.overridePendingTransition(0, 0);

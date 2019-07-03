@@ -4,6 +4,11 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.viewpager.widget.ViewPager;
+
 import com.google.android.material.tabs.TabLayout;
 import com.left.gank.R;
 import com.left.gank.bean.CheckVersion;
@@ -20,17 +25,12 @@ import com.socks.library.KLog;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
 
 /**
  * Create by LingYan on 2016-04-22
  */
-public class IndexFragment extends SupportFragment implements
-        DownloadProgressListener, ILauncher {
+public class IndexFragment extends SupportFragment implements DownloadProgressListener, ILauncher {
     @BindView(R.id.tab_layout)
     TabLayout tabLayout;
 

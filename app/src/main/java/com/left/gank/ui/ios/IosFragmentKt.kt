@@ -1,7 +1,7 @@
 package com.left.gank.ui.ios
 
-import android.ly.business.domain.Gank
-import android.ly.business.domain.PageConfig
+import android.business.domain.Gank
+import android.business.domain.PageConfig
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager

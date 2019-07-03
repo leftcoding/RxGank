@@ -1,6 +1,6 @@
 package com.left.gank.ui.web.normal;
 
-import android.left.ui.base.BaseView;
+import android.ui.base.BaseView;
 
 import androidx.annotation.NonNull;
 

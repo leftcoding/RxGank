@@ -1,6 +1,6 @@
 package com.left.gank.bean;
 
-import android.ly.business.domain.Gift;
+import android.business.domain.Gift;
 
 import java.util.List;
 

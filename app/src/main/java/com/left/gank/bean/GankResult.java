@@ -1,6 +1,7 @@
 package com.left.gank.bean;
 
-import android.ly.business.domain.Gank;
+
+import android.business.domain.Gank;
 
 import com.left.gank.utils.ListUtils;
 

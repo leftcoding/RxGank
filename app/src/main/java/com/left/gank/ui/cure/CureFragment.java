@@ -1,11 +1,15 @@
 package com.left.gank.ui.cure;
 
 import android.app.ProgressDialog;
+import android.business.domain.Gift;
 import android.content.Intent;
-import android.ly.business.domain.Gift;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.left.gank.R;
 import com.left.gank.ui.base.LazyFragment;
@@ -17,9 +21,6 @@ import com.left.gank.widget.MultipleStatusView;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import butterknife.BindView;
 
 /**

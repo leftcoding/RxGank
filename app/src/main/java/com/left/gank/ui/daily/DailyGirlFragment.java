@@ -1,14 +1,15 @@
 package com.left.gank.ui.daily;
 
 import android.app.ProgressDialog;
+import android.business.domain.Gift;
+import android.business.domain.Girl;
 import android.content.Intent;
-import android.ly.business.domain.Gift;
-import android.ly.business.domain.Girl;
 import android.os.Bundle;
+import android.view.View;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import android.view.View;
 
 import com.left.gank.R;
 import com.left.gank.listener.ItemClick;
@@ -122,7 +123,7 @@ public class DailyGirlFragment extends LazyFragment implements DailyGirlContract
         }
     }
 
-//    @Override
+    //    @Override
     public void onClick(int position, Object object) {
 //        DailyGirl dailyGirl = (DailyGirl) object;
 //        String url = dailyGirl.getUrl();

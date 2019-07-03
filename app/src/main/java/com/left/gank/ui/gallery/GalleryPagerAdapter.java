@@ -1,6 +1,7 @@
 package com.left.gank.ui.gallery;
 
-import android.ly.business.domain.Gift;
+import android.business.domain.Gift;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;

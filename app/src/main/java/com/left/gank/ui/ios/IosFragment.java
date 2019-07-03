@@ -1,10 +1,16 @@
 package com.left.gank.ui.ios;
 
+import android.business.domain.Gank;
+import android.business.domain.PageConfig;
 import android.content.Context;
-import android.ly.business.domain.Gank;
-import android.ly.business.domain.PageConfig;
 import android.os.Bundle;
 import android.view.View;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.left.gank.R;
 import com.left.gank.config.Constants;
@@ -16,11 +22,6 @@ import com.left.gank.widget.recyclerview.OnFlexibleScrollListener;
 
 import java.util.List;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 
 /**
