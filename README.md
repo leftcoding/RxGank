@@ -7,15 +7,15 @@
 ### 更新说明
 *优化下之前的写的代码*
 
-- support-coding-adapter           适配器（开发中...）
-- support-coding-basic             基本组件（开发中...）
-- support-coding-business          网络请求封装（二次优化）
-- support-coding-download          下载（开发中...）
-- support-coding-file              文件管理（开发中...）
-- support-coding-jsoup             爬虫（二次优化）
-- support-coding-network           网络库（二次优化）
-- support-coding-rxbus             rxbus（开发中...）
-- support-coding-ui                基本UI（开发中...）
+- support-adapter           适配器（开发中...）
+- support-basic             基本组件（开发中...）
+- support-business          网络请求封装（二次优化）
+- support-download          下载（开发中...）
+- support-file              文件管理（开发中...）
+- support-jsoup             爬虫（二次优化）
+- support-network           网络库（二次优化）
+- support-rxbus             rxbus（开发中...）
+- support-ui                基本UI（开发中...）
 
 
 ## 以下都是之前的说明
