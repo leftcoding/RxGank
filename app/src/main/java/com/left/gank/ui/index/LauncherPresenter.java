@@ -7,7 +7,7 @@ import android.net.Uri;
 import android.os.Environment;
 
 import com.left.gank.BuildConfig;
-import com.left.gank.bean.CheckVersion;
+import com.left.gank.domain.CheckVersion;
 import com.left.gank.mvp.base.BasePresenter;
 import com.left.gank.network.DownloadProgressListener;
 import com.left.gank.network.api.DownloadApi;

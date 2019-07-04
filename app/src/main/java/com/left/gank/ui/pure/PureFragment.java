@@ -1,8 +1,8 @@
 package com.left.gank.ui.pure;
 
 import android.app.ProgressDialog;
+import android.business.domain.Gift;
 import android.content.Intent;
-import android.ly.business.domain.Gift;
 import android.os.Bundle;
 import android.view.View;
 

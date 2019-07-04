@@ -1,7 +1,7 @@
 package com.left.gank.mvp.source.remote;
 
-import com.left.gank.bean.GankResult;
 import com.left.gank.config.MeiziArrayList;
+import com.left.gank.domain.GankResult;
 import com.left.gank.network.api.ApiManager;
 import com.left.gank.network.service.GankService;
 

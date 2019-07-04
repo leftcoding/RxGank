@@ -1,8 +1,6 @@
 package com.left.gank.ui.baisi.image;
 
 import android.content.Context;
-import androidx.collection.ArrayMap;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -14,13 +12,15 @@ import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.left.gank.R;
-import com.left.gank.bean.BuDeJieBean;
-import com.left.gank.bean.GallerySize;
+import com.left.gank.domain.BuDeJieBean;
+import com.left.gank.domain.GallerySize;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import androidx.collection.ArrayMap;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 

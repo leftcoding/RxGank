@@ -1,6 +1,6 @@
 package com.left.gank.ui.cure;
 
-import android.ly.business.domain.Gift;
+import android.business.domain.Gift;
 import android.view.ViewGroup;
 import android.widget.TextView;
 

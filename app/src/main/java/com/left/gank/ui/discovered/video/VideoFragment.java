@@ -1,7 +1,7 @@
 package com.left.gank.ui.discovered.video;
 
+import android.business.domain.Gank;
 import android.content.res.Resources;
-import android.ly.business.domain.Gank;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.View;

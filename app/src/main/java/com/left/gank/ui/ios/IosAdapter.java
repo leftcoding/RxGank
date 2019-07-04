@@ -1,10 +1,8 @@
 package com.left.gank.ui.ios;
 
+import android.business.domain.Gank;
 import android.content.Context;
-import android.ly.business.domain.Gank;
 import android.view.ViewGroup;
-
-import androidx.annotation.NonNull;
 
 import com.left.gank.butterknife.adapter.FootAdapter;
 import com.left.gank.butterknife.holder.BindHolder;
@@ -17,6 +15,8 @@ import com.left.gank.utils.ListUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.annotation.NonNull;
 
 /**
  * Create by LingYan on 2016-04-25

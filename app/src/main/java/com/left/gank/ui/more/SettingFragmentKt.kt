@@ -5,7 +5,7 @@ import android.view.View
 import androidx.appcompat.widget.Toolbar
 import butterknife.BindView
 import com.left.gank.R
-import com.left.gank.bean.CheckVersion
+import com.left.gank.domain.CheckVersion
 import com.left.gank.ui.base.fragment.SupportFragment
 import com.left.gank.ui.index.LauncherPresenter
 import com.left.gank.utils.AppUtils

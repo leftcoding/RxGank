@@ -1,10 +1,10 @@
 package com.left.gank.ui.daily;
 
+import android.business.domain.Gift;
+import android.business.domain.Girl;
 import android.content.Context;
-import android.ly.business.domain.Gift;
-import android.ly.jsoup.JsoupServer;
+import android.jsoup.JsoupServer;
 
-import android.ly.business.domain.Girl;
 import com.left.gank.utils.ListUtils;
 import com.socks.library.KLog;
 
@@ -32,13 +32,13 @@ public class DailyGirlPresenter extends DailyGirlContract.Presenter {
         mModelView = view;
     }
 
-//    @Override
+    //    @Override
     public void fetchNew() {
 //        setFetchLimit(24);
         fetchData(MEIZI_FIRST_URL);
     }
 
-//    @Override
+    //    @Override
     public void fetchMore() {
         //empty
     }

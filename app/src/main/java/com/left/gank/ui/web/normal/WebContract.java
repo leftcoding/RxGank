@@ -1,11 +1,11 @@
 package com.left.gank.ui.web.normal;
 
-import android.left.ui.base.BaseView;
-
-import androidx.annotation.NonNull;
+import android.ui.base.BaseView;
 
 import com.left.gank.data.entity.ReadHistory;
 import com.left.gank.data.entity.UrlCollect;
+
+import androidx.annotation.NonNull;
 
 /**
  * Create by LingYan on 2016-10-27

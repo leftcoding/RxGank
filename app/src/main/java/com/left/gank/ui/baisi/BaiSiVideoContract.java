@@ -1,6 +1,6 @@
 package com.left.gank.ui.baisi;
 
-import com.left.gank.bean.BuDeJieVideo;
+import com.left.gank.domain.BuDeJieVideo;
 import com.left.gank.mvp.ILoadMorePresenter;
 import com.left.gank.mvp.base.SupportView;
 

@@ -2,21 +2,21 @@ package com.left.gank.ui.baisi;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.widget.Toolbar;
+import android.rxbus.RxEventBus;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.left.gank.R;
-import com.left.gank.bean.GallerySize;
-import com.left.gank.rxjava.RxBus_;
+import com.left.gank.domain.GallerySize;
 import com.left.gank.ui.base.activity.BaseActivity;
 import com.left.gank.utils.ShareUtils;
 import com.superplayer.library.SuperPlayer;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.Toolbar;
 import butterknife.BindView;
 import io.reactivex.disposables.Disposable;
 
@@ -52,7 +52,7 @@ public class BaiSiVideoPreViewActivity extends BaseActivity implements SuperPlay
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mDisposable = RxBus_.getInstance()
+        mDisposable = RxEventBus.newInstance()
                 .toObservableSticky(GallerySize.class)
                 .subscribe(gallerySize -> {
                     if (gallerySize != null) {

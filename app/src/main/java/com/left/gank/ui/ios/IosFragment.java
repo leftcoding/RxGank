@@ -1,8 +1,8 @@
 package com.left.gank.ui.ios;
 
+import android.business.domain.Gank;
+import android.business.domain.PageConfig;
 import android.content.Context;
-import android.ly.business.domain.Gank;
-import android.ly.business.domain.PageConfig;
 import android.os.Bundle;
 import android.view.View;
 

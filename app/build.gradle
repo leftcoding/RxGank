@@ -56,7 +56,7 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation project(':support-coding-basic')
+    implementation project(':support-basic')
 
     implementation rootProject.ext.butterknife.butterknife
     annotationProcessor rootProject.ext.compilerDeps.butterknife_compiler

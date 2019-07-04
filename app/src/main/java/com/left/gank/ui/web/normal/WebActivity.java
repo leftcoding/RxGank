@@ -22,10 +22,10 @@ import com.left.gank.data.entity.UrlCollect;
 import com.left.gank.mvp.source.LocalDataSource;
 import com.left.gank.ui.base.activity.BaseActivity;
 import com.left.gank.utils.AppUtils;
-import com.left.gank.utils.CircularAnimUtils;
 import com.left.gank.utils.ShareUtils;
 import com.left.gank.utils.ToastUtils;
 import com.tencent.smtt.export.external.interfaces.IX5WebChromeClient;
+import com.tencent.smtt.export.external.interfaces.JsResult;
 import com.tencent.smtt.sdk.CookieSyncManager;
 import com.tencent.smtt.sdk.ValueCallback;
 import com.tencent.smtt.sdk.WebChromeClient;
@@ -37,7 +37,6 @@ import java.io.InputStream;
 import java.util.Date;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
 import butterknife.BindView;
 
@@ -57,12 +56,15 @@ public class WebActivity extends BaseActivity implements WebContract.View {
 
     @BindView(R.id.web_view)
     FrameLayout mWebParent;
+
     @BindView(R.id.toolbar)
-    Toolbar mToolbar;
+    Toolbar toolbar;
+
     @BindView(R.id.web_progress_bar)
-    ProgressBar mProgressBar;
+    ProgressBar progressBar;
+
     @BindView(R.id.web_main)
-    View mView;
+    View webMain;
 
     WebView mWebView;
 
@@ -154,14 +156,12 @@ public class WebActivity extends BaseActivity implements WebContract.View {
         CookieSyncManager.createInstance(this);
         CookieSyncManager.getInstance().sync();
 
+        setSupportActionBar(toolbar);
         setTitle(mTitle);
-        setSupportActionBar(mToolbar);
-        ActionBar bar = getSupportActionBar();
-        if (bar != null) {
-            bar.setHomeAsUpIndicator(R.drawable.ic_toolbar_close);
-            bar.setDisplayHomeAsUpEnabled(true);
-        }
-        mToolbar.setNavigationOnClickListener(v -> CircularAnimUtils.actionVisible_(false, WebActivity.this, v, mView, 0, 618));
+        toolbar.setNavigationOnClickListener(v -> {
+            finish();
+            overridePendingTransition(R.anim.alpha_in, R.anim.alpha_out);
+        });
 
         isInitCollect = true;
         if (!TextUtils.isEmpty(mUrl)) {
@@ -233,7 +233,7 @@ public class WebActivity extends BaseActivity implements WebContract.View {
 
                 isCollect = !isCollect;
                 mPresenter.collectAction(isCollect);
-                showSnackbar(mView, resText, getResources().getColor(resColor));
+                showSnackbar(webMain, resText, getResources().getColor(resColor));
                 switchCollectIcon(isCollect);
                 return true;
             case R.id.welfare_share:
@@ -325,8 +325,7 @@ public class WebActivity extends BaseActivity implements WebContract.View {
     public class MyWebChromeClient extends WebChromeClient {
 
         @Override
-        public boolean onJsConfirm(WebView arg0, String arg1, String arg2, com.tencent.smtt.export.external.interfaces.JsResult
-                arg3) {
+        public boolean onJsConfirm(WebView arg0, String arg1, String arg2, JsResult arg3) {
             return super.onJsConfirm(arg0, arg1, arg2, arg3);
         }
 
@@ -336,15 +335,15 @@ public class WebActivity extends BaseActivity implements WebContract.View {
 
         @Override
         public void onProgressChanged(WebView webView, int newProgress) {
-            if (mProgressBar == null) {
+            if (progressBar == null) {
                 return;
             }
-            mProgressBar.setProgress(newProgress);
+            progressBar.setProgress(newProgress);
 
             if (newProgress == 100) {
-                mProgressBar.setVisibility(View.GONE);
+                progressBar.setVisibility(View.GONE);
             } else {
-                mProgressBar.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.VISIBLE);
             }
             super.onProgressChanged(webView, newProgress);
         }

@@ -1,7 +1,7 @@
 package com.left.gank.ui.pure;
 
+import android.business.domain.Gift;
 import android.content.Context;
-import android.ly.business.domain.Gift;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;

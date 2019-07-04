@@ -1,8 +1,7 @@
 package com.left.gank.ui.discovered.video;
 
+import android.business.domain.Gank;
 import android.content.Context;
-import android.ly.business.domain.Gank;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 

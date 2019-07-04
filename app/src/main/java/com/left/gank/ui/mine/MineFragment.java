@@ -1,23 +1,22 @@
 package com.left.gank.ui.mine;
 
 import android.content.Intent;
-import android.left.ui.logcat.Logcat;
+import android.download.Download;
+import android.download.DownloadListener;
+import android.file.FilePathUtils;
 import android.os.Bundle;
+import android.ui.logcat.Logcat;
 import android.view.View;
 import android.widget.ProgressBar;
+
+import com.left.gank.R;
+import com.left.gank.ui.base.fragment.ButterKnifeFragment;
+import com.left.gank.ui.more.MoreActivity;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.widget.NestedScrollView;
-
-import com.coding.download.Download;
-import com.coding.download.DownloadListener;
-import com.coding.file.FilePathUtils;
-import com.left.gank.R;
-import com.left.gank.ui.base.fragment.ButterKnifeFragment;
-import com.left.gank.ui.more.MoreActivity;
-
 import butterknife.BindView;
 import butterknife.OnClick;
 

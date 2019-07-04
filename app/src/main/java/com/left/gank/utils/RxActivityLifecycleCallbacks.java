@@ -4,15 +4,10 @@ import android.app.Activity;
 import android.app.Application;
 import android.os.Bundle;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * Create by LingYan on 2019-07-02
  */
 public class RxActivityLifecycleCallbacks {
-    private static Map<String, Activity> activityMap = new HashMap<>();
-
     private RxActivityLifecycleCallbacks() {
 
     }
@@ -21,15 +16,13 @@ public class RxActivityLifecycleCallbacks {
         application.registerActivityLifecycleCallbacks(new Application.ActivityLifecycleCallbacks() {
             @Override
             public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
-                if (activityMap.containsKey(activity.getLocalClassName()))
-                    if (callback != null) {
-                        callback.onActivityCreated(activity, savedInstanceState);
-                    }
             }
 
             @Override
             public void onActivityStarted(Activity activity) {
-
+                if (callback != null) {
+                    callback.onActivityStarted(activity);
+                }
             }
 
             @Override
@@ -60,8 +53,6 @@ public class RxActivityLifecycleCallbacks {
     }
 
     public interface Callback {
-        void onActivityCreated(Activity activity, Bundle savedInstanceState);
-
-        void onFourceFront(Activity activity);
+        void onActivityStarted(Activity activity);
     }
 }

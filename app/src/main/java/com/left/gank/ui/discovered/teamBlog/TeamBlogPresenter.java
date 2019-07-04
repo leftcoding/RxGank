@@ -1,9 +1,9 @@
 package com.left.gank.ui.discovered.teamBlog;
 
 import android.content.Context;
-import android.ly.jsoup.JsoupServer;
+import android.jsoup.JsoupServer;
 
-import com.left.gank.bean.JianDanBean;
+import com.left.gank.domain.JianDanBean;
 import com.left.gank.mvp.source.remote.TeamBlogDataSource;
 import com.left.gank.ui.discovered.technology.TechnologyContract;
 import com.socks.library.KLog;

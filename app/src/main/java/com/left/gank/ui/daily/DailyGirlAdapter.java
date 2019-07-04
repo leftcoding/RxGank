@@ -1,12 +1,12 @@
 package com.left.gank.ui.daily;
 
-import com.left.gank.butterknife.adapter.BaseAdapter;
-import android.ly.business.domain.Girl;
+import android.business.domain.Girl;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.left.gank.R;
+import com.left.gank.butterknife.adapter.BaseAdapter;
 import com.left.gank.butterknife.holder.BindHolder;
 import com.left.gank.butterknife.item.ItemModel;
 import com.left.gank.listener.ItemClick;

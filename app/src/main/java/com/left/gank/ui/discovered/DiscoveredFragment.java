@@ -7,8 +7,6 @@ import android.view.View;
 
 import com.google.android.material.tabs.TabLayout;
 import com.left.gank.R;
-import com.left.gank.rxjava.RxBus_;
-import com.left.gank.rxjava.theme.ThemeEvent;
 import com.left.gank.ui.base.LazyFragment;
 import com.left.gank.ui.base.fragment.ButterKnifeFragment;
 import com.left.gank.ui.discovered.jiandan.JiandanFragment;
@@ -25,7 +23,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
-import io.reactivex.disposables.Disposable;
 
 /**
  * 发现
@@ -43,8 +40,6 @@ public class DiscoveredFragment extends ButterKnifeFragment implements ViewPager
     @BindView(R.id.discovered_view_pager)
     ViewPager mViewPager;
 
-    private Disposable mDisposable;
-
     private List<String> mTitles;
 
     @Override
@@ -55,10 +50,6 @@ public class DiscoveredFragment extends ButterKnifeFragment implements ViewPager
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mDisposable = RxBus_.getInstance().toObservable(ThemeEvent.class)
-                .subscribe(themeEvent -> {
-                    refreshUi();
-                });
 
         List<LazyFragment> mList = new ArrayList<>();
         mList.add(new VideoFragment());
@@ -116,8 +107,5 @@ public class DiscoveredFragment extends ButterKnifeFragment implements ViewPager
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if (mDisposable != null && !mDisposable.isDisposed()) {
-            mDisposable.dispose();
-        }
     }
 }

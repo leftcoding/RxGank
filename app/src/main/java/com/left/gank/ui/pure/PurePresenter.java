@@ -1,10 +1,10 @@
 package com.left.gank.ui.pure;
 
+import android.business.domain.Gift;
 import android.content.Context;
-import android.left.ui.logcat.Logcat;
-import android.ly.business.domain.Gift;
-import android.ly.jsoup.JsoupServer;
+import android.jsoup.JsoupServer;
 import android.text.TextUtils;
+import android.ui.logcat.Logcat;
 
 import com.left.gank.utils.CrashUtils;
 import com.left.gank.utils.ListUtils;

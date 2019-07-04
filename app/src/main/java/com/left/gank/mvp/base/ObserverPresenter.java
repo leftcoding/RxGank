@@ -1,10 +1,9 @@
 package com.left.gank.mvp.base;
 
 import android.content.Context;
-import android.left.ui.base.BaseView;
-
-import com.leftcoding.rxbus.ObserverListener;
-import com.leftcoding.rxbus.RxApiManager;
+import android.rxbus.ObserverListener;
+import android.rxbus.RxApiManager;
+import android.ui.base.BaseView;
 
 /**
  * Create by LingYan on 2019-04-28
@@ -27,7 +26,7 @@ public abstract class ObserverPresenter<T extends BaseView> extends BasePresente
 
     protected void cleanDisposable(String tag) {
         if (observerListener != null) {
-            observerListener.cleanDisposable(tag);
+            observerListener.remove(tag);
         }
     }
 }

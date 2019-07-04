@@ -1,7 +1,7 @@
 package com.left.gank.ui.cure;
 
+import android.business.domain.Gift;
 import android.content.Context;
-import android.ly.business.domain.Gift;
 
 import com.left.gank.mvp.base.LoadMorePresenter;
 

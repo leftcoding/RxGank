@@ -1,6 +1,6 @@
 package com.left.gank.ui.discovered.teamBlog;
 
-import com.left.gank.bean.JianDanBean;
+import com.left.gank.domain.JianDanBean;
 import com.left.gank.mvp.ILoadMorePresenter;
 import com.left.gank.mvp.base.SupportView;
 

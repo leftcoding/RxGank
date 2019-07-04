@@ -14,7 +14,7 @@ import com.davemorrissey.labs.subscaleview.ImageSource;
 import com.davemorrissey.labs.subscaleview.ImageViewState;
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
 import com.left.gank.R;
-import com.left.gank.bean.GallerySize;
+import com.left.gank.domain.GallerySize;
 import com.left.gank.ui.base.fragment.SupportFragment;
 import com.socks.library.KLog;
 

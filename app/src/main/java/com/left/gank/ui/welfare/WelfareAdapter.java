@@ -1,17 +1,13 @@
 package com.left.gank.ui.welfare;
 
+import android.business.domain.Gank;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.left.ui.logcat.Logcat;
-import android.ly.business.domain.Gank;
 import android.util.ArrayMap;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.bumptech.glide.request.transition.Transition;
@@ -24,6 +20,8 @@ import com.left.gank.glide.GlideApp;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import butterknife.BindView;
 
 /**
@@ -95,16 +93,13 @@ public class WelfareAdapter extends FootAdapter<WelfareAdapter.ViewHolder, List<
             GlideApp.with(context)
                     .asBitmap()
                     .load(url)
-                    .placeholder(R.drawable.ic_image_default)
-                    .fallback(R.drawable.ic_image_default)
-                    .error(R.drawable.ic_image_default)
                     .into(new BitmapImageViewTarget(image) {
                         @Override
                         public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
                             final int height = resource.getHeight();
                             final int width = resource.getWidth();
                             final int imageWidth = image.getWidth();
-                            Logcat.d(">>height:" + height + " width:" + width + " imageWidth:" + imageWidth);
+//                            Logcat.d(">>height:" + height + " width:" + width + " imageWidth:" + imageWidth);
 
                             int finalHeight = -1;
                             if (heights.containsKey(url)) {
@@ -124,12 +119,9 @@ public class WelfareAdapter extends FootAdapter<WelfareAdapter.ViewHolder, List<
                         }
                     });
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (itemClickListener != null) {
-                        itemClickListener.onItem(image, url);
-                    }
+            itemView.setOnClickListener(v -> {
+                if (itemClickListener != null) {
+                    itemClickListener.onItem(image, url);
                 }
             });
         }

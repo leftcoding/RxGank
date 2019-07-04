@@ -1,9 +1,9 @@
 package com.left.gank.ui.welfare;
 
+import android.business.domain.Gank;
+import android.business.domain.Gift;
+import android.business.domain.PageConfig;
 import android.content.Intent;
-import android.ly.business.domain.Gank;
-import android.ly.business.domain.Gift;
-import android.ly.business.domain.PageConfig;
 import android.os.Bundle;
 import android.view.View;
 
@@ -118,17 +118,25 @@ public class WelfareFragment extends LazyFragment implements WelfareContract.Vie
 
     @Override
     public void showProgress() {
-        if (swipeRefresh != null) {
-            swipeRefresh.setRefreshing(true);
+        if (swipeRefresh != null && !swipeRefresh.isRefreshing()) {
+            showLoading();
         }
     }
 
+    private void showLoading() {
+        if (multipleStatusView != null) {
+            multipleStatusView.showLoading();
+        }
+    }
+
+    @Override
     public void showContent() {
         if (multipleStatusView != null) {
             multipleStatusView.showContent();
         }
     }
 
+    @Override
     public void showEmpty() {
         if (multipleStatusView != null) {
             multipleStatusView.showEmpty();

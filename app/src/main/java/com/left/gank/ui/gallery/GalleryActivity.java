@@ -1,11 +1,11 @@
 package com.left.gank.ui.gallery;
 
 import android.app.WallpaperManager;
+import android.business.domain.Gank;
+import android.business.domain.Gift;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.ly.business.domain.Gank;
-import android.ly.business.domain.Gift;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;

@@ -6,8 +6,8 @@ import android.view.View;
 
 import com.google.android.material.tabs.TabLayout;
 import com.left.gank.R;
-import com.left.gank.bean.CheckVersion;
 import com.left.gank.config.Constants;
+import com.left.gank.domain.CheckVersion;
 import com.left.gank.network.DownloadProgressListener;
 import com.left.gank.ui.android.AndroidFragment;
 import com.left.gank.ui.base.LazyFragment;
@@ -29,8 +29,7 @@ import butterknife.BindView;
 /**
  * Create by LingYan on 2016-04-22
  */
-public class IndexFragment extends SupportFragment implements
-        DownloadProgressListener, ILauncher {
+public class IndexFragment extends SupportFragment implements DownloadProgressListener, ILauncher {
     @BindView(R.id.tab_layout)
     TabLayout tabLayout;
 

@@ -1,14 +1,14 @@
 package com.left.gank.ui.ios;
 
+import android.business.domain.Gank;
 import android.content.Context;
-import android.ly.business.domain.Gank;
-
-import androidx.annotation.NonNull;
 
 import com.left.gank.mvp.base.ObserverPresenter;
 import com.left.gank.mvp.base.SupportView;
 
 import java.util.List;
+
+import androidx.annotation.NonNull;
 
 /**
  * Create by LingYan on 2016-12-20

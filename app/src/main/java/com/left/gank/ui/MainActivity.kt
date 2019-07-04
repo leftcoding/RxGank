@@ -1,9 +1,9 @@
 package com.left.gank.ui
 
 import android.os.Bundle
+import android.rxbus.RxEventBus
 import androidx.fragment.app.Fragment
 import com.left.gank.R
-import com.left.gank.rxjava.RxBus_
 import com.left.gank.ui.base.activity.BaseActivity
 import com.left.gank.ui.discovered.DiscoveredFragment
 import com.left.gank.ui.girls.GirlsFragment
@@ -18,18 +18,18 @@ import kotlinx.android.synthetic.main.fragment_main_bottom_navigation.*
 class MainActivity : BaseActivity() {
     private var curFragment: Fragment? = null
 
+    private val fragmentList = listOf(
+            IndexFragment(),
+            DiscoveredFragment(),
+            GirlsFragment(),
+            MineFragment()
+    )
+
     companion object {
         const val TAB_HOME = 0
         const val TAB_NEWS = 1
         const val TAB_IMAGE = 2
         const val TAB_MORE = 3
-
-        private val fragmentList = listOf(
-                IndexFragment(),
-                DiscoveredFragment(),
-                GirlsFragment(),
-                MineFragment()
-        )
     }
 
     override fun getContentId(): Int {
@@ -79,6 +79,6 @@ class MainActivity : BaseActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        RxBus_.getInstance().removeAllStickyEvents()// 移除所有Sticky事件
+        RxEventBus.newInstance().removeAllStickyEvents() // 移除所有Sticky事件
     }
 }

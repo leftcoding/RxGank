@@ -1,11 +1,10 @@
 package com.left.gank.ui.web.normal;
 
-import androidx.annotation.NonNull;
+import android.rxbus.RxEventBus;
 
-import com.left.gank.rxjava.RxBus_;
-import com.left.gank.bean.RxCollect;
 import com.left.gank.data.entity.ReadHistory;
 import com.left.gank.data.entity.UrlCollect;
+import com.left.gank.domain.RxCollect;
 import com.left.gank.mvp.source.LocalDataSource;
 import com.left.gank.utils.ListUtils;
 import com.socks.library.KLog;
@@ -14,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import androidx.annotation.NonNull;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
@@ -118,7 +118,7 @@ public class WebPresenter implements WebContract.Presenter {
                 public void onNext(String string) {
                     isCollect = false;
 
-                    RxBus_.getInstance().post(new RxCollect(true));
+                    RxEventBus.newInstance().post(new RxCollect(true));
                 }
             });
         }
