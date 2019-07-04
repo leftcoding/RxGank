@@ -41,6 +41,7 @@ captures/
 .idea/dictionaries
 .idea/libraries
 .idea/caches
+.idea/modules.xml
 
 # Keystore files
 # Uncomment the following line if you do not want to check your keystore files in.
@@ -63,3 +64,11 @@ fastlane/Preview.html
 fastlane/screenshots
 fastlane/test_output
 fastlane/readme.md
+app/src/main/java/com/left/gank/mvp/observer/
+support-coding-basic/libs/
+support-coding-basic/src/main/java/
+support-coding-basic/src/main/res/drawable/
+support-coding-download/libs/
+support-coding-download/src/main/res/drawable/
+support-coding-file/libs/
+support-coding-file/src/main/res/drawable/
