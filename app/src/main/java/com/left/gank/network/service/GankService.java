@@ -1,10 +1,10 @@
 package com.left.gank.network.service;
 
-import com.left.gank.bean.GankResult;
+import com.left.gank.domain.GankResult;
 
+import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
-import io.reactivex.Observable;
 
 /**
  * Create by LingYan on 2016-04-06

@@ -18,18 +18,18 @@ import kotlinx.android.synthetic.main.fragment_main_bottom_navigation.*
 class MainActivity : BaseActivity() {
     private var curFragment: Fragment? = null
 
+    private val fragmentList = listOf(
+            IndexFragment(),
+            DiscoveredFragment(),
+            GirlsFragment(),
+            MineFragment()
+    )
+
     companion object {
         const val TAB_HOME = 0
         const val TAB_NEWS = 1
         const val TAB_IMAGE = 2
         const val TAB_MORE = 3
-
-        private val fragmentList = listOf(
-                IndexFragment(),
-                DiscoveredFragment(),
-                GirlsFragment(),
-                MineFragment()
-        )
     }
 
     override fun getContentId(): Int {

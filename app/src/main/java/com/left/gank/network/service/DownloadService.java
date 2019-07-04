@@ -1,6 +1,6 @@
 package com.left.gank.network.service;
 
-import com.left.gank.bean.CheckVersion;
+import com.left.gank.domain.CheckVersion;
 
 import io.reactivex.Observable;
 import okhttp3.ResponseBody;

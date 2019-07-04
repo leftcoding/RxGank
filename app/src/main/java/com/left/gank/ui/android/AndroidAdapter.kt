@@ -28,14 +28,22 @@ class AndroidAdapter(context: Context) : FootAdapter<BindHolder<*>, List<Gank>>(
         return itemModels
     }
 
-    override fun fillItems(list: List<Gank>) {
+    override fun fillItems(list: List<Gank>?) {
         itemModels.clear()
         appendItems(list)
     }
 
-    override fun appendItems(list: List<Gank>) {
-        for (gank in list) {
-            itemModels.add(TextItem(gank))
+    override fun appendItems(list: List<Gank>?) {
+        if (list != null) {
+            if (list.isEmpty()) {
+                setEnd(true)
+                return
+            }
+            for (gank in list) {
+                itemModels.add(TextItem(gank))
+            }
+        } else {
+            showError()
         }
     }
 

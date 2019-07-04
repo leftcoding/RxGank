@@ -3,16 +3,17 @@ package com.left.gank.ui.more;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
-import android.view.View;
-import android.widget.TextView;
 
 import com.left.gank.R;
-import com.left.gank.bean.CheckVersion;
 import com.left.gank.config.Preferences;
+import com.left.gank.domain.CheckVersion;
 import com.left.gank.listener.DialogOnClick;
 import com.left.gank.ui.base.fragment.SupportFragment;
 import com.left.gank.ui.index.LauncherPresenter;

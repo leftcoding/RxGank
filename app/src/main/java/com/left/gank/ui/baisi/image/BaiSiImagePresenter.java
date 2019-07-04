@@ -2,7 +2,7 @@ package com.left.gank.ui.baisi.image;
 
 import android.content.Context;
 
-import com.left.gank.bean.BuDeJieBean;
+import com.left.gank.domain.BuDeJieBean;
 import com.left.gank.mvp.source.remote.BuDeJieDataSource;
 import com.socks.library.KLog;
 

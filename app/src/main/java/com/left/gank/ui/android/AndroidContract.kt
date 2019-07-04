@@ -12,7 +12,7 @@ import com.left.gank.mvp.base.SupportView
 
 interface AndroidContract {
     interface View : SupportView {
-        fun loadAndroidSuccess(page: Int, list: List<Gank>)
+        fun loadAndroidSuccess(page: Int, list: List<Gank>?)
 
         fun loadAndroidFailure(page: Int, msg: String)
     }

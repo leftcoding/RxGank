@@ -4,9 +4,9 @@ import android.rxbus.RxEventBus;
 
 import androidx.annotation.NonNull;
 
-import com.left.gank.bean.RxCollect;
 import com.left.gank.data.entity.ReadHistory;
 import com.left.gank.data.entity.UrlCollect;
+import com.left.gank.domain.RxCollect;
 import com.left.gank.mvp.source.LocalDataSource;
 import com.left.gank.utils.ListUtils;
 import com.socks.library.KLog;

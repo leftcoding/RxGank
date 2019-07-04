@@ -119,17 +119,25 @@ public class WelfareFragment extends LazyFragment implements WelfareContract.Vie
 
     @Override
     public void showProgress() {
-        if (swipeRefresh != null) {
-            swipeRefresh.setRefreshing(true);
+        if (swipeRefresh != null && !swipeRefresh.isRefreshing()) {
+            showLoading();
         }
     }
 
+    private void showLoading() {
+        if (multipleStatusView != null) {
+            multipleStatusView.showLoading();
+        }
+    }
+
+    @Override
     public void showContent() {
         if (multipleStatusView != null) {
             multipleStatusView.showContent();
         }
     }
 
+    @Override
     public void showEmpty() {
         if (multipleStatusView != null) {
             multipleStatusView.showEmpty();

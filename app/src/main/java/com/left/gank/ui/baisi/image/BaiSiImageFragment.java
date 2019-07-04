@@ -2,13 +2,14 @@ package com.left.gank.ui.baisi.image;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.view.View;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import android.view.View;
 
 import com.left.gank.R;
-import com.left.gank.bean.BuDeJieBean;
+import com.left.gank.domain.BuDeJieBean;
 import com.left.gank.ui.baisi.BaiSiActivity;
 import com.left.gank.ui.base.LazyFragment;
 import com.left.gank.widget.LySwipeRefreshLayout;

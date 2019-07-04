@@ -13,8 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.left.gank.R;
-import com.left.gank.bean.RxCollect;
 import com.left.gank.data.entity.UrlCollect;
+import com.left.gank.domain.RxCollect;
 import com.left.gank.mvp.source.LocalDataSource;
 import com.left.gank.ui.base.fragment.SupportFragment;
 import com.left.gank.ui.web.normal.WebActivity;

@@ -2,7 +2,7 @@ package com.left.gank.view;
 
 import android.ui.base.BaseView;
 
-import com.left.gank.bean.CheckVersion;
+import com.left.gank.domain.CheckVersion;
 
 /**
  * Create by LingYan on 2016-06-01

@@ -1,4 +1,4 @@
-package com.left.gank.data.bean;
+package com.left.gank.domain;
 
 import java.io.Serializable;
 

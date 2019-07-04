@@ -1,6 +1,6 @@
 package com.left.gank.network.api;
 
-import com.left.gank.bean.CheckVersion;
+import com.left.gank.domain.CheckVersion;
 import com.left.gank.network.DownloadProgressInterceptor;
 import com.left.gank.network.DownloadProgressListener;
 import com.left.gank.network.service.DownloadService;

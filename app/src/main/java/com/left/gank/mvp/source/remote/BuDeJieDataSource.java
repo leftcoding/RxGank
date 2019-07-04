@@ -1,7 +1,7 @@
 package com.left.gank.mvp.source.remote;
 
-import com.left.gank.bean.BuDeJieBean;
-import com.left.gank.bean.BuDeJieVideo;
+import com.left.gank.domain.BuDeJieBean;
+import com.left.gank.domain.BuDeJieVideo;
 import com.left.gank.network.api.ApiManager;
 import com.left.gank.network.service.BaiSiService;
 

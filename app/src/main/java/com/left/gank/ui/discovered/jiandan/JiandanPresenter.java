@@ -3,7 +3,7 @@ package com.left.gank.ui.discovered.jiandan;
 import android.content.Context;
 import android.jsoup.JsoupServer;
 
-import com.left.gank.bean.JianDanBean;
+import com.left.gank.domain.JianDanBean;
 import com.socks.library.KLog;
 
 import org.jsoup.nodes.Document;

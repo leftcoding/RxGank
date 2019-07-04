@@ -3,7 +3,7 @@ package com.left.gank.ui.discovered.technology;
 import android.content.Context;
 import android.jsoup.JsoupServer;
 
-import com.left.gank.bean.JianDanBean;
+import com.left.gank.domain.JianDanBean;
 import com.left.gank.mvp.source.remote.TechnologyDataSource;
 import com.socks.library.KLog;
 

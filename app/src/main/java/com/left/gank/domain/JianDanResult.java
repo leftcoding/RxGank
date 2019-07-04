@@ -1,4 +1,4 @@
-package com.left.gank.bean;
+package com.left.gank.domain;
 
 import java.util.List;
 

@@ -1,12 +1,12 @@
 package com.left.gank.network.service;
 
-import com.left.gank.bean.BuDeJieBean;
-import com.left.gank.bean.BuDeJieVideo;
+import com.left.gank.domain.BuDeJieBean;
+import com.left.gank.domain.BuDeJieVideo;
 
+import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
-import io.reactivex.Observable;
 
 /**
  * Create by LingYan on 2016-11-30

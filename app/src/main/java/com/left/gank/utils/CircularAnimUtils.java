@@ -76,8 +76,7 @@ public class CircularAnimUtils {
     /**
      * 为 myView 自身添加显示隐藏的动画
      */
-    @SuppressLint("NewApi")
-    private static void actionVisible(boolean isShow, final View myView, float miniRadius, long durationMills) {
+    public static void actionVisible(boolean isShow, final View myView, float miniRadius, long durationMills) {
         // 版本判断
         if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.LOLLIPOP) {
             if (isShow)

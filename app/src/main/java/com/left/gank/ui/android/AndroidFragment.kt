@@ -24,33 +24,6 @@ class AndroidFragment : LazyFragment(), AndroidContract.View {
 
     private val pageConfig = PageConfig()
 
-    private val errorListener = {
-        loadAndroid(false, pageConfig.nextPage)
-    }
-
-    private val scrollListener = object : OnFlexibleScrollListener.ScrollListener {
-        override fun onRefresh() {
-            loadAndroid(false, PageConfig.starPage())
-        }
-
-        override fun onLoadMore() {
-            loadAndroid(false, pageConfig.nextPage)
-        }
-    }
-
-    private val callback = object : AndroidAdapter.Callback {
-        override fun onItemClick(view: View, gank: Gank) {
-            val bundle = Bundle()
-            bundle.putString(WebActivity.TITLE, gank.desc)
-            bundle.putString(WebActivity.URL, gank.url)
-            bundle.putString(WebActivity.TYPE, Constants.ANDROID)
-            bundle.putString(WebActivity.AUTHOR, gank.who)
-            val intent = Intent(context, WebActivity::class.java)
-            intent.putExtras(bundle)
-            CircularAnimUtils.startActivity(activity, intent, view, R.color.white_half)
-        }
-    }
-
     override fun fragmentLayoutId(): Int {
         return R.layout.fragment_android
     }
@@ -81,17 +54,41 @@ class AndroidFragment : LazyFragment(), AndroidContract.View {
         loadAndroid(true, PageConfig.starPage())
     }
 
+    private val errorListener = {
+        loadAndroid(false, pageConfig.nextPage)
+    }
+
+    private val scrollListener = object : OnFlexibleScrollListener.ScrollListener {
+        override fun onRefresh() {
+            loadAndroid(false, PageConfig.starPage())
+        }
+
+        override fun onLoadMore() {
+            loadAndroid(false, pageConfig.nextPage)
+        }
+    }
+
+    private val callback = object : AndroidAdapter.Callback {
+        override fun onItemClick(view: View, gank: Gank) {
+            val intent = Intent(context, WebActivity::class.java)
+            val bundle = Bundle()
+            bundle.putString(WebActivity.TITLE, gank.desc)
+            bundle.putString(WebActivity.URL, gank.url)
+            bundle.putString(WebActivity.TYPE, Constants.ANDROID)
+            bundle.putString(WebActivity.AUTHOR, gank.who)
+            intent.putExtras(bundle)
+            CircularAnimUtils.startActivity(activity, intent, view, R.color.white_half)
+        }
+    }
+
     private fun loadAndroid(useProgress: Boolean, page: Int) {
         androidPresenter.loadAndroid(true, useProgress, page)
     }
 
     override fun showProgress() {
-        if (swipe_refresh != null && swipe_refresh.isRefreshing) {
+        if (!swipe_refresh.isRefreshing) {
             showLoading()
-            return
         }
-
-        swipe_refresh?.isRefreshing = true
     }
 
     override fun hideProgress() {
@@ -110,34 +107,30 @@ class AndroidFragment : LazyFragment(), AndroidContract.View {
         multiple_status_view?.showLoading()
     }
 
-    override fun loadAndroidSuccess(page: Int, list: List<Gank>) {
+    override fun loadAndroidSuccess(page: Int, list: List<Gank>?) {
         showContent()
         val isFirst = PageConfig.isFirstPage(page)
-        if (ListUtils.isEmpty(list)) {
-            if (isFirst) {
-                showEmpty()
-                return
-            } else {
-                androidAdapter.setEnd(true)
-            }
+        if (ListUtils.isEmpty(list) && isFirst) {
+            showEmpty()
+            return
         }
         pageConfig.curPage = page
-        if (isFirst) {
-            androidAdapter.fillItems(list)
-        } else {
-            androidAdapter.appendItems(list)
+        androidAdapter.apply {
+            if (isFirst) fillItems(list) else appendItems(list)
+            notifyDataSetChanged()
         }
-        androidAdapter.notifyDataSetChanged()
     }
 
     override fun loadAndroidFailure(page: Int, msg: String) {
         shortToast(msg)
         val isFirst = PageConfig.isFirstPage(page)
-        if (!isFirst) {
-            androidAdapter.showError()
-            androidAdapter.notifyDataSetChanged()
-        } else {
-            multiple_status_view.showEmpty()
+        if (isFirst) {
+            showEmpty()
+            return
+        }
+        androidAdapter.apply {
+            showError()
+            notifyDataSetChanged()
         }
     }
 
@@ -148,12 +141,6 @@ class AndroidFragment : LazyFragment(), AndroidContract.View {
     }
 
     companion object {
-
-        fun newInstance(): AndroidFragment {
-            val fragment = AndroidFragment()
-            val args = Bundle()
-            fragment.arguments = args
-            return fragment
-        }
+        fun newInstance(): AndroidFragment = AndroidFragment()
     }
 }

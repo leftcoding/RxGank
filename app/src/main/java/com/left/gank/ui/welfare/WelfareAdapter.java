@@ -3,7 +3,6 @@ package com.left.gank.ui.welfare;
 import android.business.domain.Gank;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.ui.logcat.Logcat;
 import android.util.ArrayMap;
 import android.view.View;
 import android.view.ViewGroup;
@@ -95,16 +94,13 @@ public class WelfareAdapter extends FootAdapter<WelfareAdapter.ViewHolder, List<
             GlideApp.with(context)
                     .asBitmap()
                     .load(url)
-                    .placeholder(R.drawable.ic_image_default)
-                    .fallback(R.drawable.ic_image_default)
-                    .error(R.drawable.ic_image_default)
                     .into(new BitmapImageViewTarget(image) {
                         @Override
                         public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
                             final int height = resource.getHeight();
                             final int width = resource.getWidth();
                             final int imageWidth = image.getWidth();
-                            Logcat.d(">>height:" + height + " width:" + width + " imageWidth:" + imageWidth);
+//                            Logcat.d(">>height:" + height + " width:" + width + " imageWidth:" + imageWidth);
 
                             int finalHeight = -1;
                             if (heights.containsKey(url)) {
@@ -124,12 +120,9 @@ public class WelfareAdapter extends FootAdapter<WelfareAdapter.ViewHolder, List<
                         }
                     });
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (itemClickListener != null) {
-                        itemClickListener.onItem(image, url);
-                    }
+            itemView.setOnClickListener(v -> {
+                if (itemClickListener != null) {
+                    itemClickListener.onItem(image, url);
                 }
             });
         }

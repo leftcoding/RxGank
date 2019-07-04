@@ -3,8 +3,8 @@ package com.left.gank.ui.discovered.video;
 import android.business.domain.Gank;
 import android.content.Context;
 
-import com.left.gank.bean.GankResult;
 import com.left.gank.config.MeiziArrayList;
+import com.left.gank.domain.GankResult;
 import com.left.gank.mvp.source.remote.GankDataSource;
 import com.socks.library.KLog;
 

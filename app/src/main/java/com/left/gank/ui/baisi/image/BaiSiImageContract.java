@@ -1,9 +1,10 @@
 package com.left.gank.ui.baisi.image;
 
 import android.content.Context;
+
 import androidx.annotation.NonNull;
 
-import com.left.gank.bean.BuDeJieBean;
+import com.left.gank.domain.BuDeJieBean;
 import com.left.gank.mvp.base.LoadMorePresenter;
 import com.left.gank.mvp.base.SupportView;
 

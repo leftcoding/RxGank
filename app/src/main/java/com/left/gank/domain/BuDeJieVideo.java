@@ -1,12 +1,13 @@
-package com.left.gank.bean;
+package com.left.gank.domain;
 
 import java.util.List;
 
 /**
- * Create by LingYan on 2016-12-07
+ * Create by LingYan on 2016-12-13
  */
 
-public class BuDeJieBean {
+public class BuDeJieVideo {
+
     private InfoBean info;
     private List<ListBean> list;
 
@@ -27,6 +28,7 @@ public class BuDeJieBean {
     }
 
     public static class InfoBean {
+
         private int count;
         private int np;
 
@@ -52,16 +54,15 @@ public class BuDeJieBean {
         private String comment;
         private String bookmark;
         private String text;
-        private ImageBean image;
         private String up;
         private String share_url;
         private int down;
         private int forward;
         private UBean u;
         private String passtime;
+        private VideoBean video;
         private String type;
         private String id;
-        private GifBean gif;
         private List<TagsBean> tags;
         private List<TopCommentsBean> top_comments;
 
@@ -95,14 +96,6 @@ public class BuDeJieBean {
 
         public void setText(String text) {
             this.text = text;
-        }
-
-        public ImageBean getImage() {
-            return image;
-        }
-
-        public void setImage(ImageBean image) {
-            this.image = image;
         }
 
         public String getUp() {
@@ -153,6 +146,14 @@ public class BuDeJieBean {
             this.passtime = passtime;
         }
 
+        public VideoBean getVideo() {
+            return video;
+        }
+
+        public void setVideo(VideoBean video) {
+            this.video = video;
+        }
+
         public String getType() {
             return type;
         }
@@ -169,14 +170,6 @@ public class BuDeJieBean {
             this.id = id;
         }
 
-        public GifBean getGif() {
-            return gif;
-        }
-
-        public void setGif(GifBean gif) {
-            this.gif = gif;
-        }
-
         public List<TagsBean> getTags() {
             return tags;
         }
@@ -191,72 +184,6 @@ public class BuDeJieBean {
 
         public void setTop_comments(List<TopCommentsBean> top_comments) {
             this.top_comments = top_comments;
-        }
-
-        public static class ImageBean {
-            private int height;
-            private int width;
-            private List<?> medium;
-            private List<String> big;
-            private List<String> download_url;
-            private List<?> small;
-            private List<String> thumbnail_small;
-
-            public int getHeight() {
-                return height;
-            }
-
-            public void setHeight(int height) {
-                this.height = height;
-            }
-
-            public int getWidth() {
-                return width;
-            }
-
-            public void setWidth(int width) {
-                this.width = width;
-            }
-
-            public List<?> getMedium() {
-                return medium;
-            }
-
-            public void setMedium(List<?> medium) {
-                this.medium = medium;
-            }
-
-            public List<String> getBig() {
-                return big;
-            }
-
-            public void setBig(List<String> big) {
-                this.big = big;
-            }
-
-            public List<String> getDownload_url() {
-                return download_url;
-            }
-
-            public void setDownload_url(List<String> download_url) {
-                this.download_url = download_url;
-            }
-
-            public List<?> getSmall() {
-                return small;
-            }
-
-            public void setSmall(List<?> small) {
-                this.small = small;
-            }
-
-            public List<String> getThumbnail_small() {
-                return thumbnail_small;
-            }
-
-            public void setThumbnail_small(List<String> thumbnail_small) {
-                this.thumbnail_small = thumbnail_small;
-            }
         }
 
         public static class UBean {
@@ -343,19 +270,23 @@ public class BuDeJieBean {
             }
         }
 
-        public static class GifBean {
-            private int width;
+        public static class VideoBean {
+            private int playfcount;
             private int height;
-            private List<String> images;
-            private List<String> gif_thumbnail;
-            private List<String> download_url;
+            private int width;
+            private int duration;
+            private int playcount;
+            private List<String> video;
+            private List<String> download;
+            private List<String> thumbnail;
+            private List<String> thumbnail_small;
 
-            public int getWidth() {
-                return width;
+            public int getPlayfcount() {
+                return playfcount;
             }
 
-            public void setWidth(int width) {
-                this.width = width;
+            public void setPlayfcount(int playfcount) {
+                this.playfcount = playfcount;
             }
 
             public int getHeight() {
@@ -366,32 +297,65 @@ public class BuDeJieBean {
                 this.height = height;
             }
 
-            public List<String> getImages() {
-                return images;
+            public int getWidth() {
+                return width;
             }
 
-            public void setImages(List<String> images) {
-                this.images = images;
+            public void setWidth(int width) {
+                this.width = width;
             }
 
-            public List<String> getGif_thumbnail() {
-                return gif_thumbnail;
+            public int getDuration() {
+                return duration;
             }
 
-            public void setGif_thumbnail(List<String> gif_thumbnail) {
-                this.gif_thumbnail = gif_thumbnail;
+            public void setDuration(int duration) {
+                this.duration = duration;
             }
 
-            public List<String> getDownload_url() {
-                return download_url;
+            public int getPlaycount() {
+                return playcount;
             }
 
-            public void setDownload_url(List<String> download_url) {
-                this.download_url = download_url;
+            public void setPlaycount(int playcount) {
+                this.playcount = playcount;
+            }
+
+            public List<String> getVideo() {
+                return video;
+            }
+
+            public void setVideo(List<String> video) {
+                this.video = video;
+            }
+
+            public List<String> getDownload() {
+                return download;
+            }
+
+            public void setDownload(List<String> download) {
+                this.download = download;
+            }
+
+            public List<String> getThumbnail() {
+                return thumbnail;
+            }
+
+            public void setThumbnail(List<String> thumbnail) {
+                this.thumbnail = thumbnail;
+            }
+
+            public List<String> getThumbnail_small() {
+                return thumbnail_small;
+            }
+
+            public void setThumbnail_small(List<String> thumbnail_small) {
+                this.thumbnail_small = thumbnail_small;
             }
         }
 
         public static class TagsBean {
+
             private int id;
             private String name;
 
@@ -415,6 +379,7 @@ public class BuDeJieBean {
         public static class TopCommentsBean {
             private int voicetime;
             private int status;
+            private int hate_count;
             private String cmt_type;
             private int precid;
             private String content;
@@ -439,6 +404,14 @@ public class BuDeJieBean {
 
             public void setStatus(int status) {
                 this.status = status;
+            }
+
+            public int getHate_count() {
+                return hate_count;
+            }
+
+            public void setHate_count(int hate_count) {
+                this.hate_count = hate_count;
             }
 
             public String getCmt_type() {
@@ -514,18 +487,6 @@ public class BuDeJieBean {
             }
 
             public static class UBeanX {
-                /**
-                 * header : ["http://tp2.sinaimg.cn/2438151561/50/5720544787/1","http://tp2.sinaimg.cn/2438151561/50/5720544787/1"]
-                 * uid : 15031595
-                 * is_vip : false
-                 * room_url :
-                 * sex : m
-                 * room_name :
-                 * room_role :
-                 * room_icon :
-                 * name : 手机用户2438151561
-                 */
-
                 private String uid;
                 private boolean is_vip;
                 private String room_url;

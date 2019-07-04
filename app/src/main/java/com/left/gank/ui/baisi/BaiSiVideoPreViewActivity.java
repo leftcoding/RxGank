@@ -13,7 +13,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
 
 import com.left.gank.R;
-import com.left.gank.bean.GallerySize;
+import com.left.gank.domain.GallerySize;
 import com.left.gank.ui.base.activity.BaseActivity;
 import com.left.gank.utils.ShareUtils;
 import com.superplayer.library.SuperPlayer;

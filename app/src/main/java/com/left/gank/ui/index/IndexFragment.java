@@ -11,8 +11,8 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
 import com.left.gank.R;
-import com.left.gank.bean.CheckVersion;
 import com.left.gank.config.Constants;
+import com.left.gank.domain.CheckVersion;
 import com.left.gank.network.DownloadProgressListener;
 import com.left.gank.ui.android.AndroidFragment;
 import com.left.gank.ui.base.LazyFragment;

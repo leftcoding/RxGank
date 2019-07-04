@@ -1,4 +1,4 @@
-package com.left.gank.bean;
+package com.left.gank.domain;
 
 /**
  * Create by LingYan on 2016-12-12

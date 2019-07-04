@@ -5,9 +5,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.left.gank.R;
-import com.left.gank.bean.JianDanBean;
 import com.left.gank.config.Constants;
+import com.left.gank.domain.JianDanBean;
 import com.left.gank.listener.ItemClick;
 import com.left.gank.ui.base.LazyFragment;
 import com.left.gank.ui.discovered.technology.TechnologyContract;
@@ -20,10 +25,6 @@ import com.left.gank.widget.MultipleStatusView;
 
 import java.util.List;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 
 /**

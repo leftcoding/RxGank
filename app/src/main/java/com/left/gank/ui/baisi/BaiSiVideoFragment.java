@@ -11,8 +11,8 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.left.gank.R;
-import com.left.gank.bean.BuDeJieVideo;
-import com.left.gank.bean.GallerySize;
+import com.left.gank.domain.BuDeJieVideo;
+import com.left.gank.domain.GallerySize;
 import com.left.gank.mvp.source.remote.BuDeJieDataSource;
 import com.left.gank.ui.base.LazyFragment;
 import com.left.gank.widget.LySwipeRefreshLayout;

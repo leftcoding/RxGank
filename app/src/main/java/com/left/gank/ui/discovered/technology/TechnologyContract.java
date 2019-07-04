@@ -1,9 +1,10 @@
 package com.left.gank.ui.discovered.technology;
 
 import android.content.Context;
+
 import androidx.annotation.NonNull;
 
-import com.left.gank.bean.JianDanBean;
+import com.left.gank.domain.JianDanBean;
 import com.left.gank.mvp.base.LoadMorePresenter;
 import com.left.gank.mvp.base.SupportView;
 

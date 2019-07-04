@@ -7,7 +7,6 @@ import android.permission.RequestCallback;
 import android.permission.RequestExecutor;
 import android.permission.Runnable;
 import android.permission.RxPermission;
-import android.view.View;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
@@ -19,7 +18,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Permission {
-    public static void initPermissions(final Context context, final RequestCallback requestCallback, final String... permissions) {
+    public static void permissionApp(final Context context, final RequestCallback requestCallback, final String... permissions) {
         RxPermission.with(context)
                 .runtime()
                 .checkPermission(permissions)
@@ -43,20 +42,20 @@ public class Permission {
                             showDeniedDialog(context, requestCallback);
                             return;
                         }
-                        initPermissions(context, requestCallback, permissions);
+                        permissionApp(context, requestCallback, permissions);
                     }
                 })
                 .start();
     }
 
-    public static void initPermissions(final Context context, final RequestCallback requestCallback, final String[]... permissions) {
+    public static void permissionApp(final Context context, final RequestCallback requestCallback, final String[]... permissions) {
         List<String> permission = new ArrayList<>();
         if (permissions != null && permissions.length > 0) {
             for (String[] strings : permissions) {
                 permission.addAll(Arrays.asList(strings));
             }
         }
-        initPermissions(context, requestCallback, permission.toArray(new String[0]));
+        permissionApp(context, requestCallback, permission.toArray(new String[0]));
     }
 
     private static void showRationaleDialog(final Context context, final RequestExecutor executor) {
@@ -88,24 +87,16 @@ public class Permission {
                 .setTitle(R.string.permission_title_tips)
                 .setMessage(context.getString(R.string.permission_message_format, context.getString(R.string.app_name)))
                 .setPositiveButton(R.string.permission_setting, null)
-                .setNegativeButton(R.string.permission_out, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        ((Activity) context).finish();
-                    }
-                })
+                .setNegativeButton(R.string.permission_out, (dialog1, which) -> ((Activity) context).finish())
                 .create();
 
         dialog.setCancelable(false);
         dialog.setCanceledOnTouchOutside(false);
         dialog.show();
-        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-                if (requestCallback != null) {
-                    requestCallback.onDenied(null);
-                }
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v -> {
+            dialog.dismiss();
+            if (requestCallback != null) {
+                requestCallback.onDenied(null);
             }
         });
     }
