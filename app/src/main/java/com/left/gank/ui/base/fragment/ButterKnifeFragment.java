@@ -8,6 +8,10 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.left.gank.utils.RxLifecycleUtils;
+import com.uber.autodispose.AutoDisposeConverter;
+
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
@@ -31,6 +35,10 @@ public abstract class ButterKnifeFragment extends BaseFragment {
     }
 
     protected abstract int fragmentLayoutId();
+
+    protected <T> AutoDisposeConverter<T> bindLifecycle() {
+        return RxLifecycleUtils.bindLifecycle(this);
+    }
 
     @Override
     public void onDestroyView() {
