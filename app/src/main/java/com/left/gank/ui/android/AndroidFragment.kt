@@ -10,7 +10,6 @@ import com.left.gank.R
 import com.left.gank.config.Constants
 import com.left.gank.ui.base.LazyFragment
 import com.left.gank.ui.web.normal.WebActivity
-import com.left.gank.utils.CircularAnimUtils
 import com.left.gank.utils.ListUtils
 import com.left.gank.widget.recyclerview.OnFlexibleScrollListener
 import kotlinx.android.synthetic.main.fragment_android.*
@@ -77,7 +76,7 @@ class AndroidFragment : LazyFragment(), AndroidContract.View {
             bundle.putString(WebActivity.TYPE, Constants.ANDROID)
             bundle.putString(WebActivity.AUTHOR, gank.who)
             intent.putExtras(bundle)
-            CircularAnimUtils.startActivity(activity, intent, view, R.color.white_half)
+            startActivity(intent)
         }
     }
 

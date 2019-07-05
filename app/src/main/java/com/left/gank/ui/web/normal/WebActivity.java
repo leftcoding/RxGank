@@ -15,6 +15,9 @@ import android.view.ViewParent;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
+
 import com.left.gank.R;
 import com.left.gank.config.Constants;
 import com.left.gank.data.entity.ReadHistory;
@@ -36,8 +39,6 @@ import com.tencent.smtt.sdk.WebViewClient;
 import java.io.InputStream;
 import java.util.Date;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.widget.Toolbar;
 import butterknife.BindView;
 
 /**
@@ -160,7 +161,6 @@ public class WebActivity extends BaseActivity implements WebContract.View {
         setTitle(mTitle);
         toolbar.setNavigationOnClickListener(v -> {
             finish();
-            overridePendingTransition(R.anim.alpha_in, R.anim.alpha_out);
         });
 
         isInitCollect = true;
@@ -284,10 +284,6 @@ public class WebActivity extends BaseActivity implements WebContract.View {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             if (mWebView != null && mWebView.canGoBack()) {
                 mWebView.goBack();
-                return true;
-            } else {
-                finish();
-                overridePendingTransition(R.anim.alpha_in, R.anim.alpha_out);
                 return true;
             }
         }
