@@ -84,7 +84,7 @@
 
     <!-- actionbar 主题-->
     <style name="Design.ActionOverflowButtonStyle" parent="@style/Widget.AppCompat.Light.ActionButton.Overflow">
-        <item name="android:src">@drawable/ic_menu_moreoverflow_material_dark</item>
+        <item name="android:src">@drawable/ic_menu_moreoverflow</item>
     </style>
 
     <style name="Design.AppBar.Theme" parent="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
