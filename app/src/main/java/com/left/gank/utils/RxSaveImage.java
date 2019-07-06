@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 
 import com.bumptech.glide.Glide;
@@ -91,8 +92,12 @@ public class RxSaveImage {
             KLog.e(e);
         }
 
-        Uri uri = FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".fileProvider", imageFile);
-//        Uri uri = Uri.fromFile(imageFile);
+        Uri uri;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            uri = FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".fileProvider", imageFile);
+        } else {
+            uri = Uri.fromFile(imageFile);
+        }
         // 通知图库更新
         Intent scannerIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri);
         context.sendBroadcast(scannerIntent);
