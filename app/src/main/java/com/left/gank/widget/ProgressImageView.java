@@ -68,6 +68,8 @@ public class ProgressImageView extends RelativeLayout {
 
     public interface ImageViewOnClick {
         void onImageClick(View v);
+
+        void onLongClick(View v);
     }
 
     @Override
@@ -78,7 +80,18 @@ public class ProgressImageView extends RelativeLayout {
         imageView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                mImageViewOnClick.onImageClick(v);
+                if (mImageViewOnClick != null) {
+                    mImageViewOnClick.onImageClick(v);
+                }
+            }
+        });
+        imageView.setOnLongClickListener(new OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if (mImageViewOnClick != null) {
+                    mImageViewOnClick.onLongClick(v);
+                }
+                return false;
             }
         });
         progressBar = (ProgressBar) getChildAt(1);

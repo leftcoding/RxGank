@@ -15,9 +15,6 @@ import android.view.ViewParent;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.widget.Toolbar;
-
 import com.left.gank.R;
 import com.left.gank.config.Constants;
 import com.left.gank.data.entity.ReadHistory;
@@ -39,6 +36,8 @@ import com.tencent.smtt.sdk.WebViewClient;
 import java.io.InputStream;
 import java.util.Date;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import butterknife.BindView;
 
 /**
@@ -67,7 +66,7 @@ public class WebActivity extends BaseActivity implements WebContract.View {
     @BindView(R.id.web_main)
     View webMain;
 
-    WebView mWebView;
+    WebView webView;
 
     private String mUrl;
     private String mTitle;
@@ -117,14 +116,14 @@ public class WebActivity extends BaseActivity implements WebContract.View {
         parseBundle();
         mPresenter = new WebPresenter(LocalDataSource.getInstance(), this);
 
-        mWebView = new WebView(getApplicationContext(), null);
+        webView = new WebView(getApplicationContext(), null);
 
-        mWebParent.addView(mWebView, new FrameLayout.LayoutParams(
+        mWebParent.addView(webView, new FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.MATCH_PARENT,
                 FrameLayout.LayoutParams.MATCH_PARENT));
 
-        WebSettings settings = mWebView.getSettings();
-        mWebView.requestFocusFromTouch(); //支持获取手势焦点，输入用户名、密码或其他
+        WebSettings settings = webView.getSettings();
+        webView.requestFocusFromTouch(); //支持获取手势焦点，输入用户名、密码或其他
         settings.setJavaScriptEnabled(true);  //支持js
         settings.setDomStorageEnabled(true); //
         settings.setSupportZoom(true); //设置支持缩放
@@ -150,9 +149,9 @@ public class WebActivity extends BaseActivity implements WebContract.View {
                 .getPath());
         settings.setPluginState(WebSettings.PluginState.ON_DEMAND);
 
-        mWebView.setWebViewClient(new MyWebViewClient());
-        mWebView.setWebChromeClient(new MyWebChromeClient());
-        mWebView.loadUrl(mUrl);
+        webView.setWebViewClient(new MyWebViewClient());
+        webView.setWebChromeClient(new MyWebChromeClient());
+        webView.loadUrl(mUrl);
 
         CookieSyncManager.createInstance(this);
         CookieSyncManager.getInstance().sync();
@@ -237,17 +236,17 @@ public class WebActivity extends BaseActivity implements WebContract.View {
                 switchCollectIcon(isCollect);
                 return true;
             case R.id.welfare_share:
-                ShareUtils.getInstance().shareText(this, mWebView.getTitle(), mWebView.getUrl());
+                ShareUtils.getInstance().shareText(this, webView.getTitle(), webView.getUrl());
                 return true;
             case R.id.welfare_copy_url:
-                AppUtils.copyText(this, mWebView.getUrl());
+                AppUtils.copyText(this, webView.getUrl());
                 ToastUtils.showToast(getBaseContext(), R.string.tip_copy_success);
                 return true;
             case R.id.welfare_refresh:
-                mWebView.reload();
+                webView.reload();
                 return true;
             case R.id.welfare_browser:
-                openBrowser(mWebView.getUrl());
+                openBrowser(webView.getUrl());
                 return true;
             default:
                 break;
@@ -282,8 +281,8 @@ public class WebActivity extends BaseActivity implements WebContract.View {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if (mWebView != null && mWebView.canGoBack()) {
-                mWebView.goBack();
+            if (webView != null && webView.canGoBack()) {
+                webView.goBack();
                 return true;
             }
         }
@@ -412,7 +411,7 @@ public class WebActivity extends BaseActivity implements WebContract.View {
             inputStream.read(buffer);
             inputStream.close();
             String encoded = Base64.encodeToString(buffer, Base64.NO_WRAP);
-            mWebView.loadUrl("javascript:(function() {" +
+            webView.loadUrl("javascript:(function() {" +
                     "var parent = document.getElementsByTagName('head').item(0);" +
                     "var style = document.createElement('style');" +
                     "style.type = 'text/css';" +
@@ -432,19 +431,19 @@ public class WebActivity extends BaseActivity implements WebContract.View {
 
     @Override
     protected void onDestroy() {
-        if (mWebView != null) {
-            ViewParent viewParent = mWebView.getParent();
+        if (webView != null) {
+            ViewParent viewParent = webView.getParent();
             if (viewParent != null) {
-                ((ViewGroup) viewParent).removeView(mWebView);
+                ((ViewGroup) viewParent).removeView(webView);
             }
-            mWebView.stopLoading();
-            mWebView.getSettings().setJavaScriptEnabled(false);
-            mWebView.clearView();
-            mWebView.clearFormData();
-            mWebView.clearHistory();
-            mWebView.removeAllViews();
-            mWebView.destroy();
-            mWebView = null;
+            webView.stopLoading();
+            webView.getSettings().setJavaScriptEnabled(false);
+            webView.clearView();
+            webView.clearFormData();
+            webView.clearHistory();
+            webView.removeAllViews();
+            webView.destroy();
+            webView = null;
         }
         super.onDestroy(); // All you have to do is destroy() the WebView before Activity finishes
     }

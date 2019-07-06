@@ -375,7 +375,7 @@ public class GalleryActivity extends SupportActivity {
     }
 
     private void saveImagePath(String imgUrl, final boolean isShare) {
-        RxSaveImage.saveImageAndGetPathObservable(this, imgUrl)
+        RxSaveImage.saveImageObservable(this, imgUrl)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Uri>() {
                     @Override

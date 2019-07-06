@@ -2,72 +2,74 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/share"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="36dp"
+        android:background="?android:attr/selectableItemBackground"
         android:gravity="center"
         android:orientation="horizontal">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_ab_back" />
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:src="@drawable/ic_view_gallery_share" />
 
         <TextView
-            android:id="@+id/share"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginStart="12dp"
             android:gravity="center"
             android:text="分享"
-            android:textColor="@color/black"
+            android:textColor="@color/text_333333"
             android:textSize="14sp" />
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/save"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="36dp"
+        android:layout_marginTop="5dp"
+        android:background="?android:attr/selectableItemBackground"
         android:gravity="center"
         android:orientation="horizontal">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_ab_back" />
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:src="@drawable/ic_down_load" />
 
         <TextView
-            android:id="@+id/save"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginStart="12dp"
             android:gravity="center"
             android:text="保存"
-            android:textColor="@color/black"
+            android:textColor="@color/text_333333"
             android:textSize="14sp" />
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/cancel"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_height="36dp"
+        android:layout_marginTop="12dp"
+        android:background="?android:attr/selectableItemBackground"
         android:gravity="center"
         android:orientation="horizontal">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_ab_back" />
-
         <TextView
-            android:id="@+id/cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
             android:text="取消"
-            android:textColor="@color/black"
+            android:textColor="@color/text_333333"
             android:textSize="14sp" />
     </LinearLayout>
 </LinearLayout>

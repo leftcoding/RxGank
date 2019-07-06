@@ -9,7 +9,7 @@ object RxSchedulers {
         return Schedulers.io()
     }
 
-    fun ui(): Scheduler {
+    fun mainThread(): Scheduler {
         return AndroidSchedulers.mainThread()
     }
 

@@ -12,7 +12,7 @@ import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.load.model.LazyHeaders;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
-import com.left.gank.config.Constants;
+import com.left.gank.BuildConfig;
 import com.socks.library.KLog;
 
 import java.io.File;
@@ -20,6 +20,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
+import androidx.core.content.FileProvider;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
@@ -29,7 +30,7 @@ import io.reactivex.schedulers.Schedulers;
  * Create by LingYan on 2016-04-20
  */
 public class RxSaveImage {
-    public static Observable<Uri> saveImageAndGetPathObservable(final Context context, final String url) {
+    public static Observable<Uri> saveImageObservable(final Context context, final String url) {
         return Observable.create(new ObservableOnSubscribe<Uri>() {
             @Override
             public void subscribe(ObservableEmitter<Uri> subscriber) throws Exception {
@@ -51,7 +52,6 @@ public class RxSaveImage {
                                     .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
                                     .skipMemoryCache(true)
                             )
-//                            .atMost()
                             .submit(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
                             .get();
                 } catch (InterruptedException | ExecutionException e) {
@@ -71,21 +71,28 @@ public class RxSaveImage {
     }
 
     public static Uri saveImage(Context context, Bitmap bm, String name) {
-        File appDir = new File(Environment.getExternalStorageDirectory(), Constants.IMAGE_PATH);
+        String storagePath = Environment
+                .getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+                .getAbsolutePath() + File.separator + "pic";
+
+        File appDir = new File(storagePath);
         if (!appDir.exists()) {
-            appDir.mkdir();
+            appDir.mkdirs();
         }
-        File file = new File(appDir, name + ".jpg");
+//        File imageFile = new File(appDir, name + ".jpg");
+        File imageFile = null;
         try {
-            FileOutputStream out = new FileOutputStream(file);
+            imageFile = File.createTempFile(name, ".jpg", appDir);
+            FileOutputStream out = new FileOutputStream(imageFile);
             bm.compress(Bitmap.CompressFormat.JPEG, 100, out);
             out.flush();
             out.close();
         } catch (IOException e) {
             KLog.e(e);
-            CrashUtils.crashReport(e);
         }
-        Uri uri = Uri.fromFile(file);
+
+        Uri uri = FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".fileProvider", imageFile);
+//        Uri uri = Uri.fromFile(imageFile);
         // 通知图库更新
         Intent scannerIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri);
         context.sendBroadcast(scannerIntent);

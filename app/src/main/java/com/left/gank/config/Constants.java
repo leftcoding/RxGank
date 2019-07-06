@@ -1,5 +1,7 @@
 package com.left.gank.config;
 
+import java.io.File;
+
 /**
  * Create by LingYan on 2016-04-06
  */
@@ -18,7 +20,7 @@ public class Constants {
     public static final String CURE = "治愈系";
 
     //image save path
-    public static final String IMAGE_PATH = "Gankly/pic";
+    public static final String IMAGE_PATH = "Gankly" + File.separator + "pic";
 
     // bugly id
     public static final String CRASH_LOG_ID = "900039150";
