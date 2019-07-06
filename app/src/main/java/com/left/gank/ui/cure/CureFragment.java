@@ -119,7 +119,7 @@ public class CureFragment extends LazyFragment implements CureContract.View {
         bundle.putString(GalleryActivity.EXTRA_MODEL, GalleryActivity.EXTRA_DAILY);
         intent.putExtra(GalleryActivity.EXTRA_LIST, (ArrayList) list);
         intent.putExtras(bundle);
-        getContext().startActivity(intent);
+        startActivity(intent);
     }
 
     @Override

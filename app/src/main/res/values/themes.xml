@@ -43,7 +43,7 @@
     </style>
 
     <!-- 图片浏览主题 -->
-    <style name="Design.Gallery" parent="@style/Theme.AppCompat.DayNight.NoActionBar">
+    <style name="Design.App.Gallery">
         <item name="android:windowBackground">@color/black</item>
         <item name="colorAccent">@color/black</item>
         <item name="colorPrimary">@color/black</item>

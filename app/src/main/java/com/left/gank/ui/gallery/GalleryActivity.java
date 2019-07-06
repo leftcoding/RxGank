@@ -6,10 +6,8 @@ import android.business.domain.Gift;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.text.TextUtils;
+import android.ui.logcat.Logcat;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -87,7 +85,6 @@ public class GalleryActivity extends SupportActivity {
 
     private GalleryPagerAdapter pagerAdapter;
     private WallpaperManager wallpaperManager;
-    private Disposable subscription;
 
     private List<Gift> gifts;
     private Bitmap bitmap;
@@ -209,7 +206,6 @@ public class GalleryActivity extends SupportActivity {
     private void stopBrowse() {
         isCanPlay = true;
         browseAuto.setImageDrawable(getResources().getDrawable(R.drawable.ic_gallery_play));
-        unSubscribeTime();
     }
 
     @OnClick(R.id.progress_page)
@@ -228,14 +224,14 @@ public class GalleryActivity extends SupportActivity {
                 }
             });
 
-            AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-            dialog.setTitle(R.string.gallery_page_select);
-            dialog.setView(outerView);
-            dialog.setPositiveButton(R.string.dialog_ok, (dialog1, which) -> {
-                dialog1.dismiss();
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle(R.string.gallery_page_select);
+            builder.setView(outerView);
+            builder.setPositiveButton(R.string.dialog_ok, (dialog, which) -> {
+                dialog.dismiss();
                 viewPager.setCurrentItem(position);
             });
-            dialog.show();
+            builder.show();
         }
     }
 
@@ -264,8 +260,9 @@ public class GalleryActivity extends SupportActivity {
     }
 
     private void timerBrowse() {
-        subscription = Observable.interval(INITIAL_DELAY, INTERVALS, TimeUnit.MILLISECONDS)
+        Observable.interval(INITIAL_DELAY, INTERVALS, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
+                .as(bindLifecycle())
                 .subscribe(aLong -> {
                     if (aLong >= getAdapterCount()) {
                         stopBrowse();
@@ -277,12 +274,6 @@ public class GalleryActivity extends SupportActivity {
                         stopBrowse();
                     }
                 }, KLog::e);
-    }
-
-    private void unSubscribeTime() {
-        if (subscription != null && !subscription.isDisposed()) {
-            subscription.dispose();
-        }
     }
 
     private void makeWallpaperDialog() {
@@ -318,12 +309,12 @@ public class GalleryActivity extends SupportActivity {
         })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .as(bindLifecycle())
                 .subscribe(new Observer<Bitmap>() {
                     @Override
                     public void onError(Throwable e) {
                         ToastUtils.showToast(getBaseContext(), R.string.meizi_wallpaper_failure);
                         KLog.e(e);
-                        CrashUtils.crashReport(e);
                     }
 
                     @Override
@@ -375,51 +366,28 @@ public class GalleryActivity extends SupportActivity {
     }
 
     private void saveImagePath(String imgUrl, final boolean isShare) {
-        RxSaveImage.saveImageObservable(this, imgUrl)
+        RxSaveImage.convertBitmap(this, imgUrl)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Uri>() {
-                    @Override
-                    public void onError(Throwable e) {
-                        KLog.e(e);
-                        CrashUtils.crashReport(e);
-                        ToastUtils.showToast(getBaseContext(), e.getMessage());
+                .map(bitmap -> {
+                    File file = RxSaveImage.createImageFile(String.valueOf(bitmap.hashCode()));
+                    if (file != null) {
+                        return RxSaveImage.bitmapToImage(getBaseContext(), bitmap, file);
                     }
-
-                    @Override
-                    public void onComplete() {
-
+                    return null;
+                })
+                .as(bindLifecycle())
+                .subscribe(uri -> {
+                    if (isShare) {
+                        ShareUtils.shareSingleImage(getBaseContext(), uri);
+                    } else {
+                        String msg = String.format(getString(R.string.meizi_picture_save_path), uri.toString());
+                        ToastUtils.showToast(getBaseContext(), msg);
                     }
-
-                    @Override
-                    public void onSubscribe(Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onNext(Uri uri) {
-                        String imgPath = getImagePath();
-                        if (TextUtils.isEmpty(imgPath)) {
-                            ToastUtils.showToast(getBaseContext(), R.string.tip_img_path_error);
-                            return;
-                        }
-                        if (isShare) {
-                            ShareUtils.shareSingleImage(GalleryActivity.this, uri);
-                        } else {
-                            String msg = String.format(getString(R.string.meizi_picture_save_path), imgPath);
-                            ToastUtils.showToast(getBaseContext(), msg);
-                        }
-                    }
-                });
-    }
-
-    private String getImagePath() {
-        File appDir = new File(Environment.getExternalStorageDirectory(), FILE_PATH);
-        return appDir.getAbsolutePath();
+                }, Logcat::e);
     }
 
     @Override
     protected void onDestroy() {
-        unSubscribeTime();
         super.onDestroy();
         viewPager = null;
         if (gifts != null) {

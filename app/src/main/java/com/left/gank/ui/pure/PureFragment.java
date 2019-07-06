@@ -19,7 +19,6 @@ import java.util.concurrent.TimeUnit;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.app.ActivityOptionsCompat;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import butterknife.BindView;
 import io.reactivex.Observable;
@@ -209,9 +208,7 @@ public class PureFragment extends LazyFragment implements PureContract.View {
         bundle.putString(GalleryActivity.EXTRA_MODEL, GalleryActivity.EXTRA_GIFT);
         intent.putExtra(GalleryActivity.EXTRA_LIST, (ArrayList) list);
         intent.putExtras(bundle);
-        ActivityOptionsCompat compat = ActivityOptionsCompat.makeCustomAnimation(getContext(),
-                R.anim.alpha_in, R.anim.alpha_out);
-        startActivity(intent, compat.toBundle());
+        startActivity(intent);
     }
 
     @Override

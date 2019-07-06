@@ -19,7 +19,6 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.app.ActivityOptionsCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -91,16 +90,12 @@ public class WelfareFragment extends LazyFragment implements WelfareContract.Vie
         }
     };
 
-    private final WelfareAdapter.ItemClickListener itemClickListener = new WelfareAdapter.ItemClickListener() {
-        @Override
-        public void onItem(View view, String url) {
-            Intent intent = new Intent(getContext(), GalleryActivity.class);
-            ArrayList<Gift> list = new ArrayList<>();
-            list.add(new Gift(url));
-            intent.putExtra(GalleryActivity.EXTRA_LIST, list);
-            ActivityOptionsCompat activityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(), view, getString(R.string.transition_welfare_image));
-            startActivity(intent, activityOptionsCompat.toBundle());
-        }
+    private final WelfareAdapter.ItemClickListener itemClickListener = (view, url) -> {
+        Intent intent = new Intent(getContext(), GalleryActivity.class);
+        ArrayList<Gift> list = new ArrayList<>();
+        list.add(new Gift(url));
+        intent.putExtra(GalleryActivity.EXTRA_LIST, list);
+        startActivity(intent);
     };
 
     private void loadWelfare(boolean useProgress, int page) {

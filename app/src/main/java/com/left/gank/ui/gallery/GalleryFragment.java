@@ -13,6 +13,8 @@ import com.left.gank.utils.ShareUtils;
 import com.left.gank.widget.BottomSheetGalleryMenuDialog;
 import com.left.gank.widget.ProgressImageView;
 
+import java.io.File;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import butterknife.BindView;
@@ -74,16 +76,30 @@ public class GalleryFragment extends SupportFragment {
     private final BottomSheetGalleryMenuDialog.Callback callback = new BottomSheetGalleryMenuDialog.Callback() {
         @Override
         public void share() {
-            RxSaveImage.saveImageObservable(getContext(), url)
+            RxSaveImage.convertBitmap(getContext(), url)
                     .observeOn(RxSchedulers.INSTANCE.mainThread())
+                    .map(bitmap -> {
+                        File file = RxSaveImage.createImageFile(String.valueOf(bitmap.hashCode()));
+                        if (file != null) {
+                            return RxSaveImage.bitmapToImage(getContext(), bitmap, file);
+                        }
+                        return null;
+                    })
                     .as(bindLifecycle())
                     .subscribe(uri -> ShareUtils.shareSingleImage(getContext(), uri), Logcat::e);
         }
 
         @Override
         public void save() {
-            RxSaveImage.saveImageObservable(getContext(), url)
+            RxSaveImage.convertBitmap(getContext(), url)
                     .observeOn(RxSchedulers.INSTANCE.mainThread())
+                    .map(bitmap -> {
+                        File file = RxSaveImage.createImageFile(String.valueOf(bitmap.hashCode()));
+                        if (file != null) {
+                            return RxSaveImage.bitmapToImage(getContext(), bitmap, file);
+                        }
+                        return null;
+                    })
                     .as(bindLifecycle())
                     .subscribe(uri -> shortToast(uri.toString()), Logcat::e);
         }
