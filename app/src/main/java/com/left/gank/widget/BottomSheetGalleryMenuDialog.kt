@@ -10,7 +10,7 @@ import com.left.gank.R
  *
  * Create by LingYan on 2019-07-04
  */
-class BottomSheetGalleryMenuDialog(context: Context) : BottomSheetDialog(context) {
+open class BottomSheetGalleryMenuDialog(context: Context) : BottomSheetDialog(context) {
     private var save: View? = null
     private var share: View? = null
     private var cancel: View? = null

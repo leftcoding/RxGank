@@ -1,7 +1,5 @@
 package com.left.gank.mvp.source;
 
-import androidx.annotation.NonNull;
-
 import com.left.gank.data.entity.ReadHistory;
 import com.left.gank.data.entity.ReadHistoryDao;
 import com.left.gank.data.entity.UrlCollect;
@@ -12,6 +10,7 @@ import com.left.gank.utils.ListUtils;
 import java.util.Date;
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import de.greenrobot.dao.query.QueryBuilder;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;

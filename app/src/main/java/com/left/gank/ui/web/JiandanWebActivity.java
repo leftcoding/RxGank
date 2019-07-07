@@ -4,10 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import com.google.android.material.snackbar.Snackbar;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -18,13 +14,13 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.left.gank.R;
 import com.left.gank.config.Constants;
 import com.left.gank.data.entity.UrlCollect;
 import com.left.gank.data.entity.UrlCollectDao;
 import com.left.gank.ui.base.activity.BaseActivity;
 import com.left.gank.utils.AppUtils;
-import com.left.gank.utils.CrashUtils;
 import com.left.gank.utils.ListUtils;
 import com.left.gank.utils.ShareUtils;
 import com.left.gank.utils.ToastUtils;
@@ -46,6 +42,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.Toolbar;
 import butterknife.BindView;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
@@ -202,7 +201,6 @@ public class JiandanWebActivity extends BaseActivity {
             @Override
             public void onError(Throwable e) {
                 KLog.e(e);
-                CrashUtils.crashReport(e);
             }
 
             @Override

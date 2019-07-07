@@ -24,7 +24,6 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
-import io.reactivex.disposables.Disposable;
 
 /**
  * 收藏
@@ -47,7 +46,6 @@ public class CollectFragment extends SupportFragment implements CollectContract.
 
     private CollectContract.Presenter presenter;
     private CollectAdapter collectAdapter;
-    private Disposable disposable;
 
     @Override
     protected int fragmentLayoutId() {
@@ -60,7 +58,8 @@ public class CollectFragment extends SupportFragment implements CollectContract.
         toolbar.setTitle(R.string.mine_my_collect);
         toolbar.setNavigationOnClickListener(v -> getActivity().finish());
 
-        disposable = RxEventBus.newInstance().toObservable(RxCollect.class)
+        RxEventBus.newInstance().toObservable(RxCollect.class)
+                .as(bindLifecycle())
                 .subscribe(rxCollect -> {
                     if (rxCollect.isCollect()) {
                         onDelete();
@@ -133,7 +132,7 @@ public class CollectFragment extends SupportFragment implements CollectContract.
         bundle.putString(WebActivity.TITLE, urlCollect.getComment());
         bundle.putString(WebActivity.URL, urlCollect.getUrl());
         bundle.putInt(WebActivity.FROM_TYPE, WebActivity.FROM_COLLECT);
-        WebActivity.startWebActivity(getContext(), bundle);
+        WebActivity.Companion.startWebActivity(getContext(), bundle);
     }
 
 
@@ -190,14 +189,6 @@ public class CollectFragment extends SupportFragment implements CollectContract.
     public void hideProgress() {
         if (swipeRefreshLayout != null) {
             swipeRefreshLayout.setRefreshing(false);
-        }
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        if (disposable != null && !disposable.isDisposed()) {
-            disposable.dispose();
         }
     }
 }

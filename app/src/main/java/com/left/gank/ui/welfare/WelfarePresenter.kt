@@ -49,6 +49,6 @@ class WelfarePresenter internal constructor(context: Context, view: WelfareContr
     }
 
     companion object {
-        private val DEFAULT_LIMIT = 20
+        private const val DEFAULT_LIMIT = 20
     }
 }

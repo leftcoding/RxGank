@@ -1,27 +1,26 @@
-package com.left.gank.ui.android
+package com.left.gank.ui.ios
 
 import android.business.api.GankServer
 import android.business.domain.Gank
 import android.business.domain.PageEntity
 import android.business.observer.ManagerObserver
 import android.content.Context
-import com.left.gank.ui.android.AndroidContract.Presenter
 import com.uber.autodispose.ObservableSubscribeProxy
 import retrofit2.Response
 
 /**
- * Create by LingYan on 2016-10-25
+ * Create by LingYan on 2016-12-20
  */
-internal class AndroidPresenter(context: Context, view: AndroidContract.View) : Presenter(context, view) {
 
-    override fun loadAndroid(refresh: Boolean, useProgress: Boolean, page: Int) {
+class IosPresenter(context: Context, view: IosContract.View) : IosContract.Presenter(context, view) {
+
+    override fun loadIos(refresh: Boolean, useProgress: Boolean, page: Int) {
         if (isDestroy) {
             return
         }
-
         GankServer.with()
                 .api()
-                .androids(refresh, page, INIT_LIMIT)
+                .ios(refresh, page, INIT_LIMIT)
                 .doOnSubscribe { showProgress(useProgress) }
                 .doFinally { hideProgress() }
                 .`as`<ObservableSubscribeProxy<Response<PageEntity<Gank>>>>(bindLifecycle<Response<PageEntity<Gank>>>())
@@ -29,28 +28,25 @@ internal class AndroidPresenter(context: Context, view: AndroidContract.View) : 
                     override fun onSuccess(entity: PageEntity<Gank>?) {
                         if (isViewLife) {
                             if (entity != null) {
-                                view.loadAndroidSuccess(page, entity.results)
+                                view.loadIosSuccess(page, entity.results)
                                 return
                             }
-                            view.loadAndroidFailure(page, errorTip)
+                            view.loadIosFailure(page, errorTip)
                         }
                     }
 
                     override fun onFailure(e: Throwable) {
-                        e.printStackTrace()
                         if (isViewLife) {
-                            view.loadAndroidFailure(page, errorTip)
+                            view.loadIosFailure(page, errorTip)
                         }
                     }
                 })
     }
 
     override fun onDestroy() {
-        cleanDisposable(requestTag)
     }
 
     companion object {
-        // 请求个数
         private const val INIT_LIMIT = 20
     }
 }

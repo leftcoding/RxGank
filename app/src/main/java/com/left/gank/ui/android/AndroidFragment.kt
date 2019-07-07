@@ -49,7 +49,9 @@ class AndroidFragment : LazyFragment(), AndroidContract.View {
     }
 
     override fun onLazyActivityCreate() {
-        androidPresenter = AndroidPresenter(context!!, this)
+        androidPresenter = AndroidPresenter(context!!, this).apply {
+            setLifeCycleOwner(this@AndroidFragment)
+        }
         loadAndroid(true, PageConfig.starPage())
     }
 

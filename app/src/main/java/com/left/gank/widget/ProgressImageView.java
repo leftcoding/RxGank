@@ -30,7 +30,7 @@ public class ProgressImageView extends RelativeLayout {
     private TouchImageView imageView;
     private ProgressBar progressBar;
     private ProgressTarget<String, Bitmap> target;
-    private ImageViewOnClick mImageViewOnClick;
+    private ImageCallback imageCallback;
 
     public ProgressImageView(Context context) {
         super(context);
@@ -62,11 +62,11 @@ public class ProgressImageView extends RelativeLayout {
         }
     }
 
-    public void setImageViewOnClick(ImageViewOnClick imageViewOnClick) {
-        mImageViewOnClick = imageViewOnClick;
+    public void setImageViewOnClick(ImageCallback imageCallback) {
+        this.imageCallback = imageCallback;
     }
 
-    public interface ImageViewOnClick {
+    public interface ImageCallback {
         void onImageClick(View v);
 
         void onLongClick(View v);
@@ -75,21 +75,20 @@ public class ProgressImageView extends RelativeLayout {
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-
         imageView = (TouchImageView) getChildAt(0);
         imageView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mImageViewOnClick != null) {
-                    mImageViewOnClick.onImageClick(v);
+                if (imageCallback != null) {
+                    imageCallback.onImageClick(v);
                 }
             }
         });
         imageView.setOnLongClickListener(new OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                if (mImageViewOnClick != null) {
-                    mImageViewOnClick.onLongClick(v);
+                if (imageCallback != null) {
+                    imageCallback.onLongClick(v);
                 }
                 return false;
             }
@@ -101,6 +100,11 @@ public class ProgressImageView extends RelativeLayout {
 
 //        target = new MyProgressTarget<>(new GlideDrawableImageViewTarget(imageView), progressBar, imageView, progressTextView);
         target = new MyProgressTarget<>(new BitmapImageViewTarget(imageView), progressBar, progressTextView);
+    }
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
     }
 
     public void load(String url, final Context context) {

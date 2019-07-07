@@ -2,6 +2,8 @@ apply plugin: 'com.android.application'
 
 apply plugin: 'kotlin-android'
 
+apply plugin: 'kotlin-kapt'
+
 apply plugin: 'kotlin-android-extensions'
 
 android {
@@ -56,12 +58,14 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+
     implementation project(':support-basic')
 
-    implementation rootProject.ext.butterknife.butterknife
-    annotationProcessor rootProject.ext.compilerDeps.butterknife_compiler
+    kapt rootProject.ext.compilerDeps.glide_compiler
 
-    annotationProcessor rootProject.ext.compilerDeps.glide_compiler
+    implementation rootProject.ext.butterknife.butterknife
+
+    annotationProcessor rootProject.ext.compilerDeps.butterknife_compiler
 
     debugImplementation rootProject.ext.leakcanary.leakcanary_android
 }
