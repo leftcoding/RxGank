@@ -6,6 +6,7 @@ import android.business.domain.PageConfig
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.core.app.ActivityOptionsCompat
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.left.gank.R
 import com.left.gank.ui.base.LazyFragment
@@ -41,7 +42,8 @@ class WelfareFragment : LazyFragment(), WelfareContract.View {
             val list = listOf(Gift(url))
             val intent = Intent(context, GalleryActivity::class.java)
             intent.putParcelableArrayListExtra(GalleryActivity.EXTRA_LIST, ArrayList(list))
-            startActivity(intent)
+            val activityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(activity!!, view, getString(R.string.transition_welfare_image))
+            startActivity(intent, activityOptionsCompat.toBundle())
         }
     }
 
@@ -51,15 +53,18 @@ class WelfareFragment : LazyFragment(), WelfareContract.View {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        welfareAdapter = WelfareAdapter(context!!)
-        welfareAdapter.setListener(itemClickListener)
-        val staggeredGridLayoutManager = StaggeredGridLayoutManager(2,
-                StaggeredGridLayoutManager.VERTICAL)
-        recycler_view!!.layoutManager = staggeredGridLayoutManager
-        val scrollListener = OnFlexibleScrollListener(swipe_refresh!!)
-        scrollListener.setOnScrollListener(this.scrollListener)
-        recycler_view!!.addOnScrollListener(scrollListener)
-        recycler_view!!.adapter = welfareAdapter
+        welfareAdapter = WelfareAdapter(context!!).apply {
+            setListener(itemClickListener)
+        }
+
+        recycler_view!!.apply {
+            layoutManager = StaggeredGridLayoutManager(2,
+                    StaggeredGridLayoutManager.VERTICAL)
+            val onFlexibleScrollListener = OnFlexibleScrollListener(swipe_refresh!!)
+            onFlexibleScrollListener.setOnScrollListener(scrollListener)
+            addOnScrollListener(onFlexibleScrollListener)
+            adapter = welfareAdapter
+        }
 
         multiple_status_view!!.setListener(onMultipleClick)
     }
@@ -113,12 +118,10 @@ class WelfareFragment : LazyFragment(), WelfareContract.View {
         showContent()
         pageConfig.curPage = page
         list?.let {
-            if (isFirst) {
-                welfareAdapter.fillItems(it)
-            } else {
-                welfareAdapter.appendItems(it)
+            welfareAdapter.apply {
+                if (isFirst) fillItems(list) else appendItems(list)
+                notifyDataSetChanged()
             }
-            welfareAdapter.notifyDataSetChanged()
         }
     }
 
@@ -127,12 +130,14 @@ class WelfareFragment : LazyFragment(), WelfareContract.View {
     }
 
     override fun onDestroyView() {
+        if (::presenter.isInitialized) {
+            presenter.destroy()
+        }
         super.onDestroyView()
-        presenter.destroy()
+
     }
 
     companion object {
-
         fun newInstance(): WelfareFragment {
             val fragment = WelfareFragment()
             val args = Bundle()

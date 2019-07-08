@@ -19,7 +19,7 @@ import java.util.*
 /**
  * Create by LingYan on 2016-04-25
  */
-class PureAdapter internal constructor() : BaseAdapter<BindHolder<ItemModel>>() {
+class PureAdapter internal constructor() : BaseAdapter<BindHolder<*>>() {
     private val gifts = ArrayList<Gift>()
     private val items = ArrayList<ItemModel>()
     private var callback: Callback? = null
@@ -28,9 +28,9 @@ class PureAdapter internal constructor() : BaseAdapter<BindHolder<ItemModel>>() 
         override fun onChanged() {
             super.onChanged()
             items.clear()
-            if (ListUtils.isNotEmpty(gifts)) {
-                for (gift in gifts) {
-                    items.add(GiftItem(gift))
+            ListUtils.isNotEmpty(gifts).let {
+                gifts.forEach {
+                    items.add(GiftItem(it))
                 }
             }
         }
@@ -40,16 +40,26 @@ class PureAdapter internal constructor() : BaseAdapter<BindHolder<ItemModel>>() 
         registerAdapterDataObserver(observer)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BindHolder<ItemModel> {
-        var holder: BindHolder<*>? = null
-        if (viewType == Type.IMAGE) {
-            holder = GiftHolder(parent, callback)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BindHolder<*> {
+        when (viewType) {
+            Type.IMAGE -> {
+                return GiftHolder(parent, callback)
+            }
+            else -> {
+                throw RuntimeException("invalid viewType = $viewType")
+            }
         }
-        return (holder as BindHolder<ItemModel>?)!!
     }
 
-    override fun onBindViewHolder(holder: BindHolder<ItemModel>, position: Int) {
-        holder.bindHolder(items[position])
+    override fun onBindViewHolder(holder: BindHolder<*>, position: Int) {
+        when (holder) {
+            is GiftHolder -> {
+                holder.bindHolder(items[position] as GiftItem)
+            }
+            else -> {
+                throw RuntimeException("invalid holder = $holder")
+            }
+        }
     }
 
     override fun getItemCount(): Int {
@@ -107,14 +117,13 @@ class PureAdapter internal constructor() : BaseAdapter<BindHolder<ItemModel>>() 
                     )
                     .into(itemView.goods_background!!)
 
-            itemView.setOnClickListener { v ->
+            itemView.setOnClickListener {
                 callback?.onItemClick(gift)
             }
         }
     }
 
     internal class GiftItem(val gift: Gift) : ItemModel() {
-
         override fun getViewType(): Int {
             return Type.IMAGE
         }

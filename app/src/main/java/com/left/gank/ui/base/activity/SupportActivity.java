@@ -11,6 +11,15 @@ import com.uber.autodispose.AutoDisposeConverter;
 public abstract class SupportActivity extends BaseActivity implements SupportView {
 
     @Override
+    protected int getContentId() {
+        return 0;
+    }
+
+    protected <T> AutoDisposeConverter<T> bindLifecycle() {
+        return RxLifecycleUtils.bindLifecycle(this);
+    }
+
+    @Override
     public void showContent() {
 
     }
@@ -28,14 +37,5 @@ public abstract class SupportActivity extends BaseActivity implements SupportVie
     @Override
     public void showEmpty() {
 
-    }
-
-    @Override
-    protected int getContentId() {
-        return 0;
-    }
-
-    protected <T> AutoDisposeConverter<T> bindLifecycle() {
-        return RxLifecycleUtils.bindLifecycle(this);
     }
 }

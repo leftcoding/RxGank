@@ -5,10 +5,10 @@ import android.rxbus.ObserverListener;
 import android.rxbus.RxApiManager;
 import android.ui.base.BaseView;
 
+import androidx.lifecycle.LifecycleOwner;
+
 import com.left.gank.utils.RxLifecycleUtils;
 import com.uber.autodispose.AutoDisposeConverter;
-
-import androidx.lifecycle.LifecycleOwner;
 
 /**
  * Create by LingYan on 2019-04-28
@@ -27,7 +27,6 @@ public abstract class ObserverPresenter<T extends BaseView> extends BasePresente
 
     public ObserverPresenter(Context context, T view) {
         super(context, view);
-
     }
 
     protected void setObserverListener(ObserverListener observerListener) {

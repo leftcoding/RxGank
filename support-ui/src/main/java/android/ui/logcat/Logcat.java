@@ -7,11 +7,11 @@ import android.ui.logcat.base.FileLog;
 import android.ui.logcat.base.JsonLog;
 import android.ui.logcat.base.XmlLog;
 
+import androidx.annotation.Nullable;
+
 import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-
-import androidx.annotation.Nullable;
 
 /**
  * This is a Log tool，with this you can the following
@@ -22,14 +22,14 @@ import androidx.annotation.Nullable;
  * </ol>
  *
  * @author zhaokaiqiang
- *         github https://github.com/ZhaoKaiQiang/KLog
- *         15/11/17 扩展功能，添加对文件的支持
- *         15/11/18 扩展功能，增加对XML的支持，修复BUG
- *         15/12/8  扩展功能，添加对任意参数的支持
- *         15/12/11 扩展功能，增加对无限长字符串支持
- *         16/6/13  扩展功能，添加对自定义全局Tag的支持,修复内部类不能点击跳转的BUG
- *         16/6/15  扩展功能，添加不能关闭的KLog.debug(),用于发布版本的Log打印,优化部分代码
- *         16/6/20  扩展功能，添加堆栈跟踪功能KLog.trace()
+ * github https://github.com/ZhaoKaiQiang/KLog
+ * 15/11/17 扩展功能，添加对文件的支持
+ * 15/11/18 扩展功能，增加对XML的支持，修复BUG
+ * 15/12/8  扩展功能，添加对任意参数的支持
+ * 15/12/11 扩展功能，增加对无限长字符串支持
+ * 16/6/13  扩展功能，添加对自定义全局Tag的支持,修复内部类不能点击跳转的BUG
+ * 16/6/15  扩展功能，添加不能关闭的KLog.debug(),用于发布版本的Log打印,优化部分代码
+ * 16/6/20  扩展功能，添加堆栈跟踪功能KLog.trace()
  */
 public final class Logcat {
 
@@ -299,14 +299,13 @@ public final class Logcat {
             tag = mGlobalTag;
         }
 
-        String msg = (objects == null) ? NULL_TIPS : getObjectsString(objects);
+        String msg = (objects == null) ? NULL_TIPS : getObjectsString(tagStr, objects);
         String headString = "[ (" + className + ":" + lineNumber + ")#" + methodName + " ] ";
 
         return new String[]{tag, msg, headString};
     }
 
     private static String getObjectsString(Object... objects) {
-
         if (objects.length > 1) {
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.append("\n");
@@ -319,10 +318,20 @@ public final class Logcat {
                 }
             }
             return stringBuilder.toString();
-        } else {
+        } else if (objects.length == 1) {
             Object object = objects[0];
             return object == null ? NULL : object.toString();
+        } else {
+            return NULL;
         }
     }
 
+    private static String getObjectsString(String tagStr, Object... objects) {
+        Object[] obj = null;
+        if (objects.length == 0) {
+            obj = new Object[1];
+            obj[0] = tagStr;
+        }
+        return getObjectsString(obj == null ? objects : obj);
+    }
 }

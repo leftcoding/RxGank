@@ -137,9 +137,10 @@ class IosFragment : LazyFragment(), IosContract.View {
     }
 
     override fun onDestroyView() {
+        if (::iosPresenter.isInitialized) {
+            iosPresenter.destroy()
+        }
         super.onDestroyView()
-        iosPresenter.destroy()
-        iosAdapter.destroy()
     }
 
     companion object {

@@ -2,8 +2,6 @@ apply plugin: 'com.android.application'
 
 apply plugin: 'kotlin-android'
 
-apply plugin: 'kotlin-kapt'
-
 apply plugin: 'kotlin-android-extensions'
 
 android {
@@ -61,11 +59,8 @@ dependencies {
 
     implementation project(':support-basic')
 
-    kapt rootProject.ext.compilerDeps.glide_compiler
+    debugImplementation rootProject.ext.leakcanary.leakcanary_android
 
     implementation rootProject.ext.butterknife.butterknife
-
     annotationProcessor rootProject.ext.compilerDeps.butterknife_compiler
-
-    debugImplementation rootProject.ext.leakcanary.leakcanary_android
 }

@@ -15,22 +15,15 @@ import com.socks.library.KLog;
 
 import java.util.IllegalFormatException;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
 
 /**
  * Create by LingYan on 2016-06-06
  */
 public class ItemSwitchView extends RelativeLayout implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
-    @BindView(R.id.item_switch_txt_title)
-    TextView txtTitle;
-    @BindView(R.id.item_switch_txt_summary)
-    TextView txtSummary;
-    @BindView(R.id.item_switch_auto_check)
-    LSwitch mSwitch;
-    @BindView(R.id.setting_rl_auto_check)
-    View viItem;
+    private TextView txtTitle;
+    private TextView txtSummary;
+    private LSwitch lSwitch;
+    private View itemView;
 
     private OnSwitch mOnSwitch;
 
@@ -57,7 +50,7 @@ public class ItemSwitchView extends RelativeLayout implements View.OnClickListen
 
     public ItemSwitchView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        View view = LayoutInflater.from(context).inflate(R.layout.layout_item_text_view_switch, this);
+        final View root = LayoutInflater.from(context).inflate(R.layout.layout_item_text_view_switch, this);
         TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.ItemSwitchView);
         try {
             mTitle = array.getString(R.styleable.ItemSwitchView_textTitle);
@@ -70,13 +63,16 @@ public class ItemSwitchView extends RelativeLayout implements View.OnClickListen
         } catch (IllegalFormatException e) {
             KLog.e(e);
         }
-        ButterKnife.bind(this, view);
+        txtTitle = root.findViewById(R.id.item_switch_txt_title);
+        txtSummary = root.findViewById(R.id.item_switch_txt_summary);
+        lSwitch = root.findViewById(R.id.item_switch_auto_check);
+        itemView = root.findViewById(R.id.setting_rl_auto_check);
         array.recycle();
     }
 
     public void setSwitchChecked(boolean isCheck) {
         this.isCheck = isCheck;
-        mSwitch.setChecked(isCheck);
+        lSwitch.setChecked(isCheck);
     }
 
     public void setSwitchListener(OnSwitch onSwitch) {
@@ -90,7 +86,7 @@ public class ItemSwitchView extends RelativeLayout implements View.OnClickListen
     }
 
     public LSwitch getSwitch() {
-        return mSwitch;
+        return lSwitch;
     }
 
     @Override
@@ -98,7 +94,7 @@ public class ItemSwitchView extends RelativeLayout implements View.OnClickListen
         switch (v.getId()) {
             case R.id.setting_rl_auto_check:
                 isCheck = !isCheck;
-                mSwitch.setChecked(isCheck);
+                lSwitch.setChecked(isCheck);
                 onViewClick(isCheck);
                 break;
             default:
@@ -109,8 +105,8 @@ public class ItemSwitchView extends RelativeLayout implements View.OnClickListen
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        viItem.setOnClickListener(this);
-        mSwitch.setOnCheckedChangeListener(this);
+        itemView.setOnClickListener(this);
+        lSwitch.setOnCheckedChangeListener(this);
         txtTitle.setText(mTitle);
         txtSummary.setText(mSummary);
         txtTitle.setTextColor(mTitleColor);
@@ -126,7 +122,7 @@ public class ItemSwitchView extends RelativeLayout implements View.OnClickListen
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         this.isCheck = isChecked;
-        mSwitch.setChecked(isChecked);
+        lSwitch.setChecked(isChecked);
         onViewClick(isChecked);
     }
 }

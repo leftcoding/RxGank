@@ -35,6 +35,9 @@
 
     <!-- WebView 主题 -->
     <style name="Design.App.Web">
+        <item name="colorPrimary">#212529</item>
+        <item name="colorAccent">#212529</item>
+        <item name="colorPrimaryDark">#212529</item>
         <item name="android:backgroundDimEnabled">false</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowIsTranslucent">false</item>

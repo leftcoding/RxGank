@@ -150,7 +150,7 @@
                 app:showDividers="middle">
 
                 <com.left.gank.widget.LYRelativeLayoutRipple
-                    android:id="@+id/download"
+                    android:id="@+id/mine_download_group"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingStart="16dp"

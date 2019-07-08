@@ -6,13 +6,14 @@ import android.graphics.Bitmap
 import android.util.ArrayMap
 import android.view.View
 import android.view.ViewGroup
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.target.BitmapImageViewTarget
 import com.bumptech.glide.request.transition.Transition
 import com.left.gank.R
 import com.left.gank.butterknife.adapter.FootAdapter
 import com.left.gank.butterknife.holder.BindHolder
 import com.left.gank.butterknife.item.ItemModel
-import com.left.gank.glide.GlideApp
 import kotlinx.android.synthetic.main.adapter_meizi.view.*
 import java.util.*
 
@@ -57,9 +58,10 @@ class WelfareAdapter internal constructor(context: Context) : FootAdapter<Welfar
             val gank = item.gank
             val url = gank.url
 
-            GlideApp.with(context)
+            Glide.with(context)
                     .asBitmap()
                     .load(url)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(object : BitmapImageViewTarget(itemView.image) {
                         override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
                             val height = resource.height
@@ -99,7 +101,6 @@ class WelfareAdapter internal constructor(context: Context) : FootAdapter<Welfar
     }
 
     class ImageItem internal constructor(val gank: Gank) : ItemModel() {
-
         override fun getViewType(): Int {
             return 0
         }

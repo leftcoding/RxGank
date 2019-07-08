@@ -1,4 +1,4 @@
-package com.left.gank.ui.android
+package com.left.gank.ui.download
 
 import android.business.domain.Gank
 import android.content.Context
@@ -9,7 +9,7 @@ import com.left.gank.mvp.base.SupportView
  * Create by LingYan on 2016-10-25
  */
 
-interface AndroidContract {
+interface DownloadContract {
     interface View : SupportView {
         fun loadAndroidSuccess(page: Int, list: List<Gank>?)
 

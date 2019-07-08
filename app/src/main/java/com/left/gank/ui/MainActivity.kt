@@ -1,7 +1,6 @@
 package com.left.gank.ui
 
 import android.os.Bundle
-import android.rxbus.RxEventBus
 import androidx.fragment.app.Fragment
 import com.left.gank.R
 import com.left.gank.ui.base.activity.BaseActivity
@@ -32,14 +31,11 @@ class MainActivity : BaseActivity() {
         const val TAB_MORE = 3
     }
 
-    override fun getContentId(): Int {
-        return R.layout.fragment_main_bottom_navigation
-    }
+    override fun getContentId(): Int = R.layout.fragment_main_bottom_navigation
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        bottom_navigation.setOnNavigationItemSelectedListener {
+        bottom_navigation!!.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.tab_home -> {
                     openFragment(TAB_HOME)
@@ -75,10 +71,5 @@ class MainActivity : BaseActivity() {
                 curFragment = toFragment
             }
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        RxEventBus.newInstance().removeAllStickyEvents() // 移除所有Sticky事件
     }
 }

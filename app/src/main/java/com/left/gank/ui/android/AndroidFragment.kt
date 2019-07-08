@@ -136,8 +136,12 @@ class AndroidFragment : LazyFragment(), AndroidContract.View {
     }
 
     override fun onDestroyView() {
-        androidAdapter.destroy()
-        androidPresenter.destroy()
+        if (::androidAdapter.isInitialized) {
+            androidAdapter.destroy()
+        }
+        if (::androidPresenter.isInitialized) {
+            androidPresenter.destroy()
+        }
         super.onDestroyView()
     }
 

@@ -7,7 +7,6 @@ import android.file.FilePathUtils
 import android.os.Bundle
 import android.ui.logcat.Logcat
 import android.view.View
-import butterknife.OnClick
 import com.left.gank.R
 import com.left.gank.ui.base.fragment.ButterKnifeFragment
 import com.left.gank.ui.more.MoreActivity
@@ -20,7 +19,7 @@ import kotlinx.android.synthetic.main.fragment_mine.*
  */
 
 class MineFragment : ButterKnifeFragment() {
-    private var download: Download? = null
+    private lateinit var download: Download
 
     private val downloadListener = object : DownloadListener {
         override fun onSuccess() {
@@ -46,6 +45,23 @@ class MineFragment : ButterKnifeFragment() {
         super.onViewCreated(view, savedInstanceState)
         toolbar!!.setTitle(R.string.navigation_mine)
         mine_nested_scroll!!.isNestedScrollingEnabled = false
+        mine_rl_setting!!.setOnClickListener {
+            startActivity(MoreActivity.TYPE_SETTING)
+        }
+        mine_rl_collect!!.setOnClickListener {
+            startActivity(MoreActivity.TYPE_COLLECT)
+        }
+        mine_rl_browse!!.setOnClickListener {
+            startActivity(MoreActivity.TYPE_BROWSE)
+        }
+        mine_download_group!!.setOnClickListener {
+            download.apply {
+                if (isDownloading) {
+                    cancel()
+                }
+                download()
+            }
+        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -57,32 +73,7 @@ class MineFragment : ButterKnifeFragment() {
                 .build()
     }
 
-    @OnClick(R.id.mine_rl_setting)
-    internal fun onSetting() {
-        openActivity(MoreActivity.TYPE_SETTING)
-    }
-
-    @OnClick(R.id.mine_rl_collect)
-    internal fun onCollect() {
-        openActivity(MoreActivity.TYPE_COLLECT)
-    }
-
-    @OnClick(R.id.mine_rl_browse)
-    internal fun onBrowse() {
-        openActivity(MoreActivity.TYPE_BROWSE)
-    }
-
-    @OnClick(R.id.download)
-    internal fun download() {
-        if (download != null) {
-            if (download!!.isDownloading) {
-                download!!.cancel()
-            }
-            download!!.download()
-        }
-    }
-
-    private fun openActivity(type: Int) {
+    private fun startActivity(type: Int) {
         Intent(context, MoreActivity::class.java).apply {
             putExtra(MoreActivity.TYPE, type)
             startActivity(this)
@@ -90,9 +81,9 @@ class MineFragment : ButterKnifeFragment() {
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
-        if (download != null) {
-            download!!.cancel()
+        if (::download.isInitialized) {
+            download.cancel()
         }
+        super.onDestroyView()
     }
 }

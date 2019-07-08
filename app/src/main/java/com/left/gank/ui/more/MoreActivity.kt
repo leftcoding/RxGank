@@ -8,29 +8,26 @@ import com.left.gank.ui.collect.CollectFragment
 import com.left.gank.ui.history.BrowseHistoryFragment
 
 /**
- *
- * Create by LingYan on 2019-06-27
+ * Create by LingYan on 2016-09-21
  */
-class MoreActivityKt : BaseActivity() {
-    companion object {
-        private const val CONTENT_ID = R.id.setting_frame_layout
-        private const val TYPE = "fromType"
 
-        private const val TYPE_SETTING = 1
-        private const val TYPE_COLLECT = 2
-        private const val TYPE_BROWSE = 3
-    }
-
+class MoreActivity : BaseActivity() {
     private var type: Int = 0
 
-    override fun getContentId(): Int {
-        return R.layout.activity_setting//To change body of created functions use File | Settings | File Templates.
-    }
+    override fun getContentId(): Int = R.layout.activity_setting
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         parseIntent()
-        addFragment(getFragment(type))
+        getFragment(type).apply {
+            addFragment(this)
+        }
+    }
+
+    private fun parseIntent() {
+        intent.extras?.apply {
+            type = getInt(TYPE)
+        }
     }
 
     private fun getFragment(type: Int): Fragment {
@@ -44,16 +41,18 @@ class MoreActivityKt : BaseActivity() {
         return fragment
     }
 
-    private fun parseIntent() {
-        val bundle = intent.extras
-        if (bundle != null) {
-            type = bundle.getInt(TYPE)
-        }
-    }
-
     private fun addFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
-                .add(CONTENT_ID, fragment)
+                .add(R.id.setting_frame_layout, fragment)
                 .commitAllowingStateLoss()
+    }
+
+    companion object {
+        const val TITLE = "title"
+        const val TYPE = "from_type"
+
+        const val TYPE_SETTING = 1
+        const val TYPE_COLLECT = 2
+        const val TYPE_BROWSE = 3
     }
 }

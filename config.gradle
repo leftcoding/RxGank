@@ -99,7 +99,6 @@ ext {
     ]
 
     compilerDeps = [
-            glide_compiler      : "com.github.bumptech.glide:compiler:${dependVersion.glide}",
             butterknife_compiler: "com.jakewharton:butterknife-compiler:${dependVersion.butterknife}",
     ]
 

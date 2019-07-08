@@ -13,7 +13,11 @@ public class DownloadProgressInterceptor implements Interceptor {
 
     private DownloadProgressListener listener;
 
-    public DownloadProgressInterceptor(DownloadProgressListener listener) {
+    public DownloadProgressInterceptor() {
+
+    }
+
+    public void setDownloadProgressListener(DownloadProgressListener listener) {
         this.listener = listener;
     }
 

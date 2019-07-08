@@ -64,9 +64,7 @@ class WebActivity : BaseActivity(), WebContract.View {
         NORMAL, COLLECT, UN_COLLECT
     }
 
-    override fun getContentId(): Int {
-        return R.layout.activity_web
-    }
+    override fun getContentId(): Int = R.layout.activity_web
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -115,7 +113,7 @@ class WebActivity : BaseActivity(), WebContract.View {
 
         setSupportActionBar(toolbar)
         setTitle(title)
-        toolbar!!.setNavigationOnClickListener { v -> finish() }
+        toolbar!!.setNavigationOnClickListener { finish() }
 
         isInitCollect = true
         if (!TextUtils.isEmpty(url)) {

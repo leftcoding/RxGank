@@ -1,9 +1,7 @@
 package com.left.gank.ui.web.normal
 
-import android.rxbus.RxEventBus
 import com.left.gank.data.entity.ReadHistory
 import com.left.gank.data.entity.UrlCollect
-import com.left.gank.domain.RxCollect
 import com.left.gank.mvp.source.LocalDataSource
 import com.left.gank.utils.ListUtils
 import com.socks.library.KLog
@@ -60,26 +58,7 @@ class WebPresenter(private val mTask: LocalDataSource, private val mView: WebCon
 
     override fun cancelCollect() {
         if (isCollect) {
-            val deleteByKey = mCollects!![0].id!!
-            mTask.cancelCollect(deleteByKey).subscribe(object : Observer<String> {
-                override fun onError(e: Throwable) {
-                    KLog.e(e)
-                }
 
-                override fun onComplete() {
-
-                }
-
-                override fun onSubscribe(d: Disposable) {
-
-                }
-
-                override fun onNext(string: String) {
-                    isCollect = false
-
-                    RxEventBus.newInstance().post(RxCollect(true))
-                }
-            })
         }
     }
 
@@ -89,7 +68,6 @@ class WebPresenter(private val mTask: LocalDataSource, private val mView: WebCon
     }
 
     override fun collectAction(isCollect: Boolean) {
-        KLog.d("isCollect:$isCollect")
         val curTime = System.currentTimeMillis()
         if (curTime - endTime < 2000) {
             subscription!!.dispose()
