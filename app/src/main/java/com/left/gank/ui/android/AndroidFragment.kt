@@ -23,9 +23,7 @@ class AndroidFragment : LazyFragment(), AndroidContract.View {
 
     private val pageConfig = PageConfig()
 
-    override fun fragmentLayoutId(): Int {
-        return R.layout.fragment_android
-    }
+    override fun fragmentLayoutId(): Int = R.layout.fragment_android
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

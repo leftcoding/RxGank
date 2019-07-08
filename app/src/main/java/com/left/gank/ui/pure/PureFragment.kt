@@ -29,9 +29,7 @@ class PureFragment : LazyFragment(), PureContract.View {
     private var disposable: Disposable? = null
     private var curPage = FIRST_PAGE
 
-    override fun fragmentLayoutId(): Int {
-        return R.layout.fragment_gift
-    }
+    override fun fragmentLayoutId(): Int = R.layout.fragment_gift
 
     private val listener = object : LySwipeRefreshLayout.OnListener {
 

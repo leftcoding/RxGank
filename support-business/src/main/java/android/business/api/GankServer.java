@@ -57,4 +57,10 @@ public class GankServer extends HttpServer {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
+
+    public Observable<Response<PageEntity<Gank>>> video(final boolean refresh, final int page, final int limit) {
+        return gankApi.videos(cacheControl(refresh), page, limit)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
 }

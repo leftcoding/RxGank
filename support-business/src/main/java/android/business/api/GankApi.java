@@ -1,7 +1,6 @@
 package android.business.api;
 
 import android.business.domain.Gank;
-import android.business.domain.ListEntity;
 import android.business.domain.PageEntity;
 
 import io.reactivex.Observable;
@@ -50,7 +49,8 @@ public interface GankApi {
     );
 
     @GET("休息视频/{limit}/{page}")
-    Observable<Response<ListEntity<Gank>>> videos(
+    Observable<Response<PageEntity<Gank>>> videos(
+            @Header(CACHE_CONTROL) CacheControl cacheControl,
             @Path("page") int page,
             @Path("limit") int limit
     );

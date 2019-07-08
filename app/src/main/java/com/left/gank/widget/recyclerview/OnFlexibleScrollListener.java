@@ -12,14 +12,11 @@ public class OnFlexibleScrollListener extends RecyclerView.OnScrollListener {
 
     public OnFlexibleScrollListener(SwipeRefreshLayout swipeRefreshLayout) {
         super();
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                if (scrollListener != null) {
-                    scrollListener.onRefresh();
-                }
-                lastPosition = RecyclerView.NO_POSITION;
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            if (scrollListener != null) {
+                scrollListener.onRefresh();
             }
+            lastPosition = RecyclerView.NO_POSITION;
         });
     }
 

@@ -5,11 +5,10 @@ import android.content.Intent;
 import android.graphics.PixelFormat;
 import android.net.Uri;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
 import android.text.TextUtils;
+import android.ui.logcat.Logcat;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
 import com.left.gank.R;
@@ -26,6 +25,7 @@ import com.tencent.smtt.sdk.WebViewClient;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.Nullable;
 import butterknife.BindView;
 
 /**
@@ -37,12 +37,13 @@ public class WebVideoViewActivity extends BaseActivity {
 
     @BindView(R.id.web_progress_bar)
     ProgressBar mProgressBar;
-    @BindView(R.id.web_video)
-    X5WebView mWebView;
 
-    private String mUrl;
-    private String mHistory;
-    private List<String> mStrings = new ArrayList<>();
+    @BindView(R.id.web_video)
+    WebView mWebView;
+
+    private String curUrl;
+    private String history;
+    private List<String> urls = new ArrayList<>();
 
     @Override
     protected int getContentId() {
@@ -54,25 +55,22 @@ public class WebVideoViewActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            mUrl = bundle.getString(URL);
+            curUrl = bundle.getString(URL);
         }
 
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
-
         getWindow().setFormat(PixelFormat.TRANSLUCENT);
         mWebView.getView().setOverScrollMode(View.OVER_SCROLL_ALWAYS);
 
 
         mWebView.setWebViewClient(new MyWebViewClient());
         mWebView.setWebChromeClient(new MyWebChromeClient());
-        KLog.d("mUrl:" + mUrl);
-        if (!TextUtils.isEmpty(mUrl)) {
-            mWebView.loadUrl(mUrl);
+        Logcat.d("mUrl:" + curUrl);
+        if (!TextUtils.isEmpty(curUrl)) {
+            mWebView.loadUrl(curUrl);
         } else {
             ToastUtils.showToast(getBaseContext(), R.string.tip_server_error);
         }
-
-
     }
 
     public static void startWebActivity(Context packageContext, Bundle bundle) {
@@ -96,7 +94,7 @@ public class WebVideoViewActivity extends BaseActivity {
         public WebResourceResponse shouldInterceptRequest
                 (WebView view,
                  com.tencent.smtt.export.external.interfaces.WebResourceRequest request) {
-            KLog.e("should", "request.getUrl().toString() is " + request.getUrl().toString());
+            Logcat.d("request.getUrl().toString() is " + request.getUrl().toString());
             return super.shouldInterceptRequest(view, request);
         }
 
@@ -104,9 +102,9 @@ public class WebVideoViewActivity extends BaseActivity {
         @Override
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
-            mHistory = url;
-            if (!mStrings.contains(url)) {
-                mStrings.add(url);
+            history = url;
+            if (!urls.contains(url)) {
+                urls.add(url);
             }
         }
     }
@@ -144,13 +142,13 @@ public class WebVideoViewActivity extends BaseActivity {
         @Override
         public void onShowCustomView(View view, IX5WebChromeClient.CustomViewCallback
                 customViewCallback) {
-            FrameLayout normalView = (FrameLayout) findViewById(R.id.web_filechooser);
-            ViewGroup viewGroup = (ViewGroup) normalView.getParent();
-            viewGroup.removeView(normalView);
-            viewGroup.addView(view);
-            myVideoView = view;
-            myNormalView = normalView;
-            callback = customViewCallback;
+//            FrameLayout normalView = (FrameLayout) findViewById(R.id.web_filechooser);
+//            ViewGroup viewGroup = (ViewGroup) normalView.getParent();
+//            viewGroup.removeView(normalView);
+//            viewGroup.addView(view);
+//            myVideoView = view;
+//            myNormalView = normalView;
+//            callback = customViewCallback;
         }
 
         @Override

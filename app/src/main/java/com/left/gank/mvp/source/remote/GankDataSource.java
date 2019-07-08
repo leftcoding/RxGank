@@ -14,12 +14,12 @@ import io.reactivex.Observable;
 
 public class GankDataSource {
     private static final String BASE_URL = "http://gank.io/api/data/";
-    private GankService mGankService;
+    private GankService gankService;
 
     private volatile static GankDataSource INSTANCE;
 
     private GankDataSource() {
-        mGankService = ApiManager.init(BASE_URL).createService(GankService.class);
+        gankService = ApiManager.init(BASE_URL).createService(GankService.class);
     }
 
     public static GankDataSource getInstance() {
@@ -41,8 +41,8 @@ public class GankDataSource {
      * @return Observable
      */
     public Observable<GankResult> fetchAndroidAndImages(final int page, final int limit) {
-        final Observable<GankResult> androidGoods = mGankService.fetchAndroid(limit, page);
-        final Observable<GankResult> images = mGankService.fetchImages(limit, page);
+        final Observable<GankResult> androidGoods = gankService.fetchAndroid(limit, page);
+        final Observable<GankResult> images = gankService.fetchImages(limit, page);
 
         return Observable.zip(androidGoods, images, (androidGoods1, images1) -> {
             MeiziArrayList.getInstance().refillOneItems(images1.getResults());
@@ -51,34 +51,34 @@ public class GankDataSource {
     }
 
     public Observable<GankResult> fetchAndroid(final int page, final int limit) {
-        return mGankService.fetchAndroid(limit, page);
+        return gankService.fetchAndroid(limit, page);
     }
 
 
     public Observable<GankResult> fetchIos(final int page, final int limit) {
-        return mGankService.fetchIosGoods(limit, page);
+        return gankService.fetchIosGoods(limit, page);
     }
 
     /**
      * 干货图片
      */
     public Observable<GankResult> fetchWelfare(final int page, final int limit) {
-        return mGankService.fetchImages(limit, page);
+        return gankService.fetchImages(limit, page);
     }
 
     /**
      * 视频
      */
     public Observable<GankResult> fetchVideo(final int page, final int limit) {
-        return mGankService.fetchVideo(limit, page);
+        return gankService.fetchVideo(limit, page);
     }
 
     /**
      * 视频和图片
      */
     public Observable<GankResult> fetchVideoAndImages(final int page, final int limit) {
-        final Observable<GankResult> androidGoods = mGankService.fetchVideo(limit, page);
-        final Observable<GankResult> images = mGankService.fetchImages(limit, page);
+        final Observable<GankResult> androidGoods = gankService.fetchVideo(limit, page);
+        final Observable<GankResult> images = gankService.fetchImages(limit, page);
 
         return Observable.zip(androidGoods, images, (androidGoods1, images1) -> {
             MeiziArrayList.getInstance().refillOneItems(images1.getResults());
