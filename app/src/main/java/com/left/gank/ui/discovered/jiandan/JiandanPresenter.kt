@@ -2,40 +2,51 @@ package com.left.gank.ui.discovered.jiandan
 
 import android.content.Context
 import android.jsoup.JsoupServer
+import android.ui.logcat.Logcat
 import com.left.gank.domain.JianDanBean
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
 import org.jsoup.nodes.Document
-import java.util.*
 
 
 /**
  * Create by LingYan on 2016-11-21
  */
 
-class JianDanPresenter(context: Context, view: JiandanContract.View) : JiandanContract.Presenter(context, view) {
+class JiandanPresenter(context: Context, view: JiandanContract.View) : JiandanContract.Presenter(context, view) {
 
     private fun mapResult(doc: Document?): List<JianDanBean> {
-        val list = ArrayList<JianDanBean>()
+        Logcat.d(doc)
+        val list = mutableListOf<JianDanBean>()
         if (doc != null) {
-            val herfs = doc.select(".thumb_s a")
+            var herfs = doc.select(".thumb_s a")
             val imgs = doc.select(".thumb_s a img")
             val types = doc.select(".indexs")
             val titles = doc.select(".thetitle")
 
+            if (herfs == null || herfs.isEmpty()) {
+                herfs = doc.select(".post a")
+            }
+
+            val imagesEmpty = imgs == null || imgs.isEmpty()
             var url: String
             var title: String
             var type: String
-            var imgUrl: String?
+            var imgUrl: String? = null
             for (i in herfs.indices) {
                 url = herfs[i].attr("href")
                 title = titles[i].text()
                 type = types[i].text()
-                imgUrl = imgs[i].attr("data-original")
-                if (imgUrl != null && imgUrl.startsWith("//")) {
-                    imgUrl = imgUrl.substring(2, imgUrl.length)
-                    imgUrl = "http://$imgUrl"
+                if (!imagesEmpty) {
+                    imgUrl = imgs[i].attr("data-original")
                 }
+                imgUrl?.apply {
+                    if (startsWith("//")) {
+                        substring(2, length)
+                        imgUrl = "http://$imgUrl"
+                    }
+                }
+
                 list.add(JianDanBean(url, title, type, imgUrl))
             }
         }
@@ -48,6 +59,8 @@ class JianDanPresenter(context: Context, view: JiandanContract.View) : JiandanCo
                 .map {
                     mapResult(it)
                 }
+                .doOnSubscribe { if (view != null) view.showProgress() }
+                .doFinally { if (view != null) view.hideProgress() }
                 .subscribe(object : Observer<List<JianDanBean>> {
                     override fun onError(e: Throwable) {
                         if (view != null) {
@@ -74,7 +87,6 @@ class JianDanPresenter(context: Context, view: JiandanContract.View) : JiandanCo
     }
 
     companion object {
-        private val BASE_URL = "http://i.jandan.net/page/"
-        private val LIMIT = 24
+        private const val BASE_URL = "http://i.jandan.net/page/"
     }
 }

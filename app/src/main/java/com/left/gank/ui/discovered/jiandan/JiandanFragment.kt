@@ -6,10 +6,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.left.gank.R
 import com.left.gank.config.Constants
 import com.left.gank.domain.JianDanBean
-import com.left.gank.listener.ItemClick
 import com.left.gank.ui.base.LazyFragment
 import com.left.gank.ui.web.JiandanWebActivity
-import com.left.gank.widget.MyDecoration
 import com.left.gank.widget.recyclerview.OnFlexibleScrollListener
 import kotlinx.android.synthetic.main.fragment_refresh.*
 
@@ -18,32 +16,45 @@ import kotlinx.android.synthetic.main.fragment_refresh.*
  * Create by LingYan on 2016-11-18
  */
 
-class JiandanFragment : LazyFragment(), JiandanContract.View, ItemClick {
+class JiandanFragment : LazyFragment(), JiandanContract.View {
     private lateinit var jianDanAdapter: JiandanAdapter
     private lateinit var presenter: JiandanContract.Presenter
-    private var page = 1
+    private var curPage = 1
 
     override fun fragmentLayoutId(): Int = R.layout.fragment_refresh
 
     private val scrollListener = object : OnFlexibleScrollListener.ScrollListener {
         override fun onRefresh() {
-            presenter.loadJianDan(page)
+            curPage = 1
+            presenter.loadJianDan(curPage)
         }
 
         override fun onLoadMore() {
-            presenter.loadJianDan(page)
+            presenter.loadJianDan(curPage)
+        }
+    }
+
+    private val callback = object : JiandanAdapter.Callback {
+        override fun onClick(result: JianDanBean) {
+            Bundle().apply {
+                putString(JiandanWebActivity.TITLE, result.title)
+                putString(JiandanWebActivity.URL, result.url)
+                putString(JiandanWebActivity.TYPE, Constants.JIANDAN)
+                putString(JiandanWebActivity.AUTHOR, result.type)
+                JiandanWebActivity.startWebActivity(activity, this)
+            }
         }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         jianDanAdapter = JiandanAdapter()
-        jianDanAdapter.setListener(this)
+        jianDanAdapter.setListener(callback)
 
         recycler_view.apply {
             adapter = jianDanAdapter
             layoutManager = LinearLayoutManager(context)
-            addItemDecoration(MyDecoration(context, LinearLayoutManager.HORIZONTAL))
+//            addItemDecoration(MyDecoration(context, LinearLayoutManager.HORIZONTAL))
             setHasFixedSize(true)
             val onFlexibleScrollListener = OnFlexibleScrollListener(swipe_refresh)
             onFlexibleScrollListener.setOnScrollListener(scrollListener)
@@ -52,12 +63,19 @@ class JiandanFragment : LazyFragment(), JiandanContract.View, ItemClick {
     }
 
     override fun onLazyActivityCreate() {
-        presenter = JianDanPresenter(context!!, this)
-        presenter.loadJianDan(page)
+        presenter = JiandanPresenter(context!!, this)
+        presenter.loadJianDan(curPage)
     }
 
     override fun loadJiandanSuccess(page: Int, list: List<JianDanBean>?) {
-        jianDanAdapter.updateItem(list)
+        list?.let {
+            if (page == 1) {
+                jianDanAdapter.updateItem(list)
+            } else {
+                jianDanAdapter.appendItem(list)
+            }
+            curPage = page + 1
+        }
     }
 
     override fun loadJiandanFailure(page: Int, msg: String) {
@@ -78,15 +96,5 @@ class JiandanFragment : LazyFragment(), JiandanContract.View, ItemClick {
 
     override fun showEmpty() {
         multiple_status_view?.showEmpty()
-    }
-
-    override fun onClick(position: Int, `object`: Any) {
-        val bean = `object` as JianDanBean
-        val bundle = Bundle()
-        bundle.putString(JiandanWebActivity.TITLE, bean.title)
-        bundle.putString(JiandanWebActivity.URL, bean.url)
-        bundle.putString(JiandanWebActivity.TYPE, Constants.JIANDAN)
-        bundle.putString(JiandanWebActivity.AUTHOR, bean.type)
-        JiandanWebActivity.startWebActivity(activity, bundle)
     }
 }

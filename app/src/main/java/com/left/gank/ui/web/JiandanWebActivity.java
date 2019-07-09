@@ -18,10 +18,8 @@ import com.google.android.material.snackbar.Snackbar;
 import com.left.gank.R;
 import com.left.gank.config.Constants;
 import com.left.gank.data.entity.UrlCollect;
-import com.left.gank.data.entity.UrlCollectDao;
-import com.left.gank.ui.base.activity.BaseActivity;
+import com.left.gank.ui.base.activity.SupportActivity;
 import com.left.gank.utils.AppUtils;
-import com.left.gank.utils.ListUtils;
 import com.left.gank.utils.ShareUtils;
 import com.left.gank.utils.ToastUtils;
 import com.socks.library.KLog;
@@ -47,17 +45,15 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
 import butterknife.BindView;
 import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
-import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 /**
  * Create by LingYan on 2016-5-10
  */
-public class JiandanWebActivity extends BaseActivity {
+public class JiandanWebActivity extends SupportActivity {
     public static final int FROM_COLLECT = 1;
     public static final int FROM_JIANDAN = 2;
 
@@ -82,7 +78,7 @@ public class JiandanWebActivity extends BaseActivity {
 
     private String mUrl;
     private String mTitle;
-    private UrlCollectDao mUrlCollectDao;
+    //    private UrlCollectDao mUrlCollectDao;
     private String mType;
     private String mAuthor;
     private boolean isCollect;
@@ -98,13 +94,17 @@ public class JiandanWebActivity extends BaseActivity {
     }
 
     @Override
+    protected int getContentId() {
+        return R.layout.activity_web;
+    }
+
+    @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle(mTitle);
         setSupportActionBar(mToolbar);
         ActionBar bar = getSupportActionBar();
         if (bar != null) {
-            bar.setHomeAsUpIndicator(R.drawable.ic_toolbar_close);
             bar.setDisplayHomeAsUpEnabled(true);
         }
         mToolbar.setNavigationOnClickListener(v -> onBackPressed());
@@ -145,19 +145,13 @@ public class JiandanWebActivity extends BaseActivity {
         }
 
 //        mUrlCollectDao = App.getDaoSession().getUrlCollectDao();
-        List<UrlCollect> list = mUrlCollectDao.queryBuilder().where(UrlCollectDao.Properties.Url.eq(mUrl)).list();
-        if (!ListUtils.isEmpty(list)) {
-            isInitCollect = true;
-            isCollect = true;
-            mUrlCollect = list.get(0);
-        }
-
+//        List<UrlCollect> list = mUrlCollectDao.queryBuilder().where(UrlCollectDao.Properties.Url.eq(mUrl)).list();
+//        if (!ListUtils.isEmpty(list)) {
+//            isInitCollect = true;
+//            isCollect = true;
+//            mUrlCollect = list.get(0);
+//        }
         parseLoadUrlData(filterUrl(mUrl));
-    }
-
-    @Override
-    protected int getContentId() {
-        return R.layout.activity_web;
     }
 
     private String filterUrl(String url) {
@@ -170,58 +164,40 @@ public class JiandanWebActivity extends BaseActivity {
     }
 
     private void parseLoadUrlData(final String url) {
-        Observable<String> observable = Observable.create(new ObservableOnSubscribe<String>() {
-            @Override
-            public void subscribe(ObservableEmitter<String> subscriber) throws Exception {
-                try {
-                    Document doc = Jsoup.connect(url)
-                            .userAgent(USERAGENT)
-                            .timeout(timeout)
-                            .ignoreContentType(true)
-                            .ignoreHttpErrors(true)
-                            .get();
-                    String _url = null;
-                    if (doc != null) {
-                        doc = removeDivs(doc);
-                        _url = doc.html();
-                    }
-                    subscriber.onNext(_url);
-                    subscriber.onComplete();
-                } catch (IOException e) {
-                    KLog.e(e);
-                    subscriber.onError(e);
+        Observable.create((ObservableOnSubscribe<String>) subscriber -> {
+            try {
+                Document doc = Jsoup.connect(url)
+                        .userAgent(USERAGENT)
+                        .timeout(timeout)
+                        .ignoreContentType(true)
+                        .ignoreHttpErrors(true)
+                        .get();
+                String _url = null;
+                if (doc != null) {
+                    doc = removeDivs(doc);
+                    _url = doc.html();
                 }
+                subscriber.onNext(_url);
+                subscriber.onComplete();
+            } catch (IOException e) {
+                KLog.e(e);
+                subscriber.onError(e);
             }
         })
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
-        observable.subscribe(new Observer<String>() {
-
-            @Override
-            public void onError(Throwable e) {
-                KLog.e(e);
-            }
-
-            @Override
-            public void onComplete() {
-
-            }
-
-            @Override
-            public void onSubscribe(Disposable d) {
-
-            }
-
-            @Override
-            public void onNext(String s) {
-                if (TextUtils.isEmpty(s)) {
-                    mWebView.loadUrl(mUrl);
-                } else {
-                    mWebView.loadDataWithBaseURL(getLoadDataBaseUrl(), s, "text/html", "utf-8", mUrl);
-                }
-            }
-        });
+                .observeOn(AndroidSchedulers.mainThread())
+                .as(bindLifecycle())
+                .subscribe(new Consumer<String>() {
+                    @Override
+                    public void accept(String s) {
+                        if (TextUtils.isEmpty(s)) {
+                            mWebView.loadUrl(mUrl);
+                        } else {
+                            mWebView.loadDataWithBaseURL(getLoadDataBaseUrl(), s, "text/html", "utf-8", mUrl);
+                        }
+                    }
+                });
     }
 
     private String getLoadDataBaseUrl() {
@@ -407,11 +383,11 @@ public class JiandanWebActivity extends BaseActivity {
 
     private void collectUrl() {
         UrlCollect urlCollect = new UrlCollect(null, mUrl, mTitle, new Date(), mType, mAuthor);
-        mUrlCollectDao.insert(urlCollect);
+//        mUrlCollectDao.insert(urlCollect);
     }
 
     private void cancelCollect() {
-        mUrlCollectDao.deleteByKey(mUrlCollect.getId());
+//        mUrlCollectDao.deleteByKey(mUrlCollect.getId());
     }
 
 
