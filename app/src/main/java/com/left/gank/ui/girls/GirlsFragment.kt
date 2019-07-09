@@ -62,7 +62,7 @@ class GirlsFragment : SupportFragment() {
     private fun initTabLayout() {
         girl_tabLayout!!.apply {
             for (i in titles.indices) {
-                addTab(girl_tabLayout!!.newTab().setText(titles[i]))
+                addTab(newTab().setText(titles[i]))
             }
             setupWithViewPager(girl_view_pager)
             tabMode = TabLayout.MODE_FIXED

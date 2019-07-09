@@ -59,10 +59,10 @@ class PureFragment : LazyFragment(), PureContract.View {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         pureAdapter = PureAdapter()
-        swipe_refresh!!.setAdapter(pureAdapter)
-        swipe_refresh!!.setLayoutManager(StaggeredGridLayoutManager(2,
+        swipe_refresh.setAdapter(pureAdapter)
+        swipe_refresh.setLayoutManager(StaggeredGridLayoutManager(2,
                 StaggeredGridLayoutManager.VERTICAL))
-        swipe_refresh!!.setOnScrollListener(listener)
+        swipe_refresh.setOnScrollListener(listener)
         pureAdapter.setOnItemClickListener(pureCallback)
     }
 

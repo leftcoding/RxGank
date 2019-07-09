@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.left.gank.R
-import com.left.gank.listener.MeiziOnClick
 import com.left.gank.ui.base.LazyFragment
 import com.left.gank.ui.web.WebVideoViewActivity
 import com.left.gank.widget.recyclerview.OnFlexibleScrollListener
@@ -33,12 +32,13 @@ class VideoFragment : LazyFragment(), VideoContract.View {
         }
     }
 
-    private val itemClickListener = MeiziOnClick { _, position ->
-        Bundle().apply {
-            val list = videoAdapter.results
-            putString(WebVideoViewActivity.TITLE, list[position].desc)
-            putString(WebVideoViewActivity.URL, list[position].url)
-            WebVideoViewActivity.startWebActivity(activity, this)
+    private val itemClickListener = object : VideoAdapter.Callback {
+        override fun onClick(gank: Gank) {
+            Bundle().apply {
+                putString(WebVideoViewActivity.TITLE, gank.desc)
+                putString(WebVideoViewActivity.URL, gank.url)
+                WebVideoViewActivity.startWebActivity(activity, this)
+            }
         }
     }
 
@@ -46,7 +46,7 @@ class VideoFragment : LazyFragment(), VideoContract.View {
         super.onViewCreated(view, savedInstanceState)
         multiple_status_view.setListener { loadVideo(pageConfig.curPage) }
 
-        videoAdapter = VideoAdapter(activity).apply {
+        videoAdapter = VideoAdapter().apply {
             setOnItemClickListener(itemClickListener)
         }
 
@@ -65,8 +65,9 @@ class VideoFragment : LazyFragment(), VideoContract.View {
         loadVideo(PageConfig.starPage())
     }
 
-    override fun loadVideoSuccess(page: Int, list: List<Gank>) {
-        list.let {
+    override fun loadVideoSuccess(page: Int, list: List<Gank>?) {
+        list?.let {
+            pageConfig.curPage = page
             if (PageConfig.isFirstPage(page)) {
                 videoAdapter.refillItems(it)
             } else {

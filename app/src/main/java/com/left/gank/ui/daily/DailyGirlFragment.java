@@ -7,8 +7,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.left.gank.R;
-import com.left.gank.listener.ItemClick;
 import com.left.gank.ui.base.LazyFragment;
 import com.left.gank.ui.gallery.GalleryActivity;
 import com.left.gank.widget.LySwipeRefreshLayout;
@@ -17,9 +21,6 @@ import com.left.gank.widget.MultipleStatusView;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import butterknife.BindView;
 
 /**
@@ -47,7 +48,7 @@ public class DailyGirlFragment extends LazyFragment implements DailyGirlContract
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         dailyGirlAdapter = new DailyGirlAdapter();
-        swipeRefresh.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        swipeRefresh.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
         swipeRefresh.setAdapter(dailyGirlAdapter);
 
         swipeRefresh.setOnScrollListener(new LySwipeRefreshLayout.OnListener() {
@@ -61,13 +62,9 @@ public class DailyGirlFragment extends LazyFragment implements DailyGirlContract
             }
         });
 
-        dailyGirlAdapter.setOnItemClickListener(new ItemClick() {
-            @Override
-            public void onClick(int position, Object object) {
+        dailyGirlAdapter.setOnItemClickListener((position, object) -> {
 
-            }
         });
-
     }
 
     private void showLoadingDialog() {

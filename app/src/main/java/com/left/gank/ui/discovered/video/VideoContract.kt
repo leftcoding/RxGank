@@ -13,7 +13,7 @@ import com.left.gank.mvp.base.SupportView
 
 interface VideoContract {
     interface View : SupportView {
-        fun loadVideoSuccess(page: Int, list: List<Gank>)
+        fun loadVideoSuccess(page: Int, list: List<Gank>?)
 
         fun loadVideoFailure(page: Int, msg: String)
     }

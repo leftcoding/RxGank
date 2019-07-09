@@ -25,8 +25,8 @@ import kotlinx.android.synthetic.main.layout_bar.*
  */
 class SettingFragment : SupportFragment(), ILauncher {
     private lateinit var downloadPresenter: DownloadPresenter
-    private var progressDialog: ProgressDialog? = null
-    private var versionDialog: UpdateVersionDialog? = null
+    private lateinit var versionDialog: UpdateVersionDialog
+    private lateinit var progressDialog: ProgressDialog
 
     override fun fragmentLayoutId(): Int = R.layout.fragment_setting
 
@@ -70,18 +70,18 @@ class SettingFragment : SupportFragment(), ILauncher {
     }
 
     private fun initPreferences() {
-        setting_item_text_update!!.apply {
+        setting_item_text_update.apply {
             val summary = context!!.getString(R.string.setting_current_version,
                     AppUtils.getVersionName(context))
             setTextSummary(summary)
             setTextName(R.string.setting_check_version)
         }
 
-        setting_switch_check!!.apply {
+        setting_switch_check.apply {
             val isAutoCheck = GanklyPreferences.getBoolean(context, Preferences.SETTING_AUTO_CHECK, true)
             setSwitchChecked(isAutoCheck)
         }
-        setting_switch_only_wifi!!.apply {
+        setting_switch_only_wifi.apply {
             val isOnlyWifi = GanklyPreferences.getBoolean(context, Preferences.SETTING_WIFI_ONLY, false)
             setSwitchChecked(isOnlyWifi)
         }
@@ -96,38 +96,38 @@ class SettingFragment : SupportFragment(), ILauncher {
     }
 
     private fun showVersionDialog(content: String) {
-        val bundle = Bundle()
-        bundle.putString(UpdateVersionDialog.UPDATE_CONTENT, content)
-
-        if (versionDialog == null) {
+        if (!::versionDialog.isInitialized) {
             versionDialog = UpdateVersionDialog()
         }
-        versionDialog!!.setDialogOnClick(object : DialogOnClick {
+        versionDialog.setDialogOnClick(object : DialogOnClick {
             override fun cancel() {
-                versionDialog!!.dismiss()
+                versionDialog.dismiss()
             }
 
             override fun submit() {
-                versionDialog!!.dismiss()
+                versionDialog.dismiss()
                 ToastUtils.showToast(context, R.string.update_downing)
                 downloadPresenter.downloadApk()
             }
         })
-        versionDialog!!.arguments = bundle
-        versionDialog!!.show(activity!!.supportFragmentManager, DIALOG_TAG)
+
+        val bundle = Bundle()
+        bundle.putString(UpdateVersionDialog.UPDATE_CONTENT, content)
+        versionDialog.arguments = bundle
+        versionDialog.show(activity!!.supportFragmentManager, DIALOG_TAG)
     }
 
     private fun createDialog() {
-        if (progressDialog == null) {
+        if (!::progressDialog.isInitialized) {
             progressDialog = ProgressDialog(activity)
         }
-        progressDialog!!.setMessage(context!!.getString(R.string.dialog_checking))
-        progressDialog!!.show()
+        progressDialog.setMessage(context!!.getString(R.string.dialog_checking))
+        progressDialog.show()
     }
 
     private fun disDialog() {
-        if (progressDialog != null && progressDialog!!.isShowing) {
-            progressDialog!!.dismiss()
+        if (progressDialog.isShowing) {
+            progressDialog.dismiss()
         }
     }
 
