@@ -127,7 +127,7 @@ public class TeamBlogFragment extends LazyFragment implements TechnologyContract
         bundle.putString(WebActivity.AUTHOR, "");
         Intent intent = new Intent(getActivity(), WebActivity.class);
         intent.putExtras(bundle);
-        JiandanWebActivity.startWebActivity(getActivity(), bundle);
+        JiandanWebActivity.Companion.startWebActivity(getActivity(), bundle);
     }
 
     protected void callBackRefreshUi() {
