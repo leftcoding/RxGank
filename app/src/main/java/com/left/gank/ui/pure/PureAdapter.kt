@@ -19,7 +19,7 @@ import java.util.*
 /**
  * Create by LingYan on 2016-04-25
  */
-class PureAdapter internal constructor() : BaseAdapter<BindHolder<*>>() {
+class PureAdapter : BaseAdapter<BindHolder<*>>() {
     private val gifts = ArrayList<Gift>()
     private val items = ArrayList<ItemModel>()
     private var callback: Callback? = null
