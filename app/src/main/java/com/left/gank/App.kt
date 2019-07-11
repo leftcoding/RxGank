@@ -1,7 +1,7 @@
 package com.left.gank
 
 import android.app.Application
-import android.file.FilePathUtils
+import android.file.RxFile
 import android.network.HttpServer
 import android.network.interceptor.CacheNetworkInterceptor
 import android.network.interceptor.CacheOffLineInterceptor
@@ -45,10 +45,11 @@ class App : Application() {
     }
 
     private fun initSdk() {
-        FilePathUtils.init("edu")
+        RxFile.with(this).config().create()
+
         HttpServer.initConfig()
                 .baseUrl(HttpUrlConfig.GANK_URL)
-                .cache(Cache(FilePathUtils.mkHttpPath(), (10 * 1024 * 1024).toLong()))
+                .cache(Cache(RxFile.networkFile(), (10 * 1024 * 1024).toLong()))
                 .addInterceptor(CacheOffLineInterceptor(this))
                 .addNetworkInterceptor(CacheNetworkInterceptor())
                 .addNetworkInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))

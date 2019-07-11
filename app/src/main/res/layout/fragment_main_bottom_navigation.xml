@@ -17,5 +17,5 @@
         style="@style/Widget.Gank.BottomNav"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        app:menu="@menu/bottombar_tabs_color_changing" />
+        app:menu="@menu/navigation_menu" />
 </LinearLayout>

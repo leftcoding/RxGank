@@ -480,11 +480,11 @@ class JiandanWebActivity : SupportActivity() {
         private val timeout = 50 * 1000
         private val USERAGENT = "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.76 Mobile Safari/537.36"
 
-        val TITLE = "title"
-        val URL = "url"
-        val TYPE = "type"
-        val AUTHOR = "author"
-        val FROM_WAY = "from_type"
+        const val TITLE = "title"
+        const val URL = "url"
+        const val TYPE = "type"
+        const val AUTHOR = "author"
+        const val FROM_WAY = "from_type"
 
         fun startWebActivity(activity: Activity, bundle: Bundle?) {
             val intent = Intent(activity, JiandanWebActivity::class.java)
@@ -492,7 +492,6 @@ class JiandanWebActivity : SupportActivity() {
                 intent.putExtras(bundle)
             }
             activity.startActivity(intent)
-            activity.overridePendingTransition(0, 0)
         }
     }
 }

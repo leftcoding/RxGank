@@ -41,7 +41,7 @@ class JiandanFragment : LazyFragment(), JiandanContract.View {
                 putString(JiandanWebActivity.URL, result.url)
                 putString(JiandanWebActivity.TYPE, Constants.JIANDAN)
                 putString(JiandanWebActivity.AUTHOR, result.type)
-                JiandanWebActivity.startWebActivity(activity, this)
+                JiandanWebActivity.startWebActivity(activity!!, this)
             }
         }
     }
