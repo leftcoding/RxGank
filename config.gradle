@@ -100,6 +100,7 @@ ext {
 
     compilerDeps = [
             butterknife_compiler: "com.jakewharton:butterknife-compiler:${dependVersion.butterknife}",
+            glide_compiler      : "com.github.bumptech.glide:compiler:${dependVersion.glide}",
     ]
 
     supportLibs = supportDeps.values()

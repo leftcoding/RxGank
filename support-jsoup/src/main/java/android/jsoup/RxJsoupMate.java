@@ -44,19 +44,19 @@ public class RxJsoupMate extends Mate<Observable<Document>> {
     }
 
     @Override
-    public Mate setTimeOut(int timeOut) {
+    public RxJsoupMate setTimeOut(int timeOut) {
         this.timeOut = timeOut;
         return this;
     }
 
     @Override
-    public Mate setUserAgent(String userAgent) {
+    public RxJsoupMate setUserAgent(String userAgent) {
         this.userAgent = userAgent;
         return this;
     }
 
     @Override
-    public Mate setMobile(boolean isMobile) {
+    public RxJsoupMate setMobile(boolean isMobile) {
         this.isMobile = isMobile;
         return this;
     }

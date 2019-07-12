@@ -61,6 +61,8 @@ dependencies {
 
     debugImplementation rootProject.ext.leakcanary.leakcanary_android
 
+    annotationProcessor rootProject.ext.compilerDeps.glide_compiler
+
     implementation rootProject.ext.butterknife.butterknife
     annotationProcessor rootProject.ext.compilerDeps.butterknife_compiler
 }

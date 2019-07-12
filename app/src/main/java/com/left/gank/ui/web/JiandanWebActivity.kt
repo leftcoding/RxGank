@@ -2,38 +2,36 @@ package com.left.gank.ui.web
 
 import android.app.Activity
 import android.content.Intent
+import android.jsoup.JsoupServer
 import android.net.Uri
 import android.os.Bundle
 import android.text.TextUtils
+import android.ui.logcat.Logcat
 import android.util.Log
 import android.view.*
+import android.webkit.JsResult
+import android.webkit.WebResourceRequest
+import android.webkit.WebViewClient
 import android.widget.FrameLayout
 import com.google.android.material.snackbar.Snackbar
 import com.left.gank.R
 import com.left.gank.config.Constants
-import com.left.gank.data.entity.UrlCollect
 import com.left.gank.ui.base.activity.SupportActivity
 import com.left.gank.utils.AppUtils
 import com.left.gank.utils.ShareUtils
 import com.left.gank.utils.ToastUtils
-import com.tencent.smtt.export.external.interfaces.IX5WebChromeClient
-import com.tencent.smtt.export.external.interfaces.WebResourceResponse
-import com.tencent.smtt.sdk.*
 import com.uber.autodispose.ObservableSubscribeProxy
-import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_web.*
-import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
-import java.io.IOException
 import java.util.*
 
 /**
  * Create by LingYan on 2016-5-10
  */
 class JiandanWebActivity : SupportActivity() {
-    private var cusWebView: WebView? = null
+    private var cusWebView: android.webkit.WebView? = null
 
     private var url: String? = null
     private var title: String? = null
@@ -91,19 +89,26 @@ class JiandanWebActivity : SupportActivity() {
         NORMAL, COLLECT, UN_COLLECT
     }
 
-    override fun getContentId(): Int {
-        return R.layout.activity_web
-    }
+    override fun getContentId(): Int = R.layout.activity_web
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        title = title
+        val bundle = intent.extras
+        if (bundle != null) {
+            url = bundle.getString(URL)
+            title = bundle.getString(TITLE)
+            type = bundle.getString(TYPE, Constants.JIANDAN)
+            author = bundle.getString(AUTHOR)
+            fromWay = bundle.getInt(FROM_WAY)
+        }
+
         setSupportActionBar(toolbar)
         val bar = supportActionBar
+        bar?.title = title
         bar?.setDisplayHomeAsUpEnabled(true)
-        toolbar!!.setNavigationOnClickListener { v -> onBackPressed() }
+        toolbar!!.setNavigationOnClickListener { onBackPressed() }
 
-        cusWebView = WebView(this, null)
+        cusWebView = android.webkit.WebView(this)
 
         web_view!!.addView(cusWebView, FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.MATCH_PARENT,
@@ -118,26 +123,18 @@ class JiandanWebActivity : SupportActivity() {
         settings.displayZoomControls = false//是否显示缩放控件
         settings.useWideViewPort = true  //将图片调整到适合webview的大小
         settings.loadWithOverviewMode = true // 缩放至屏幕的大小
-        settings.layoutAlgorithm = WebSettings.LayoutAlgorithm.SINGLE_COLUMN //支持内容重新布局
+        settings.layoutAlgorithm = android.webkit.WebSettings.LayoutAlgorithm.SINGLE_COLUMN //支持内容重新布局
         settings.supportMultipleWindows()  //多窗口
-        settings.cacheMode = WebSettings.LOAD_CACHE_ELSE_NETWORK  //关闭webview中缓存
+        settings.cacheMode = android.webkit.WebSettings.LOAD_CACHE_ELSE_NETWORK  //关闭webview中缓存
         settings.allowFileAccess = true  //设置可以访问文件
         settings.setNeedInitialFocus(true) //当webview调用requestFocus时为webview设置节点
         settings.javaScriptCanOpenWindowsAutomatically = true //支持通过JS打开新窗口
         settings.loadsImagesAutomatically = true  //支持自动加载图片
         settings.defaultTextEncodingName = "utf-8"//设置编码格式
-        cusWebView!!.setWebViewClient(MyWebViewClient())
-        cusWebView!!.setWebChromeClient(MyWebChromeClient())
+        cusWebView!!.webViewClient = MyWebViewClient()
+        cusWebView!!.webChromeClient = MyWebChromeClient()
 
-        val bundle = intent.extras
-        if (bundle != null) {
-            url = bundle.getString(URL)
-            title = bundle.getString(TITLE)
-            type = bundle.getString(TYPE, Constants.JIANDAN)
-            author = bundle.getString(AUTHOR)
-            fromWay = bundle.getInt(FROM_WAY)
-        }
-
+        Logcat.d(">>url:" + url)
         if (!TextUtils.isEmpty(url)) {
             parseLoadUrlData(filterUrl(url!!))
         }
@@ -151,29 +148,13 @@ class JiandanWebActivity : SupportActivity() {
     }
 
     private fun parseLoadUrlData(url: String) {
-        Observable.create<String> { subscriber ->
-            try {
-                var doc = Jsoup.connect(url)
-                        .userAgent(USERAGENT)
-                        .timeout(timeout)
-                        .ignoreContentType(true)
-                        .ignoreHttpErrors(true)
-                        .get()
-                var docHtml: String? = null
-                if (doc != null) {
-                    doc = removeDivs(doc)
-                    docHtml = doc.html()
+        JsoupServer.rxConnect(url)
+                .setTimeOut(TIME_OUT)
+                .setUserAgent(USER_AGENT)
+                .build()
+                .map { doc ->
+                    return@map removeDivs(doc).html()
                 }
-                if (!TextUtils.isEmpty(docHtml)) {
-                    subscriber.onNext(docHtml!!)
-                    subscriber.onComplete()
-                } else {
-                    subscriber.onError(Throwable("doc html is null"))
-                }
-            } catch (e: IOException) {
-                subscriber.onError(e)
-            }
-        }
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -182,13 +163,13 @@ class JiandanWebActivity : SupportActivity() {
                     if (TextUtils.isEmpty(s)) {
                         cusWebView!!.loadUrl(url)
                     } else {
-                        cusWebView!!.loadDataWithBaseURL(loadDataBaseUrl, s, "text/html", "utf-8", this.url)
+                        cusWebView!!.loadDataWithBaseURL(loadDataBaseUrl, s, "text/html", "utf-8", url)
                     }
                 }
     }
 
     private fun removeDivs(doc: Document): Document {
-        var doc = doc
+        var document = doc
         var list: List<String> = ArrayList()
         if (isJianDanUrl) {
             list = jianDanRemoveDivs
@@ -196,23 +177,30 @@ class JiandanWebActivity : SupportActivity() {
             list = pmRemoveDivs
         }
 
-        if (list.size != 0) {
+        if (list.isNotEmpty()) {
             for (i in list.indices) {
-                doc.select(list[i]).remove()
+                document.select(list[i]).remove()
             }
         }
 
         if (isJianDanUrl) {
-            doc = removePrevDiv(doc)
-            doc = removeScripts(doc)
+            document = removePrevDiv(document)
+            document = removeScripts(document)
         }
-        return doc
+        return document
     }
 
     private fun removePrevDiv(doc: Document): Document {
         val elements = doc.select(".entry")
         if (elements != null && elements.size > 1) {
             elements[1].remove()
+        }
+        doc.apply {
+            select(".comments").remove()
+            select(".social-share").remove()
+            select(".wechat-hide").remove()
+            select(".shang").remove()
+            select(".a").remove()
         }
         return doc
     }
@@ -302,72 +290,54 @@ class JiandanWebActivity : SupportActivity() {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             if (cusWebView != null && cusWebView!!.canGoBack()) {
                 cusWebView!!.goBack()
-                //                int size = mStrings.size();
-                //                KLog.d("size:" + size + ",mHistory:" + mHistory);
-                //                if (size > 1) {
-                //                    mStrings.remove(size - 1);
-                //                    KLog.d("size:" + mStrings.size());
-                //                    size = mStrings.size();
-                //                    String url;
-                //                    if (size == 1) {
-                //                        url = mUrl;
-                //                    } else {
-                //                        url = mStrings.get(size - 1);
-                //                    }
-                //                    mWebView.loadUrl(url);
                 return true
-                //                }
             }
         }
         return super.onKeyDown(keyCode, event)
     }
 
     private fun collectUrl() {
-        val urlCollect = UrlCollect(null, url, title, Date(), type, author)
-        //        mUrlCollectDao.insert(urlCollect);
     }
 
     private fun cancelCollect() {
-        //        mUrlCollectDao.deleteByKey(mUrlCollect.getId());
     }
 
 
     inner class MyWebViewClient : WebViewClient() {
-        override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
+        override fun shouldOverrideUrlLoading(view: android.webkit.WebView?, request: WebResourceRequest?): Boolean {
             if (!TextUtils.isEmpty(url)) {
                 cusWebView!!.loadUrl(url)
+                return true
             }
-            return true
+            return super.shouldOverrideUrlLoading(view, request)
         }
 
-        override fun shouldInterceptRequest(view: WebView,
-                                            request: com.tencent.smtt.export.external.interfaces.WebResourceRequest): WebResourceResponse {
-            Log.e("should", "request.getUrl().toString() is " + request.url.toString())
+        override fun shouldInterceptRequest(view: android.webkit.WebView?, request: WebResourceRequest?): android.webkit.WebResourceResponse? {
+            Log.e("should", "request.getUrl().toString() is " + request.toString())
             return super.shouldInterceptRequest(view, request)
         }
 
-
-        override fun onPageFinished(view: WebView?, url: String?) {
-            super.onPageFinished(view, url)
+        override fun onPageFinished(view: android.webkit.WebView?, url: String?) {
             history = url
             if (!TextUtils.isEmpty(url)) {
                 if (!strings.contains(url)) {
                     strings.add(url!!)
                 }
             }
+            super.onPageFinished(view, url)
         }
     }
 
-    inner class MyWebChromeClient : WebChromeClient() {
+    inner class MyWebChromeClient : android.webkit.WebChromeClient() {
         private var myVideoView: View? = null
         private var myNormalView: View? = null
-        internal var callback: IX5WebChromeClient.CustomViewCallback? = null
+        internal var callback: CustomViewCallback? = null
 
-        override fun onJsConfirm(arg0: WebView?, arg1: String?, arg2: String?, arg3: com.tencent.smtt.export.external.interfaces.JsResult?): Boolean {
-            return super.onJsConfirm(arg0, arg1, arg2, arg3)
+        override fun onJsConfirm(view: android.webkit.WebView?, url: String?, message: String?, result: JsResult?): Boolean {
+            return super.onJsConfirm(view, url, message, result)
         }
 
-        override fun onProgressChanged(webView: WebView?, newProgress: Int) {
+        override fun onProgressChanged(view: android.webkit.WebView?, newProgress: Int) {
             if (web_progress_bar == null) {
                 return
             }
@@ -378,20 +348,21 @@ class JiandanWebActivity : SupportActivity() {
             } else {
                 web_progress_bar!!.visibility = View.VISIBLE
             }
-            super.onProgressChanged(webView, newProgress)
+            super.onProgressChanged(view, newProgress)
         }
 
         /**
          * 全屏播放配置
          */
-        override fun onShowCustomView(view: View?, customViewCallback: IX5WebChromeClient.CustomViewCallback?) {
+        override fun onShowCustomView(view: View?, callback: CustomViewCallback?) {
+            super.onShowCustomView(view, callback)
             val normalView = findViewById<View>(R.id.web_filechooser) as FrameLayout
             val viewGroup = normalView.parent as ViewGroup
             viewGroup.removeView(normalView)
             viewGroup.addView(view)
             myVideoView = view
             myNormalView = normalView
-            callback = customViewCallback
+            this.callback = callback
         }
 
         override fun onHideCustomView() {
@@ -404,55 +375,6 @@ class JiandanWebActivity : SupportActivity() {
                 viewGroup.removeView(myVideoView)
                 viewGroup.addView(myNormalView)
             }
-        }
-
-        override fun onShowFileChooser(arg0: WebView?,
-                                       arg1: ValueCallback<Array<Uri>>?, arg2: WebChromeClient.FileChooserParams?): Boolean {
-            // TODO Auto-generated method stub
-            Log.e("app", "onShowFileChooser")
-            return super.onShowFileChooser(arg0, arg1, arg2)
-        }
-
-        override fun openFileChooser(uploadFile: ValueCallback<Uri>, acceptType: String?, captureType: String?) {
-            //            JiandanWebActivity.this.uploadFile = uploadFile;
-            //            Intent i = new Intent(Intent.ACTION_GET_CONTENT);
-            //            i.addCategory(Intent.CATEGORY_OPENABLE);
-            //            i.setType("*/*");
-            //            startActivityForResult(Intent.createChooser(i, "test"), 0);
-        }
-
-
-        override fun onJsAlert(arg0: WebView?, arg1: String?, arg2: String?, arg3: com.tencent.smtt.export.external.interfaces.JsResult?): Boolean {
-            /**
-             * 这里写入你自定义的window alert
-             */
-            // AlertDialog.DownloadParams builder = new DownloadParams(getContext());
-            // builder.setTitle("X5内核");
-            // builder.setPositiveButton("确定", new
-            // DialogInterface.OnClickListener() {
-            //
-            // @Override
-            // public void onClick(DialogInterface dialog, int which) {
-            // // TODO Auto-generated method stub
-            // dialog.dismiss();
-            // }
-            // });
-            // builder.show();
-            // arg3.confirm();
-            // return true;
-            Log.i("yuanhaizhou", "setX5webview = null")
-            return super.onJsAlert(null, "www.baidu.com", "aa", arg3)
-        }
-
-        /**
-         * 对应js 的通知弹框 ，可以用来实现js 和 android之间的通信
-         */
-
-
-        override fun onReceivedTitle(arg0: WebView?, arg1: String?) {
-            super.onReceivedTitle(arg0, arg1)
-            Log.i("yuanhaizhou", "webpage title is " + arg1!!)
-
         }
     }
 
@@ -477,8 +399,8 @@ class JiandanWebActivity : SupportActivity() {
         const val FROM_COLLECT = 1
         const val FROM_JIANDAN = 2
 
-        private val timeout = 50 * 1000
-        private val USERAGENT = "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.76 Mobile Safari/537.36"
+        private const val TIME_OUT = 50 * 1000
+        private const val USER_AGENT = "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.76 Mobile Safari/537.36"
 
         const val TITLE = "title"
         const val URL = "url"
