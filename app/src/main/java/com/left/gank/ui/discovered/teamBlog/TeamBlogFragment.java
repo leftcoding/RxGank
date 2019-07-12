@@ -6,10 +6,10 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.left.gank.R;
+import com.left.gank.base.LazyFragment;
 import com.left.gank.config.Constants;
 import com.left.gank.domain.JianDanBean;
 import com.left.gank.listener.ItemClick;
-import com.left.gank.ui.base.LazyFragment;
 import com.left.gank.ui.discovered.technology.TechnologyContract;
 import com.left.gank.ui.web.JiandanWebActivity;
 import com.left.gank.ui.web.normal.WebActivity;

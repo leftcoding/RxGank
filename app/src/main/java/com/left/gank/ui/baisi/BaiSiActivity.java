@@ -1,10 +1,11 @@
 package com.left.gank.ui.baisi;
 
 import android.os.Bundle;
-import androidx.annotation.Nullable;
 
 import com.left.gank.R;
-import com.left.gank.ui.base.activity.BaseActivity;
+import com.left.gank.base.activity.BaseActivity;
+
+import androidx.annotation.Nullable;
 
 /**
  * 百思不得姐

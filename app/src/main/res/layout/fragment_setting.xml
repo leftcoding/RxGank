@@ -48,20 +48,22 @@
                 app:textSummary="@string/setting_save_flow_summary"
                 app:textTitle="@string/setting_save_flow" />
 
-            <com.left.gank.widget.LYRelativeLayoutRipple
+            <RelativeLayout
                 android:id="@+id/setting_rl_about"
                 style="@style/setting_item"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/setting_item_text_clean_cache">
+                android:layout_below="@id/setting_item_text_clean_cache"
+                android:background="?attr/selectableItemBackground">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:gravity="start"
-                    android:text="@string/navigation_about" />
-            </com.left.gank.widget.LYRelativeLayoutRipple>
+                    android:text="@string/navigation_about"
+                    android:textColor="@color/text_333333" />
+            </RelativeLayout>
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <TextView

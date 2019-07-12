@@ -1,18 +1,18 @@
-package com.left.gank.ui.base.fragment;
+package com.left.gank.base.fragment;
 
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.view.View;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.left.gank.R;
 import com.left.gank.utils.ListUtils;
 import com.left.gank.widget.LYRelativeLayoutRipple;
 
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 /**
  * Create by LingYan on 2016-10-21

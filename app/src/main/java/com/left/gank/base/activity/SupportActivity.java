@@ -1,4 +1,4 @@
-package com.left.gank.ui.base.activity;
+package com.left.gank.base.activity;
 
 import com.left.gank.mvp.base.SupportView;
 import com.left.gank.utils.RxLifecycleUtils;

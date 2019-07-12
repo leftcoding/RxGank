@@ -1,4 +1,4 @@
-package com.left.gank.ui.base.activity;
+package com.left.gank.base.activity;
 
 import android.app.Activity;
 import android.content.Intent;

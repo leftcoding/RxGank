@@ -1,4 +1,4 @@
-package com.left.gank.ui.base.fragment;
+package com.left.gank.base.fragment;
 
 import android.os.Bundle;
 import android.text.TextUtils;

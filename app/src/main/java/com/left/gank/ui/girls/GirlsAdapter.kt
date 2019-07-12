@@ -4,7 +4,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
-import com.left.gank.ui.base.LazyFragment
+import com.left.gank.base.LazyFragment
 
 /**
  * Create by LingYan on 2016-07-01

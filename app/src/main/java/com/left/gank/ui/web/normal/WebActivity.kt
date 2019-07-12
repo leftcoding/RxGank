@@ -9,11 +9,11 @@ import android.util.Base64
 import android.view.*
 import android.widget.FrameLayout
 import com.left.gank.R
+import com.left.gank.base.activity.BaseActivity
 import com.left.gank.config.Constants
 import com.left.gank.data.entity.ReadHistory
 import com.left.gank.data.entity.UrlCollect
 import com.left.gank.mvp.source.LocalDataSource
-import com.left.gank.ui.base.activity.BaseActivity
 import com.left.gank.utils.AppUtils
 import com.left.gank.utils.ShareUtils
 import com.left.gank.utils.ToastUtils

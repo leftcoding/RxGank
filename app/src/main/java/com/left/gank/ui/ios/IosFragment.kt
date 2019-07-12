@@ -6,8 +6,8 @@ import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.left.gank.R
+import com.left.gank.base.LazyFragment
 import com.left.gank.config.Constants
-import com.left.gank.ui.base.LazyFragment
 import com.left.gank.ui.ios.text.ItemCallback
 import com.left.gank.ui.web.normal.WebActivity
 import com.left.gank.utils.ListUtils

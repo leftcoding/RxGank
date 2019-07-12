@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.left.gank.R;
-import com.left.gank.ui.base.activity.BaseActivity;
+import com.left.gank.base.activity.BaseActivity;
 import com.left.gank.utils.ToastUtils;
 import com.socks.library.KLog;
 import com.tencent.smtt.export.external.interfaces.IX5WebChromeClient;

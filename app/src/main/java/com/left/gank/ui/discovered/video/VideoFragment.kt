@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.left.gank.R
-import com.left.gank.ui.base.LazyFragment
+import com.left.gank.base.LazyFragment
 import com.left.gank.ui.web.WebVideoViewActivity
 import com.left.gank.widget.recyclerview.OnFlexibleScrollListener
 import kotlinx.android.synthetic.main.fragment_refresh.*

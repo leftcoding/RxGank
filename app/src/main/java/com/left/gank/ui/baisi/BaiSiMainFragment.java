@@ -3,24 +3,24 @@ package com.left.gank.ui.baisi;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import com.google.android.material.tabs.TabLayout;
-import androidx.viewpager.widget.ViewPager;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.widget.Toolbar;
 import android.util.TypedValue;
 import android.view.View;
 
+import com.google.android.material.tabs.TabLayout;
 import com.left.gank.R;
-import com.left.gank.ui.base.fragment.ButterKnifeFragment;
+import com.left.gank.base.LazyFragment;
+import com.left.gank.base.fragment.ButterKnifeFragment;
 import com.left.gank.ui.baisi.image.BaiSiImageFragment;
-import com.left.gank.ui.base.LazyFragment;
 import com.left.gank.ui.index.IndexPagerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.Toolbar;
+import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
 
 /**

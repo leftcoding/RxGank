@@ -6,10 +6,10 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import com.left.gank.R
+import com.left.gank.base.activity.BaseActivity
 import com.left.gank.domain.PoseCode
 import com.left.gank.domain.PoseEvent
 import com.left.gank.ui.MainActivity
-import com.left.gank.ui.base.activity.BaseActivity
 import kotlinx.android.synthetic.main.activity_splash.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe

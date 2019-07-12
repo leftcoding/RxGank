@@ -3,7 +3,7 @@ package com.left.gank.ui.more
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.left.gank.R
-import com.left.gank.ui.base.activity.BaseActivity
+import com.left.gank.base.activity.BaseActivity
 import com.left.gank.ui.collect.CollectFragment
 import com.left.gank.ui.history.BrowseHistoryFragment
 

@@ -1,7 +1,8 @@
-package com.left.gank.ui.base.adapter;
+package com.left.gank.base.adapter;
+
+import android.view.View;
 
 import androidx.recyclerview.widget.RecyclerView;
-import android.view.View;
 
 /**
  * Create by LingYan on 2018-09-26

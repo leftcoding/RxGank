@@ -6,9 +6,9 @@ import androidx.core.content.ContextCompat
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import com.left.gank.R
+import com.left.gank.base.LazyFragment
+import com.left.gank.base.fragment.SupportFragment
 import com.left.gank.config.Constants
-import com.left.gank.ui.base.LazyFragment
-import com.left.gank.ui.base.fragment.SupportFragment
 import com.left.gank.ui.cure.CureFragment
 import com.left.gank.ui.pure.PureFragment
 import kotlinx.android.synthetic.main.fragment_girls.*

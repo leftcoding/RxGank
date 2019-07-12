@@ -1,13 +1,14 @@
 package com.left.gank.ui.discovered.more;
 
+import android.view.ViewGroup;
+
+import com.left.gank.base.LazyFragment;
+
+import java.util.List;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
-import android.view.ViewGroup;
-
-import com.left.gank.ui.base.LazyFragment;
-
-import java.util.List;
 
 /**
  * Create by LingYan on 2016-07-01

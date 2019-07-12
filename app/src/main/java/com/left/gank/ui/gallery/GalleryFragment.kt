@@ -5,8 +5,8 @@ import android.os.Bundle
 import android.ui.logcat.Logcat
 import android.view.View
 import com.left.gank.R
+import com.left.gank.base.fragment.SupportFragment
 import com.left.gank.rx.mainThread
-import com.left.gank.ui.base.fragment.SupportFragment
 import com.left.gank.utils.RxSaveImage
 import com.left.gank.utils.ShareUtils
 import com.left.gank.widget.BottomSheetGalleryMenuDialog

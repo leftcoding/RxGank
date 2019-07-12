@@ -1,4 +1,4 @@
-package com.left.gank.ui.base.holder;
+package com.left.gank.base.holder;
 
 import android.view.View;
 

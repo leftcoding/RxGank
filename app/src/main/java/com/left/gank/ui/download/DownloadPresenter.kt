@@ -5,14 +5,12 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Environment
 import com.left.gank.BuildConfig
+import com.left.gank.base.ILauncher
 import com.left.gank.domain.CheckVersion
 import com.left.gank.mvp.base.BasePresenter
 import com.left.gank.network.DownloadProgressListener
 import com.left.gank.network.api.DownloadApi
-import com.left.gank.utils.CrashUtils
 import com.left.gank.utils.FileUtils
-import com.left.gank.view.ILauncher
-import com.socks.library.KLog
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
 import java.io.File
@@ -34,16 +32,11 @@ class DownloadPresenter(context: Context, view: ILauncher) : BasePresenter<ILaun
     }
 
     fun checkVersion() {
-        view.showDialog()
         downloadApi.checkVersion(object : Observer<CheckVersion> {
             override fun onError(e: Throwable) {
-                KLog.e(e)
-                CrashUtils.crashReport(e)
-                view.hiddenDialog()
             }
 
             override fun onComplete() {
-                view.hiddenDialog()
             }
 
             override fun onSubscribe(d: Disposable) {
@@ -64,14 +57,10 @@ class DownloadPresenter(context: Context, view: ILauncher) : BasePresenter<ILaun
             try {
                 FileUtils.writeFile(inputStream, mFile)
             } catch (e: IOException) {
-                KLog.e(e)
-                CrashUtils.crashReport(e)
             }
         }, object : Observer<InputStream> {
 
             override fun onError(e: Throwable) {
-                KLog.e(e)
-                CrashUtils.crashReport(e)
             }
 
             override fun onComplete() {

@@ -75,4 +75,9 @@
         <item name="android:textColor">@color/bottom_nav_item</item>
         <item name="android:textSize">10sp</item>
     </style>
+
+    <style name="Design.About.ItemView" parent="">
+        <item name="textTitleColor">@color/white</item>
+        <item name="textSummaryColor">@color/b3ffffff</item>
+    </style>
 </resources>

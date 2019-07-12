@@ -8,7 +8,7 @@ import android.os.Bundle
 import android.ui.logcat.Logcat
 import android.view.View
 import com.left.gank.R
-import com.left.gank.ui.base.fragment.ButterKnifeFragment
+import com.left.gank.base.fragment.ButterKnifeFragment
 import com.left.gank.ui.more.MoreActivity
 import kotlinx.android.synthetic.main.fragment_mine.*
 

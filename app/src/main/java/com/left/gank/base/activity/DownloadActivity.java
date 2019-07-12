@@ -1,10 +1,10 @@
-package com.left.gank.ui.base.activity;
+package com.left.gank.base.activity;
 
 import android.os.Bundle;
 
-import androidx.annotation.Nullable;
-
 import com.left.gank.network.DownloadProgressListener;
+
+import androidx.annotation.Nullable;
 
 public abstract class DownloadActivity extends SupportActivity implements DownloadProgressListener {
     @Override

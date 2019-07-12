@@ -1,4 +1,4 @@
-package com.left.gank.ui.base;
+package com.left.gank.base;
 
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 

@@ -1,4 +1,4 @@
-package com.left.gank.view;
+package com.left.gank.base;
 
 import android.ui.base.BaseView;
 
@@ -9,10 +9,4 @@ import com.left.gank.domain.CheckVersion;
  */
 public interface ILauncher extends BaseView {
     void callUpdate(CheckVersion checkVersion);
-
-    void showDialog();
-
-    void noNewVersion();
-
-    void hiddenDialog();
 }

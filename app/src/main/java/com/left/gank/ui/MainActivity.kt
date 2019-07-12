@@ -3,7 +3,7 @@ package com.left.gank.ui
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.left.gank.R
-import com.left.gank.ui.base.activity.BaseActivity
+import com.left.gank.base.activity.BaseActivity
 import com.left.gank.ui.discovered.DiscoveredFragment
 import com.left.gank.ui.girls.GirlsFragment
 import com.left.gank.ui.index.IndexFragment

@@ -1,13 +1,13 @@
-package com.left.gank.ui.base;
-
-import androidx.recyclerview.widget.DiffUtil;
-import androidx.recyclerview.widget.RecyclerView;
+package com.left.gank.base;
 
 import com.left.gank.butterknife.adapter.BaseAdapter;
 import com.left.gank.butterknife.item.ItemModel;
 import com.left.gank.diff.DiffCallback;
 
 import java.util.List;
+
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * Create by LingYan on 2018-11-13

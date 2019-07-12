@@ -5,9 +5,9 @@ import android.view.View
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import com.left.gank.R
+import com.left.gank.base.fragment.SupportFragment
 import com.left.gank.config.Constants
 import com.left.gank.ui.android.AndroidFragment
-import com.left.gank.ui.base.fragment.SupportFragment
 import com.left.gank.ui.ios.IosFragment
 import com.left.gank.ui.welfare.WelfareFragment
 import kotlinx.android.synthetic.main.fragment_main.*

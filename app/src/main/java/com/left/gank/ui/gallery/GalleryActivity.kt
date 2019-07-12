@@ -15,7 +15,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.snackbar.Snackbar
 import com.left.gank.R
-import com.left.gank.ui.base.activity.SupportActivity
+import com.left.gank.base.activity.SupportActivity
 import com.left.gank.utils.*
 import com.left.gank.widget.WheelView
 import com.socks.library.KLog

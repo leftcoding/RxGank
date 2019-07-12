@@ -7,13 +7,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.left.gank.R;
-import com.left.gank.ui.base.LazyFragment;
+import com.left.gank.base.LazyFragment;
 import com.left.gank.ui.gallery.GalleryActivity;
 import com.left.gank.widget.LySwipeRefreshLayout;
 import com.left.gank.widget.MultipleStatusView;
@@ -21,6 +16,10 @@ import com.left.gank.widget.MultipleStatusView;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 
 /**

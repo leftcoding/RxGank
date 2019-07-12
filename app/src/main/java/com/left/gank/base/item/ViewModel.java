@@ -1,4 +1,4 @@
-package com.left.gank.ui.base.item;
+package com.left.gank.base.item;
 
 import com.left.gank.butterknife.diff.ItemComparator;
 

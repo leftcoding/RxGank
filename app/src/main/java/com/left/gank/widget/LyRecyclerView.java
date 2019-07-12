@@ -9,11 +9,11 @@ import android.view.ViewConfiguration;
 import android.view.animation.LinearInterpolator;
 import android.widget.Scroller;
 
+import com.left.gank.base.holder.BaseHolder;
+
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.left.gank.ui.base.holder.BaseHolder;
 
 /**
  * reference https://github.com/moodstrikerdd/Test_Android/blob/53ecf70a131e553a68daad2b57bfe3f09722ddc2/sidesliplist/src/main/java/com/example/sidesliplist/MyRecyclerView.java

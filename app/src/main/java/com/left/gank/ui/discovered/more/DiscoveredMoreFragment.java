@@ -5,8 +5,8 @@ import android.content.Intent;
 import android.widget.LinearLayout;
 
 import com.left.gank.R;
+import com.left.gank.base.LazyFragment;
 import com.left.gank.ui.baisi.BaiSiActivity;
-import com.left.gank.ui.base.LazyFragment;
 import com.left.gank.utils.theme.ThemeColor;
 
 import butterknife.BindView;

@@ -1,6 +1,6 @@
-package com.left.gank.ui.base.adapter;
+package com.left.gank.base.adapter;
 
-import com.left.gank.ui.base.item.ViewModel;
+import com.left.gank.base.item.ViewModel;
 
 import java.util.List;
 

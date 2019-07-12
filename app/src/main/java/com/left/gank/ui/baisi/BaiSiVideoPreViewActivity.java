@@ -9,8 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.left.gank.R;
+import com.left.gank.base.activity.BaseActivity;
 import com.left.gank.domain.GallerySize;
-import com.left.gank.ui.base.activity.BaseActivity;
 import com.left.gank.utils.ShareUtils;
 import com.superplayer.library.SuperPlayer;
 

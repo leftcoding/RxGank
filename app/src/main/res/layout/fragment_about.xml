@@ -76,21 +76,24 @@
                 android:paddingBottom="8dp">
 
                 <com.left.gank.widget.ItemTextView
-                    android:id="@+id/about_item_text_gank"
+                    android:id="@+id/gank"
+                    style="@style/Design.About.ItemView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:textSummary="@string/about_gank_url"
                     app:textTitle="@string/about_gank" />
 
                 <com.left.gank.widget.ItemTextView
-                    android:id="@+id/about_item_text_mzitu"
+                    android:id="@+id/mzitu"
+                    style="@style/Design.About.ItemView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:textSummary="@string/about_mzitu_url"
                     app:textTitle="@string/about_mzitu" />
 
                 <com.left.gank.widget.ItemTextView
-                    android:id="@+id/about_item_text_github"
+                    android:id="@+id/github"
+                    style="@style/Design.About.ItemView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:textSummary="@string/about_my_github_url"
@@ -98,6 +101,7 @@
 
                 <com.left.gank.widget.ItemTextView
                     android:id="@+id/about_item_text_contact"
+                    style="@style/Design.About.ItemView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:textSummary="@string/about_contact_email"

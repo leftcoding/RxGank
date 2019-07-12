@@ -1,20 +1,20 @@
 package com.left.gank.ui.history;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.left.gank.R;
+import com.left.gank.base.holder.BaseHolder;
 import com.left.gank.data.entity.ReadHistory;
 import com.left.gank.listener.ItemClick;
-import com.left.gank.ui.base.holder.BaseHolder;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 

@@ -5,9 +5,9 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.left.gank.R;
+import com.left.gank.base.LazyFragment;
 import com.left.gank.domain.BuDeJieBean;
 import com.left.gank.ui.baisi.BaiSiActivity;
-import com.left.gank.ui.base.LazyFragment;
 import com.left.gank.widget.LySwipeRefreshLayout;
 import com.left.gank.widget.MultipleStatusView;
 import com.left.gank.widget.SpaceItemDecoration;

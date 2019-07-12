@@ -5,11 +5,11 @@ package android.ui.base;
  */
 
 public interface BaseView extends BaseContract.View {
-    public void showProgress();
+    void showProgress();
 
-    public void hideProgress();
+    void hideProgress();
 
-    public void showEmpty();
+    void showEmpty();
 
-    public void showContent();
+    void showContent();
 }

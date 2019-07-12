@@ -1,11 +1,12 @@
-package com.left.gank.ui.base;
+package com.left.gank.base;
 
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import android.view.View;
 
-import com.left.gank.ui.base.fragment.ButterKnifeFragment;
+import com.left.gank.base.fragment.ButterKnifeFragment;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 
 /**

@@ -1,15 +1,15 @@
-package com.left.gank.ui.base.adapter;
+package com.left.gank.base.adapter;
 
 import android.view.ViewGroup;
+
+import com.left.gank.base.item.ViewModel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.left.gank.ui.base.item.ViewModel;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Create by LingYan on 2018-09-25

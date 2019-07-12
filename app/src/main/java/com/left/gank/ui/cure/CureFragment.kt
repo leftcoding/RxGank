@@ -8,7 +8,7 @@ import android.text.TextUtils
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.left.gank.R
-import com.left.gank.ui.base.LazyFragment
+import com.left.gank.base.LazyFragment
 import com.left.gank.ui.gallery.GalleryActivity
 import com.left.gank.utils.ListUtils
 import com.left.gank.widget.LySwipeRefreshLayout

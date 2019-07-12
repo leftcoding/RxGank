@@ -7,10 +7,10 @@ import android.rxbus.RxEventBus;
 import android.view.View;
 
 import com.left.gank.R;
+import com.left.gank.base.LazyFragment;
 import com.left.gank.domain.BuDeJieVideo;
 import com.left.gank.domain.GallerySize;
 import com.left.gank.mvp.source.remote.BuDeJieDataSource;
-import com.left.gank.ui.base.LazyFragment;
 import com.left.gank.widget.LySwipeRefreshLayout;
 import com.left.gank.widget.MultipleStatusView;
 import com.left.gank.widget.SpaceItemDecoration;

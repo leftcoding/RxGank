@@ -5,10 +5,10 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.left.gank.R;
+import com.left.gank.base.LazyFragment;
 import com.left.gank.config.Constants;
 import com.left.gank.domain.JianDanBean;
 import com.left.gank.listener.ItemClick;
-import com.left.gank.ui.base.LazyFragment;
 import com.left.gank.ui.web.normal.WebActivity;
 import com.left.gank.utils.theme.RecyclerViewColor;
 import com.left.gank.utils.theme.ThemeColor;

@@ -6,9 +6,9 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.left.gank.R;
+import com.left.gank.base.fragment.SupportFragment;
 import com.left.gank.data.entity.ReadHistory;
 import com.left.gank.listener.ItemClick;
-import com.left.gank.ui.base.fragment.SupportFragment;
 import com.left.gank.ui.web.normal.WebActivity;
 import com.left.gank.widget.LyRecyclerView;
 import com.left.gank.widget.LySwipeRefreshLayout;

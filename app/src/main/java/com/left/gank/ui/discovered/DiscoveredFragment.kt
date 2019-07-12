@@ -6,7 +6,7 @@ import androidx.core.content.ContextCompat
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import com.left.gank.R
-import com.left.gank.ui.base.fragment.ButterKnifeFragment
+import com.left.gank.base.fragment.ButterKnifeFragment
 import com.left.gank.ui.discovered.jiandan.JiandanFragment
 import com.left.gank.ui.discovered.more.DiscoveredAdapter
 import com.left.gank.ui.discovered.more.DiscoveredMoreFragment

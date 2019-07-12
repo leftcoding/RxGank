@@ -1,7 +1,8 @@
-package com.left.gank.ui.base;
+package com.left.gank.base;
+
+import android.view.View;
 
 import androidx.recyclerview.widget.RecyclerView;
-import android.view.View;
 
 public abstract class BaseViewHolder extends RecyclerView.ViewHolder {
     public BaseViewHolder(View itemView) {

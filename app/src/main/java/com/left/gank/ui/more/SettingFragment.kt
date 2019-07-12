@@ -4,16 +4,16 @@ import android.app.ProgressDialog
 import android.os.Bundle
 import android.view.View
 import com.left.gank.R
+import com.left.gank.base.ILauncher
+import com.left.gank.base.fragment.SupportFragment
 import com.left.gank.config.Preferences
 import com.left.gank.domain.CheckVersion
 import com.left.gank.listener.DialogOnClick
-import com.left.gank.ui.base.fragment.SupportFragment
 import com.left.gank.ui.download.DownloadPresenter
 import com.left.gank.utils.AppUtils
 import com.left.gank.utils.GanklyPreferences
 import com.left.gank.utils.GlideCatchUtil
 import com.left.gank.utils.ToastUtils
-import com.left.gank.view.ILauncher
 import com.left.gank.widget.UpdateVersionDialog
 import com.tencent.bugly.beta.Beta
 import kotlinx.android.synthetic.main.fragment_setting.*
@@ -25,8 +25,12 @@ import kotlinx.android.synthetic.main.layout_bar.*
  */
 class SettingFragment : SupportFragment(), ILauncher {
     private lateinit var downloadPresenter: DownloadPresenter
-    private lateinit var versionDialog: UpdateVersionDialog
-    private lateinit var progressDialog: ProgressDialog
+    private val versionDialog by lazy {
+        UpdateVersionDialog()
+    }
+    private val progressDialog by lazy {
+        ProgressDialog(activity)
+    }
 
     override fun fragmentLayoutId(): Int = R.layout.fragment_setting
 
@@ -60,7 +64,7 @@ class SettingFragment : SupportFragment(), ILauncher {
         }
         setting_item_text_clean_cache.setOnClickListener {
             GlideCatchUtil.getInstance().clearCacheDiskSelf(context)
-            setting_item_text_clean_cache!!.setTextSummary(context!!.getString(R.string.setting_picture_cache_string))
+            setting_item_text_clean_cache.setTextSummary(context!!.getString(R.string.setting_picture_cache_string))
         }
     }
 
@@ -91,14 +95,7 @@ class SettingFragment : SupportFragment(), ILauncher {
         showVersionDialog(checkVersion.changelog)
     }
 
-    override fun noNewVersion() {
-        ToastUtils.showToast(context, R.string.tip_no_new_version)
-    }
-
     private fun showVersionDialog(content: String) {
-        if (!::versionDialog.isInitialized) {
-            versionDialog = UpdateVersionDialog()
-        }
         versionDialog.setDialogOnClick(object : DialogOnClick {
             override fun cancel() {
                 versionDialog.dismiss()
@@ -118,25 +115,12 @@ class SettingFragment : SupportFragment(), ILauncher {
     }
 
     private fun createDialog() {
-        if (!::progressDialog.isInitialized) {
-            progressDialog = ProgressDialog(activity)
-        }
         progressDialog.setMessage(context!!.getString(R.string.dialog_checking))
         progressDialog.show()
     }
 
     private fun disDialog() {
-        if (progressDialog.isShowing) {
-            progressDialog.dismiss()
-        }
-    }
-
-    override fun showDialog() {
-        createDialog()
-    }
-
-    override fun hiddenDialog() {
-        disDialog()
+        progressDialog.dismiss()
     }
 
     companion object {
