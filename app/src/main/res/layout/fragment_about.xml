@@ -14,6 +14,7 @@
             android:id="@+id/about_collapsing"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            app:contentScrim="@color/colorPrimary"
             app:expandedTitleTextAppearance="@style/CollapsingToolbarTitleStyle"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
