@@ -1,25 +1,24 @@
 package com.left.gank.ui.daily;
 
 import android.app.ProgressDialog;
-import android.business.domain.Gift;
 import android.business.domain.Girl;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-
-import com.left.gank.R;
-import com.left.gank.base.LazyFragment;
-import com.left.gank.ui.gallery.GalleryActivity;
-import com.left.gank.widget.LySwipeRefreshLayout;
-import com.left.gank.widget.MultipleStatusView;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.left.gank.R;
+import com.left.gank.base.LazyFragment;
+import com.left.gank.widget.LySwipeRefreshLayout;
+import com.left.gank.widget.MultipleStatusView;
+
+import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
+
 import butterknife.BindView;
 
 /**
@@ -53,7 +52,6 @@ public class DailyGirlFragment extends LazyFragment implements DailyGirlContract
         swipeRefresh.setOnScrollListener(new LySwipeRefreshLayout.OnListener() {
             @Override
             public void onRefresh() {
-                dailyPresenter.fetchNew();
             }
 
             @Override
@@ -82,15 +80,15 @@ public class DailyGirlFragment extends LazyFragment implements DailyGirlContract
         }
     }
 
-    @Override
-    public void openBrowseActivity(@NonNull ArrayList<Gift> list) {
-        Bundle bundle = new Bundle();
-        Intent intent = new Intent(getContext(), GalleryActivity.class);
-        bundle.putString(GalleryActivity.EXTRA_MODEL, GalleryActivity.EXTRA_DAILY);
-        intent.putExtra(GalleryActivity.EXTRA_LIST, list);
-        intent.putExtras(bundle);
-        getContext().startActivity(intent);
-    }
+//    @Override
+//    public void openBrowseActivity(@NonNull ArrayList<Gift> list) {
+//        Bundle bundle = new Bundle();
+//        Intent intent = new Intent(getContext(), GalleryActivity.class);
+//        bundle.putString(GalleryActivity.EXTRA_MODEL, GalleryActivity.EXTRA_DAILY);
+//        intent.putExtra(GalleryActivity.EXTRA_LIST, list);
+//        intent.putExtras(bundle);
+//        getContext().startActivity(intent);
+//    }
 
     @Override
     public void hideProgress() {
@@ -129,30 +127,6 @@ public class DailyGirlFragment extends LazyFragment implements DailyGirlContract
     }
 
     @Override
-    public void refillData(List<Girl> list) {
-        dailyGirlAdapter.refillItem(list);
-    }
-
-    @Override
-    public void appendItem(List<Girl> list) {
-        dailyGirlAdapter.appendItem(list);
-    }
-
-    @Override
-    public void setMaxProgress(int value) {
-        if (mDialog != null) {
-            mDialog.setMax(value);
-        }
-    }
-
-    @Override
-    public void disProgressDialog() {
-        if (mDialog != null && mDialog.isShowing()) {
-            mDialog.dismiss();
-        }
-    }
-
-    @Override
     public void onDestroyView() {
         super.onDestroyView();
         if (dailyGirlAdapter != null) {
@@ -164,11 +138,15 @@ public class DailyGirlFragment extends LazyFragment implements DailyGirlContract
     public void onLazyActivityCreate() {
         dailyPresenter = new DailyGirlPresenter(getContext(), this);
         multipleStatusView.showLoading();
-        dailyPresenter.fetchNew();
     }
 
     @Override
-    public void shortToast(String string) {
+    public void refillData(@NotNull List<? extends Girl> list) {
+
+    }
+
+    @Override
+    public void appendItem(@NotNull List<? extends Girl> list) {
 
     }
 }
