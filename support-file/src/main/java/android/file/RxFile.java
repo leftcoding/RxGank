@@ -159,7 +159,7 @@ public class RxFile {
     }
 
     private static String getRootDir() {
-        final String externalName = getConfig().externalRootDir;
+        final String externalName = getFileEntity().externalRootDir;
         final String rootDir = TextUtils.isEmpty(externalName) ? FileInfo.ROOT : externalName;
         return Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + rootDir;
     }
@@ -179,7 +179,7 @@ public class RxFile {
         return rxFile;
     }
 
-    private static FileEntity getConfig() {
+    private static FileEntity getFileEntity() {
         return fileEntity == null ? new FileEntity.Build().build() : fileEntity;
     }
 

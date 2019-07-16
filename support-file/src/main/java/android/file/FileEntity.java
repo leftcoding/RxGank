@@ -28,7 +28,7 @@ public class FileEntity {
         private boolean isAddDefaultDir = true;
         private String externalRootDir = "RxFile";
 
-        Build() {
+        public Build() {
 
         }
 
@@ -42,7 +42,7 @@ public class FileEntity {
             return this;
         }
 
-        public Build setAddDefaultDir(boolean addDefaultDir) {
+        public Build isAddDefaultDir(boolean addDefaultDir) {
             isAddDefaultDir = addDefaultDir;
             return this;
         }
@@ -55,7 +55,7 @@ public class FileEntity {
             return this;
         }
 
-        FileEntity build() {
+        public FileEntity build() {
             return new FileEntity(this);
         }
     }
