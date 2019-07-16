@@ -11,7 +11,7 @@
 - support-basic             基本组件（开发中...）
 - support-business          网络请求封装（二次优化）
 - support-download          下载（开发中...）
-- support-file              文件管理（开发中...）
+- support-file              文件管理（<a href="https://github.com/leftcoding/RxGank/blob/master/support-file/README.md">README</a>）
 - support-jsoup             爬虫（二次优化）
 - support-network           网络库（二次优化）
 - support-rxbus             rxbus（开发中...）
