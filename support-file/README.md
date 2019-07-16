@@ -76,7 +76,7 @@ public class App extends Application {
 
 
 
-## 创建文件夹
+## 使用
 
 ```java
 RxFile.makeFile("dir1"); // 在当前跟目录下，创建文件
