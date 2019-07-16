@@ -3,30 +3,24 @@ package android.file;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FileImpl implements IFile {
-    private FileEntity fileEntity = new FileEntity.Build().build();
+class FileImpl {
+    private FileEntity fileEntity;
+    private String rootParent;
     private String cacheDir;
 
-    public FileImpl() {
-
+    void setFileEntity(FileEntity fileEntity) {
+        this.fileEntity = fileEntity;
     }
 
-    public void setCacheDir(String cacheDir) {
+    void setRootParent(String rootParent) {
+        this.rootParent = rootParent;
+    }
+
+    void setCacheDir(String cacheDir) {
         this.cacheDir = cacheDir;
     }
 
-    @Override
-    public IFile setFileEntity(FileEntity fileEntity) {
-        if (fileEntity == null) {
-            throw new RuntimeException("fileEntity can't be null");
-        }
-        this.fileEntity = fileEntity;
-        return this;
-    }
-
-    @Override
-    public void create() {
-        final String rootParent = RxFile.getRootDir();
+    void create() {
         if (fileEntity.isAddDefaultDir) {
             FileUtils.makeFiles(rootParent, getDefaultDirs());
         }

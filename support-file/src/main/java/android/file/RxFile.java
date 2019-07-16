@@ -7,56 +7,37 @@ import android.text.TextUtils;
 import java.io.File;
 
 
-public class RxFile implements IRxFile {
+public class RxFile {
     private static volatile RxFile rxFile;
-    private FileImpl fileImpl;
 
-    private static String rootName;
+    private static FileEntity fileEntity;
 
-    private RxFile(Context context) {
-        final Context finalContext = context.getApplicationContext() == null ? context : context.getApplicationContext();
-        String cacheDir = getCacheDir(finalContext).getAbsolutePath();
+    private RxFile() {
 
-        fileImpl = new FileImpl();
-        fileImpl.setCacheDir(cacheDir);
-    }
-
-    @Override
-    public IRxFile setRootName(String rootName) {
-        if (TextUtils.isEmpty(rootName)) {
-            throw new RuntimeException("rootName can't be null");
-        }
-        RxFile.rootName = rootName;
-        return this;
-    }
-
-    @Override
-    public IFile config() {
-        return fileImpl;
     }
 
     public static File imageFile() {
-        return FileUtils.makeFile(getRootDir(), FileInfo.IMAGE);
+        return makeFile(FileInfo.IMAGE);
     }
 
     public static File imageCacheFile() {
-        return FileUtils.makeFile(getRootDir(), FileInfo.IMAGE_CACHE);
+        return makeFile(FileInfo.IMAGE_CACHE);
     }
 
     public static File crashFile() {
-        return FileUtils.makeFile(getRootDir(), FileInfo.CRASH);
+        return makeFile(FileInfo.CRASH);
     }
 
     public static File networkFile() {
-        return FileUtils.makeFile(getRootDir(), FileInfo.NETWORK_CACHE);
+        return makeFile(FileInfo.NETWORK_CACHE);
     }
 
     public static File apkFile() {
-        return FileUtils.makeFile(getRootDir(), FileInfo.APK);
+        return makeFile(FileInfo.APK);
     }
 
     public static File galleryFile() {
-        return FileUtils.makeFile(getRootDir(), FileInfo.GALLERY);
+        return makeFile(FileInfo.GALLERY);
     }
 
     public static File makeFile(String child) {
@@ -177,23 +158,44 @@ public class RxFile implements IRxFile {
         return child.listFiles();
     }
 
-    public static String getRootDir() {
-        final String rootDir = TextUtils.isEmpty(rootName) ? FileInfo.ROOT : rootName;
+    private static String getRootDir() {
+        final String externalName = getConfig().externalRootDir;
+        final String rootDir = TextUtils.isEmpty(externalName) ? FileInfo.ROOT : externalName;
         return Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + rootDir;
     }
 
-    public static File getCacheDir(Context context) {
+    private static File getCacheDir(Context context) {
         return FileUtils.getDiskCacheDir(context);
     }
 
-    public static RxFile with(Context context) {
+    public static RxFile with() {
         if (rxFile == null) {
             synchronized (RxFile.class) {
                 if (rxFile == null) {
-                    rxFile = new RxFile(context);
+                    rxFile = new RxFile();
                 }
             }
         }
         return rxFile;
+    }
+
+    private static FileEntity getConfig() {
+        return fileEntity == null ? new FileEntity.Build().build() : fileEntity;
+    }
+
+    public static void init(Context context) {
+        init(context, new FileEntity.Build().build());
+    }
+
+    public static void init(Context context, FileEntity fileEntity) {
+        ThrowRuntimeException.run(fileEntity, "FileEntity can't be null");
+        final Context finalContext = context.getApplicationContext() == null ? context : context.getApplicationContext();
+        RxFile.fileEntity = fileEntity;
+        String cacheDir = FileUtils.getDiskCacheDir(finalContext).getAbsolutePath();
+        FileImpl fileImpl = new FileImpl();
+        fileImpl.setFileEntity(fileEntity);
+        fileImpl.setCacheDir(cacheDir);
+        fileImpl.setRootParent(getRootDir());
+        fileImpl.create();
     }
 }
