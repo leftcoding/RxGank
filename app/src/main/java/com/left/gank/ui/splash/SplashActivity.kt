@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.permission.application.PermissionApp
 import com.left.gank.R
 import com.left.gank.base.activity.BaseActivity
 import com.left.gank.domain.PoseCode
@@ -19,6 +20,7 @@ import org.greenrobot.eventbus.ThreadMode
  *
  * Create by LingYan on 2019-06-30
  */
+@PermissionApp
 class SplashActivity : BaseActivity() {
     private var permissionSuccess = false
 
@@ -53,7 +55,7 @@ class SplashActivity : BaseActivity() {
     }
 
     private fun startAnim() {
-        splash_img!!.animate()
+        splash_img.animate()
                 .scaleX(SCALE_X)
                 .scaleY(SCALE_Y)
                 .setDuration(ANIMATE_DURATION)

@@ -1,9 +1,9 @@
 package android.permission.andpermission;
 
 import android.content.Context;
+import android.permission.RationaleListener;
 import android.permission.Request;
 import android.permission.RequestCallback;
-import android.permission.Runnable;
 
 import com.yanzhenjie.permission.Action;
 import com.yanzhenjie.permission.AndPermission;
@@ -14,7 +14,7 @@ public class RxAndPermission implements Request {
     private final Context context;
     private String[] permissions;
     private RequestCallback callback;
-    private Runnable runnable;
+    private RationaleListener rationaleListener;
 
     public RxAndPermission(Context context) {
         this.context = context;
@@ -33,8 +33,8 @@ public class RxAndPermission implements Request {
     }
 
     @Override
-    public Request rationale(Runnable runnable) {
-        this.runnable = runnable;
+    public Request rationale(RationaleListener rationaleListener) {
+        this.rationaleListener = rationaleListener;
         return this;
     }
 
@@ -43,7 +43,7 @@ public class RxAndPermission implements Request {
         AndPermission.with(context)
                 .runtime()
                 .permission(permissions)
-                .rationale(new RuntimeRationale(runnable))
+                .rationale(new RuntimeRationale(rationaleListener))
                 .onGranted(new Action<List<String>>() {
                     @Override
                     public void onAction(List<String> permissions) {

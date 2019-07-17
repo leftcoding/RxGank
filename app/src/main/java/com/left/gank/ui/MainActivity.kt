@@ -1,6 +1,7 @@
 package com.left.gank.ui
 
 import android.os.Bundle
+import android.rxbus.RxApiManager
 import androidx.fragment.app.Fragment
 import com.left.gank.R
 import com.left.gank.base.activity.BaseActivity
@@ -71,5 +72,10 @@ class MainActivity : BaseActivity() {
                 curFragment = toFragment
             }
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        RxApiManager.get().clear()
     }
 }

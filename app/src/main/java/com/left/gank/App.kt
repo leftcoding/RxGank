@@ -7,13 +7,12 @@ import android.network.interceptor.CacheNetworkInterceptor
 import android.network.interceptor.CacheOffLineInterceptor
 import android.permission.Permissions
 import android.permission.RequestCallback
+import android.permission.application.RxLifecycleCallbacks
 import com.left.gank.config.Constants
 import com.left.gank.config.HttpUrlConfig
 import com.left.gank.domain.PoseCode
 import com.left.gank.domain.PoseEvent
-import com.left.gank.ui.splash.SplashActivity
 import com.left.gank.utils.Permission
-import com.left.gank.utils.RxActivityLifecycleCallbacks
 import com.tencent.bugly.Bugly
 import com.tencent.bugly.beta.Beta
 import okhttp3.Cache
@@ -28,24 +27,24 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        RxActivityLifecycleCallbacks.permissionApp(this) { activity ->
-            if (activity is SplashActivity) {
-                Permission.permissionApp(activity, object : RequestCallback {
-                    override fun onGranted(list: List<String>?) {
-                        initSdk()
-                        EventBus.getDefault().post(PoseEvent(PoseCode.NEED_PERMISSION_SUCCESS))
-                    }
+        RxLifecycleCallbacks.permissionApp(this) { activity ->
+            Permission.permissionApp(activity, Permissions.Group.STORAGE)
+                    .requestCallback(object : RequestCallback {
+                        override fun onGranted(list: List<String>?) {
+                            initSdk()
+                            EventBus.getDefault().post(PoseEvent(PoseCode.NEED_PERMISSION_SUCCESS))
+                        }
 
-                    override fun onDenied(list: List<String>?) {
-                        Permission.startPermissionSetting(activity)
-                    }
-                }, Permissions.Group.STORAGE)
-            }
+                        override fun onDenied(list: List<String>?) {
+                            Permission.startPermissionSetting(activity)
+                        }
+                    })
+                    .start()
         }
     }
 
     private fun initSdk() {
-        RxFile.with(this).config().create()
+        RxFile.init(this)
 
         HttpServer.initConfig()
                 .baseUrl(HttpUrlConfig.GANK_URL)

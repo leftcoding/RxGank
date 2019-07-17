@@ -5,7 +5,7 @@ public interface Request {
 
     Request setCallback(RequestCallback callback);
 
-    Request rationale(Runnable runnable);
+    Request rationale(RationaleListener rationaleListener);
 
     void start();
 }

@@ -2,7 +2,7 @@ ext {
     // app 版本号统一管理
     android = [
             compileSdkVersion: 28,
-            applicationId    : "com.gank.gankly",
+            applicationId    : "com.left.gank",
             minSdkversion    : 21,
             targetSdkVersion : 26,
             versionName      : "1.0",
