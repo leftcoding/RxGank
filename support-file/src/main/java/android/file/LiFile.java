@@ -7,12 +7,12 @@ import android.text.TextUtils;
 import java.io.File;
 
 
-public class RxFile {
-    private static volatile RxFile rxFile;
+public class LiFile {
+    private static volatile LiFile liFile;
 
     private static FileEntity fileEntity;
 
-    private RxFile() {
+    private LiFile() {
 
     }
 
@@ -168,15 +168,15 @@ public class RxFile {
         return FileUtils.getDiskCacheDir(context);
     }
 
-    public static RxFile with() {
-        if (rxFile == null) {
-            synchronized (RxFile.class) {
-                if (rxFile == null) {
-                    rxFile = new RxFile();
+    public static LiFile with() {
+        if (liFile == null) {
+            synchronized (LiFile.class) {
+                if (liFile == null) {
+                    liFile = new LiFile();
                 }
             }
         }
-        return rxFile;
+        return liFile;
     }
 
     private static FileEntity getFileEntity() {
@@ -190,7 +190,7 @@ public class RxFile {
     public static void init(Context context, FileEntity fileEntity) {
         ThrowRuntimeException.run(fileEntity, "FileEntity can't be null");
         final Context finalContext = context.getApplicationContext() == null ? context : context.getApplicationContext();
-        RxFile.fileEntity = fileEntity;
+        LiFile.fileEntity = fileEntity;
         String cacheDir = FileUtils.getDiskCacheDir(finalContext).getAbsolutePath();
         FileImpl fileImpl = new FileImpl();
         fileImpl.setFileEntity(fileEntity);

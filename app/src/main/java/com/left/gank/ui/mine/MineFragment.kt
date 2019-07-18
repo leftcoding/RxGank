@@ -3,7 +3,7 @@ package com.left.gank.ui.mine
 import android.content.Intent
 import android.download.Download
 import android.download.DownloadListener
-import android.file.RxFile
+import android.file.LiFile
 import android.os.Bundle
 import android.ui.logcat.Logcat
 import android.view.View
@@ -67,7 +67,7 @@ class MineFragment : ButterKnifeFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         download = Download.Builder()
-                .savePath(RxFile.apkFile())
+                .savePath(LiFile.apkFile())
                 .url("http://b8.market.mi-img.com/download/AppStore/045ac05c5b03b42730855cfeef96cecc4f61d1143/com.duia.duiaapp.apk")
                 .downloadListener(downloadListener)
                 .build()

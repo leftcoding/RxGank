@@ -26,7 +26,7 @@ public class FileEntity {
         private List<String> internalDirs = new ArrayList<>();
         private List<String> externalDirs = new ArrayList<>();
         private boolean isAddDefaultDir = true;
-        private String externalRootDir = "RxFile";
+        private String externalRootDir = "LiFile";
 
         public Build() {
 
