@@ -7,7 +7,7 @@ import android.network.interceptor.CacheNetworkInterceptor
 import android.network.interceptor.CacheOffLineInterceptor
 import android.permission.Permissions
 import android.permission.RequestCallback
-import android.permission.application.RxLifecycleCallbacks
+import android.permission.application.PermissionLifecycle
 import com.left.gank.config.Constants
 import com.left.gank.config.HttpUrlConfig
 import com.left.gank.domain.PoseCode
@@ -27,7 +27,7 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        RxLifecycleCallbacks.permissionApp(this) { activity ->
+        PermissionLifecycle.permissionApp(this) { activity ->
             Permission.permissionApp(activity, Permissions.Group.STORAGE)
                     .requestCallback(object : RequestCallback {
                         override fun onGranted(list: List<String>?) {

@@ -10,13 +10,13 @@ import com.yanzhenjie.permission.AndPermission;
 
 import java.util.List;
 
-public class RxAndPermission implements Request {
+public class RAndPermission implements Request {
     private final Context context;
     private String[] permissions;
     private RequestCallback callback;
     private RationaleListener rationaleListener;
 
-    public RxAndPermission(Context context) {
+    public RAndPermission(Context context) {
         this.context = context;
     }
 

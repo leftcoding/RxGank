@@ -1,6 +1,6 @@
 package android.permission;
 
-import android.permission.andpermission.RxAndPermission;
+import android.permission.andpermission.RAndPermission;
 import android.permission.launcher.AllLauncher;
 import android.permission.launcher.Launcher;
 import android.permission.source.Source;
@@ -14,7 +14,7 @@ public class BootOption implements Option {
 
     @Override
     public Request runtime() {
-        return new RxAndPermission(source.getContext());
+        return new RAndPermission(source.getContext());
     }
 
     @Override

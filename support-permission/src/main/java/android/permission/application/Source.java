@@ -4,16 +4,16 @@ import android.app.Activity;
 
 import androidx.fragment.app.Fragment;
 
-public class TagEntity {
+public class Source {
     public Activity activity;
 
     public Fragment fragment;
 
-    public TagEntity(Activity activity) {
+    public Source(Activity activity) {
         this.activity = activity;
     }
 
-    public TagEntity(Fragment fragment) {
+    public Source(Fragment fragment) {
         this.fragment = fragment;
     }
 }

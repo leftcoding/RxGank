@@ -2,10 +2,10 @@ package com.left.gank.utils;
 
 import android.app.Activity;
 import android.content.Context;
+import android.permission.LiPermission;
 import android.permission.RationaleListener;
 import android.permission.RequestCallback;
 import android.permission.RequestExecutor;
-import android.permission.RxPermission;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
@@ -68,18 +68,18 @@ public class Permission {
 
     /**
      * 启动权限设置页
-     * 默认请求码是 RxPermission.RESULT_CODE： 100
+     * 默认请求码是 LiPermission.RESULT_CODE： 100
      */
     public static void startPermissionSetting(Fragment fragment) {
-        RxPermission.with(fragment).launcher().start(RxPermission.RESULT_CODE);
+        LiPermission.with(fragment).launcher().start(LiPermission.RESULT_CODE);
     }
 
     /**
      * 启动权限设置页
-     * 默认请求码是 RxPermission.RESULT_CODE： 100
+     * 默认请求码是 LiPermission.RESULT_CODE： 100
      */
     public static void startPermissionSetting(Activity activity) {
-        RxPermission.with(activity).launcher().start(RxPermission.RESULT_CODE);
+        LiPermission.with(activity).launcher().start(LiPermission.RESULT_CODE);
     }
 
     /**
@@ -87,7 +87,7 @@ public class Permission {
      */
     public static void checkPermission(final Fragment fragment, final RequestCallback requestCallback, final String... permissions) {
         final Context context = fragment.getContext();
-        RxPermission.with(fragment)
+        LiPermission.with(fragment)
                 .runtime()
                 .checkPermission(permissions)
                 .rationale(new RationaleListener() {
@@ -106,7 +106,7 @@ public class Permission {
 
                     @Override
                     public void onDenied(List<String> list) {
-                        if (RxPermission.hasAlwaysDeniedPermission(context, list)) {
+                        if (LiPermission.hasAlwaysDeniedPermission(context, list)) {
                             checkDeniedDialog(context, requestCallback, null);
                             return;
                         }
@@ -152,7 +152,7 @@ public class Permission {
         }
 
         public void start() {
-            RxPermission.with(context)
+            LiPermission.with(context)
                     .runtime()
                     .checkPermission(permissions)
                     .rationale((context1, permissions1, executor) -> showRationaleDialog(context, executor))
@@ -166,7 +166,7 @@ public class Permission {
 
                         @Override
                         public void onDenied(List<String> list) {
-                            if (RxPermission.hasAlwaysDeniedPermission(context, list)) {
+                            if (LiPermission.hasAlwaysDeniedPermission(context, list)) {
                                 showDeniedDialog(context, requestCallback);
                                 return;
                             }

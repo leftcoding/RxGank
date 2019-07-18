@@ -8,16 +8,16 @@ import android.permission.source.ContextSource;
 import android.permission.source.FragmentSource;
 import android.permission.source.Source;
 
+import androidx.fragment.app.Fragment;
+
 import com.yanzhenjie.permission.AndPermission;
 
 import java.util.List;
 
-import androidx.fragment.app.Fragment;
-
-public class RxPermission {
+public class LiPermission {
     public static final int RESULT_CODE = 100;
 
-    private RxPermission() {
+    private LiPermission() {
 
     }
 

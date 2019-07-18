@@ -14,10 +14,10 @@ import java.util.List;
 /**
  * Create by LingYan on 2019-07-02
  */
-public class RxLifecycleCallbacks {
-    private static TagEntity tagEntity;
+public class PermissionLifecycle {
+    private static Source source;
 
-    private RxLifecycleCallbacks() {
+    private PermissionLifecycle() {
 
     }
 
@@ -71,9 +71,9 @@ public class RxLifecycleCallbacks {
      * @return true 命中目标，false 未命中目标
      */
     private static boolean isHitActivity(Activity sourceActivity) {
-        if (tagEntity != null) {
+        if (source != null) {
             final String sourceName = sourceActivity.getClass().getCanonicalName();
-            final String name = tagEntity.activity.getClass().getCanonicalName();
+            final String name = source.activity.getClass().getCanonicalName();
             return TextUtils.equals(sourceName, name);
         }
         return false;
@@ -86,7 +86,7 @@ public class RxLifecycleCallbacks {
      * @return true 命中目标，false 未命中目标
      */
     private static boolean isHitFragment(Activity sourceActivity) {
-        if (sourceActivity instanceof AppCompatActivity && tagEntity != null && tagEntity.fragment != null) {
+        if (sourceActivity instanceof AppCompatActivity && source != null && source.fragment != null) {
             try {
                 final AppCompatActivity appCompatActivity = (AppCompatActivity) sourceActivity;
                 final FragmentManager fragmentManager = appCompatActivity.getSupportFragmentManager();
@@ -94,7 +94,7 @@ public class RxLifecycleCallbacks {
                 for (Fragment fragment : fragments) {
                     if (fragment == null) continue;
                     final String sourceName = fragment.getClass().getCanonicalName();
-                    final String name = tagEntity.fragment.getClass().getCanonicalName();
+                    final String name = source.fragment.getClass().getCanonicalName();
                     return TextUtils.equals(sourceName, name);
                 }
             } catch (Exception e) {
@@ -114,14 +114,14 @@ public class RxLifecycleCallbacks {
                     Object o = c.newInstance();
                     if (o instanceof Activity) {
                         Activity activity = (Activity) o;
-                        if (tagEntity == null) {
-                            tagEntity = new TagEntity(activity);
+                        if (source == null) {
+                            source = new Source(activity);
                             return;
                         }
                     } else if (o instanceof Fragment) {
                         Fragment fragment = (Fragment) o;
-                        if (tagEntity == null) {
-                            tagEntity = new TagEntity(fragment);
+                        if (source == null) {
+                            source = new Source(fragment);
                             return;
                         }
                     }
