@@ -4,8 +4,8 @@ import android.business.domain.Gift
 import android.business.domain.Girl
 import android.content.Context
 import android.jsoup.JsoupServer
-import com.left.gank.utils.ListUtils
-import com.socks.library.KLog
+import android.ui.logcat.Logcat
+import com.uber.autodispose.ObservableSubscribeProxy
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
 import org.jsoup.nodes.Document
@@ -15,43 +15,20 @@ import java.util.*
  * Create by LingYan on 2016-10-26
  */
 
-class DailyGirlPresenter(context: Context, private val mModelView: DailyGirlContract.View) : DailyGirlContract.Presenter(context, mModelView) {
-    override fun loadGirls(page: Int) {
-
-    }
-
+class DailyGirlPresenter(context: Context, view: DailyGirlContract.View) : DailyGirlContract.Presenter(context, view) {
     private var imagesList: ArrayList<Gift>? = null
     private var max: Int = 0
 
-
-    override fun onDestroy() {
-
-    }
-
-    public fun girlsImages(url: String) {
-        JsoupServer.rxConnect(url).build()
-                .map<String> { document ->
-                    max = getImageUrlsMax(document)
-
-                    null
-                }
-                .subscribe(object : Observer<String> {
-                    override fun onComplete() {
-                        //empty
+    override fun loadGirls() {
+        JsoupServer.rxConnect(MEIZI_FIRST_URL)
+                .build()
+                .map { doc -> parseData(doc) }
+                .`as`<ObservableSubscribeProxy<List<Girl>>>(bindLifecycle<List<Girl>>())
+                .subscribe({ list ->
+                    if (view != null) {
+                        view.loadDailyGirlSuccess(list)
                     }
-
-                    override fun onError(e: Throwable) {
-                        KLog.e(e)
-                    }
-
-                    override fun onSubscribe(d: Disposable) {
-                        //empty
-                    }
-
-                    override fun onNext(url: String) {
-                        getImages(url)
-                    }
-                })
+                }, { e -> Logcat.e(e) })
     }
 
     private fun getImages(url: String) {
@@ -76,10 +53,10 @@ class DailyGirlPresenter(context: Context, private val mModelView: DailyGirlCont
                         val lastPointIndex: Int
                         val lastNameIndex: Int
                         if (url.contains(".")) {
-                            if (url.contains("-")) {
-                                lastPointIndex = url.lastIndexOf("-")
+                            lastPointIndex = if (url.contains("-")) {
+                                url.lastIndexOf("-")
                             } else {
-                                lastPointIndex = url.lastIndexOf(".")
+                                url.lastIndexOf(".")
                             }
                             lastNameIndex = url.lastIndexOf("/")
                             baseUrl = url.substring(0, lastNameIndex)
@@ -90,10 +67,10 @@ class DailyGirlPresenter(context: Context, private val mModelView: DailyGirlCont
                         var number: String
                         var lastUrl: String
                         for (i in 1..max) {
-                            if (i < 10) {
-                                number = "0$i"
+                            number = if (i < 10) {
+                                "0$i"
                             } else {
-                                number = i.toString()
+                                i.toString()
                             }
                             lastUrl = baseUrl + name + number + endType
                             imagesList!!.add(Gift(lastUrl))
@@ -102,26 +79,16 @@ class DailyGirlPresenter(context: Context, private val mModelView: DailyGirlCont
                 })
     }
 
-    private fun parseDocument(document: Document?) {
-        if (document != null) {
-            val list = getDays(document)
-            //            list = filterData(list, mModelView);
-            if (ListUtils.getSize(list) > 0) {
-                mModelView.refillData(list)
-            }
-        }
-    }
-
     /**
      * 筛选过滤得到月份集合
      */
-    private fun getDays(doc: Document?): List<Girl> {
+    private fun parseData(doc: Document?): List<Girl> {
         val list = ArrayList<Girl>()
         if (doc != null) {
             val times = doc.select(".post-content .archive-brick")
-            val a_href = doc.select(".post-content .archive-brick a")
-            for (i in a_href.indices) {
-                list.add(Girl(a_href[i].attr("href"), times[i].text()))
+            val href = doc.select(".post-content .archive-brick a")
+            for (i in href.indices) {
+                list.add(Girl(href[i].attr("href"), times[i].text()))
             }
         }
         return list
@@ -167,7 +134,11 @@ class DailyGirlPresenter(context: Context, private val mModelView: DailyGirlCont
         return imgUrl
     }
 
+    override fun onDestroy() {
+
+    }
+
     companion object {
-        private val MEIZI_FIRST_URL = "http://m.mzitu.com/all"
+        private const val MEIZI_FIRST_URL = "http://m.mzitu.com/all"
     }
 }

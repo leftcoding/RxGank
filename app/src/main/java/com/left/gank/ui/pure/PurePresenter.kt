@@ -22,10 +22,10 @@ class PurePresenter internal constructor(context: Context, view: PureContract.Vi
     private var maxPageNumber: Int = 0
     private var maxImages: Int = 0
 
-    internal override fun loadData(page: Int) {
+    override fun loadData(page: Int) {
         val url = getUrl(page)
         JsoupServer.rxConnect(url).build()
-                .doOnSubscribe { disposable ->
+                .doOnSubscribe {
                     if (view != null) {
                         view.showProgress()
                     }
@@ -61,10 +61,10 @@ class PurePresenter internal constructor(context: Context, view: PureContract.Vi
                 })
     }
 
-    internal override fun loadImages(url: String) {
+    override fun loadImages(url: String) {
         JsoupServer.rxConnect(url)
                 .build()
-                .doOnSubscribe { disposable ->
+                .doOnSubscribe {
                     if (view != null) {
                         view.showLoadingDialog()
                     }
@@ -134,10 +134,10 @@ class PurePresenter internal constructor(context: Context, view: PureContract.Vi
         val lastPointIndex: Int
         val lastNameIndex: Int
         if (url.contains(".")) {
-            if (url.contains("-")) {
-                lastPointIndex = url.lastIndexOf("-")
+            lastPointIndex = if (url.contains("-")) {
+                url.lastIndexOf("-")
             } else {
-                lastPointIndex = url.lastIndexOf(".")
+                url.lastIndexOf(".")
             }
             lastNameIndex = url.lastIndexOf("/")
             baseUrl = url.substring(0, lastNameIndex)
@@ -148,10 +148,10 @@ class PurePresenter internal constructor(context: Context, view: PureContract.Vi
         var number: String
         var lastUrl: String
         for (i in 1..maxPageNumber) {
-            if (i < 10) {
-                number = "0$i"
+            number = if (i < 10) {
+                "0$i"
             } else {
-                number = i.toString()
+                i.toString()
             }
             lastUrl = baseUrl + name + number + endType
             imagesList.add(Gift(lastUrl))
@@ -190,13 +190,11 @@ class PurePresenter internal constructor(context: Context, view: PureContract.Vi
     }
 
     private fun getUrl(page: Int): String {
-        val _url: String
-        if (page == 1) {
-            _url = BASE_URL
+        return if (page == 1) {
+            BASE_URL
         } else {
-            _url = nextUrl + page
+            nextUrl + page
         }
-        return _url
     }
 
     private fun getMaxPageNum(doc: Document?): Int {
@@ -227,8 +225,8 @@ class PurePresenter internal constructor(context: Context, view: PureContract.Vi
     }
 
     companion object {
-        private val BASE_URL = "http://www.mzitu.com/mm/"
-        private val HOST = "page/"
-        private val nextUrl = BASE_URL + HOST
+        private const val BASE_URL = "http://www.mzitu.com/mm/"
+        private const val HOST = "page/"
+        private const val nextUrl = BASE_URL + HOST
     }
 }

@@ -18,6 +18,7 @@
       <module fileurl="file://$PROJECT_DIR$/support-permission/support-permission.iml" filepath="$PROJECT_DIR$/support-permission/support-permission.iml" />
       <module fileurl="file://$PROJECT_DIR$/support-rxjava/support-rxjava.iml" filepath="$PROJECT_DIR$/support-rxjava/support-rxjava.iml" />
       <module fileurl="file://$PROJECT_DIR$/support-ui/support-ui.iml" filepath="$PROJECT_DIR$/support-ui/support-ui.iml" />
+      <module fileurl="file://$PROJECT_DIR$/support-utils/support-utils.iml" filepath="$PROJECT_DIR$/support-utils/support-utils.iml" />
     </modules>
   </component>
 </project>

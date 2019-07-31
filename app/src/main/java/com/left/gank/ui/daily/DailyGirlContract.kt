@@ -13,12 +13,12 @@ import com.left.gank.mvp.base.SupportView
 
 interface DailyGirlContract {
     interface View : SupportView {
-        fun refillData(list: List<Girl>)
+        fun loadDailyGirlSuccess(list: List<Girl>)
 
-        fun appendItem(list: List<Girl>)
+        fun loadDailyGirlFailure(msg: String)
     }
 
     abstract class Presenter(context: Context, view: View) : LoadMorePresenter<View>(context, view) {
-        internal abstract fun loadGirls(page: Int)
+        internal abstract fun loadGirls()
     }
 }

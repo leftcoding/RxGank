@@ -58,10 +58,6 @@ public class DailyGirlFragment extends LazyFragment implements DailyGirlContract
             public void onLoadMore() {
             }
         });
-
-        dailyGirlAdapter.setOnItemClickListener((position, object) -> {
-
-        });
     }
 
     private void showLoadingDialog() {
@@ -140,13 +136,14 @@ public class DailyGirlFragment extends LazyFragment implements DailyGirlContract
         multipleStatusView.showLoading();
     }
 
+
     @Override
-    public void refillData(@NotNull List<? extends Girl> list) {
+    public void loadDailyGirlSuccess(@NotNull List<? extends Girl> list) {
 
     }
 
     @Override
-    public void appendItem(@NotNull List<? extends Girl> list) {
+    public void loadDailyGirlFailure(@NotNull String msg) {
 
     }
 }
