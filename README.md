@@ -7,15 +7,15 @@
 ### 更新说明
 *优化下之前的写的代码*
 
-- support-adapter           适配器（开发中...）
-- support-basic             基本组件（开发中...）
-- support-business          网络请求封装（二次优化）
-- support-download          下载（开发中...）
-- support-file              文件管理（<a href="https://github.com/leftcoding/RxGank/blob/master/support-file/README.md">README</a>）
-- support-jsoup             爬虫（二次优化）
-- support-network           网络库（二次优化）
-- support-rxbus             rxbus（开发中...）
-- support-ui                基本UI（开发中...）
+- adapter           适配器（开发中...）
+- basic             基本组件（开发中...）
+- business          网络请求封装（二次优化）
+- download          网络下载（<a href="https://github.com/leftcoding/LiDownload">README</a>）
+- file              文件管理（<a href="https://github.com/leftcoding/RxGank/blob/master/support-file/README.md">README</a>）
+- jsoup             爬虫（二次优化）
+- network           网络库（二次优化）
+- rxbus             rxbus（开发中...）
+- ui                基本UI（开发中...）
 
 
 ## 以下都是之前的说明
