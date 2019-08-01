@@ -16,8 +16,8 @@ public class Constants {
     public static final String TECHNOLOGY = "科技资讯";
 
     public static final String QINGCHUN = "清纯";
-    public static final String DAILY_GIRL = "每日更新";
     public static final String CURE = "治愈系";
+    public static final String DAILY_GIRL = "每日更新";
 
     //image save path
     public static final String IMAGE_PATH = "Gankly" + File.separator + "pic";

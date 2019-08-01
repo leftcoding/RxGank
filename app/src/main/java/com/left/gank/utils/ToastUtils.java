@@ -1,6 +1,7 @@
 package com.left.gank.utils;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.widget.Toast;
 
@@ -34,6 +35,7 @@ public class ToastUtils {
     }
 
     private static void show(Context context, String msg, int duration) {
+        if (TextUtils.isEmpty(msg)) return;
         cancel();
         toast = Toast.makeText(context.getApplicationContext(), msg, duration);
         toast.setGravity(Gravity.CENTER, 0, 0);

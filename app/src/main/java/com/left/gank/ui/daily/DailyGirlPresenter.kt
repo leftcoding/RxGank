@@ -6,8 +6,6 @@ import android.content.Context
 import android.jsoup.JsoupServer
 import android.ui.logcat.Logcat
 import com.uber.autodispose.ObservableSubscribeProxy
-import io.reactivex.Observer
-import io.reactivex.disposables.Disposable
 import org.jsoup.nodes.Document
 import java.util.*
 
@@ -16,67 +14,99 @@ import java.util.*
  */
 
 class DailyGirlPresenter(context: Context, view: DailyGirlContract.View) : DailyGirlContract.Presenter(context, view) {
-    private var imagesList: ArrayList<Gift>? = null
     private var max: Int = 0
 
     override fun loadGirls() {
         JsoupServer.rxConnect(MEIZI_FIRST_URL)
                 .build()
                 .map { doc -> parseData(doc) }
+                .doOnSubscribe {
+                    if (view != null) {
+                        view.showProgress()
+                    }
+                }
+                .doFinally {
+                    if (view != null) {
+                        view.hideProgress()
+                    }
+                }
                 .`as`<ObservableSubscribeProxy<List<Girl>>>(bindLifecycle<List<Girl>>())
                 .subscribe({ list ->
                     if (view != null) {
                         view.loadDailyGirlSuccess(list)
                     }
-                }, { e -> Logcat.e(e) })
-    }
-
-    private fun getImages(url: String) {
-        JsoupServer.rxConnect(url).build()
-                .map<String> { document -> getImageCountList(document) }
-                .subscribe(object : Observer<String> {
-                    override fun onComplete() {
-                    }
-
-                    override fun onError(e: Throwable) {
-                    }
-
-                    override fun onSubscribe(d: Disposable) {
-                        //empty
-                    }
-
-                    override fun onNext(url: String) {
-                        imagesList = ArrayList()
-                        var baseUrl: String? = null
-                        var name: String? = null
-                        var endType: String? = null
-                        val lastPointIndex: Int
-                        val lastNameIndex: Int
-                        if (url.contains(".")) {
-                            lastPointIndex = if (url.contains("-")) {
-                                url.lastIndexOf("-")
-                            } else {
-                                url.lastIndexOf(".")
-                            }
-                            lastNameIndex = url.lastIndexOf("/")
-                            baseUrl = url.substring(0, lastNameIndex)
-                            name = url.substring(lastNameIndex, lastPointIndex - 2)
-                            endType = url.substring(lastPointIndex, url.length)
-                        }
-
-                        var number: String
-                        var lastUrl: String
-                        for (i in 1..max) {
-                            number = if (i < 10) {
-                                "0$i"
-                            } else {
-                                i.toString()
-                            }
-                            lastUrl = baseUrl + name + number + endType
-                            imagesList!!.add(Gift(lastUrl))
-                        }
+                }, { e ->
+                    Logcat.e(e)
+                    if (view != null) {
+                        view.loadDailyGirlFailure(e.toString())
                     }
                 })
+    }
+
+    override fun getImages(url: String) {
+        JsoupServer.rxConnect(url)
+                .build()
+                .map<String> { document ->
+                    max = getImageUrlsMax(document)
+                    getImageCountList(document)
+                }
+                .map<List<Gift>> { imageUrl -> parseImageUrl(imageUrl) }
+                .doOnSubscribe {
+                    if (view != null) {
+                        view.showLoadingDialog()
+                    }
+                }
+                .doFinally {
+                    if (view != null) {
+                        view.hideLoadingDialog()
+                    }
+                }
+                .`as`<ObservableSubscribeProxy<List<Gift>>>(bindLifecycle<List<Gift>>())
+                .subscribe({ imagesList ->
+                    if (view != null) {
+                        view.loadImagesSuccess(imagesList)
+                    }
+                }, { e ->
+                    Logcat.e(e)
+                    if (view != null) {
+                        view.loadImagesFailure(e.toString())
+                    }
+                })
+    }
+
+    private fun parseImageUrl(imageUrl: String?): List<Gift> {
+        val imagesList = arrayListOf<Gift>()
+        if (imageUrl != null) {
+            var baseUrl: String? = null
+            var name: String? = null
+            var endType: String? = null
+            val lastPointIndex: Int
+            val lastNameIndex: Int
+            if (imageUrl.contains(".")) {
+                lastPointIndex = if (imageUrl.contains("-")) {
+                    imageUrl.lastIndexOf("-")
+                } else {
+                    imageUrl.lastIndexOf(".")
+                }
+                lastNameIndex = imageUrl.lastIndexOf("/")
+                baseUrl = imageUrl.substring(0, lastNameIndex)
+                name = imageUrl.substring(lastNameIndex, lastPointIndex - 2)
+                endType = imageUrl.substring(lastPointIndex, imageUrl.length)
+            }
+
+            var number: String
+            var lastUrl: String
+            for (i in 1..max) {
+                number = if (i < 10) {
+                    "0$i"
+                } else {
+                    i.toString()
+                }
+                lastUrl = baseUrl + name + number + endType
+                imagesList.add(Gift(lastUrl))
+            }
+        }
+        return imagesList
     }
 
     /**
@@ -97,7 +127,7 @@ class DailyGirlPresenter(context: Context, view: DailyGirlContract.View) : Daily
 
     private fun getImageUrlsMax(doc: Document?): Int {
         var max = 0
-        if (doc != null) {
+        doc?.apply {
             val page = doc.select(".prev-next-page")
             if (page.size > 0) {
                 var mm = page[0].text()
@@ -115,12 +145,7 @@ class DailyGirlPresenter(context: Context, view: DailyGirlContract.View) : Daily
                 }
             }
         }
-
         return max
-    }
-
-    private fun getImageUrl(url: String): String {
-        return "$url/0"
     }
 
     private fun getImageCountList(doc: Document?): String? {

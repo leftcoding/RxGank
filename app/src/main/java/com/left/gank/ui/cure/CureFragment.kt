@@ -137,9 +137,9 @@ class CureFragment : LazyFragment(), CureContract.View {
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
         cureAdapter.destroy()
         curePresenter.destroy()
+        super.onDestroyView()
     }
 
     override fun onLazyActivityCreate() {

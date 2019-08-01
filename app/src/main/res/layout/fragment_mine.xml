@@ -139,42 +139,6 @@
                         android:text="@string/mine_setting" />
                 </com.left.gank.widget.LYRelativeLayoutRipple>
             </androidx.appcompat.widget.LinearLayoutCompat>
-
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:elevation="1dp"
-                android:orientation="vertical"
-                app:divider="@drawable/shape_item_divider"
-                app:showDividers="middle">
-
-                <com.left.gank.widget.LYRelativeLayoutRipple
-                    android:id="@+id/mine_download_group"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingStart="16dp"
-                    android:paddingTop="16dp"
-                    android:paddingEnd="0dp"
-                    android:paddingBottom="16dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:drawableStart="@drawable/mine_browse"
-                        android:drawablePadding="10dp"
-                        android:gravity="center_vertical"
-                        android:text="下载测试" />
-
-                </com.left.gank.widget.LYRelativeLayoutRipple>
-
-                <ProgressBar
-                    android:id="@+id/progress_bar"
-                    style="?android:attr/progressBarStyleHorizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-            </androidx.appcompat.widget.LinearLayoutCompat>
         </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.core.widget.NestedScrollView>
 

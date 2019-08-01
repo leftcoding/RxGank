@@ -13,7 +13,6 @@ import kotlinx.android.synthetic.main.adapter_daily_girl.view.*
  */
 class DailyGirlAdapter internal constructor() : BaseAdapter<BasicHolder<*>>() {
     private var itemClick: ItemCallback? = null
-    private var girlList: List<Girl>? = null
     private val items = mutableListOf<ItemModel>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BasicHolder<*> {
@@ -30,14 +29,13 @@ class DailyGirlAdapter internal constructor() : BaseAdapter<BasicHolder<*>>() {
         this.itemClick = itemClick
     }
 
-    override fun getItemCount(): Int = girlList?.size ?: 0
+    override fun getItemCount(): Int = items.size
 
-    fun refillItem(girlList: List<Girl>?) {
+    fun refillItem(girlList: List<Girl?>?) {
         items.clear()
-        girlList?.forEach {
+        girlList?.filterNotNull()?.forEach {
             items.add(NormalItem(it))
         }
-        this.girlList = girlList
     }
 
     class DailyGirlHolder(parent: ViewGroup, private val call: ItemCallback?) : BasicHolder<NormalItem>(parent, R.layout.adapter_daily_girl) {

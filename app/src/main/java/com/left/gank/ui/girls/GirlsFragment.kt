@@ -10,9 +10,9 @@ import com.left.gank.base.LazyFragment
 import com.left.gank.base.fragment.SupportFragment
 import com.left.gank.config.Constants
 import com.left.gank.ui.cure.CureFragment
+import com.left.gank.ui.daily.DailyGirlFragment
 import com.left.gank.ui.pure.PureFragment
 import kotlinx.android.synthetic.main.fragment_girls.*
-import java.util.*
 
 /**
  * 美しい妹
@@ -20,15 +20,17 @@ import java.util.*
  */
 class GirlsFragment : SupportFragment() {
     private lateinit var girlsAdapter: GirlsAdapter
-    private val titles = ArrayList<String>()
-    private val fragments = ArrayList<LazyFragment>()
+    private val titles = arrayListOf<String>()
+    private val fragments = arrayListOf<LazyFragment>()
 
     init {
         titles.add(Constants.QINGCHUN)
         titles.add(Constants.CURE)
+        titles.add(Constants.DAILY_GIRL)
 
         fragments.add(PureFragment())
         fragments.add(CureFragment())
+        fragments.add(DailyGirlFragment())
     }
 
     override fun fragmentLayoutId(): Int {
@@ -51,7 +53,7 @@ class GirlsFragment : SupportFragment() {
         girlsAdapter = GirlsAdapter(childFragmentManager, fragments, titles)
         girl_view_pager!!.apply {
             adapter = girlsAdapter
-            offscreenPageLimit = 1
+            offscreenPageLimit = fragments.size
             addOnPageChangeListener(pageChangeListener)
             currentItem = 0
         }
