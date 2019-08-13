@@ -38,7 +38,6 @@ dependencies {
     api project(path: ':support-network')
     api project(path: ':support-download')
     api project(path: ':support-file')
-    api project(path: ':support-permission')
 
     api rootProject.ext.kotlinDeps.kotlin
     api rootProject.ext.supportLibs

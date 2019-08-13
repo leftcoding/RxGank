@@ -2,10 +2,12 @@ package com.left.gank.ui.splash
 
 import android.animation.Animator
 import android.content.Intent
+import android.file.LiFile
+import android.left.permission.base.Permissions
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.permission.application.PermissionApp
+import android.permission.aop.api.PermissionRequest
 import com.left.gank.R
 import com.left.gank.base.activity.BaseActivity
 import com.left.gank.domain.PoseCode
@@ -20,10 +22,7 @@ import org.greenrobot.eventbus.ThreadMode
  *
  * Create by LingYan on 2019-06-30
  */
-@PermissionApp
 class SplashActivity : BaseActivity() {
-    private var permissionSuccess = false
-
     private val handler: Handler = Handler(Looper.getMainLooper())
 
     companion object {
@@ -38,19 +37,19 @@ class SplashActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (permissionSuccess) {
-            delayStartAnimate()
-        }
+        delayStartAnimate()
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public fun onMessageEvent(postEvent: PoseEvent) {
+    fun onMessageEvent(postEvent: PoseEvent) {
         if (postEvent.code == PoseCode.NEED_PERMISSION_SUCCESS) {
             delayStartAnimate()
         }
     }
 
+    @PermissionRequest(permissions = [Permissions.WRITE_EXTERNAL_STORAGE, Permissions.READ_EXTERNAL_STORAGE], repeat = true)
     private fun delayStartAnimate() {
+        LiFile.init(this@SplashActivity)
         handler.post { startAnim() }
     }
 

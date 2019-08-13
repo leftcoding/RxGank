@@ -1,1 +1,1 @@
-include ':app', ':superplayerlibrary', ':ijkplayerlibrary', ':support-network', ':support-rxjava', ':support-ui', ':support-business', ':support-jsoup', ':support-adapter', ':support-basic', ':support-file', ':support-download', ':support-permission', ':support-eventbus', ':support-utils'
+include ':app', ':superplayerlibrary', ':ijkplayerlibrary', ':support-network', ':support-rxjava', ':support-ui', ':support-business', ':support-jsoup', ':support-adapter', ':support-basic', ':support-file', ':support-download', ':support-eventbus', ':support-utils'

@@ -2,10 +2,10 @@ package com.left.gank.utils;
 
 import android.app.Activity;
 import android.content.Context;
-import android.permission.LiPermission;
-import android.permission.RationaleListener;
-import android.permission.RequestCallback;
-import android.permission.RequestExecutor;
+import android.left.permission.LiPermission;
+import android.left.permission.request.RationaleListener;
+import android.left.permission.request.RequestCallback;
+import android.left.permission.request.RequestExecutor;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;

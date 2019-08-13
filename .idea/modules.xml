@@ -15,7 +15,6 @@
       <module fileurl="file://$PROJECT_DIR$/support-file/support-file.iml" filepath="$PROJECT_DIR$/support-file/support-file.iml" />
       <module fileurl="file://$PROJECT_DIR$/support-jsoup/support-jsoup.iml" filepath="$PROJECT_DIR$/support-jsoup/support-jsoup.iml" />
       <module fileurl="file://$PROJECT_DIR$/support-network/support-network.iml" filepath="$PROJECT_DIR$/support-network/support-network.iml" />
-      <module fileurl="file://$PROJECT_DIR$/support-permission/support-permission.iml" filepath="$PROJECT_DIR$/support-permission/support-permission.iml" />
       <module fileurl="file://$PROJECT_DIR$/support-rxjava/support-rxjava.iml" filepath="$PROJECT_DIR$/support-rxjava/support-rxjava.iml" />
       <module fileurl="file://$PROJECT_DIR$/support-ui/support-ui.iml" filepath="$PROJECT_DIR$/support-ui/support-ui.iml" />
       <module fileurl="file://$PROJECT_DIR$/support-utils/support-utils.iml" filepath="$PROJECT_DIR$/support-utils/support-utils.iml" />
