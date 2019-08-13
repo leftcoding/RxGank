@@ -36,7 +36,7 @@
 应用含有知识干货、新鲜事、妹子、科技资讯，搞笑视频和图片，动态更新皮肤等，图片来源于<a href="http://www.mzitu.com/">妹子图</a>，图标来源于<a href="http://iconfont.cn/">阿里巴巴矢量图</a>，项目采用 mvp-clean 架构，基于 Glide + retrofit2 + rxjava2 + Rxbus + butterknife。
 
 ### 应用截图
-<img src="art/1.png" height="650" width="320"> <img src="art/2.png" height="650" width="320">
+<img src="art/1.png" height="650" width="320"> <img src="art/2.png" height="650" width="320"> <img src="art/3.png" height="650" width="320">
 
 ![image](art/1.png)
 
