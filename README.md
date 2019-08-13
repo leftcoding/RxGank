@@ -36,27 +36,9 @@
 应用含有知识干货、新鲜事、妹子、科技资讯，搞笑视频和图片，动态更新皮肤等，图片来源于<a href="http://www.mzitu.com/">妹子图</a>，图标来源于<a href="http://iconfont.cn/">阿里巴巴矢量图</a>，项目采用 mvp-clean 架构，基于 Glide + retrofit2 + rxjava2 + Rxbus + butterknife。
 
 ### 应用截图
-<img src="art/1.png" height="610" width="290"> <img src="art/2.png" height="610" width="290"> <img src="art/3.png" height="610" width="290">
-
-![image](art/1.png)
-
-![image](art/2.png)
-
-![image](art/3.png)
-
-![image](art/4.png)
-
-![image](art/5.png)
-
-![image](art/6.png)
-
-![image](art/7.png)
-
-![image](art/8.png)
-
-![image](art/9.png) 
-
-
+<img src="art/1.png" height="600" width="290"> <img src="art/2.png" height="600" width="290"> <img src="art/3.png" height="600" width="290">
+<img src="art/4.png" height="600" width="290"> <img src="art/5.png" height="600" width="290"> <img src="art/6.png" height="600" width="290">
+<img src="art/7.png" height="600" width="290"> <img src="art/8.png" height="600" width="290"> <img src="art/9.png" height="600" width="290">
 
 ###  动图
 
