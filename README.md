@@ -1,12 +1,6 @@
 # Gank
 
-
-
-[![license](https://img.shields.io/badge/license-MIT-blue.svg)](*https://github.com/leftcoding/GankLy#*声明)
-
-[![platform](https://img.shields.io/badge/platform-Android-yellow.svg)](*https://www.android.com*)
-
-[![API](https://img.shields.io/badge/API-21%2B-blue.svg?style=flat)](*https://android-arsenal.com/api?level=21#l21*)
+[![license](https://img.shields.io/badge/license-MIT-blue.svg)](*https://github.com/leftcoding/GankLy#*声明)[![platform](https://img.shields.io/badge/platform-Android-yellow.svg)](*https://www.android.com*)[![API](https://img.shields.io/badge/API-21%2B-blue.svg?style=flat)](*https://android-arsenal.com/api?level=21#l21*)
 
 
 
@@ -171,10 +165,8 @@
 
 
 ### 声明
-
+```
 ​    Copyright 2016 LeftCoding
-
-
 
 ​    Licensed under the Apache License, Version 2.0 （the "License"）;
 
@@ -182,11 +174,7 @@
 
 ​    You may obtain a copy of the License at
 
-
-
 ​     http://www.apache.org/licenses/LICENSE-2.0
-
-
 
 ​    Unless required by applicable law or agreed to in writing, software
 
@@ -197,3 +185,4 @@
 ​    See the License for the specific language governing permissions and
 
 ​    limitations under the License.
+```
