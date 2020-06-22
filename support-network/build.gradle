@@ -30,4 +30,6 @@ dependencies {
     api rootProject.ext.okhttp3.logging_interceptor
 
     api rootProject.ext.retrofitLibs
+
+    api "androidx.lifecycle:lifecycle-extensions:2.1.0"
 }

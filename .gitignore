@@ -72,3 +72,4 @@ support-coding-download/libs/
 support-coding-download/src/main/res/drawable/
 support-coding-file/libs/
 support-coding-file/src/main/res/drawable/
+!/.idea/

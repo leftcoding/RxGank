@@ -75,7 +75,7 @@ class MainActivity : BaseActivity() {
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         RxApiManager.get().clear()
+        super.onDestroy()
     }
 }
