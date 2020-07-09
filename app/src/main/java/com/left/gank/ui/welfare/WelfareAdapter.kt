@@ -6,13 +6,14 @@ import android.graphics.Bitmap
 import android.util.ArrayMap
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.LifecycleOwner
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.target.BitmapImageViewTarget
 import com.bumptech.glide.request.transition.Transition
 import com.left.gank.R
+import com.left.gank.butterknife.adapter.BindHolder
 import com.left.gank.butterknife.adapter.FootAdapter
-import com.left.gank.butterknife.holder.BindHolder
 import com.left.gank.butterknife.item.ItemModel
 import kotlinx.android.synthetic.main.adapter_meizi.view.*
 import java.util.*
@@ -20,7 +21,8 @@ import java.util.*
 /**
  * Create by LingYan on 2018-09-25
  */
-class WelfareAdapter internal constructor(context: Context) : FootAdapter<WelfareAdapter.ViewHolder, List<Gank>>(context) {
+class WelfareAdapter internal constructor(context: Context, lifecycleOwner: LifecycleOwner)
+    : FootAdapter<WelfareAdapter.ViewHolder, List<Gank>>(context, lifecycleOwner) {
     private val models = ArrayList<ItemModel>()
     private var itemClickListener: ItemClickListener? = null
 

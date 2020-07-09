@@ -27,7 +27,7 @@ class AndroidFragment : LazyFragment(), AndroidContract.View {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        androidAdapter = AndroidAdapter(context!!).apply {
+        androidAdapter = AndroidAdapter(context!!, this).apply {
             setErrorListener(errorListener)
             setCallback(callback)
         }
@@ -134,9 +134,6 @@ class AndroidFragment : LazyFragment(), AndroidContract.View {
     }
 
     override fun onDestroyView() {
-        if (::androidAdapter.isInitialized) {
-            androidAdapter.destroy()
-        }
         if (::androidPresenter.isInitialized) {
             androidPresenter.destroy()
         }

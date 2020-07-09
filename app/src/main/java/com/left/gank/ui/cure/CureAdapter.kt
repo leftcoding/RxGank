@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.annotation.IntDef
 import com.left.gank.R
 import com.left.gank.butterknife.adapter.BaseAdapter
-import com.left.gank.butterknife.holder.BindHolder
+import com.left.gank.butterknife.adapter.BindHolder
 import com.left.gank.butterknife.item.ItemModel
 import kotlinx.android.synthetic.main.adapter_daily_girl.view.*
 import java.util.*
@@ -62,11 +62,6 @@ class CureAdapter internal constructor() : BaseAdapter<CureAdapter.NormalHolder<
         for (gift in gifts) {
             items.add(CureItem(gift))
         }
-    }
-
-    override fun destroy() {
-        items.clear()
-        gifts.clear()
     }
 
     internal class CureHolder(parent: ViewGroup, private val callback: Callback?) : NormalHolder<CureItem>(parent, R.layout.adapter_daily_girl) {

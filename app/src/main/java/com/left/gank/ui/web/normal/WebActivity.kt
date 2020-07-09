@@ -4,29 +4,24 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.text.TextUtils
 import android.util.Base64
 import android.view.*
 import android.widget.FrameLayout
 import com.left.gank.R
 import com.left.gank.base.activity.BaseActivity
 import com.left.gank.config.Constants
-import com.left.gank.data.entity.ReadHistory
-import com.left.gank.data.entity.UrlCollect
-import com.left.gank.mvp.source.LocalDataSource
 import com.left.gank.utils.AppUtils
 import com.left.gank.utils.ShareUtils
 import com.left.gank.utils.ToastUtils
 import com.tencent.smtt.export.external.interfaces.IX5WebChromeClient
 import com.tencent.smtt.sdk.*
 import kotlinx.android.synthetic.main.activity_web.*
-import java.util.*
 
 /**
  * 普通webView
  * Create by LingYan on 2016-5-10
  */
-class WebActivity : BaseActivity(), WebContract.View {
+class WebActivity : BaseActivity() {
     private var webView: WebView? = null
     private var url: String? = null
     private var title: String? = null
@@ -36,29 +31,9 @@ class WebActivity : BaseActivity(), WebContract.View {
     private var isInitCollect: Boolean = false
     private var mStates = CollectStates.NORMAL
     private var mFromType: Int = 0
-    private var mPresenter: WebContract.Presenter? = null
     private var mMenuItem: MenuItem? = null
 
     private var uploadFile: ValueCallback<Uri>? = null
-
-    override val collect: UrlCollect
-        get() = UrlCollect(null, url, title, Date(), collectType, author)
-
-    override fun showProgress() {
-
-    }
-
-    override fun hideProgress() {
-
-    }
-
-    override fun showEmpty() {
-
-    }
-
-    override fun showContent() {
-
-    }
 
     internal enum class CollectStates {
         NORMAL, COLLECT, UN_COLLECT
@@ -69,8 +44,6 @@ class WebActivity : BaseActivity(), WebContract.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         parseBundle()
-        mPresenter = WebPresenter(LocalDataSource.getInstance(), this)
-
         webView = WebView(applicationContext, null)
 
         web_view!!.addView(webView, FrameLayout.LayoutParams(
@@ -116,12 +89,6 @@ class WebActivity : BaseActivity(), WebContract.View {
         toolbar!!.setNavigationOnClickListener { finish() }
 
         isInitCollect = true
-        if (!TextUtils.isEmpty(url)) {
-            if (mPresenter != null) {
-                mPresenter!!.findCollectUrl(url!!)
-                mPresenter!!.insetHistoryUrl(ReadHistory(null, url, title, Date(), collectType))
-            }
-        }
     }
 
     private fun parseBundle() {
@@ -152,7 +119,6 @@ class WebActivity : BaseActivity(), WebContract.View {
             R.id.welfare_collect -> {
                 mStates = CollectStates.NORMAL
                 isCollect = !isCollect
-                mPresenter!!.collectAction(isCollect)
                 switchCollectIcon(isCollect)
                 return true
             }
@@ -331,19 +297,6 @@ class WebActivity : BaseActivity(), WebContract.View {
             webView = null
         }
         super.onDestroy() // All you have to do is destroy() the WebView before Activity finishes
-    }
-
-    override fun onCollect() {
-        switchCollectIcon(true)
-    }
-
-    override fun onCancelCollect() {
-        switchCollectIcon(false)
-    }
-
-    override fun setCollectIcon(isCollect: Boolean) {
-        invalidateOptionsMenu()//更新Menu
-        this.isCollect = isCollect
     }
 
     companion object {

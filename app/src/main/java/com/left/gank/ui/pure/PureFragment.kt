@@ -108,7 +108,6 @@ class PureFragment : LazyFragment(), PureContract.View {
     }
 
     override fun onDestroyView() {
-        pureAdapter.destroy()
         if (disposable != null) {
             disposable!!.dispose()
         }

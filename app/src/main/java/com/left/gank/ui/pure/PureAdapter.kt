@@ -10,7 +10,7 @@ import com.bumptech.glide.load.model.LazyHeaders
 import com.bumptech.glide.request.RequestOptions
 import com.left.gank.R
 import com.left.gank.butterknife.adapter.BaseAdapter
-import com.left.gank.butterknife.holder.BindHolder
+import com.left.gank.butterknife.adapter.BindHolder
 import com.left.gank.butterknife.item.ItemModel
 import com.left.gank.utils.ListUtils
 import kotlinx.android.synthetic.main.adapter_gift.view.*
@@ -88,12 +88,6 @@ class PureAdapter : BaseAdapter<BindHolder<*>>() {
 
     fun setOnItemClickListener(callback: Callback) {
         this.callback = callback
-    }
-
-    override fun destroy() {
-        items.clear()
-        gifts.clear()
-        unregisterAdapterDataObserver(observer)
     }
 
     internal class GiftHolder(parent: ViewGroup, private val callback: Callback?) : BindHolder<GiftItem>(parent, R.layout.adapter_gift) {

@@ -3,8 +3,9 @@ package com.left.gank.ui.ios
 import android.business.domain.Gank
 import android.content.Context
 import android.view.ViewGroup
+import androidx.lifecycle.LifecycleOwner
+import com.left.gank.butterknife.adapter.BindHolder
 import com.left.gank.butterknife.adapter.FootAdapter
-import com.left.gank.butterknife.holder.BindHolder
 import com.left.gank.butterknife.item.ItemModel
 import com.left.gank.ui.ios.text.ItemCallback
 import com.left.gank.ui.ios.text.TextHolder
@@ -16,7 +17,7 @@ import java.util.*
 /**
  * Create by LingYan on 2016-04-25
  */
-internal class IosAdapter(context: Context) : FootAdapter<BindHolder<*>, List<Gank>>(context) {
+internal class IosAdapter(context: Context, lifecycleOwner: LifecycleOwner) : FootAdapter<BindHolder<*>, List<Gank>>(context, lifecycleOwner) {
     private val itemModels = ArrayList<ItemModel>()
 
     private var itemCallback: ItemCallback? = null
@@ -46,10 +47,6 @@ internal class IosAdapter(context: Context) : FootAdapter<BindHolder<*>, List<Ga
             ViewType.NORMAL -> bindHolder = TextHolder(parent, itemCallback)
         }
         return bindHolder
-    }
-
-    override fun destroy() {
-        itemCallback = null
     }
 
     fun setOnItemClickListener(itemCallBack: ItemCallback) {

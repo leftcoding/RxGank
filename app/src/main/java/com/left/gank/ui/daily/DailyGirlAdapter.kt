@@ -4,7 +4,7 @@ import android.business.domain.Girl
 import android.view.ViewGroup
 import com.left.gank.R
 import com.left.gank.butterknife.adapter.BaseAdapter
-import com.left.gank.butterknife.holder.BasicHolder
+import com.left.gank.butterknife.adapter.BasicHolder
 import com.left.gank.butterknife.item.ItemModel
 import kotlinx.android.synthetic.main.adapter_daily_girl.view.*
 
@@ -55,10 +55,6 @@ class DailyGirlAdapter internal constructor() : BaseAdapter<BasicHolder<*>>() {
         override fun getViewType(): Int {
             return 0
         }
-    }
-
-    override fun destroy() {
-
     }
 
     interface ItemCallback {

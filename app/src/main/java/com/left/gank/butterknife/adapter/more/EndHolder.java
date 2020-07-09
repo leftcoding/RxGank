@@ -3,7 +3,7 @@ package com.left.gank.butterknife.adapter.more;
 import android.view.ViewGroup;
 
 import com.left.gank.R;
-import com.left.gank.butterknife.holder.BindHolder;
+import com.left.gank.butterknife.adapter.BindHolder;
 
 public class EndHolder extends BindHolder<EndItem> {
 

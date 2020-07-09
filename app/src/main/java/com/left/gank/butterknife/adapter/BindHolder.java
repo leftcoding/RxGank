@@ -1,10 +1,11 @@
-package com.left.gank.butterknife.holder;
+package com.left.gank.butterknife.adapter;
 
 import android.view.ViewGroup;
 
+import androidx.annotation.LayoutRes;
+
 import com.left.gank.butterknife.item.ItemModel;
 
-import androidx.annotation.LayoutRes;
 import butterknife.ButterKnife;
 
 /**
@@ -16,6 +17,4 @@ public abstract class BindHolder<II extends ItemModel> extends BasicHolder<II> {
         super(parent, layout);
         ButterKnife.bind(this, itemView);
     }
-
-    public abstract void bindHolder(II item);
 }

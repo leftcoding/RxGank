@@ -6,7 +6,7 @@ import android.ui.logcat.Logcat
 import android.view.View
 import com.left.gank.R
 import com.left.gank.base.fragment.SupportFragment
-import com.left.gank.rx.mainThread
+import com.left.gank.rx.RxSchedulers
 import com.left.gank.utils.RxSaveImage
 import com.left.gank.utils.ShareUtils
 import com.left.gank.widget.BottomSheetGalleryMenuDialog
@@ -65,7 +65,7 @@ class GalleryFragment : SupportFragment() {
 
     private fun onEvent(save: Boolean) {
         RxSaveImage.convertBitmap(context, url)
-                .observeOn(mainThread())
+                .observeOn(RxSchedulers.mainThread())
                 .map<Uri> { bitmap ->
                     val file = RxSaveImage.createImageFile(bitmap.hashCode().toString())
                     if (file != null) {

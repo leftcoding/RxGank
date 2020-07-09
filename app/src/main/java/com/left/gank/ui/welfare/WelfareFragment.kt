@@ -53,7 +53,7 @@ class WelfareFragment : LazyFragment(), WelfareContract.View {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        welfareAdapter = WelfareAdapter(context!!).apply {
+        welfareAdapter = WelfareAdapter(context!!, this).apply {
             setListener(itemClickListener)
         }
 

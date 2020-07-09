@@ -54,7 +54,7 @@ class IosFragment : LazyFragment(), IosContract.View {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        iosAdapter = IosAdapter(context!!)
+        iosAdapter = IosAdapter(context!!, this)
         iosAdapter.setOnItemClickListener(onItemClickListener)
 
         val onFlexibleScrollListener = OnFlexibleScrollListener(swipe_refresh!!)

@@ -4,15 +4,16 @@ import android.business.domain.Gank
 import android.content.Context
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.LifecycleOwner
 import com.left.gank.R
+import com.left.gank.butterknife.adapter.BindHolder
 import com.left.gank.butterknife.adapter.FootAdapter
-import com.left.gank.butterknife.holder.BindHolder
 import com.left.gank.butterknife.item.ItemModel
 import com.left.gank.utils.DateUtils
 import kotlinx.android.synthetic.main.adapter_android.view.*
 import java.util.*
 
-class AndroidAdapter(context: Context) : FootAdapter<BindHolder<*>, List<Gank>>(context) {
+class AndroidAdapter(context: Context, lifecycleOwner: LifecycleOwner) : FootAdapter<BindHolder<*>, List<Gank>>(context, lifecycleOwner) {
     private val itemModels = ArrayList<ItemModel>()
     private var callback: Callback? = null
 

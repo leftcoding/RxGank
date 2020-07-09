@@ -6,14 +6,14 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 
-import com.left.gank.R;
-import com.socks.library.KLog;
-
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
+import com.left.gank.R;
+import com.socks.library.KLog;
 
 /**
  * 组合 SwipeRefresh RecyclerView LyRecyclerView(侧滑)
@@ -63,7 +63,6 @@ public class LySwipeRefreshLayout extends SwipeRefreshLayout {
         }
         mRecyclerView = (RecyclerView) view.findViewById(R.id.my_recyclerView);
 
-        isGesture = mRecyclerView instanceof LyRecyclerView;
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -134,22 +133,6 @@ public class LySwipeRefreshLayout extends SwipeRefreshLayout {
 
     public RecyclerView getRecyclerView() {
         return mRecyclerView;
-    }
-
-
-    /**
-     * 设置滑动收拾 回调监听
-     *
-     * @param lyRecycler
-     */
-    public void setILyRecycler(LyRecyclerView.ILyRecycler lyRecycler) {
-        if (isGesture) {
-            ((LyRecyclerView) mRecyclerView).setILyRecycler(lyRecycler);
-        }
-    }
-
-    public int getPosition() {
-        return ((LyRecyclerView) mRecyclerView).getPosition();
     }
 
     /**

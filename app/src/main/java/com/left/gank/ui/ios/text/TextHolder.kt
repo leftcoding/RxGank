@@ -2,7 +2,7 @@ package com.left.gank.ui.ios.text
 
 import android.view.ViewGroup
 import com.left.gank.R
-import com.left.gank.butterknife.holder.BindHolder
+import com.left.gank.butterknife.adapter.BindHolder
 import kotlinx.android.synthetic.main.adapter_ios.view.*
 
 class TextHolder(parent: ViewGroup, private val itemCallBack: ItemCallback?) : BindHolder<TextModel>(parent, R.layout.adapter_ios) {

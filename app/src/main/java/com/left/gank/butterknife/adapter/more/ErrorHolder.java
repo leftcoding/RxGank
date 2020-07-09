@@ -4,8 +4,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.left.gank.R;
+import com.left.gank.butterknife.adapter.BindHolder;
 import com.left.gank.butterknife.adapter.FootAdapter;
-import com.left.gank.butterknife.holder.BindHolder;
 
 public class ErrorHolder extends BindHolder<ErrorItem> {
     private final FootAdapter.ErrorListener errorListener;

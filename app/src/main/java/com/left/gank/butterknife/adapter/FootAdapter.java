@@ -5,6 +5,9 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleEventObserver;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.left.gank.butterknife.adapter.more.EndHolder;
@@ -13,7 +16,6 @@ import com.left.gank.butterknife.adapter.more.ErrorHolder;
 import com.left.gank.butterknife.adapter.more.ErrorItem;
 import com.left.gank.butterknife.adapter.more.LoadingHolder;
 import com.left.gank.butterknife.adapter.more.LoadingItem;
-import com.left.gank.butterknife.holder.BasicHolder;
 import com.left.gank.butterknife.item.ItemModel;
 
 import java.util.ArrayList;
@@ -31,8 +33,17 @@ public abstract class FootAdapter<VH extends BasicHolder, T> extends BaseAdapter
     private ErrorListener errorListener;
     private int spanCount;
 
-    public FootAdapter(Context context) {
+    public FootAdapter(Context context, LifecycleOwner lifecycleOwner) {
         this.context = context;
+        lifecycleOwner.getLifecycle().addObserver(new LifecycleEventObserver() {
+            @Override
+            public void onStateChanged(@NonNull LifecycleOwner source, @NonNull Lifecycle.Event event) {
+                if (event == Lifecycle.Event.ON_DESTROY) {
+                    unregisterAdapterDataObserver(adapterDataObserver);
+                    clear();
+                }
+            }
+        });
         registerAdapterDataObserver(adapterDataObserver);
     }
 
@@ -128,6 +139,9 @@ public abstract class FootAdapter<VH extends BasicHolder, T> extends BaseAdapter
                 vh = rxCreateViewHolder(parent, viewType);
                 break;
         }
+        if (vh == null) {
+            throw new RuntimeException("RecyclerView.ViewHolder is null");
+        }
         return (VH) vh;
     }
 
@@ -166,12 +180,6 @@ public abstract class FootAdapter<VH extends BasicHolder, T> extends BaseAdapter
     public int getItemCount() {
         List<ItemModel> list = addItems();
         return isFootModel ? itemModels.size() : list == null ? 0 : list.size();
-    }
-
-    @Override
-    public void destroy() {
-        clear();
-        unregisterAdapterDataObserver(adapterDataObserver);
     }
 
     public interface ErrorListener {
