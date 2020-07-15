@@ -21,7 +21,9 @@ import java.util.*
  */
 class CureFragment : LazyFragment(), CureContract.View {
     private lateinit var cureAdapter: CureAdapter
-    private lateinit var curePresenter: CureContract.Presenter
+    private val curePresenter: CureContract.Presenter by lazy {
+        CurePresenter(context!!, this)
+    }
     private lateinit var progressDialog: ProgressDialog
     private var page = 1
 
@@ -31,7 +33,7 @@ class CureFragment : LazyFragment(), CureContract.View {
 
     private val cureCallback = object : CureAdapter.Callback {
         override fun onClick(url: String) {
-            !TextUtils.isEmpty(url).apply {
+            TextUtils.isEmpty(url).not().apply {
                 curePresenter.loadImages(url)
             }
         }
@@ -40,7 +42,7 @@ class CureFragment : LazyFragment(), CureContract.View {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         cureAdapter = CureAdapter().apply {
-            setOnItemClickListener(cureCallback)
+            setCallback(cureCallback)
         }
 
         progressDialog = ProgressDialog(context).apply {
@@ -69,9 +71,7 @@ class CureFragment : LazyFragment(), CureContract.View {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        curePresenter = CurePresenter(context!!, this).apply {
-            setLifeCycleOwner(this@CureFragment)
-        }
+        curePresenter.setLifeCycleOwner(this@CureFragment)
     }
 
     private fun loadData() {
@@ -103,21 +103,19 @@ class CureFragment : LazyFragment(), CureContract.View {
     }
 
     override fun hideProgress() {
-        if (swipe_refresh != null && swipe_refresh!!.isRefreshing) {
-            swipe_refresh!!.isRefreshing = false
+        swipe_refresh?.isRefreshing?.also {
+            swipe_refresh.isRefreshing = false
         }
     }
 
     override fun showProgress() {
-        if (swipe_refresh != null && !swipe_refresh!!.isRefreshing) {
-            swipe_refresh!!.isRefreshing = true
+        swipe_refresh?.isRefreshing?.also {
+            swipe_refresh.isRefreshing = true
         }
     }
 
     override fun showContent() {
-        if (multiple_status_view != null) {
-            multiple_status_view!!.showContent()
-        }
+        multiple_status_view?.showContent()
     }
 
     override fun loadDataSuccess(page: Int, maxPage: Int, list: List<Gift>) {

@@ -1,6 +1,5 @@
 package com.left.gank.butterknife.adapter;
 
-import android.content.Context;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -21,8 +20,7 @@ import com.left.gank.butterknife.item.ItemModel;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class FootAdapter<VH extends BasicHolder, T> extends BaseAdapter<VH> {
-    protected final Context context;
+public abstract class FootAdapter<VH extends BindHolder, T> extends BaseAdapter<VH> {
     private List<ItemModel> itemModels = new ArrayList<>();
     private boolean isFootModel = true;
     private boolean hasError;
@@ -33,8 +31,7 @@ public abstract class FootAdapter<VH extends BasicHolder, T> extends BaseAdapter
     private ErrorListener errorListener;
     private int spanCount;
 
-    public FootAdapter(Context context, LifecycleOwner lifecycleOwner) {
-        this.context = context;
+    public FootAdapter(LifecycleOwner lifecycleOwner) {
         lifecycleOwner.getLifecycle().addObserver(new LifecycleEventObserver() {
             @Override
             public void onStateChanged(@NonNull LifecycleOwner source, @NonNull Lifecycle.Event event) {

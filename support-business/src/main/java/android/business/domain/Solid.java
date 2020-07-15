@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-public class Gank extends BaseEntity implements Serializable, ContentEqual {
+public class Solid extends BaseEntity implements Serializable, ContentEqual {
     @SerializedName("_id")
     public String id;
     public String createdAt;
@@ -20,8 +20,8 @@ public class Gank extends BaseEntity implements Serializable, ContentEqual {
 
     @Override
     public boolean isContentEqual(ContentEqual contentEqual) {
-        if (contentEqual instanceof Gank) {
-            Gank item = (Gank) contentEqual;
+        if (contentEqual instanceof Solid) {
+            Solid item = (Solid) contentEqual;
             return TextUtils.equals(id, item.id)
                     && TextUtils.equals(createdAt, item.createdAt)
                     && TextUtils.equals(desc, item.desc)

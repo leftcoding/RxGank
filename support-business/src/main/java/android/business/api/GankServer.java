@@ -1,7 +1,7 @@
 package android.business.api;
 
-import android.business.domain.Gank;
 import android.business.domain.PageEntity;
+import android.business.domain.Solid;
 import android.network.HttpServer;
 
 import io.reactivex.Observable;
@@ -40,25 +40,25 @@ public class GankServer extends HttpServer {
         return server;
     }
 
-    public Observable<Response<PageEntity<Gank>>> androids(final boolean refresh, final int page, final int limit) {
+    public Observable<Response<PageEntity<Solid>>> androids(final boolean refresh, final int page, final int limit) {
         return gankApi.androids(cacheControl(refresh), page, limit)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public Observable<Response<PageEntity<Gank>>> ios(final boolean refresh, final int page, final int limit) {
+    public Observable<Response<PageEntity<Solid>>> ios(final boolean refresh, final int page, final int limit) {
         return gankApi.ios(cacheControl(refresh), page, limit)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public Observable<Response<PageEntity<Gank>>> images(final boolean refresh, final int page, final int limit) {
+    public Observable<Response<PageEntity<Solid>>> images(final boolean refresh, final int page, final int limit) {
         return gankApi.images(cacheControl(refresh), page, limit)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public Observable<Response<PageEntity<Gank>>> video(final boolean refresh, final int page, final int limit) {
+    public Observable<Response<PageEntity<Solid>>> video(final boolean refresh, final int page, final int limit) {
         return gankApi.videos(cacheControl(refresh), page, limit)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());

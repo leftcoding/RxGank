@@ -4,25 +4,24 @@ import android.business.domain.Girl
 import android.view.ViewGroup
 import com.left.gank.R
 import com.left.gank.butterknife.adapter.BaseAdapter
-import com.left.gank.butterknife.adapter.BasicHolder
+import com.left.gank.butterknife.adapter.BindHolder
 import com.left.gank.butterknife.item.ItemModel
 import kotlinx.android.synthetic.main.adapter_daily_girl.view.*
 
 /**
  * Create by LingYan on 2016-07-05
  */
-class DailyGirlAdapter internal constructor() : BaseAdapter<BasicHolder<*>>() {
+class DailyGirlAdapter internal constructor() : BaseAdapter<BindHolder<ItemModel>>() {
     private var itemClick: ItemCallback? = null
     private val items = mutableListOf<ItemModel>()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BasicHolder<*> {
-        return DailyGirlHolder(parent, itemClick)
+    @Suppress("UNCHECKED_CAST")
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BindHolder<ItemModel> {
+        return DailyGirlHolder(parent, itemClick) as BindHolder<ItemModel>
     }
 
-    override fun onBindViewHolder(holder: BasicHolder<*>, position: Int) {
-        if (holder is DailyGirlHolder) {
-            holder.bindHolder(items[position] as NormalItem)
-        }
+    override fun onBindViewHolder(holder: BindHolder<ItemModel>, position: Int) {
+        holder.bindHolder(items[position])
     }
 
     fun setOnItemClickListener(itemClick: ItemCallback) {
@@ -38,7 +37,7 @@ class DailyGirlAdapter internal constructor() : BaseAdapter<BasicHolder<*>>() {
         }
     }
 
-    class DailyGirlHolder(parent: ViewGroup, private val call: ItemCallback?) : BasicHolder<NormalItem>(parent, R.layout.adapter_daily_girl) {
+    class DailyGirlHolder(parent: ViewGroup, private val call: ItemCallback?) : BindHolder<NormalItem>(parent, R.layout.adapter_daily_girl) {
 
         override fun bindHolder(item: NormalItem) {
             val girl = item.girl

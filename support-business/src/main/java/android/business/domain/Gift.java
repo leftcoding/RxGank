@@ -16,6 +16,11 @@ public class Gift implements Parcelable {
         this.imgUrl = imgUrl;
     }
 
+    public Gift(String imgUrl, String url) {
+        this.imgUrl = imgUrl;
+        this.url = url;
+    }
+
     public Gift(String imgUrl, String url, String time, String title) {
         this.imgUrl = imgUrl;
         this.url = url;

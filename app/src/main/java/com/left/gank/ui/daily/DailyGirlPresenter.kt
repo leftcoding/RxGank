@@ -50,7 +50,7 @@ class DailyGirlPresenter(context: Context, view: DailyGirlContract.View) : Daily
                     max = getImageUrlsMax(document)
                     getImageCountList(document)
                 }
-                .map<List<Gift>> { imageUrl -> parseImageUrl(imageUrl) }
+                .map<List<Gift>> { imageUrl -> parseImageUrl(imageUrl, url) }
                 .doOnSubscribe {
                     if (view != null) {
                         view.showLoadingDialog()
@@ -64,7 +64,7 @@ class DailyGirlPresenter(context: Context, view: DailyGirlContract.View) : Daily
                 .`as`<ObservableSubscribeProxy<List<Gift>>>(bindLifecycle<List<Gift>>())
                 .subscribe({ imagesList ->
                     if (view != null) {
-                        view.loadImagesSuccess(imagesList)
+                        view.loadImagesSuccess(imagesList, url)
                     }
                 }, { e ->
                     Logcat.e(e)
@@ -74,7 +74,7 @@ class DailyGirlPresenter(context: Context, view: DailyGirlContract.View) : Daily
                 })
     }
 
-    private fun parseImageUrl(imageUrl: String?): List<Gift> {
+    private fun parseImageUrl(imageUrl: String?, url: String?): List<Gift> {
         val imagesList = arrayListOf<Gift>()
         if (imageUrl != null) {
             var baseUrl: String? = null
@@ -96,6 +96,7 @@ class DailyGirlPresenter(context: Context, view: DailyGirlContract.View) : Daily
 
             var number: String
             var lastUrl: String
+            var postUrl = url;
             for (i in 1..max) {
                 number = if (i < 10) {
                     "0$i"
@@ -103,7 +104,8 @@ class DailyGirlPresenter(context: Context, view: DailyGirlContract.View) : Daily
                     i.toString()
                 }
                 lastUrl = baseUrl + name + number + endType
-                imagesList.add(Gift(lastUrl))
+                postUrl = "$url/$i"
+                imagesList.add(Gift(lastUrl, postUrl))
             }
         }
         return imagesList

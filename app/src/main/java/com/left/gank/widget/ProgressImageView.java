@@ -107,7 +107,7 @@ public class ProgressImageView extends RelativeLayout {
         super.onAttachedToWindow();
     }
 
-    public void load(String url, final Context context) {
+    public void load(String url, String postUrl, final Context context) {
         target.setModel(url); // update target's cache
 
         if (url.contains("i.meizitu.net/")) {
@@ -132,16 +132,65 @@ public class ProgressImageView extends RelativeLayout {
                     )
                     .load(glideUrl)
                     .into(target);
-        } else {
+        } else if (postUrl != null && postUrl.contains("m.mzitu.com/")) {
+            GlideUrl glideUrl = new GlideUrl(url, new LazyHeaders.Builder()
+                    .addHeader(":authority", "i5.mmzztt.com")
+                    .addHeader(":method", "GET")
+                    .addHeader(":path", "/2020/01/20b10.jpg")
+                    .addHeader(",scheme", "https")
+                    .addHeader("accept", "image/webp,image/apng,image/*,*/*;q=0.8")
+                    .addHeader("accept-encoding", "gzip, deflate, br")
+                    .addHeader("accept-language", "zh-CN,zh;q=0.9")
+                    .addHeader("referer", postUrl)
+                    .addHeader("sec-fetch-dest", "image")
+                    .addHeader("sec-fetch-mode", "no-cors")
+                    .addHeader("sec-fetch-site", "cross-site")
+                    .build());
             Glide.with(context)
                     .asBitmap()
+                    .load(glideUrl)
                     .apply(new RequestOptions()
                             .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
                             .placeholder(R.drawable.image_loading)
                             .error(R.drawable.image_failure)
                             .fitCenter()
                     )
+                    .into(target);
+        } else if (postUrl != null && postUrl.contains("www.mzitu.com/")) {
+            GlideUrl glideUrl = new GlideUrl(url, new LazyHeaders.Builder()
+                    .addHeader(":authority", "i3.mmzztt.com")
+                    .addHeader(":method", "GET")
+                    .addHeader(":path", "/2020/01/20b10.jpg")
+                    .addHeader(",scheme", "https")
+                    .addHeader("accept", "image/webp,image/apng,image/*,*/*;q=0.8")
+                    .addHeader("accept-encoding", "gzip, deflate, br")
+                    .addHeader("accept-language", "zh-CN,zh;q=0.9")
+                    .addHeader("referer", postUrl)
+                    .addHeader("sec-fetch-dest", "image")
+                    .addHeader("sec-fetch-mode", "no-cors")
+                    .addHeader("sec-fetch-site", "cross-site")
+                    .addHeader("user-agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36")
+                    .build());
+            Glide.with(context)
+                    .asBitmap()
+                    .load(glideUrl)
+                    .apply(new RequestOptions()
+                            .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+                            .placeholder(R.drawable.image_loading)
+                            .error(R.drawable.image_failure)
+                            .fitCenter()
+                    )
+                    .into(target);
+        } else {
+            Glide.with(context)
+                    .asBitmap()
                     .load(url)
+                    .apply(new RequestOptions()
+                            .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+                            .placeholder(R.drawable.image_loading)
+                            .error(R.drawable.image_failure)
+                            .fitCenter()
+                    )
                     .into(target);
         }
     }

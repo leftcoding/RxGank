@@ -72,7 +72,7 @@ class PurePresenter internal constructor(context: Context, view: PureContract.Vi
                 .map { document ->
                     maxImages = getImageMaxPage(document)
                     val firstUrl = getImageFirstUrl(document)
-                    getImages(firstUrl)
+                    getImages(firstUrl, url)
                 }
                 .doFinally {
                     if (view != null) {
@@ -126,7 +126,7 @@ class PurePresenter internal constructor(context: Context, view: PureContract.Vi
         return links[0].attr("src")
     }
 
-    private fun getImages(url: String): ArrayList<Gift> {
+    private fun getImages(url: String, postUrl: String): ArrayList<Gift> {
         val imagesList = ArrayList<Gift>()
         var baseUrl: String? = null
         var name: String? = null
@@ -154,7 +154,7 @@ class PurePresenter internal constructor(context: Context, view: PureContract.Vi
                 i.toString()
             }
             lastUrl = baseUrl + name + number + endType
-            imagesList.add(Gift(lastUrl))
+            imagesList.add(Gift(lastUrl, postUrl))
         }
         return imagesList
     }

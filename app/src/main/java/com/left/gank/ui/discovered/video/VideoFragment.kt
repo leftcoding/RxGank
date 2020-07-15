@@ -1,7 +1,7 @@
 package com.left.gank.ui.discovered.video
 
-import android.business.domain.Gank
 import android.business.domain.PageConfig
+import android.business.domain.Solid
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -33,10 +33,10 @@ class VideoFragment : LazyFragment(), VideoContract.View {
     }
 
     private val itemClickListener = object : VideoAdapter.Callback {
-        override fun onClick(gank: Gank) {
+        override fun onClick(solid: Solid) {
             Bundle().apply {
-                putString(WebVideoViewActivity.TITLE, gank.desc)
-                putString(WebVideoViewActivity.URL, gank.url)
+                putString(WebVideoViewActivity.TITLE, solid.desc)
+                putString(WebVideoViewActivity.URL, solid.url)
                 WebVideoViewActivity.startWebActivity(activity, this)
             }
         }
@@ -65,7 +65,7 @@ class VideoFragment : LazyFragment(), VideoContract.View {
         loadVideo(PageConfig.starPage())
     }
 
-    override fun loadVideoSuccess(page: Int, list: List<Gank>?) {
+    override fun loadVideoSuccess(page: Int, list: List<Solid>?) {
         list?.let {
             pageConfig.curPage = page
             if (PageConfig.isFirstPage(page)) {

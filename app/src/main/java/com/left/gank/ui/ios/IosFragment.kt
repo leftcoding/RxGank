@@ -1,7 +1,7 @@
 package com.left.gank.ui.ios
 
-import android.business.domain.Gank
 import android.business.domain.PageConfig
+import android.business.domain.Solid
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -37,11 +37,11 @@ class IosFragment : LazyFragment(), IosContract.View {
     }
 
     private val onItemClickListener = object : ItemCallback {
-        override fun onItemClick(view: View, gank: Gank) {
+        override fun onItemClick(view: View, solid: Solid) {
             Bundle().apply {
-                putString(WebActivity.TITLE, gank.desc)
-                putString(WebActivity.URL, gank.url)
-                putString(WebActivity.AUTHOR, gank.who)
+                putString(WebActivity.TITLE, solid.desc)
+                putString(WebActivity.URL, solid.url)
+                putString(WebActivity.AUTHOR, solid.who)
                 putString(WebActivity.TYPE, Constants.IOS)
                 WebActivity.startWebActivity(context!!, this)
             }
@@ -54,7 +54,7 @@ class IosFragment : LazyFragment(), IosContract.View {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        iosAdapter = IosAdapter(context!!, this)
+        iosAdapter = IosAdapter(this)
         iosAdapter.setOnItemClickListener(onItemClickListener)
 
         val onFlexibleScrollListener = OnFlexibleScrollListener(swipe_refresh!!)
@@ -107,7 +107,7 @@ class IosFragment : LazyFragment(), IosContract.View {
         iosPresenter.loadIos(true, useProgress, page)
     }
 
-    override fun loadIosSuccess(page: Int, list: List<Gank>?) {
+    override fun loadIosSuccess(page: Int, list: List<Solid>?) {
         showContent()
 
         if (ListUtils.isEmpty(list)) {

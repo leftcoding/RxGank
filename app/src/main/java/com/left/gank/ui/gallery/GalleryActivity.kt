@@ -1,8 +1,8 @@
 package com.left.gank.ui.gallery
 
 import android.app.WallpaperManager
-import android.business.domain.Gank
 import android.business.domain.Gift
+import android.business.domain.Solid
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
@@ -43,6 +43,7 @@ class GalleryActivity : SupportActivity() {
     private var isCanPlay = true
     private var position: Int = 0
     private var disposable: Disposable? = null
+    private var url: String? = null
 
     override fun getContentId(): Int {
         return R.layout.activity_browse_picture
@@ -98,7 +99,7 @@ class GalleryActivity : SupportActivity() {
 
         pagerAdapter = GalleryPagerAdapter(supportFragmentManager)
         gifts?.let {
-            pagerAdapter!!.setGifts(it)
+            pagerAdapter!!.setGifts(it, url)
         }
         view_pager!!.let {
             it.adapter = pagerAdapter
@@ -146,13 +147,14 @@ class GalleryActivity : SupportActivity() {
     private fun parseBundle() {
         intent.extras?.let {
             gifts = intent.getParcelableArrayListExtra(EXTRA_LIST)
+            url = intent.getStringExtra(EXTRA_URL)
         }
     }
 
-    private fun changeImageList(resultsBeen: List<Gank>): List<Gift> {
+    private fun changeImageList(resultsBeen: List<Solid>): List<Gift> {
         val list = ArrayList<Gift>()
         if (!ListUtils.isEmpty(resultsBeen)) {
-            var resultsBean: Gank
+            var resultsBean: Solid
             var url: String
             for (i in resultsBeen.indices) {
                 resultsBean = resultsBeen[i]
@@ -321,6 +323,7 @@ class GalleryActivity : SupportActivity() {
         const val EXTRA_MODEL = "Model"
         const val EXTRA_POSITION = "Position"
         const val EXTRA_LIST = "Extra_List"
+        const val EXTRA_URL = "Extra_Url"
         private const val NUMBER_COLOR = "#8b0000"
     }
 }

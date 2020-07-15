@@ -1,7 +1,7 @@
 package com.left.gank.domain;
 
 
-import android.business.domain.Gank;
+import android.business.domain.Solid;
 
 import com.left.gank.utils.ListUtils;
 
@@ -13,13 +13,13 @@ import java.util.List;
  */
 public class GankResult extends BaseResult implements Serializable {
 
-    private List<Gank> results;
+    private List<Solid> results;
 
-    public GankResult(List<Gank> results) {
+    public GankResult(List<Solid> results) {
         this.results = results;
     }
 
-    public List<Gank> getResults() {
+    public List<Solid> getResults() {
         return results;
     }
 

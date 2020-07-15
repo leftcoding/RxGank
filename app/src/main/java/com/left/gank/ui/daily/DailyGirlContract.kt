@@ -18,7 +18,7 @@ interface DailyGirlContract {
 
         fun loadDailyGirlFailure(msg: String)
 
-        fun loadImagesSuccess(list: List<Gift>)
+        fun loadImagesSuccess(list: List<Gift>, url: String)
 
         fun loadImagesFailure(msg: String)
 

@@ -1,7 +1,6 @@
 package com.left.gank.ui.ios
 
-import android.business.domain.Gank
-import android.content.Context
+import android.business.domain.Solid
 import android.view.ViewGroup
 import androidx.lifecycle.LifecycleOwner
 import com.left.gank.butterknife.adapter.BindHolder
@@ -17,7 +16,7 @@ import java.util.*
 /**
  * Create by LingYan on 2016-04-25
  */
-internal class IosAdapter(context: Context, lifecycleOwner: LifecycleOwner) : FootAdapter<BindHolder<*>, List<Gank>>(context, lifecycleOwner) {
+internal class IosAdapter(lifecycleOwner: LifecycleOwner) : FootAdapter<BindHolder<*>, List<Solid>>(lifecycleOwner) {
     private val itemModels = ArrayList<ItemModel>()
 
     private var itemCallback: ItemCallback? = null
@@ -26,12 +25,12 @@ internal class IosAdapter(context: Context, lifecycleOwner: LifecycleOwner) : Fo
         return itemModels
     }
 
-    override fun fillItems(list: List<Gank>) {
+    override fun fillItems(list: List<Solid>) {
         itemModels.clear()
         appendItems(list)
     }
 
-    override fun appendItems(list: List<Gank>) {
+    override fun appendItems(list: List<Solid>) {
         val news = ArrayList<ItemModel>()
         if (ListUtils.isNotEmpty(list)) {
             for (gank in list) {

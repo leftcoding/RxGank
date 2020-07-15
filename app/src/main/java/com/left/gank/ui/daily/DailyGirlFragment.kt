@@ -6,6 +6,7 @@ import android.business.domain.Girl
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.left.gank.R
 import com.left.gank.base.LazyFragment
@@ -17,6 +18,9 @@ import java.util.*
 class DailyGirlFragment : LazyFragment(), DailyGirlContract.View {
     private lateinit var dailyGirlAdapter: DailyGirlAdapter
     private lateinit var presenter: DailyGirlContract.Presenter
+    private val viewModel by lazy {
+        ViewModelProviders.of(this).get(DailyViewModel::class.java)
+    }
     private val progressDialog by lazy {
         ProgressDialog(context).apply {
             setProgressStyle(ProgressDialog.STYLE_SPINNER)
@@ -88,7 +92,7 @@ class DailyGirlFragment : LazyFragment(), DailyGirlContract.View {
         shortToast(msg)
     }
 
-    override fun loadImagesSuccess(list: List<Gift>) {
+    override fun loadImagesSuccess(list: List<Gift>, url: String) {
         if (list.isNotEmpty()) {
             Intent(context, GalleryActivity::class.java).apply {
                 putExtra(GalleryActivity.EXTRA_MODEL, GalleryActivity.EXTRA_DAILY)

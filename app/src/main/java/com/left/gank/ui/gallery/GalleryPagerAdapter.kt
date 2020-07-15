@@ -8,9 +8,10 @@ import androidx.fragment.app.FragmentStatePagerAdapter
 
 class GalleryPagerAdapter internal constructor(fragmentManager: FragmentManager) : FragmentStatePagerAdapter(fragmentManager) {
     private var gifts: List<Gift>? = null
-
-    internal fun setGifts(gifts: List<Gift>) {
+    private var url: String? = null
+    internal fun setGifts(gifts: List<Gift>, url: String?) {
         this.gifts = gifts
+        this.url = url
     }
 
     override fun getCount(): Int {
@@ -18,6 +19,6 @@ class GalleryPagerAdapter internal constructor(fragmentManager: FragmentManager)
     }
 
     override fun getItem(position: Int): Fragment {
-        return GalleryFragment.newInstance(gifts!![position].imgUrl)
+        return GalleryFragment.newInstance(gifts!![position])
     }
 }

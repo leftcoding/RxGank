@@ -1,8 +1,8 @@
 package com.left.gank.ui.ios
 
 import android.business.api.GankServer
-import android.business.domain.Gank
 import android.business.domain.PageEntity
+import android.business.domain.Solid
 import android.business.observer.ManagerObserver
 import android.content.Context
 import com.uber.autodispose.ObservableSubscribeProxy
@@ -23,9 +23,9 @@ class IosPresenter(context: Context, view: IosContract.View) : IosContract.Prese
                 .ios(refresh, page, INIT_LIMIT)
                 .doOnSubscribe { showProgress(useProgress) }
                 .doFinally { hideProgress() }
-                .`as`<ObservableSubscribeProxy<Response<PageEntity<Gank>>>>(bindLifecycle<Response<PageEntity<Gank>>>())
-                .subscribe(object : ManagerObserver<PageEntity<Gank>>(requestTag, obtainObserver()) {
-                    override fun onSuccess(entity: PageEntity<Gank>?) {
+                .`as`<ObservableSubscribeProxy<Response<PageEntity<Solid>>>>(bindLifecycle<Response<PageEntity<Solid>>>())
+                .subscribe(object : ManagerObserver<PageEntity<Solid>>(requestTag, obtainObserver()) {
+                    override fun onSuccess(entity: PageEntity<Solid>?) {
                         if (isViewLife) {
                             if (entity != null) {
                                 view.loadIosSuccess(page, entity.results)

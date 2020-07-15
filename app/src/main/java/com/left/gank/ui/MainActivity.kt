@@ -36,7 +36,7 @@ class MainActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        bottom_navigation!!.setOnNavigationItemSelectedListener {
+        bottom_navigation.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.tab_home -> {
                     openFragment(TAB_HOME)

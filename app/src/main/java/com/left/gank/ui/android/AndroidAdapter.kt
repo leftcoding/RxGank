@@ -1,7 +1,6 @@
 package com.left.gank.ui.android
 
-import android.business.domain.Gank
-import android.content.Context
+import android.business.domain.Solid
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.LifecycleOwner
@@ -13,7 +12,7 @@ import com.left.gank.utils.DateUtils
 import kotlinx.android.synthetic.main.adapter_android.view.*
 import java.util.*
 
-class AndroidAdapter(context: Context, lifecycleOwner: LifecycleOwner) : FootAdapter<BindHolder<*>, List<Gank>>(context, lifecycleOwner) {
+class AndroidAdapter(lifecycleOwner: LifecycleOwner) : FootAdapter<BindHolder<*>, List<Solid>>(lifecycleOwner) {
     private val itemModels = ArrayList<ItemModel>()
     private var callback: Callback? = null
 
@@ -29,19 +28,19 @@ class AndroidAdapter(context: Context, lifecycleOwner: LifecycleOwner) : FootAda
         return itemModels
     }
 
-    override fun fillItems(list: List<Gank>?) {
+    override fun fillItems(list: List<Solid>?) {
         itemModels.clear()
         appendItems(list)
     }
 
-    override fun appendItems(list: List<Gank>?) {
+    override fun appendItems(list: List<Solid>?) {
         if (list != null) {
             if (list.isEmpty()) {
                 setEnd(true)
                 return
             }
-            for (gank in list) {
-                itemModels.add(TextItem(gank))
+            for (solid in list) {
+                itemModels.add(TextItem(solid))
             }
         } else {
             showError()
@@ -52,10 +51,10 @@ class AndroidAdapter(context: Context, lifecycleOwner: LifecycleOwner) : FootAda
         this.callback = callback
     }
 
-    class TextItem internal constructor(val gank: Gank) : ItemModel() {
+    class TextItem internal constructor(val solid: Solid) : ItemModel() {
         val time: String?
             get() {
-                val date = DateUtils.formatToDate(gank.publishedAt)
+                val date = DateUtils.formatToDate(solid.publishedAt)
                 return DateUtils.formatString(date, DateUtils.MM_DD)
             }
 
@@ -66,18 +65,18 @@ class AndroidAdapter(context: Context, lifecycleOwner: LifecycleOwner) : FootAda
 
     internal class TextHolder(parent: ViewGroup, private val callback: Callback?) : BindHolder<TextItem>(parent, R.layout.adapter_android) {
         override fun bindHolder(item: TextItem) {
-            val gank = item.gank
+            val solid = item.solid
             itemView.time.text = item.time
-            itemView.title.text = gank.desc
-            itemView.author_name.text = gank.who
+            itemView.title.text = solid.desc
+            itemView.author_name.text = solid.who
             itemView.setOnClickListener { v ->
-                callback?.onItemClick(v, gank)
+                callback?.onItemClick(v, solid)
             }
         }
     }
 
     interface Callback {
-        fun onItemClick(view: View, gank: Gank)
+        fun onItemClick(view: View, solid: Solid)
     }
 
     companion object {

@@ -1,6 +1,6 @@
 package com.left.gank.ui.welfare
 
-import android.business.domain.Gank
+import android.business.domain.Solid
 import android.content.Context
 import android.graphics.Bitmap
 import android.util.ArrayMap
@@ -21,8 +21,8 @@ import java.util.*
 /**
  * Create by LingYan on 2018-09-25
  */
-class WelfareAdapter internal constructor(context: Context, lifecycleOwner: LifecycleOwner)
-    : FootAdapter<WelfareAdapter.ViewHolder, List<Gank>>(context, lifecycleOwner) {
+class WelfareAdapter internal constructor(lifecycleOwner: LifecycleOwner)
+    : FootAdapter<WelfareAdapter.ViewHolder, List<Solid>>(lifecycleOwner) {
     private val models = ArrayList<ItemModel>()
     private var itemClickListener: ItemClickListener? = null
 
@@ -42,14 +42,14 @@ class WelfareAdapter internal constructor(context: Context, lifecycleOwner: Life
         return models
     }
 
-    override fun fillItems(list: List<Gank>) {
+    override fun fillItems(list: List<Solid>) {
         models.clear()
         appendItems(list)
     }
 
-    override fun appendItems(list: List<Gank>) {
-        for (gank in list) {
-            models.add(ImageItem(gank))
+    override fun appendItems(list: List<Solid>) {
+        for (solid in list) {
+            models.add(ImageItem(solid))
         }
     }
 
@@ -57,8 +57,8 @@ class WelfareAdapter internal constructor(context: Context, lifecycleOwner: Life
         private val context: Context = parent.context
 
         override fun bindHolder(item: ImageItem) {
-            val gank = item.gank
-            val url = gank.url
+            val solid = item.solid
+            val url = solid.url
 
             Glide.with(context)
                     .asBitmap()
@@ -102,7 +102,7 @@ class WelfareAdapter internal constructor(context: Context, lifecycleOwner: Life
         }
     }
 
-    class ImageItem internal constructor(val gank: Gank) : ItemModel() {
+    class ImageItem internal constructor(val solid: Solid) : ItemModel() {
         override fun getViewType(): Int {
             return 0
         }

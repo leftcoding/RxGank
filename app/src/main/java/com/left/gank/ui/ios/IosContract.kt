@@ -1,6 +1,6 @@
 package com.left.gank.ui.ios
 
-import android.business.domain.Gank
+import android.business.domain.Solid
 import android.content.Context
 
 import com.left.gank.mvp.base.ObserverPresenter
@@ -12,7 +12,7 @@ import com.left.gank.mvp.base.SupportView
 
 interface IosContract {
     interface View : SupportView {
-        fun loadIosSuccess(page: Int, list: List<Gank>?)
+        fun loadIosSuccess(page: Int, list: List<Solid>?)
 
         fun loadIosFailure(page: Int, msg: String)
     }

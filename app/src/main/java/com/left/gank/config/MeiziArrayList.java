@@ -1,7 +1,7 @@
 package com.left.gank.config;
 
 
-import android.business.domain.Gank;
+import android.business.domain.Solid;
 
 import com.left.gank.utils.ListUtils;
 
@@ -13,8 +13,8 @@ import java.util.List;
  */
 public class MeiziArrayList {
     private static MeiziArrayList sMeiziArrayList;
-    private List<Gank> mOneItemsList;
-    private List<Gank> mMeiziList;
+    private List<Solid> mOneItemsList;
+    private List<Solid> mMeiziList;
     private int mPage = 0;
 
     private MeiziArrayList() {
@@ -29,24 +29,24 @@ public class MeiziArrayList {
         return sMeiziArrayList;
     }
 
-    public void refillOneItems(List<Gank> list) {
+    public void refillOneItems(List<Solid> list) {
         if (ListUtils.isEmpty(mOneItemsList)) {
             mOneItemsList.addAll(list);
         }
     }
 
-    public void addImages(List<Gank> list, int page) {
+    public void addImages(List<Solid> list, int page) {
         if (mPage < page) {
             mMeiziList.addAll(list);
             mPage = page;
         }
     }
 
-    public List<Gank> getImagesList() {
+    public List<Solid> getImagesList() {
         return mMeiziList;
     }
 
-    public List<Gank> getOneItemsList() {
+    public List<Solid> getOneItemsList() {
         return mOneItemsList;
     }
 
@@ -58,7 +58,7 @@ public class MeiziArrayList {
         return mPage;
     }
 
-    public Gank getResultBean(int position) {
+    public Solid getResultBean(int position) {
         if (ListUtils.isEmpty(mMeiziList)) {
             return null;
         }

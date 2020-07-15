@@ -1,6 +1,6 @@
 package com.left.gank.ui.welfare
 
-import android.business.domain.Gank
+import android.business.domain.Solid
 import android.content.Context
 import android.ui.base.BaseView
 
@@ -13,7 +13,7 @@ import com.left.gank.mvp.base.LoadMorePresenter
 
 interface WelfareContract {
     interface View : BaseView {
-        fun loadWelfareSuccess(page: Int, list: List<Gank>?)
+        fun loadWelfareSuccess(page: Int, list: List<Solid>?)
 
         fun loadWelfareFailure(page: Int, msg: String)
     }

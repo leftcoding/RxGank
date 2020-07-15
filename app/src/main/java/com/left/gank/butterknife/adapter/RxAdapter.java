@@ -14,7 +14,7 @@ import com.left.gank.butterknife.item.ItemModel;
 import java.util.ArrayList;
 import java.util.List;
 
-class RxAdapter extends BaseAdapter<BasicHolder> {
+class RxAdapter extends BaseAdapter<BindHolder<ItemModel>> {
     private List<ItemModel> holderCreators = new ArrayList<>();
     private List<Integer> integerList = new ArrayList<>();
 
@@ -62,13 +62,13 @@ class RxAdapter extends BaseAdapter<BasicHolder> {
 
     @NonNull
     @Override
-    public BasicHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public BindHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         return null;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull BasicHolder holder, int position) {
+    public void onBindViewHolder(@NonNull BindHolder holder, int position) {
         holder.bindHolder(holderCreators.get(position));
     }
 

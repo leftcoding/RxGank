@@ -1,5 +1,6 @@
 package com.left.gank.ui.gallery
 
+import android.business.domain.Gift
 import android.net.Uri
 import android.os.Bundle
 import android.ui.logcat.Logcat
@@ -20,6 +21,7 @@ import kotlinx.android.synthetic.main.fragment_browse_picture.*
  */
 class GalleryFragment : SupportFragment() {
     private var url: String? = null
+    private var postUrl: String? = null
 
     override fun fragmentLayoutId(): Int {
         return R.layout.fragment_browse_picture
@@ -52,13 +54,14 @@ class GalleryFragment : SupportFragment() {
         super.onCreate(savedInstanceState)
         arguments?.apply {
             url = getString(IMAGE_URL)
+            postUrl = getString(IMAGE_POST_URL)
         }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         progress_image!!.apply {
-            load(url, context)
+            load(url, postUrl, context)
             setImageViewOnClick(progressCallback)
         }
     }
@@ -80,10 +83,12 @@ class GalleryFragment : SupportFragment() {
 
     companion object {
         const val IMAGE_URL = "Image_Url"
+        const val IMAGE_POST_URL = "Post_Url"
 
-        fun newInstance(url: String): GalleryFragment = GalleryFragment().apply {
+        fun newInstance(gift: Gift): GalleryFragment = GalleryFragment().apply {
             arguments = Bundle().apply {
-                putString(IMAGE_URL, url)
+                putString(IMAGE_URL, gift.imgUrl)
+                putString(IMAGE_POST_URL, gift.url)
             }
         }
     }

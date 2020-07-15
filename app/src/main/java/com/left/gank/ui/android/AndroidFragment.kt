@@ -1,7 +1,7 @@
 package com.left.gank.ui.android
 
-import android.business.domain.Gank
 import android.business.domain.PageConfig
+import android.business.domain.Solid
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -27,7 +27,7 @@ class AndroidFragment : LazyFragment(), AndroidContract.View {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        androidAdapter = AndroidAdapter(context!!, this).apply {
+        androidAdapter = AndroidAdapter(this).apply {
             setErrorListener(errorListener)
             setCallback(callback)
         }
@@ -68,13 +68,13 @@ class AndroidFragment : LazyFragment(), AndroidContract.View {
     }
 
     private val callback = object : AndroidAdapter.Callback {
-        override fun onItemClick(view: View, gank: Gank) {
+        override fun onItemClick(view: View, solid: Solid) {
             val intent = Intent(context, WebActivity::class.java)
             val bundle = Bundle()
-            bundle.putString(WebActivity.TITLE, gank.desc)
-            bundle.putString(WebActivity.URL, gank.url)
+            bundle.putString(WebActivity.TITLE, solid.desc)
+            bundle.putString(WebActivity.URL, solid.url)
             bundle.putString(WebActivity.TYPE, Constants.ANDROID)
-            bundle.putString(WebActivity.AUTHOR, gank.who)
+            bundle.putString(WebActivity.AUTHOR, solid.who)
             intent.putExtras(bundle)
             startActivity(intent)
         }
@@ -106,7 +106,7 @@ class AndroidFragment : LazyFragment(), AndroidContract.View {
         multiple_status_view?.showLoading()
     }
 
-    override fun loadAndroidSuccess(page: Int, list: List<Gank>?) {
+    override fun loadAndroidSuccess(page: Int, list: List<Solid>?) {
         showContent()
         val isFirst = PageConfig.isFirstPage(page)
         if (ListUtils.isEmpty(list) && isFirst) {

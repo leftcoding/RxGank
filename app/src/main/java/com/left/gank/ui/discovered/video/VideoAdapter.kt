@@ -1,6 +1,6 @@
 package com.left.gank.ui.discovered.video
 
-import android.business.domain.Gank
+import android.business.domain.Solid
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.main.adapter_video.view.*
  * Create by LingYan on 2016-04-25
  */
 class VideoAdapter : RecyclerView.Adapter<VideoAdapter.GankViewHolder>() {
-    private val results = mutableListOf<Gank>()
+    private val results = mutableListOf<Solid>()
     private var onItemClickListener: Callback? = null
 
     init {
@@ -43,14 +43,14 @@ class VideoAdapter : RecyclerView.Adapter<VideoAdapter.GankViewHolder>() {
         return results.size
     }
 
-    fun refillItems(getResults: List<Gank>) {
+    fun refillItems(getResults: List<Solid>) {
         val size = results.size
         results.clear()
         notifyItemRangeRemoved(0, size)
         appendItems(getResults)
     }
 
-    fun appendItems(getResults: List<Gank>) {
+    fun appendItems(getResults: List<Solid>) {
         results.addAll(getResults)
         notifyItemRangeInserted(results.size, getResults.size)
     }
@@ -62,6 +62,6 @@ class VideoAdapter : RecyclerView.Adapter<VideoAdapter.GankViewHolder>() {
     inner class GankViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
     interface Callback {
-        fun onClick(gank: Gank)
+        fun onClick(solid: Solid)
     }
 }

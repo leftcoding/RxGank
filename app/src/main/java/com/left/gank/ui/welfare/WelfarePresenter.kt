@@ -1,8 +1,8 @@
 package com.left.gank.ui.welfare
 
 import android.business.api.GankServer
-import android.business.domain.Gank
 import android.business.domain.PageEntity
+import android.business.domain.Solid
 import android.business.observer.ManagerObserver
 import android.content.Context
 import androidx.lifecycle.LifecycleOwner
@@ -23,9 +23,9 @@ class WelfarePresenter internal constructor(context: Context, view: WelfareContr
                 .images(refresh, page, DEFAULT_LIMIT)
                 .doOnSubscribe { showProgress(useProgress) }
                 .doFinally { hideProgress() }
-                .`as`<ObservableSubscribeProxy<Response<PageEntity<Gank>>>>(AutoDispose.autoDisposable<Response<PageEntity<Gank>>>(AndroidLifecycleScopeProvider.from(view as LifecycleOwner)))
-                .subscribe(object : ManagerObserver<PageEntity<Gank>>(requestTag, obtainObserver()) {
-                    override fun onSuccess(entity: PageEntity<Gank>?) {
+                .`as`<ObservableSubscribeProxy<Response<PageEntity<Solid>>>>(AutoDispose.autoDisposable<Response<PageEntity<Solid>>>(AndroidLifecycleScopeProvider.from(view as LifecycleOwner)))
+                .subscribe(object : ManagerObserver<PageEntity<Solid>>(requestTag, obtainObserver()) {
+                    override fun onSuccess(entity: PageEntity<Solid>?) {
                         if (isViewLife) {
                             if (entity != null) {
                                 view.loadWelfareSuccess(page, entity.results)

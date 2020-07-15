@@ -13,29 +13,34 @@ import java.util.*
 /**
  * Create by LingYan on 2016-07-05
  */
-class CureAdapter internal constructor() : BaseAdapter<CureAdapter.NormalHolder<ItemModel>>() {
+
+class CureAdapter internal constructor() : BaseAdapter<BindHolder<ItemModel>>() {
     private var callback: Callback? = null
     private val gifts = ArrayList<Gift>()
     private val items = ArrayList<CureItem>()
 
-    override fun onCreateViewHolder(parent: ViewGroup, @ViewType.CureViewType viewType: Int): NormalHolder<ItemModel> {
-        var viewHolder: NormalHolder<*>? = null
-        if (viewType == ViewType.VIEW_TYPE_CURE) {
-            viewHolder = CureHolder(parent, callback)
+    @Suppress("UNCHECKED_CAST")
+    override fun onCreateViewHolder(parent: ViewGroup, @ViewType.CureViewType viewType: Int): BindHolder<ItemModel> {
+        when (viewType) {
+            ViewType.VIEW_TYPE_CURE -> {
+                return CureHolder(parent, callback) as BindHolder<ItemModel>
+            }
+            else -> {
+                throw RuntimeException("Holder is not null")
+            }
         }
-        return (viewHolder as NormalHolder<ItemModel>?)!!
     }
 
-    override fun onBindViewHolder(holder: NormalHolder<ItemModel>, position: Int) {
+    override fun onBindViewHolder(holder: BindHolder<ItemModel>, position: Int) {
         holder.bindHolder(items[position])
     }
 
-    fun setOnItemClickListener(callback: Callback) {
+    fun setCallback(callback: Callback) {
         this.callback = callback
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (!items.isEmpty()) {
+        return if (items.isNotEmpty()) {
             items[position].viewType
         } else super.getItemViewType(position)
     }
@@ -64,11 +69,11 @@ class CureAdapter internal constructor() : BaseAdapter<CureAdapter.NormalHolder<
         }
     }
 
-    internal class CureHolder(parent: ViewGroup, private val callback: Callback?) : NormalHolder<CureItem>(parent, R.layout.adapter_daily_girl) {
+    internal class CureHolder(parent: ViewGroup, private val callback: Callback?) : BindHolder<CureItem>(parent, R.layout.adapter_daily_girl) {
         override fun bindHolder(item: CureItem) {
             super.bindHolder(item)
             val gift = item.gift
-            itemView.title!!.text = gift.title
+            itemView.title.text = gift.title
             itemView.setOnClickListener { callback?.onClick(gift.url) }
         }
     }
@@ -82,13 +87,6 @@ class CureAdapter internal constructor() : BaseAdapter<CureAdapter.NormalHolder<
 
     interface Callback {
         fun onClick(url: String)
-    }
-
-    abstract class NormalHolder<TT : ItemModel>(parent: ViewGroup, layoutRes: Int) : BindHolder<TT>(parent, layoutRes) {
-
-        override fun bindHolder(item: TT) {
-
-        }
     }
 
     interface ViewType {

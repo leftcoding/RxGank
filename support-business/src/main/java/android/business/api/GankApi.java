@@ -1,7 +1,7 @@
 package android.business.api;
 
-import android.business.domain.Gank;
 import android.business.domain.PageEntity;
+import android.business.domain.Solid;
 
 import io.reactivex.Observable;
 import okhttp3.CacheControl;
@@ -22,7 +22,7 @@ public interface GankApi {
      * android 资源
      */
     @GET("Android/{limit}/{page}")
-    Observable<Response<PageEntity<Gank>>> androids(
+    Observable<Response<PageEntity<Solid>>> androids(
             @Header(CACHE_CONTROL) CacheControl cacheControl,
             @Path("page") int page,
             @Path("limit") int limit
@@ -32,7 +32,7 @@ public interface GankApi {
      * ios 资源
      */
     @GET("iOS/{limit}/{page}")
-    Observable<Response<PageEntity<Gank>>> ios(
+    Observable<Response<PageEntity<Solid>>> ios(
             @Header(CACHE_CONTROL) CacheControl cacheControl,
             @Path("page") int page,
             @Path("limit") int limit
@@ -42,14 +42,14 @@ public interface GankApi {
      * 福利 - 图片
      */
     @GET("福利/{limit}/{page}")
-    Observable<Response<PageEntity<Gank>>> images(
+    Observable<Response<PageEntity<Solid>>> images(
             @Header(CACHE_CONTROL) CacheControl cacheControl,
             @Path("page") int page,
             @Path("limit") int limit
     );
 
     @GET("休息视频/{limit}/{page}")
-    Observable<Response<PageEntity<Gank>>> videos(
+    Observable<Response<PageEntity<Solid>>> videos(
             @Header(CACHE_CONTROL) CacheControl cacheControl,
             @Path("page") int page,
             @Path("limit") int limit

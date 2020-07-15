@@ -1,6 +1,6 @@
 package com.left.gank.ui.discovered.video
 
-import android.business.domain.Gank
+import android.business.domain.Solid
 import android.content.Context
 
 import com.left.gank.mvp.base.LoadMorePresenter
@@ -13,7 +13,7 @@ import com.left.gank.mvp.base.SupportView
 
 interface VideoContract {
     interface View : SupportView {
-        fun loadVideoSuccess(page: Int, list: List<Gank>?)
+        fun loadVideoSuccess(page: Int, list: List<Solid>?)
 
         fun loadVideoFailure(page: Int, msg: String)
     }

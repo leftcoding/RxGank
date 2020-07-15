@@ -39,11 +39,12 @@ internal class CurePresenter(context: Context, view: CureContract.View) : CureCo
                 }
                 .subscribe({ document ->
                     getDetailMaxPage(document)
-                    val list = getImagesList(document)
+                    val list = getImagesList(document, url)
                     if (isViewLife) {
                         view.loadImagesSuccess(list)
                     }
                 }, { e ->
+                    Logcat.e(e)
                     if (isViewLife) {
                         view.loadImagesFailure(errorTip)
                     }
@@ -56,8 +57,10 @@ internal class CurePresenter(context: Context, view: CureContract.View) : CureCo
             return
         }
 
-        val disposable = JsoupServer.rxConnect(url).build()
-                .doOnSubscribe { dis ->
+        val disposable = JsoupServer.rxConnect(url)
+                .setUserAgent(JsoupServer.PC_AGENT)
+                .build()
+                .doOnSubscribe {
                     if (view != null) {
                         view.showProgress()
                     }
@@ -83,10 +86,10 @@ internal class CurePresenter(context: Context, view: CureContract.View) : CureCo
      * 解析每面，封面入口地址
      */
     private fun getPageLists(doc: Document?): List<Gift>? {
-        val list = ArrayList<Gift>()
         if (doc == null) {
             return null
         }
+        val list = ArrayList<Gift>()
         val href = doc.select("#pins > li > a")
         val img = doc.select("#pins a img")
         val times = doc.select(".time")
@@ -109,6 +112,7 @@ internal class CurePresenter(context: Context, view: CureContract.View) : CureCo
         return list
     }
 
+    val AGent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36"
     private fun getMaxPageNum(doc: Document?): Int {
         val p = 0
         if (doc != null) {
@@ -142,7 +146,7 @@ internal class CurePresenter(context: Context, view: CureContract.View) : CureCo
         return 0
     }
 
-    private fun getImagesList(doc: Document?): List<Gift> {
+    private fun getImagesList(doc: Document?, postUrl: String): List<Gift> {
         val imagesList = ArrayList<Gift>()
         if (doc != null) {
             val images = doc.select(".main-image a img")
@@ -174,7 +178,7 @@ internal class CurePresenter(context: Context, view: CureContract.View) : CureCo
                             for (i in 1 until length) {
                                 val page = if (i < 10) String.format(Locale.SIMPLIFIED_CHINESE, "0%d", i) else i.toString()
                                 val url = sub + page + type
-                                imagesList.add(Gift(url))
+                                imagesList.add(Gift(url, postUrl))
                             }
                         }
                     }
@@ -200,6 +204,6 @@ internal class CurePresenter(context: Context, view: CureContract.View) : CureCo
     }
 
     companion object {
-        private val BASE_URL = "http://www.mzitu.com/xinggan/"
+        private const val BASE_URL = "http://www.mzitu.com/xinggan/"
     }
 }
