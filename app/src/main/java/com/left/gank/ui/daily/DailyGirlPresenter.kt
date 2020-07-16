@@ -15,11 +15,14 @@ import java.util.*
 
 class DailyGirlPresenter(context: Context, view: DailyGirlContract.View) : DailyGirlContract.Presenter(context, view) {
     private var max: Int = 0
+    private var pageMaxNumber: Int = 0
 
-    override fun loadGirls() {
-        JsoupServer.rxConnect(MEIZI_FIRST_URL)
+    override fun loadGirls(page: Int) {
+        val finalPage = if (pageMaxNumber == 0) 1 else pageMaxNumber - page
+        val url = getUrl(finalPage)
+        JsoupServer.rxConnect(url)
                 .build()
-                .map { doc -> parseData(doc) }
+                .map { doc -> parseData(doc, url) }
                 .doOnSubscribe {
                     if (view != null) {
                         view.showProgress()
@@ -33,7 +36,7 @@ class DailyGirlPresenter(context: Context, view: DailyGirlContract.View) : Daily
                 .`as`<ObservableSubscribeProxy<List<Girl>>>(bindLifecycle<List<Girl>>())
                 .subscribe({ list ->
                     if (view != null) {
-                        view.loadDailyGirlSuccess(list)
+                        view.loadDailyGirlSuccess(list, page)
                     }
                 }, { e ->
                     Logcat.e(e)
@@ -114,18 +117,31 @@ class DailyGirlPresenter(context: Context, view: DailyGirlContract.View) : Daily
     /**
      * 筛选过滤得到月份集合
      */
-    private fun parseData(doc: Document?): List<Girl> {
+    private fun parseData(doc: Document?, url: String): List<Girl> {
         val list = ArrayList<Girl>()
-        if (doc != null) {
-            val times = doc.select(".post-content .archive-brick")
-            val href = doc.select(".post-content .archive-brick a")
-            for (i in href.indices) {
-                list.add(Girl(href[i].attr("href"), times[i].text()))
+        doc?.also {
+            if (pageMaxNumber == 0) {
+                val pageUrls = doc.select(".pagenavi-cm .page-numbers")
+                pageUrls?.isNotEmpty().also {
+                    val pageUrl = pageUrls[0].attr("href")
+                    pageUrl?.also {
+                        val lastPageIndex = pageUrl.lastIndexOf("-")
+                        val pageUrlStart = pageUrl.substring(0, lastPageIndex)
+                        val pageUrlEnd = pageUrl.substring(lastPageIndex + 1)
+                    }
+                    pageMaxNumber = pageUrls[pageUrls.size - 2]?.text()?.toInt() ?: 0
+                }
+            }
+
+            val imageUrls = doc.select(".comment-body img")
+            imageUrls?.also {
+                for (i in imageUrls.indices) {
+                    list.add(Girl(imageUrls[i].attr("data-original"), url))
+                }
             }
         }
         return list
     }
-
 
     private fun getImageUrlsMax(doc: Document?): Int {
         var max = 0
@@ -166,6 +182,9 @@ class DailyGirlPresenter(context: Context, view: DailyGirlContract.View) : Daily
     }
 
     companion object {
-        private const val MEIZI_FIRST_URL = "http://m.mzitu.com/all"
+        private const val Girls_FIRST_URL = "https://www.mzitu.com/zipai/"
+        fun getUrl(page: Int): String {
+            return if (page == 1) Girls_FIRST_URL else "https://www.mzitu.com/zipai/comment-page-${page}/#comments"
+        }
     }
 }

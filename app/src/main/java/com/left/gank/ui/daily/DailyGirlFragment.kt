@@ -3,21 +3,26 @@ package com.left.gank.ui.daily
 import android.app.ProgressDialog
 import android.business.domain.Gift
 import android.business.domain.Girl
+import android.business.domain.PageConfig
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.core.app.ActivityOptionsCompat
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.left.gank.R
 import com.left.gank.base.LazyFragment
 import com.left.gank.ui.gallery.GalleryActivity
 import com.left.gank.utils.ListUtils
+import com.left.gank.widget.recyclerview.OnFlexibleScrollListener
 import kotlinx.android.synthetic.main.fragment_refresh.*
 import java.util.*
 
 class DailyGirlFragment : LazyFragment(), DailyGirlContract.View {
     private lateinit var dailyGirlAdapter: DailyGirlAdapter
     private lateinit var presenter: DailyGirlContract.Presenter
+    private val pageConfig = PageConfig()
+
     private val viewModel by lazy {
         ViewModelProviders.of(this).get(DailyViewModel::class.java)
     }
@@ -38,23 +43,37 @@ class DailyGirlFragment : LazyFragment(), DailyGirlContract.View {
         dailyGirlAdapter.setOnItemClickListener(listener)
 
         recycler_view.apply {
-            layoutManager = LinearLayoutManager(context)
             adapter = dailyGirlAdapter
-        }
-        swipe_refresh.setOnRefreshListener {
-            loadData()
+            layoutManager = LinearLayoutManager(context)
+            val onFlexibleScrollListener = OnFlexibleScrollListener(swipe_refresh)
+            onFlexibleScrollListener.setOnScrollListener(scrollListener)
+            addOnScrollListener(onFlexibleScrollListener)
         }
     }
 
     override fun onLazyActivityCreate() {
         presenter = DailyGirlPresenter(context!!, this)
         presenter.setLifeCycleOwner(this)
-        loadData()
+        loadData(PageConfig.starPage())
     }
 
-    private val listener = object : DailyGirlAdapter.ItemCallback {
-        override fun onItemClick(girl: Girl) {
-            presenter.getImages(girl.url)
+    private val scrollListener = object : OnFlexibleScrollListener.ScrollListener {
+        override fun onRefresh() {
+            loadData(PageConfig.starPage())
+        }
+
+        override fun onLoadMore() {
+            loadData(pageConfig.nextPage)
+        }
+    }
+
+    private val listener = object : DailyGirlAdapter.ItemClickListener {
+        override fun onItemClick(girl: Girl, view: View) {
+            val list = arrayListOf<Gift>(Gift(girl.url))
+            val intent = Intent(context, GalleryActivity::class.java)
+            intent.putParcelableArrayListExtra(GalleryActivity.EXTRA_LIST, list)
+            val activityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(activity!!, view, getString(R.string.transition_welfare_image))
+            startActivity(intent, activityOptionsCompat.toBundle())
         }
     }
 
@@ -68,18 +87,26 @@ class DailyGirlFragment : LazyFragment(), DailyGirlContract.View {
         progressDialog.show()
     }
 
-    private fun loadData() {
-        presenter.loadGirls()
+    private fun loadData(page: Int) {
+        presenter.loadGirls(page)
     }
 
-    override fun loadDailyGirlSuccess(list: List<Girl>) {
+    override fun loadDailyGirlSuccess(list: List<Girl>, page: Int) {
         if (ListUtils.isEmpty(list)) {
             showContent()
             return
         }
         showContent()
+        pageConfig.curPage = page
         dailyGirlAdapter.apply {
-            refillItem(list)
+            when (page) {
+                1 -> {
+                    refillItem(list)
+                }
+                else -> {
+                    appendItem(list)
+                }
+            }
             notifyDataSetChanged()
         }
     }

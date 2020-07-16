@@ -1,7 +1,11 @@
 package com.left.gank.ui.daily
 
 import android.business.domain.Girl
+import android.view.View
 import android.view.ViewGroup
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
 import com.left.gank.R
 import com.left.gank.butterknife.adapter.BaseAdapter
 import com.left.gank.butterknife.adapter.BindHolder
@@ -12,7 +16,7 @@ import kotlinx.android.synthetic.main.adapter_daily_girl.view.*
  * Create by LingYan on 2016-07-05
  */
 class DailyGirlAdapter internal constructor() : BaseAdapter<BindHolder<ItemModel>>() {
-    private var itemClick: ItemCallback? = null
+    private var itemClick: ItemClickListener? = null
     private val items = mutableListOf<ItemModel>()
 
     @Suppress("UNCHECKED_CAST")
@@ -24,28 +28,32 @@ class DailyGirlAdapter internal constructor() : BaseAdapter<BindHolder<ItemModel
         holder.bindHolder(items[position])
     }
 
-    fun setOnItemClickListener(itemClick: ItemCallback) {
+    fun setOnItemClickListener(itemClick: ItemClickListener) {
         this.itemClick = itemClick
     }
 
     override fun getItemCount(): Int = items.size
 
-    fun refillItem(girlList: List<Girl?>?) {
+    fun refillItem(girlList: List<Girl?>) {
         items.clear()
-        girlList?.filterNotNull()?.forEach {
+        appendItem(girlList)
+    }
+
+    fun appendItem(girlList: List<Girl?>) {
+        girlList.filterNotNull().forEach {
             items.add(NormalItem(it))
         }
     }
 
-    class DailyGirlHolder(parent: ViewGroup, private val call: ItemCallback?) : BindHolder<NormalItem>(parent, R.layout.adapter_daily_girl) {
+    class DailyGirlHolder(parent: ViewGroup, private val call: ItemClickListener?) : BindHolder<NormalItem>(parent, R.layout.adapter_daily_girl) {
 
         override fun bindHolder(item: NormalItem) {
             val girl = item.girl
-            itemView.title.apply {
-                text = girl.title
-            }
-
-            itemView.setOnClickListener { call?.onItemClick(girl) }
+            Glide.with(itemView.context)
+                    .load(girl.url)
+                    .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.ALL))
+                    .into(itemView.image)
+            itemView.setOnClickListener { call?.onItemClick(girl, itemView) }
         }
     }
 
@@ -56,7 +64,7 @@ class DailyGirlAdapter internal constructor() : BaseAdapter<BindHolder<ItemModel
         }
     }
 
-    interface ItemCallback {
-        fun onItemClick(girl: Girl)
+    interface ItemClickListener {
+        fun onItemClick(girl: Girl, view: View)
     }
 }

@@ -7,7 +7,7 @@ import com.left.gank.R
 import com.left.gank.butterknife.adapter.BaseAdapter
 import com.left.gank.butterknife.adapter.BindHolder
 import com.left.gank.butterknife.item.ItemModel
-import kotlinx.android.synthetic.main.adapter_daily_girl.view.*
+import kotlinx.android.synthetic.main.adapter_cure_girl.view.*
 import java.util.*
 
 /**
@@ -69,7 +69,7 @@ class CureAdapter internal constructor() : BaseAdapter<BindHolder<ItemModel>>() 
         }
     }
 
-    internal class CureHolder(parent: ViewGroup, private val callback: Callback?) : BindHolder<CureItem>(parent, R.layout.adapter_daily_girl) {
+    internal class CureHolder(parent: ViewGroup, private val callback: Callback?) : BindHolder<CureItem>(parent, R.layout.adapter_cure_girl) {
         override fun bindHolder(item: CureItem) {
             super.bindHolder(item)
             val gift = item.gift

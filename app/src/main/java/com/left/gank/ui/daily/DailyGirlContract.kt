@@ -14,7 +14,7 @@ import com.left.gank.mvp.base.SupportView
 
 interface DailyGirlContract {
     interface View : SupportView {
-        fun loadDailyGirlSuccess(list: List<Girl>)
+        fun loadDailyGirlSuccess(list: List<Girl>, page: Int)
 
         fun loadDailyGirlFailure(msg: String)
 
@@ -28,7 +28,7 @@ interface DailyGirlContract {
     }
 
     abstract class Presenter(context: Context, view: View) : LoadMorePresenter<View>(context, view) {
-        internal abstract fun loadGirls()
+        internal abstract fun loadGirls(page: Int)
 
         internal abstract fun getImages(url: String)
     }
